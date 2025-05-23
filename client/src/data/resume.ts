@@ -80,7 +80,8 @@ const experienceData: ExperienceProfile = {
       title: "Manager – Product Management",
       company: {
         name: "EY",
-        location: "Columbus, OH"
+        location: "Columbus, OH",
+        logoUrl: "/src/assets/images/logos/ey-logo.svg"
       },
       period: {
         start: "2021",
@@ -178,7 +179,8 @@ const experienceData: ExperienceProfile = {
       title: "Assistant Professor of Military Science",
       company: {
         name: "U.S. Army – Ohio State University",
-        location: "Columbus, OH"
+        location: "Columbus, OH",
+        logoUrl: "/src/assets/images/logos/osu-logo.svg"
       },
       period: {
         start: "2018",
@@ -224,7 +226,8 @@ const experienceData: ExperienceProfile = {
       title: "Program Manager – Host Nation Construction",
       company: {
         name: "U.S. Army",
-        location: "Seoul, South Korea"
+        location: "Seoul, South Korea",
+        logoUrl: "/src/assets/images/logos/us-army-logo.svg"
       },
       period: {
         start: "2016",
@@ -248,6 +251,7 @@ const experienceData: ExperienceProfile = {
       id: "mba-osu",
       degree: "MBA",
       institution: "The Ohio State University – Fisher College of Business",
+      logoUrl: "/src/assets/images/logos/osu-logo.svg",
       location: "Columbus, OH",
       period: {
         start: "2019",
