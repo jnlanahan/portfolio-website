@@ -1,59 +1,54 @@
 import React from 'react';
+import bgPattern from '../assets/bg-pattern.svg';
 
 const BackgroundImage: React.FC = () => {
   return (
-    <div 
-      className="fixed inset-0 -z-10 pointer-events-none dark-theme" 
-      style={{
-        backgroundColor: '#000000',
-        backgroundImage: 'none',
-      }}
-    >
-      {/* Actual black and white image overlay */}
-      <div
-        className="absolute inset-0"
+    <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+      {/* Base black and white pattern from SVG */}
+      <div 
+        className="absolute inset-0 w-full h-full"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' width='1' height='1'%3E%3Crect width='1' height='1' fill='%23000000'/%3E%3C/svg%3E")`,
+          backgroundImage: `url(${bgPattern})`,
           backgroundSize: 'cover',
-          opacity: 1
-        }}
-      />
-      
-      {/* Black and white film grain */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
           backgroundRepeat: 'repeat',
-          opacity: 0.03,
-          mixBlendMode: 'lighten'
+          backgroundPosition: 'center',
+          opacity: 0.7
         }}
       />
       
-      {/* Green tinted vignette corners */}
-      <div
-        className="absolute inset-0 opacity-10"
+      {/* Green tinted overlay */}
+      <div 
+        className="absolute inset-0"
         style={{
           background: `
-            radial-gradient(circle at 15% 15%, rgba(34, 197, 94, 0.2) 0%, transparent 35%),
-            radial-gradient(circle at 85% 85%, rgba(34, 197, 94, 0.2) 0%, transparent 35%)
+            radial-gradient(circle at 25% 25%, rgba(34, 197, 94, 0.08) 0%, transparent 50%),
+            radial-gradient(circle at 75% 75%, rgba(34, 197, 94, 0.08) 0%, transparent 50%)
           `,
           mixBlendMode: 'screen'
         }}
       />
       
-      {/* Green Matrix-style grid */}
-      <div
+      {/* Matrix-style green scan line */}
+      <div 
         className="absolute inset-0"
         style={{
           backgroundImage: `
-            linear-gradient(to right, rgba(34, 197, 94, 0.03) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(34, 197, 94, 0.03) 1px, transparent 1px)
+            linear-gradient(to bottom, transparent, rgba(34, 197, 94, 0.02) 50%, transparent 100%)
           `,
-          backgroundSize: '30px 30px',
-          opacity: 0.2
+          backgroundSize: '100% 3px',
+          backgroundRepeat: 'repeat',
+          animation: 'scanlines 8s linear infinite',
+          opacity: 0.3
         }}
       />
+      
+      {/* Add subtle animation for scan lines */}
+      <style jsx>{`
+        @keyframes scanlines {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(100%); }
+        }
+      `}</style>
     </div>
   );
 };
