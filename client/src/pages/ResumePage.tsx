@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { getResume } from "@/data/resume";
+import { TimelineItem } from "@/components/ui/timeline";
 
 const ResumePage = () => {
   const { data: resume, isLoading } = useQuery({
@@ -32,38 +33,16 @@ const ResumePage = () => {
         </p>
       </motion.div>
 
-      <div className="timeline relative pl-8 md:pl-12 max-w-4xl mx-auto">
-        <div className="timeline-line"></div>
-
+      <div className="max-w-4xl mx-auto">
         {resume.map((job, index) => (
-          <motion.div
+          <TimelineItem
             key={index}
-            className={`timeline-item relative mb-16 ${index === resume.length - 1 ? "" : "mb-16"}`}
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-          >
-            <div className="timeline-dot"></div>
-            <div className="pl-8">
-              <h3 className="text-2xl font-space font-semibold">{job.title}</h3>
-              <div className="flex flex-wrap items-center text-muted-foreground mb-4">
-                <span className="font-medium text-secondary">{job.company}</span>
-                <span className="mx-2">•</span>
-                <span>{job.period}</span>
-              </div>
-              <p className="text-muted-foreground mb-4">{job.description}</p>
-              <div className="flex flex-wrap gap-2">
-                {job.skills.map((skill, skillIndex) => (
-                  <span
-                    key={skillIndex}
-                    className="px-3 py-1 bg-background/30 backdrop-blur-sm text-muted-foreground text-sm rounded-full"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </motion.div>
+            year={job.period}
+            title={job.title}
+            company={job.company}
+            description={job.description}
+            skills={job.skills}
+          />
         ))}
       </div>
 
