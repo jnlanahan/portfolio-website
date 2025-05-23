@@ -9,6 +9,7 @@ import {
 import { z } from "zod";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
+import { generateResumePDF } from "./pdf-generator";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Handle API routes with prefix
@@ -49,6 +50,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching resume:", error);
       res.status(500).json({ message: "Failed to fetch resume" });
+    }
+  });
+  
+  // Download resume as PDF
+  app.get("/api/resume/download", async (req, res) => {
+    try {
+      const resume = await storage.getResume();
+      await generateResumePDF(res, resume);
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+      res.status(500).json({ message: "Failed to generate resume PDF" });
     }
   });
 
