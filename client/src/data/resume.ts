@@ -134,7 +134,8 @@ const experienceData: ExperienceProfile = {
       title: "Plans Officer – U.S. Army Corps of Engineers (USACE)",
       company: {
         name: "U.S. Army Reserve",
-        location: "Seoul, South Korea"
+        location: "Seoul, South Korea",
+        logoUrl: "/src/assets/images/logos/army-logo.png"
       },
       period: {
         start: "2021",
@@ -180,7 +181,7 @@ const experienceData: ExperienceProfile = {
       company: {
         name: "U.S. Army – Ohio State University",
         location: "Columbus, OH",
-        logoUrl: "/src/assets/images/logos/osu-logo.png"
+        logoUrl: "/src/assets/images/logos/army-logo.png"
       },
       period: {
         start: "2018",
@@ -250,7 +251,7 @@ const experienceData: ExperienceProfile = {
   education: [
     {
       id: "mba-osu",
-      degree: "MBA",
+      degree: "Student: MBA",
       institution: "The Ohio State University – Fisher College of Business",
       logoUrl: "/src/assets/images/logos/osu-logo.png",
       location: "Columbus, OH",
@@ -283,7 +284,7 @@ const experienceData: ExperienceProfile = {
     },
     {
       id: "ms-missouri",
-      degree: "MS, Engineering Management",
+      degree: "Student: MS, Engineering Management",
       institution: "Missouri University of Science and Technology",
       logoUrl: "/src/assets/images/logos/mst-logo.png",
       period: {
@@ -308,7 +309,7 @@ const experienceData: ExperienceProfile = {
     },
     {
       id: "bs-ncsu",
-      degree: "BS, Civil Engineering (Structural)",
+      degree: "Student: BS, Structural Engineering",
       institution: "North Carolina State University",
       logoUrl: "/src/assets/images/logos/ncsu-logo.png",
       period: {
