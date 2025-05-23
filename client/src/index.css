@@ -4,10 +4,21 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Ensure pure black background */
+/* Ensure pure black background with no tint */
 body {
   background-color: #000000 !important;
   background: #000000 !important;
+  color-scheme: dark;
+}
+
+/* Create a high contrast look with black background */
+.dark-theme {
+  --true-black: #000000;
+  --true-white: #ffffff;
+  --green-accent: #22c55e;
+  
+  color: var(--true-white);
+  background-color: var(--true-black);
 }
 
 :root {
