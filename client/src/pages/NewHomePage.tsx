@@ -28,10 +28,11 @@ const HomeTile = ({
         <h3 className="text-xl font-space font-semibold">{title}</h3>
       </div>
       <p className="text-muted-foreground mb-6">{description}</p>
-      <Link href={linkTo}>
-        <a className="inline-flex items-center text-secondary hover:underline">
-          Explore <i className="ri-arrow-right-line ml-2"></i>
-        </a>
+      <Link 
+        href={linkTo}
+        className="inline-flex items-center text-secondary hover:underline"
+      >
+        Explore <i className="ri-arrow-right-line ml-2"></i>
       </Link>
     </motion.div>
   );

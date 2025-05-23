@@ -16,6 +16,16 @@ const Navbar = () => {
     return location.startsWith(path);
   };
 
+  // Navigation items to avoid repetition
+  const navItems = [
+    { path: "/", label: "Home", isActiveCheck: (path: string) => isActive(path) && location === path },
+    { path: "/about", label: "About", isActiveCheck: (path: string) => isActive(path) },
+    { path: "/resume", label: "Resume", isActiveCheck: (path: string) => isActive(path) },
+    { path: "/portfolio", label: "Portfolio", isActiveCheck: (path: string) => isActive(path) },
+    { path: "/blog", label: "Blog", isActiveCheck: (path: string) => isActive(path) && location !== '/blog/[id]' },
+    { path: "/top5", label: "Top 5", isActiveCheck: (path: string) => isActive(path) },
+  ];
+
   return (
     <nav className="fixed top-0 w-full bg-background/40 backdrop-blur-sm z-50 border-b border-border">
       <div className="container mx-auto px-4 md:px-6 py-4">
@@ -25,52 +35,22 @@ const Navbar = () => {
           </Link>
 
           <div className="hidden md:flex space-x-8 items-center">
-            <Link href="/">
-              <a className={`nav-link font-medium hover:text-secondary transition-colors ${
-                isActive('/') && location === '/' ? 'active' : ''
-              }`}>
-                Home
-              </a>
-            </Link>
-            <Link href="/about">
-              <a className={`nav-link font-medium hover:text-secondary transition-colors ${
-                isActive('/about') ? 'active' : ''
-              }`}>
-                About
-              </a>
-            </Link>
-            <Link href="/resume">
-              <a className={`nav-link font-medium hover:text-secondary transition-colors ${
-                isActive('/resume') ? 'active' : ''
-              }`}>
-                Resume
-              </a>
-            </Link>
-            <Link href="/portfolio">
-              <a className={`nav-link font-medium hover:text-secondary transition-colors ${
-                isActive('/portfolio') ? 'active' : ''
-              }`}>
-                Portfolio
-              </a>
-            </Link>
-            <Link href="/blog">
-              <a className={`nav-link font-medium hover:text-secondary transition-colors ${
-                isActive('/blog') && location !== '/blog/[id]' ? 'active' : ''
-              }`}>
-                Blog
-              </a>
-            </Link>
-            <Link href="/top5">
-              <a className={`nav-link font-medium hover:text-secondary transition-colors ${
-                isActive('/top5') ? 'active' : ''
-              }`}>
-                Top 5
-              </a>
-            </Link>
-            <Link href="/contact">
-              <a className="ml-4 px-5 py-2 bg-secondary text-background rounded-md font-medium hover:bg-secondary/90 transition-colors">
-                Contact
-              </a>
+            {navItems.map((item) => (
+              <Link 
+                key={item.path}
+                href={item.path}
+                className={`nav-link font-medium hover:text-secondary transition-colors ${
+                  item.isActiveCheck(item.path) ? 'active' : ''
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <Link 
+              href="/contact"
+              className="ml-4 px-5 py-2 bg-secondary text-background rounded-md font-medium hover:bg-secondary/90 transition-colors"
+            >
+              Contact
             </Link>
           </div>
 
@@ -97,73 +77,24 @@ const Navbar = () => {
         } md:hidden bg-background/40 backdrop-blur-sm border-b border-border animate-fade-in`}
       >
         <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-          <Link href="/">
-            <a 
+          {navItems.map((item) => (
+            <Link 
+              key={item.path}
+              href={item.path}
               className={`py-2 font-medium hover:text-secondary transition-colors ${
-                isActive('/') && location === '/' ? 'text-secondary' : ''
+                item.isActiveCheck(item.path) ? 'text-secondary' : ''
               }`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Home
-            </a>
-          </Link>
-          <Link href="/about">
-            <a 
-              className={`py-2 font-medium hover:text-secondary transition-colors ${
-                isActive('/about') ? 'text-secondary' : ''
-              }`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              About
-            </a>
-          </Link>
-          <Link href="/resume">
-            <a 
-              className={`py-2 font-medium hover:text-secondary transition-colors ${
-                isActive('/resume') ? 'text-secondary' : ''
-              }`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Resume
-            </a>
-          </Link>
-          <Link href="/portfolio">
-            <a 
-              className={`py-2 font-medium hover:text-secondary transition-colors ${
-                isActive('/portfolio') ? 'text-secondary' : ''
-              }`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Portfolio
-            </a>
-          </Link>
-          <Link href="/blog">
-            <a 
-              className={`py-2 font-medium hover:text-secondary transition-colors ${
-                isActive('/blog') && location !== '/blog/[id]' ? 'text-secondary' : ''
-              }`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Blog
-            </a>
-          </Link>
-          <Link href="/top5">
-            <a 
-              className={`py-2 font-medium hover:text-secondary transition-colors ${
-                isActive('/top5') ? 'text-secondary' : ''
-              }`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Top 5
-            </a>
-          </Link>
-          <Link href="/contact">
-            <a 
-              className="py-2 px-4 bg-secondary text-background rounded-md font-medium hover:bg-secondary/90 transition-colors text-center"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Contact
-            </a>
+              {item.label}
+            </Link>
+          ))}
+          <Link 
+            href="/contact"
+            className="py-2 px-4 bg-secondary text-background rounded-md font-medium hover:bg-secondary/90 transition-colors text-center"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Contact
           </Link>
         </div>
       </div>
