@@ -138,7 +138,7 @@ const ResumePage = () => {
                   {job.skills.map((skill, skillIndex) => (
                     <motion.span
                       key={skillIndex}
-                      className="px-3 py-1 bg-primary/80 text-primary-foreground text-sm rounded-full"
+                      className="px-3 py-1 bg-secondary/80 text-secondary-foreground text-sm rounded-full"
                       initial={{ opacity: 0, scale: 0.8 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
