@@ -51,7 +51,7 @@ const TopFiveListsPage = () => {
                 <ol className="space-y-4">
                   {list.items.map((item, itemIndex) => (
                     <li key={itemIndex} className="flex items-start">
-                      <span className="bg-primary/20 text-primary rounded-full w-7 h-7 flex items-center justify-center font-bold mr-3 flex-shrink-0">
+                      <span className="bg-secondary/20 text-secondary rounded-full w-7 h-7 flex items-center justify-center font-bold mr-3 flex-shrink-0">
                         {itemIndex + 1}
                       </span>
                       <div>
