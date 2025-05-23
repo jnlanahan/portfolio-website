@@ -28,8 +28,8 @@ const HomeTile = ({
           glowColor="rgba(67, 186, 147, 0.6)"
         >
           <div className="flex items-center mb-4">
-            <div className="bg-primary/20 p-3 rounded-full mr-3">
-              <i className={`${icon} text-primary text-xl`}></i>
+            <div className="bg-secondary/20 p-3 rounded-full mr-3">
+              <i className={`${icon} text-secondary text-xl`}></i>
             </div>
             <h3 className="text-xl font-space font-semibold">{title}</h3>
           </div>
