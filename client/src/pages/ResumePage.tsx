@@ -25,7 +25,7 @@ const SkillBadge = ({
       default: return 'bg-secondary/80';
     }
   };
-  
+
   return (
     <motion.span
       key={index}
@@ -52,7 +52,7 @@ const Achievements = ({
   parentIndex: number;
 }) => {
   if (!achievements || achievements.length === 0) return null;
-  
+
   return (
     <div className="mb-4">
       <h4 className="font-medium text-sm text-secondary mb-2">Key Achievements</h4>
@@ -114,7 +114,7 @@ const ExperienceItem = ({
           bounce: 0.4 
         }}
       ></motion.div>
-      
+
       <div className="md:grid md:grid-cols-3 md:gap-6 pl-8">
         {/* Left content - Company info */}
         <div className="col-span-1">
@@ -124,13 +124,13 @@ const ExperienceItem = ({
             <span className="mx-2">•</span>
             <span>{formatPeriod(job.period)}</span>
           </div>
-          
+
           {job.company.location && (
             <div className="text-sm text-muted-foreground mb-4">
               <i className="ri-map-pin-line mr-1"></i> {job.company.location}
             </div>
           )}
-          
+
           {/* Logo placeholder or actual logo if available */}
           <div className="hidden md:block w-full aspect-square relative mb-4 overflow-hidden rounded-lg company-logo-placeholder">
             {job.company.logoUrl ? (
@@ -148,7 +148,7 @@ const ExperienceItem = ({
             )}
           </div>
         </div>
-        
+
         {/* Right content - Job details */}
         <div className="col-span-2">
           {/* Project image placeholder or actual image if available */}
@@ -167,12 +167,12 @@ const ExperienceItem = ({
               </div>
             )}
           </div>
-          
+
           <p className="text-muted-foreground mb-4">{job.description}</p>
-          
+
           {/* Achievements section */}
           <Achievements achievements={job.achievements} parentIndex={index} />
-          
+
           {/* Skills section */}
           <div className="flex flex-wrap gap-2">
             {job.skills.map((skill, skillIndex) => (
@@ -197,7 +197,7 @@ const EducationSection = ({
   education: any[] 
 }) => {
   if (!education || education.length === 0) return null;
-  
+
   return (
     <div className="mt-20 mb-12">
       <motion.h2 
@@ -209,7 +209,7 @@ const EducationSection = ({
       >
         Education & Certification
       </motion.h2>
-      
+
       <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
         {education.map((edu, index) => (
           <motion.div 
@@ -247,7 +247,7 @@ const ExperiencePage = () => {
     target: timelineRef,
     offset: ["start end", "end end"]
   });
-  
+
   // Timeline line growing animation
   const timelineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
@@ -260,6 +260,25 @@ const ExperiencePage = () => {
       </div>
     );
   }
+
+  const resume = profile.workExperience;
+  const education = profile.education;
+
+  const combinedItems = [...resume, ...education.map(edu => ({
+    id: edu.id,
+    title: edu.degree,
+    company: { name: edu.institution, location: edu.location || "" },
+    period: edu.period,
+    description: edu.description || "",
+    achievements: edu.highlightedCourses?.map(course => `Completed ${course}`) || [],
+    skills: edu.highlightedCourses?.map(course => ({ name: course, category: 'education' })) || [],
+    isEducation: true
+  }))].sort((a, b) => {
+    const dateA = new Date(a.period.start);
+    const dateB = new Date(b.period.start);
+    return dateB.getTime() - dateA.getTime();
+  });
+
 
   return (
     <div className="page-container">
@@ -306,19 +325,109 @@ const ExperiencePage = () => {
           style={{ height: timelineHeight }}
         ></motion.div>
 
-        {profile.workExperience.map((job, index) => (
-          <ExperienceItem 
-            key={job.id} 
-            job={job} 
-            index={index} 
-            totalItems={profile.workExperience.length} 
-          />
+        {combinedItems.map((item, index) => (
+          <motion.div
+            key={item.id}
+            className={`timeline-item relative mb-16 ${index === combinedItems.length - 1 ? "" : "mb-16"} ${item.isEducation ? 'education-entry' : ''}`}
+            initial={{ opacity: 0, y: 50 }}
+            viewport={{ once: true, amount: 0.3 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 0.7, 
+              delay: index * 0.15,
+              type: "spring",
+              stiffness: 50
+            }}
+          >
+            {/* Animated dot */}
+            <motion.div 
+              className="timeline-dot"
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ 
+                duration: 0.5, 
+                delay: 0.2 + index * 0.15,
+                type: "spring", 
+                bounce: 0.4 
+              }}
+            ></motion.div>
+
+            <div className="md:grid md:grid-cols-3 md:gap-6 pl-8">
+              {/* Left content - Company info */}
+              <div className="col-span-1">
+                <h3 className="text-2xl font-space font-semibold">{item.title}</h3>
+                <div className="flex flex-wrap items-center text-muted-foreground mb-4">
+                  <span className="font-medium text-secondary">{item.company.name}</span>
+                  <span className="mx-2">•</span>
+                  <span>{formatPeriod(item.period)}</span>
+                </div>
+
+                {item.company.location && (
+                  <div className="text-sm text-muted-foreground mb-4">
+                    <i className="ri-map-pin-line mr-1"></i> {item.company.location}
+                  </div>
+                )}
+
+                {/* Logo placeholder or actual logo if available */}
+                <div className="hidden md:block w-full aspect-square relative mb-4 overflow-hidden rounded-lg company-logo-placeholder">
+                  {item.company.logoUrl ? (
+                    <img 
+                      src={item.company.logoUrl} 
+                      alt={`${item.company.name} logo`}
+                      className="w-full h-full object-contain" 
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-secondary text-xs">
+                        {item.company.name} Logo
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Right content - Job details */}
+              <div className="col-span-2">
+                {/* Project image placeholder or actual image if available */}
+                <div className="w-full aspect-video relative mb-4 overflow-hidden rounded-lg project-image-placeholder">
+                  {item.projectImageUrl ? (
+                    <img 
+                      src={item.projectImageUrl} 
+                      alt="Project showcase" 
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-secondary text-sm">
+                        Project Image
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                <p className="text-muted-foreground mb-4">{item.description}</p>
+
+                {/* Achievements section */}
+                <Achievements achievements={item.achievements} parentIndex={index} />
+
+                {/* Skills section */}
+                <div className="flex flex-wrap gap-2">
+                  {item.skills.map((skill, skillIndex) => (
+                    <SkillBadge 
+                      key={skillIndex}
+                      skill={skill} 
+                      index={skillIndex} 
+                      parentIndex={index} 
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
         ))}
       </div>
-      
-      {/* Education Section */}
-      {profile.education && <EducationSection education={profile.education} />}
-      
+
       {/* Skills Section */}
       {profile.skills && (
         <div className="mt-12 mb-20 max-w-4xl mx-auto">
@@ -331,7 +440,7 @@ const ExperiencePage = () => {
           >
             Technical Skills
           </motion.h2>
-          
+
           <div className="grid md:grid-cols-3 gap-8">
             {/* Technical Skills */}
             <motion.div
@@ -353,7 +462,7 @@ const ExperiencePage = () => {
                 ))}
               </div>
             </motion.div>
-            
+
             {/* Leadership Skills */}
             <motion.div
               className="p-6 rounded-lg bg-card shadow-md"
@@ -374,7 +483,7 @@ const ExperiencePage = () => {
                 ))}
               </div>
             </motion.div>
-            
+
             {/* Other Skills */}
             <motion.div
               className="p-6 rounded-lg bg-card shadow-md"

@@ -59,6 +59,17 @@
   left: 100%;
 }
 
+.education-entry {
+  background: linear-gradient(90deg, rgba(67, 186, 147, 0.05) 0%, transparent 100%);
+  border-left: 2px solid rgba(67, 186, 147, 0.3);
+  padding-left: 1rem;
+  margin-left: -1rem;
+}
+
+.education-entry .timeline-dot {
+  background: rgba(67, 186, 147, 0.8);
+}
+
 /* Animation keyframes */
 @keyframes pulse {
   0% {
