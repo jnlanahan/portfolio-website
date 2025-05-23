@@ -322,6 +322,30 @@ const ExperiencePage = () => {
         </motion.div>
       </div>
 
+      {/* Skill Category Color Key */}
+      <div className="mb-8 max-w-4xl mx-auto pl-8 md:pl-12">
+        <motion.div 
+          className="flex flex-wrap justify-center gap-6 p-3 rounded-lg border border-border"
+          initial={{ opacity: 0, y: -10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+        >
+          <div className="flex items-center gap-2">
+            <span className="w-3 h-3 rounded-full bg-blue-500"></span>
+            <span className="text-sm font-medium text-blue-500">Leadership Skills</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-3 h-3 rounded-full bg-amber-500"></span>
+            <span className="text-sm font-medium text-amber-500">Business Skills</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-3 h-3 rounded-full bg-green-500"></span>
+            <span className="text-sm font-medium text-green-500">Product Management Skills</span>
+          </div>
+        </motion.div>
+      </div>
+
       {/* Work Experience Timeline */}
       <div ref={timelineRef} className="timeline relative pl-8 md:pl-12 max-w-4xl mx-auto" style={{ position: 'relative' }}>
         {/* Animated timeline line that grows with scroll */}
@@ -433,85 +457,7 @@ const ExperiencePage = () => {
         ))}
       </div>
 
-      {/* Skills Section */}
-      {profile.skills && (
-        <div className="mt-12 mb-20 max-w-4xl mx-auto">
-          <motion.h2 
-            className="text-3xl font-bold mb-8 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            Skills Overview
-          </motion.h2>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Leadership Skills */}
-            <motion.div
-              className="p-6 rounded-lg bg-card shadow-md"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1, duration: 0.5 }}
-            >
-              <h3 className="text-xl font-bold mb-4 text-center text-blue-500">Leadership</h3>
-              <div className="flex flex-wrap gap-2">
-                {profile.skills.leadership.map((skill, idx) => (
-                  <span 
-                    key={idx} 
-                    className="text-sm bg-blue-500/10 text-blue-500 px-3 py-1 rounded-full"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Business Skills */}
-            <motion.div
-              className="p-6 rounded-lg bg-card shadow-md"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-            >
-              <h3 className="text-xl font-bold mb-4 text-center text-amber-500">Business</h3>
-              <div className="flex flex-wrap gap-2">
-                {profile.skills.business.map((skill, idx) => (
-                  <span 
-                    key={idx} 
-                    className="text-sm bg-amber-500/10 text-amber-500 px-3 py-1 rounded-full"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Product Management Skills */}
-            <motion.div
-              className="p-6 rounded-lg bg-card shadow-md"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-            >
-              <h3 className="text-xl font-bold mb-4 text-center text-green-500">Product Management</h3>
-              <div className="flex flex-wrap gap-2">
-                {profile.skills.product.map((skill, idx) => (
-                  <span 
-                    key={idx} 
-                    className="text-sm bg-green-500/10 text-green-500 px-3 py-1 rounded-full"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
