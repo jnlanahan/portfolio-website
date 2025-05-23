@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import ScrollProgress from "./ScrollProgress";
+import BackgroundImage from "./BackgroundImage";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 interface LayoutProps {
@@ -14,6 +15,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Custom background with green tint */}
+      <BackgroundImage />
+      
       <ScrollProgress />
       <Navbar />
       <main className="flex-grow">{children}</main>
