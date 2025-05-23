@@ -139,7 +139,7 @@ const AboutPage = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               {/* Enhanced profile picture with fade effect */}
-              <div className="relative mx-auto w-[500px] h-[300px]">
+              <div className="relative mx-auto w-[500px] h-[400px] -mt-12">
                 {/* Animated gradient border effect with increased blur for fade effect */}
                 <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-secondary via-primary to-secondary animate-spin-slow blur-lg"></div>
                 <div className="absolute inset-1 rounded-lg bg-gradient-to-r from-secondary via-secondary to-secondary animate-spin-slow blur-lg"></div>
