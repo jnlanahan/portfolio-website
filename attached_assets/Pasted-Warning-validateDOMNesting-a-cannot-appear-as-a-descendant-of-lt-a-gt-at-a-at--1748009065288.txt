@@ -1,0 +1,33 @@
+Warning: validateDOMNesting(...): <a> cannot appear as a descendant of &lt;a&gt;.
+    at a
+    at a
+    at https://fc6efec5-fd1b-47dc-b231-dde3a1932a25-00-12p9r9ky0g9hb.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=6c793b29:337:18
+    at div
+    at div
+    at div
+    at nav
+    at Navbar (https://fc6efec5-fd1b-47dc-b231-dde3a1932a25-00-12p9r9ky0g9hb.picard.replit.dev/src/components/Navbar.tsx:22:39)
+    at div
+    at Layout (https://fc6efec5-fd1b-47dc-b231-dde3a1932a25-00-12p9r9ky0g9hb.picard.replit.dev/src/components/Layout.tsx:20:19)
+    at Provider (https://fc6efec5-fd1b-47dc-b231-dde3a1932a25-00-12p9r9ky0g9hb.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-532U4VYK.js?v=6c793b29:72:15)
+    at TooltipProvider (https://fc6efec5-fd1b-47dc-b231-dde3a1932a25-00-12p9r9ky0g9hb.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=6c793b29:2247:5)
+    at QueryClientProvider (https://fc6efec5-fd1b-47dc-b231-dde3a1932a25-00-12p9r9ky0g9hb.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=6c793b29:2805:3)
+    at App
+at a
+at a
+at https://fc6efec5-fd1b-47dc-b231-dde3a1932a25-00-12p9r9ky0g9hb.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=6c793b29:337:18
+at div
+at div
+at div
+at nav
+at Navbar (https://fc6efec5-fd1b-47dc-b231-dde3a1932a25-00-12p9r9ky0g9hb.picard.replit.dev/src/components/Navbar.tsx:22:39)
+at div
+at Layout (https://fc6efec5-fd1b-47dc-b231-dde3a1932a25-00-12p9r9ky0g9hb.picard.replit.dev/src/components/Layout.tsx:20:19)
+at Provider (https://fc6efec5-fd1b-47dc-b231-dde3a1932a25-00-12p9r9ky0g9hb.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-532U4VYK.js?v=6c793b29:72:15)
+at TooltipProvider (https://fc6efec5-fd1b-47dc-b231-dde3a1932a25-00-12p9r9ky0g9hb.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=6c793b29:2247:5)
+at QueryClientProvider (https://fc6efec5-fd1b-47dc-b231-dde3a1932a25-00-12p9r9ky0g9hb.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=6c793b29:2805:3)
+at App
+at t.value (https://fc6efec5-fd1b-47dc-b231-dde3a1932a25-00-12p9r9ky0g9hb.picard.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://fc6efec5-fd1b-47dc-b231-dde3a1932a25-00-12p9r9ky0g9hb.picard.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://fc6efec5-fd1b-47dc-b231-dde3a1932a25-00-12p9r9ky0g9hb.picard.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://fc6efec5-fd1b-47dc-b231-dde3a1932a25-00-12p9r9ky0g9hb.picard.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400

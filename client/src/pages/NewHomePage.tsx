@@ -61,18 +61,7 @@ const NewHomePage = () => {
                 Specializing in React, Node.js, and everything in between.
               </p>
 
-              <div className="flex flex-wrap gap-4">
-                <Link href="/portfolio">
-                  <a className="px-6 py-3 bg-primary hover:bg-primary/90 text-white font-medium rounded-md transition-colors flex items-center">
-                    <i className="ri-briefcase-line mr-2"></i> View My Work
-                  </a>
-                </Link>
-                <Link href="/contact">
-                  <a className="px-6 py-3 bg-transparent border border-border hover:border-secondary text-foreground font-medium rounded-md transition-colors flex items-center">
-                    <i className="ri-mail-line mr-2"></i> Get In Touch
-                  </a>
-                </Link>
-              </div>
+              {/* Buttons removed */}
 
               <div className="mt-12 flex space-x-6">
                 <a
@@ -198,13 +187,7 @@ const NewHomePage = () => {
               delay={0.5}
             />
             
-            <HomeTile 
-              title="Contact" 
-              description="Get in touch with me for collaborations, questions, or just to say hello."
-              icon="ri-mail-line"
-              linkTo="/contact"
-              delay={0.6}
-            />
+{/* Contact tile removed */}
           </div>
         </div>
       </section>
