@@ -12,7 +12,7 @@ export const BlogDetail: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="page-container">
+      <div className="page-container relative">
         <div className="animate-pulse">
           <div className="h-8 bg-muted rounded w-3/4 mb-4"></div>
           <div className="h-4 bg-muted rounded w-1/2 mb-8"></div>
@@ -29,7 +29,7 @@ export const BlogDetail: React.FC = () => {
 
   if (error || !post) {
     return (
-      <div className="page-container">
+      <div className="page-container relative">
         <h1 className="text-3xl font-bold mb-4">Post not found</h1>
         <p className="mb-6">Sorry, the blog post you're looking for doesn't exist.</p>
         <Link href="/blog">
@@ -40,7 +40,7 @@ export const BlogDetail: React.FC = () => {
   }
 
   return (
-    <div className="page-container">
+    <div className="page-container relative">
       <Link href="/blog">
         <a className="inline-flex items-center text-muted-foreground hover:text-secondary mb-8 transition-colors">
           <i className="ri-arrow-left-line mr-2"></i> Back to all posts
