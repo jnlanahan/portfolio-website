@@ -64,7 +64,7 @@ const AboutPage = () => {
                   <RotatingWords 
                     words={["Leader", "Coach", "Product Manager", "Family Man", "Strategist", "Critical Thinker"]} 
                     interval={2500}
-                    prefixText="I am a"
+                    prefixText="and I am a"
                   />
                 </span>
               </h1>
