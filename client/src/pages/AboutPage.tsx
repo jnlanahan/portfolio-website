@@ -216,13 +216,7 @@ const AboutPage = () => {
               delay={0.4}
             />
             
-            <HomeTile 
-              title="Contact" 
-              description="Reach out for collaboration opportunities, questions, or just to say hello."
-              icon="ri-mail-line"
-              linkTo="/contact"
-              delay={0.5}
-            />
+            
           </div>
         </div>
       </section>
