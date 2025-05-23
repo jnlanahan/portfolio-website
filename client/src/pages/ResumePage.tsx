@@ -374,122 +374,166 @@ const ExperiencePage = () => {
           
           {/* Timeline Bar */}
           <div className="h-1 bg-border relative w-full mx-auto mb-28 mt-14">
-            {/* Significant year markers along timeline */}
-            <div className="absolute left-0 -top-6 text-xs font-medium text-secondary">2025</div>
-            <div className="absolute left-20% -top-6 text-xs font-medium">2021</div>
-            <div className="absolute left-1/2 -top-6 transform -translate-x-1/2 text-xs font-medium">2016</div>
-            <div className="absolute left-80% -top-6 text-xs font-medium">2011</div>
-            <div className="absolute right-0 -top-6 text-xs font-medium text-secondary">2007</div>
+            {/* Define specific years for the timeline - exactly matching the reference image */}
+            {[
+              { year: '2025', position: 0 },
+              { year: '2021', position: 20 },
+              { year: '2018', position: 40 },
+              { year: '2016', position: 60 },
+              { year: '2014', position: 80 },
+              { year: '2007', position: 100 }
+            ].map(yearMarker => (
+              <div 
+                key={yearMarker.year} 
+                className="absolute -top-6 text-xs font-medium"
+                style={{ 
+                  left: `${yearMarker.position}%`, 
+                  transform: yearMarker.position === 50 ? 'translateX(-50%)' : 'none',
+                  right: yearMarker.position === 100 ? '0' : 'auto'
+                }}
+              >
+                {yearMarker.year}
+              </div>
+            ))}
             
-            {/* Combine work experience and education items for the timeline */}
-            {[...resume, ...(education || [])]
-              // Filter to just keep a reasonable number of major positions
-              .filter(item => {
-                const id = 'institution' in item ? (item as any).id : (item as any).id;
-                // Keep main positions only
-                return ['ey-manager', 'osu-professor', 'army-pm', 'ms-missouri', 'bs-ncsu'].includes(id);
-              })
-              .map((item, index) => {
-                // Determine if this is an education item
-                const isEducation = 'institution' in item;
-                
-                // Get the start year from the item
-                const startYear = parseInt(item.period.start);
-                
-                // Calculate position based on start year (adjust min/max years as needed)
-                const minYear = 2007; // Earliest year in timeline
-                const maxYear = 2025; // Latest year (current)
-                const rangeWidth = maxYear - minYear;
-                // Reverse the position calculation (100 - position) to flip the timeline direction
-                const position = 100 - ((startYear - minYear) / rangeWidth) * 100;
-                
-                // Determine the ID, name, and title based on whether it's education or work experience
-                const id = item.id;
-                const name = isEducation ? (item as any).institution : (item as any).company.name;
-                const title = isEducation ? (item as any).degree : (item as any).title;
-                // Get the logo if available
-                const logoUrl = isEducation 
-                  ? (item as any).logoUrl 
-                  : (item as any).company.logoUrl;
-                
-                // Create a shorter version of the title for display
-                let shortTitle = title;
-                if (title.length > 15) {
-                  const titleParts = title.split('–');
-                  shortTitle = titleParts[0].trim();
-                  if (shortTitle.length > 15) {
-                    shortTitle = shortTitle.substring(0, 15) + '...';
-                  }
-                }
-                
-                // Extract organization short name for display
-                let orgShortName = name;
-                if (name.includes('Ohio State')) {
-                  orgShortName = 'OSU';
-                } else if (name.includes('Missouri')) {
-                  orgShortName = 'MS&T';
-                } else if (name.includes('Carolina')) {
-                  orgShortName = 'NCSU';
-                } else if (name.includes('Army')) {
-                  orgShortName = 'US ARMY';
-                } else if (name.length > 10) {
-                  orgShortName = name.substring(0, 10);
-                }
-                
-                return (
-                  <motion.div
-                    key={`timeline-${id}`}
-                    initial={{ opacity: 0, scale: 0 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.1 * index, duration: 0.5 }}
-                    className="absolute transform -translate-x-1/2 cursor-pointer group"
-                    style={{ left: `${position}%`, top: '-2px' }}
-                  >
-                    <a 
-                      href={`#${id}`} 
-                      className="block relative"
-                      aria-label={`Jump to ${title} at ${name}`}
-                    >
-                      {/* Year label */}
-                      <span className="absolute whitespace-nowrap text-xs font-medium -top-6 left-1/2 transform -translate-x-1/2">
-                        {item.period.start}
-                      </span>
-                      
-                      {/* Timeline point - all same color */}
-                      <div className="w-5 h-5 rounded-full bg-secondary border-2 border-background absolute -top-2 left-1/2 transform -translate-x-1/2 transition-all duration-300 group-hover:ring-4 group-hover:ring-secondary/20"></div>
-                      
-                      {/* Logo (always shown, placeholder if no logo) */}
-                      <div className="absolute top-8 left-1/2 transform -translate-x-1/2 opacity-90 hover:opacity-100 transition-all duration-300">
-                        <div className="w-14 h-14 bg-card shadow-lg border border-border p-1 overflow-hidden flex items-center justify-center hover:shadow-md hover:scale-105 transition-all duration-300">
-                          {logoUrl ? (
-                            <img 
-                              src={logoUrl} 
-                              alt={`${name} logo`}
-                              className="w-12 h-12 object-contain"
-                            />
-                          ) : (
-                            <div className="w-12 h-12 flex items-center justify-center text-sm text-center text-secondary font-bold bg-secondary/5">
-                              {orgShortName}
-                            </div>
-                          )}
-                        </div>
-                        
-                        {/* Role label below logo */}
-                        <div className="text-[10px] text-center text-muted-foreground mt-1.5 max-w-[80px] mx-auto">
-                          {shortTitle}
-                        </div>
-                      </div>
-                      
-                      {/* Full name tooltip */}
-                      <div className="absolute opacity-0 group-hover:opacity-100 -top-12 left-1/2 transform -translate-x-1/2 bg-card shadow-md rounded-md p-2 text-xs whitespace-nowrap transition-all duration-300 border border-border z-10">
-                        <div className="font-medium">{name}</div>
-                        <div className="text-muted-foreground text-[10px] mt-0.5">{title}</div>
-                      </div>
-                    </a>
-                  </motion.div>
-                );
-              })}
+            {/* Year dots */}
+            {[
+              { year: '2025', position: 0 },
+              { year: '2021', position: 20 },
+              { year: '2018', position: 40 },
+              { year: '2016', position: 60 },
+              { year: '2014', position: 80 },
+              { year: '2007', position: 100 }
+            ].map((yearDot, index) => (
+              <div 
+                key={`dot-${yearDot.year}`}
+                className="absolute w-5 h-5 rounded-full bg-secondary border-2 border-background transform -translate-x-1/2 -translate-y-1/2"
+                style={{ 
+                  left: `${yearDot.position}%`, 
+                  top: '50%',
+                  right: yearDot.position === 100 ? '0' : 'auto'
+                }}
+              ></div>
+            ))}
+            
+            {/* Job entries - one per year */}
+            <div className="relative">
+              {/* 2021 - EY Manager */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1, duration: 0.5 }}
+                className="absolute"
+                style={{ left: '20%', top: '20px', transform: 'translateX(-50%)' }}
+              >
+                <a href="#ey-manager" className="block text-center cursor-pointer">
+                  <div className="w-14 h-14 bg-card mx-auto shadow-lg border border-border overflow-hidden flex items-center justify-center hover:shadow-md transition-all duration-300">
+                    <img 
+                      src="/src/assets/images/logos/ey-logo.svg" 
+                      alt="EY logo"
+                      className="w-12 h-12 object-contain"
+                    />
+                  </div>
+                  <div className="text-xs text-center font-medium mt-1">EY</div>
+                  <div className="text-[10px] text-center text-muted-foreground">
+                    Manager
+                  </div>
+                </a>
+              </motion.div>
+              
+              {/* 2018 - OSU Assistant Professor */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+                className="absolute"
+                style={{ left: '40%', top: '20px', transform: 'translateX(-50%)' }}
+              >
+                <a href="#osu-professor" className="block text-center cursor-pointer">
+                  <div className="w-14 h-14 bg-card mx-auto shadow-lg border border-border overflow-hidden flex items-center justify-center hover:shadow-md transition-all duration-300">
+                    <img 
+                      src="/src/assets/images/logos/osu-logo.svg" 
+                      alt="OSU logo"
+                      className="w-12 h-12 object-contain"
+                    />
+                  </div>
+                  <div className="text-xs text-center font-medium mt-1">OSU</div>
+                  <div className="text-[10px] text-center text-muted-foreground">
+                    Assistant Professor
+                  </div>
+                </a>
+              </motion.div>
+              
+              {/* 2016 - US Army Program Manager */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                className="absolute"
+                style={{ left: '60%', top: '20px', transform: 'translateX(-50%)' }}
+              >
+                <a href="#army-pm" className="block text-center cursor-pointer">
+                  <div className="w-14 h-14 bg-card mx-auto shadow-lg border border-border overflow-hidden flex items-center justify-center hover:shadow-md transition-all duration-300">
+                    <img 
+                      src="/src/assets/images/logos/us-army-logo.svg" 
+                      alt="US Army logo"
+                      className="w-12 h-12 object-contain"
+                    />
+                  </div>
+                  <div className="text-xs text-center font-medium mt-1">US ARMY</div>
+                  <div className="text-[10px] text-center text-muted-foreground">
+                    Program Manager
+                  </div>
+                </a>
+              </motion.div>
+              
+              {/* 2014 - MS&T (Engineering) */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+                className="absolute"
+                style={{ left: '80%', top: '20px', transform: 'translateX(-50%)' }}
+              >
+                <a href="#ms-missouri" className="block text-center cursor-pointer">
+                  <div className="w-14 h-14 bg-card mx-auto shadow-lg border border-border overflow-hidden flex items-center justify-center hover:shadow-md transition-all duration-300">
+                    <div className="w-12 h-12 flex items-center justify-center text-sm text-center text-secondary font-bold bg-secondary/5">
+                      MS&T
+                    </div>
+                  </div>
+                  <div className="text-xs text-center font-medium mt-1">MS&T</div>
+                  <div className="text-[10px] text-center text-muted-foreground max-w-[80px] mx-auto overflow-hidden text-ellipsis">
+                    MS, Engineering
+                  </div>
+                </a>
+              </motion.div>
+              
+              {/* 2007 - NCSU (Civil Engineering) */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+                className="absolute"
+                style={{ right: '0', top: '20px', transform: 'translateX(50%)' }}
+              >
+                <a href="#bs-ncsu" className="block text-center cursor-pointer">
+                  <div className="w-14 h-14 bg-card mx-auto shadow-lg border border-border overflow-hidden flex items-center justify-center hover:shadow-md transition-all duration-300">
+                    <div className="w-12 h-12 flex items-center justify-center text-sm text-center text-secondary font-bold bg-secondary/5">
+                      NCSU
+                    </div>
+                  </div>
+                  <div className="text-xs text-center font-medium mt-1">NCSU</div>
+                  <div className="text-[10px] text-center text-muted-foreground max-w-[80px] mx-auto overflow-hidden text-ellipsis">
+                    BS, Civil Engineering
+                  </div>
+                </a>
+              </motion.div>
+            </div>
           </div>
         </motion.div>
       </div>
