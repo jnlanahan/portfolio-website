@@ -45,7 +45,7 @@ const Navbar = () => {
       isActiveCheck: (path: string) => isActive(path) && location === path 
     },
     { 
-      path: "/resume", 
+      path: "/my-experience", 
       label: "My Experience", 
       icon: "ri-file-list-line",
       isActiveCheck: (path: string) => isActive(path) 
