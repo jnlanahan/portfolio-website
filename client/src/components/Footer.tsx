@@ -23,7 +23,7 @@ const Footer = () => {
             </Link>
             <Link href="/resume" 
               className="text-muted-foreground hover:text-secondary transition-colors">
-              Resume
+              My Experience
             </Link>
             <Link href="/portfolio" 
               className="text-muted-foreground hover:text-secondary transition-colors">
@@ -46,7 +46,7 @@ const Footer = () => {
 
         <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-muted-foreground text-sm mb-4 md:mb-0">
-            © {currentYear} Alex Chen. All rights reserved.
+            © {currentYear} Nick Lanahan. All rights reserved.
           </p>
 
           <div className="flex space-x-4">
