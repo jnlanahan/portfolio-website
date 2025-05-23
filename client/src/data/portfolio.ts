@@ -1,25 +1,97 @@
+export interface ProjectCategory {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string;
+}
+
 export interface ProjectType {
   id: number;
   title: string;
+  slug: string;
   shortDescription: string;
   description: string;
   image: string;
   technologies: string[];
   demoUrl: string;
   codeUrl: string;
+  featured?: boolean;
+  category?: ProjectCategory;
+  date: string;
+  client?: string;
+  testimonial?: {
+    quote: string;
+    author: string;
+    role?: string;
+  };
+  challenge?: string;
+  solution?: string;
+  results?: string;
+  gallery?: string[];
 }
+
+// Project categories
+export const projectCategories: ProjectCategory[] = [
+  {
+    id: 'web-development',
+    name: 'Web Development',
+    slug: 'web-development',
+    description: 'Full-stack and frontend web applications'
+  },
+  {
+    id: 'mobile',
+    name: 'Mobile Apps',
+    slug: 'mobile',
+    description: 'iOS and Android mobile applications'
+  },
+  {
+    id: 'ai-ml',
+    name: 'AI & Machine Learning',
+    slug: 'ai-ml',
+    description: 'Projects utilizing artificial intelligence and machine learning'
+  },
+  {
+    id: 'ui-ux',
+    name: 'UI/UX Design',
+    slug: 'ui-ux',
+    description: 'User interface and experience design projects'
+  }
+];
+
+// Helper function to get category by ID
+export const getCategoryById = (id: string): ProjectCategory | undefined => {
+  return projectCategories.find(category => category.id === id);
+};
 
 export function getPortfolio(): ProjectType[] {
   return [
     {
       id: 1,
       title: "Analytics Dashboard",
+      slug: "analytics-dashboard",
       shortDescription: "Real-time data visualization platform",
-      description: "Real-time data visualization platform with customizable widgets.",
+      description: "Real-time data visualization platform with customizable widgets and interactive charts for business intelligence.",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      technologies: ["React", "D3.js", "Firebase"],
+      technologies: ["React", "D3.js", "Firebase", "TypeScript", "Material UI"],
       demoUrl: "https://example.com/demo1",
-      codeUrl: "https://github.com/example/demo1"
+      codeUrl: "https://github.com/example/demo1",
+      featured: true,
+      category: getCategoryById('web-development'),
+      date: "2023-12-10",
+      client: "TechCorp Inc.",
+      testimonial: {
+        quote: "This dashboard revolutionized how we analyze our data. The real-time insights have been invaluable to our business decisions.",
+        author: "Sarah Johnson",
+        role: "CTO at TechCorp"
+      },
+      challenge: "The client needed a way to visualize complex data relationships in real-time across multiple departments with different access levels and data needs.",
+      solution: "I developed a modular dashboard with role-based access control and customizable widgets. The system uses WebSockets for real-time updates and implements sophisticated data visualization with D3.js.",
+      results: "The solution reduced decision-making time by 40% and improved data accessibility across the organization. User engagement with analytics increased by 78%.",
+      gallery: [
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600"
+      ]
     },
     {
       id: 2,

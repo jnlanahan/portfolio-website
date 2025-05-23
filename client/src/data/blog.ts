@@ -104,6 +104,7 @@ export const formatBlogDate = (dateString: string): string => {
   return new Date(dateString).toLocaleDateString('en-US', options);
 };
 
+// Add a couple more blog posts to the collection
 export function getBlogPosts(): BlogPostType[] {
   return [
     {
@@ -125,6 +126,7 @@ export function getBlogPosts(): BlogPostType[] {
       featured: true,
       views: 1248,
       likes: 56,
+      relatedPosts: [2, 4],
       content: `
         <p>
           Creating truly accessible components is more than just adding ARIA attributes—it's about understanding how people with disabilities actually use the web. In this post, I'll share what I've learned building accessible UI libraries.

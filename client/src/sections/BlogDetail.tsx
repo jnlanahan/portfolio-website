@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "wouter";
-import { getBlogPostById, BlogTag, formatBlogDate } from "@/data/blog";
+import { getBlogPostById, BlogTag, formatBlogDate, getBlogPosts, BlogPostType } from "@/data/blog";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -30,9 +30,16 @@ export const BlogDetail: React.FC = () => {
   const { data: post, isLoading, error } = useQuery({
     queryKey: [`/api/blog/${slug}`],
     queryFn: () => {
-      const posts = getBlogPostById(parseInt(slug || "0")) || 
-                   getBlogPostById(1); // Fallback to first post if slug is invalid
-      return posts;
+      // First try to get post by slug
+      const allPosts = getBlogPosts();
+      let foundPost = allPosts.find((p: BlogPostType) => p.slug === slug);
+      
+      // If not found by slug, try as an ID (for backward compatibility)
+      if (!foundPost && !isNaN(parseInt(slug || "0"))) {
+        foundPost = getBlogPostById(parseInt(slug || "0"));
+      }
+      
+      return foundPost;
     },
   });
 
@@ -117,7 +124,7 @@ export const BlogDetail: React.FC = () => {
 
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-6">
-          {post.tags.map((tag) => (
+          {post.tags.map((tag: BlogTag) => (
             <BlogTagBadge key={tag.id} tag={tag} />
           ))}
         </div>
@@ -201,7 +208,7 @@ export const BlogDetail: React.FC = () => {
               }`}
             >
               <i className={`${hasLiked ? "ri-heart-fill" : "ri-heart-line"} text-lg`}></i>
-              <span>{hasLiked ? post.likes + 1 : post.likes} likes</span>
+              <span>{hasLiked ? (post.likes || 0) + 1 : post.likes || 0} likes</span>
             </button>
 
             {/* Last updated */}
