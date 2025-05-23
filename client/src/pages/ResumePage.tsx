@@ -362,7 +362,7 @@ const ExperiencePage = () => {
       </div>
 
       {/* Career Timeline Navigator */}
-      <div className="mb-28 max-w-4xl mx-auto px-4 mt-10">
+      <div className="mb-28 max-w-5xl mx-auto px-4 mt-10">
         <motion.div
           className="horizontal-timeline relative bg-card/30 p-5 rounded-lg shadow-sm border border-border"
           initial={{ opacity: 0, y: 20 }}
@@ -387,7 +387,7 @@ const ExperiencePage = () => {
           </div>
           
           {/* Timeline grid with duration bars */}
-          <div className="relative h-[350px] border-t border-border">
+          <div className="relative h-[700px] border-t border-border">
             {/* Vertical grid lines for years */}
             <div className="absolute inset-0 grid grid-cols-9 w-full h-full pointer-events-none">
               {Array(9).fill(0).map((_, i) => (
@@ -395,15 +395,367 @@ const ExperiencePage = () => {
               ))}
             </div>
             
-            {/* Timeline items with duration bars */}
+            {/* Timeline items with duration bars - ORDERED BY START DATE (EARLIEST AT BOTTOM) */}
+            
+            {/* BS NCSU: 2007-2011 */}
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              whileInView={{ opacity: 1, width: '20%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="absolute h-12 bg-cyan-500/10 border-l-4 border-cyan-500 rounded-r-md flex items-center right-0 top-656"
+              style={{ width: '20%' }}
+            >
+              <a href="#bs-ncsu" className="flex items-center pl-2 hover:underline">
+                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
+                  <div className="w-6 h-6 flex items-center justify-center text-[8px] text-center text-cyan-500 font-bold bg-cyan-500/5">
+                    NCSU
+                  </div>
+                </div>
+                <div>
+                  <div className="text-xs font-medium">NCSU</div>
+                  <div className="text-[10px] text-muted-foreground">BS, Civil Engineering (2007-2011)</div>
+                </div>
+              </a>
+            </motion.div>
+            
+            {/* Trainer - Leadership and Military Tactics: May 2011-Aug 2011 */}
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              whileInView={{ opacity: 1, width: '2%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.15 }}
+              className="absolute h-12 bg-green-500/10 border-l-4 border-green-500 rounded-r-md flex items-center left-[80%] top-620"
+              style={{ width: '2%' }}
+            >
+              <a href="#trainer-fort-knox" className="flex items-center pl-2 hover:underline">
+                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
+                  <img 
+                    src="/src/assets/images/logos/us-army-logo.svg" 
+                    alt="US Army logo"
+                    className="w-6 h-6 object-contain"
+                  />
+                </div>
+                <div>
+                  <div className="text-xs font-medium">US Army</div>
+                  <div className="text-[10px] text-muted-foreground">Trainer - Leadership (May-Aug 2011)</div>
+                </div>
+              </a>
+            </motion.div>
+            
+            {/* Basic Officer Leadership Course: Aug 2011-Dec 2011 */}
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              whileInView={{ opacity: 1, width: '2%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="absolute h-12 bg-yellow-500/10 border-l-4 border-yellow-500 rounded-r-md flex items-center left-[78%] top-584"
+              style={{ width: '2%' }}
+            >
+              <a href="#bolc-student" className="flex items-center pl-2 hover:underline">
+                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
+                  <img 
+                    src="/src/assets/images/logos/us-army-logo.svg" 
+                    alt="US Army logo"
+                    className="w-6 h-6 object-contain"
+                  />
+                </div>
+                <div className="overflow-visible whitespace-nowrap">
+                  <div className="text-xs font-medium">US Army</div>
+                  <div className="text-[10px] text-muted-foreground">Basic Officer Leadership Course (Aug-Dec 2011)</div>
+                </div>
+              </a>
+            </motion.div>
+            
+            {/* Assistant Operations Officer: Dec 2011-Jan 2013 */}
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              whileInView={{ opacity: 1, width: '6%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.25 }}
+              className="absolute h-12 bg-purple-500/10 border-l-4 border-purple-500 rounded-r-md flex items-center left-[76%] top-548"
+              style={{ width: '6%' }}
+            >
+              <a href="#assistant-operations-officer" className="flex items-center pl-2 hover:underline">
+                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
+                  <img 
+                    src="/src/assets/images/logos/us-army-logo.svg" 
+                    alt="US Army logo"
+                    className="w-6 h-6 object-contain"
+                  />
+                </div>
+                <div>
+                  <div className="text-xs font-medium">US Army</div>
+                  <div className="text-[10px] text-muted-foreground">Strategic Planner (Dec 2011-Jan 2013)</div>
+                </div>
+              </a>
+            </motion.div>
+            
+            {/* Platoon Leader: Jan 2013-Oct 2013 */}
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              whileInView={{ opacity: 1, width: '4%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="absolute h-12 bg-green-500/10 border-l-4 border-green-500 rounded-r-md flex items-center left-[70%] top-512"
+              style={{ width: '4%' }}
+            >
+              <a href="#platoon-leader" className="flex items-center pl-2 hover:underline">
+                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
+                  <img 
+                    src="/src/assets/images/logos/us-army-logo.svg" 
+                    alt="US Army logo"
+                    className="w-6 h-6 object-contain"
+                  />
+                </div>
+                <div>
+                  <div className="text-xs font-medium">US Army</div>
+                  <div className="text-[10px] text-muted-foreground">Platoon Leader (Jan-Oct 2013)</div>
+                </div>
+              </a>
+            </motion.div>
+            
+            {/* Operations and Logistics Manager: Oct 2013-Jan 2015 */}
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              whileInView={{ opacity: 1, width: '7%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.35 }}
+              className="absolute h-12 bg-orange-500/10 border-l-4 border-orange-500 rounded-r-md flex items-center left-[66%] top-476"
+              style={{ width: '7%' }}
+            >
+              <a href="#operations-logistics-manager" className="flex items-center pl-2 hover:underline">
+                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
+                  <img 
+                    src="/src/assets/images/logos/us-army-logo.svg" 
+                    alt="US Army logo"
+                    className="w-6 h-6 object-contain"
+                  />
+                </div>
+                <div>
+                  <div className="text-xs font-medium">US Army</div>
+                  <div className="text-[10px] text-muted-foreground">Operations Manager (Oct 2013-Jan 2015)</div>
+                </div>
+              </a>
+            </motion.div>
+            
+            {/* MS Missouri: 2014-2016 */}
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              whileInView={{ opacity: 1, width: '10%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="absolute h-12 bg-pink-500/10 border-l-4 border-pink-500 rounded-r-md flex items-center left-[48%] top-440"
+              style={{ width: '10%' }}
+            >
+              <a href="#ms-missouri" className="flex items-center pl-2 hover:underline">
+                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
+                  <div className="w-6 h-6 flex items-center justify-center text-[8px] text-center text-pink-500 font-bold bg-pink-500/5">
+                    MS&T
+                  </div>
+                </div>
+                <div>
+                  <div className="text-xs font-medium">MS&T</div>
+                  <div className="text-[10px] text-muted-foreground">MS, Engineering Management (2014-2016)</div>
+                </div>
+              </a>
+            </motion.div>
+            
+            {/* Assistant Project Engineer: Jan 2015-Jun 2015 */}
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              whileInView={{ opacity: 1, width: '3%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.42 }}
+              className="absolute h-12 bg-purple-500/10 border-l-4 border-purple-500 rounded-r-md flex items-center left-[59%] top-404"
+              style={{ width: '3%' }}
+            >
+              <a href="#assistant-project-engineer" className="flex items-center pl-2 hover:underline">
+                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
+                  <div className="w-6 h-6 flex items-center justify-center text-[8px] text-center text-purple-500 font-bold bg-purple-500/5">
+                    USACE
+                  </div>
+                </div>
+                <div className="whitespace-nowrap overflow-visible">
+                  <div className="text-xs font-medium">US Army Corps of Engineers</div>
+                  <div className="text-[10px] text-muted-foreground">Project Engineer (Jan-Jun 2015)</div>
+                </div>
+              </a>
+            </motion.div>
+            
+            {/* Engineer Captain's Career Course: Jun 2015-Jun 2016 */}
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              whileInView={{ opacity: 1, width: '5%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.45 }}
+              className="absolute h-12 bg-yellow-500/10 border-l-4 border-yellow-500 rounded-r-md flex items-center left-[56%] top-368"
+              style={{ width: '5%' }}
+            >
+              <a href="#captains-career-course" className="flex items-center pl-2 hover:underline">
+                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
+                  <img 
+                    src="/src/assets/images/logos/us-army-logo.svg" 
+                    alt="US Army logo"
+                    className="w-6 h-6 object-contain"
+                  />
+                </div>
+                <div className="whitespace-nowrap overflow-visible">
+                  <div className="text-xs font-medium">US Army</div>
+                  <div className="text-[10px] text-muted-foreground">Captain's Course (Jun 2015-Jun 2016)</div>
+                </div>
+              </a>
+            </motion.div>
+            
+            {/* Army Program Manager: 2016-2017 */}
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              whileInView={{ opacity: 1, width: '5%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="absolute h-12 bg-purple-500/10 border-l-4 border-purple-500 rounded-r-md flex items-center left-[43%] top-332"
+              style={{ width: '5%' }}
+            >
+              <a href="#army-pm" className="flex items-center pl-2 hover:underline">
+                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
+                  <img 
+                    src="/src/assets/images/logos/us-army-logo.svg" 
+                    alt="US Army logo"
+                    className="w-6 h-6 object-contain"
+                  />
+                </div>
+                <div>
+                  <div className="text-xs font-medium">US Army</div>
+                  <div className="text-[10px] text-muted-foreground">Program Manager (2016-2017)</div>
+                </div>
+              </a>
+            </motion.div>
+            
+            {/* Army Commander: 2017-2018 */}
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              whileInView={{ opacity: 1, width: '5%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.55 }}
+              className="absolute h-12 bg-green-500/10 border-l-4 border-green-500 rounded-r-md flex items-center left-[38%] top-296"
+              style={{ width: '5%' }}
+            >
+              <a href="#army-commander" className="flex items-center pl-2 hover:underline">
+                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
+                  <img 
+                    src="/src/assets/images/logos/us-army-logo.svg" 
+                    alt="US Army logo"
+                    className="w-6 h-6 object-contain"
+                  />
+                </div>
+                <div>
+                  <div className="text-xs font-medium">US Army</div>
+                  <div className="text-[10px] text-muted-foreground">Company Commander (2017-2018)</div>
+                </div>
+              </a>
+            </motion.div>
+            
+            {/* OSU Assistant Professor: 2018-2021 */}
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              whileInView={{ opacity: 1, width: '15%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="absolute h-12 bg-amber-500/10 border-l-4 border-amber-500 rounded-r-md flex items-center left-[23%] top-260"
+              style={{ width: '15%' }}
+            >
+              <a href="#osu-professor" className="flex items-center pl-2 hover:underline">
+                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
+                  <img 
+                    src="/src/assets/images/logos/osu-logo.svg" 
+                    alt="OSU logo"
+                    className="w-6 h-6 object-contain"
+                  />
+                </div>
+                <div>
+                  <div className="text-xs font-medium">OSU</div>
+                  <div className="text-[10px] text-muted-foreground">Assistant Professor (2018-2021)</div>
+                </div>
+              </a>
+            </motion.div>
+            
+            {/* MBA OSU: 2019-2021 */}
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              whileInView={{ opacity: 1, width: '10%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.65 }}
+              className="absolute h-12 bg-indigo-500/10 border-l-4 border-indigo-500 rounded-r-md flex items-center left-[23%] top-224"
+              style={{ width: '10%' }}
+            >
+              <a href="#mba-osu" className="flex items-center pl-2 hover:underline">
+                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
+                  <img 
+                    src="/src/assets/images/logos/osu-logo.svg" 
+                    alt="OSU logo"
+                    className="w-6 h-6 object-contain"
+                  />
+                </div>
+                <div>
+                  <div className="text-xs font-medium">OSU</div>
+                  <div className="text-[10px] text-muted-foreground">MBA (2019-2021)</div>
+                </div>
+              </a>
+            </motion.div>
+            
+            {/* H2L Intern: 2021 */}
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              whileInView={{ opacity: 1, width: '3%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.7 }}
+              className="absolute h-12 bg-blue-400/10 border-l-4 border-blue-400 rounded-r-md flex items-center left-[20%] top-188"
+              style={{ width: '3%' }}
+            >
+              <a href="#h2l-intern" className="flex items-center pl-2 hover:underline">
+                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
+                  <div className="w-6 h-6 flex items-center justify-center text-[8px] text-center text-blue-400 font-bold bg-blue-400/5">
+                    H2L
+                  </div>
+                </div>
+                <div>
+                  <div className="text-xs font-medium">Horizon Two Labs</div>
+                  <div className="text-[10px] text-muted-foreground">Product Management Intern (2021)</div>
+                </div>
+              </a>
+            </motion.div>
+            
+            {/* USACE Officer: 2021-Present */}
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              whileInView={{ opacity: 1, width: '20%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.75 }}
+              className="absolute h-12 bg-secondary/10 border-l-4 border-secondary rounded-r-md flex items-center left-0 top-152"
+              style={{ width: '20%' }}
+            >
+              <a href="#usace-officer" className="flex items-center pl-2 hover:underline">
+                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
+                  <img 
+                    src="/src/assets/images/logos/us-army-logo.svg" 
+                    alt="US Army logo"
+                    className="w-6 h-6 object-contain"
+                  />
+                </div>
+                <div>
+                  <div className="text-xs font-medium">US Army Reserve</div>
+                  <div className="text-[10px] text-muted-foreground">Plans Officer – USACE (2021-Present)</div>
+                </div>
+              </a>
+            </motion.div>
             
             {/* EY Manager: 2021-Present */}
             <motion.div
               initial={{ opacity: 0, width: 0 }}
               whileInView={{ opacity: 1, width: '20%' }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="absolute h-12 bg-secondary/10 border-l-4 border-secondary rounded-r-md flex items-center left-0 top-4"
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="absolute h-12 bg-secondary/10 border-l-4 border-secondary rounded-r-md flex items-center left-0 top-116"
               style={{ width: '20%' }}
             >
               <a href="#ey-manager" className="flex items-center pl-2 hover:underline">
@@ -426,8 +778,8 @@ const ExperiencePage = () => {
               initial={{ opacity: 0, width: 0 }}
               whileInView={{ opacity: 1, width: '12%' }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="absolute h-12 bg-secondary/10 border-l-4 border-secondary rounded-r-md flex items-center left-0 top-20"
+              transition={{ duration: 0.8, delay: 0.85 }}
+              className="absolute h-12 bg-secondary/10 border-l-4 border-secondary rounded-r-md flex items-center left-0 top-80"
               style={{ width: '12%' }}
             >
               <a href="#lanahan-innovations" className="flex items-center pl-2 hover:underline">
@@ -439,192 +791,6 @@ const ExperiencePage = () => {
                 <div>
                   <div className="text-xs font-medium">Lanahan Innovations</div>
                   <div className="text-[10px] text-muted-foreground">Founder (2023-Present)</div>
-                </div>
-              </a>
-            </motion.div>
-            
-            {/* USACE Officer: 2021-Present */}
-            <motion.div
-              initial={{ opacity: 0, width: 0 }}
-              whileInView={{ opacity: 1, width: '20%' }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="absolute h-12 bg-secondary/10 border-l-4 border-secondary rounded-r-md flex items-center left-0 top-36"
-              style={{ width: '20%' }}
-            >
-              <a href="#usace-officer" className="flex items-center pl-2 hover:underline">
-                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
-                  <img 
-                    src="/src/assets/images/logos/us-army-logo.svg" 
-                    alt="US Army logo"
-                    className="w-6 h-6 object-contain"
-                  />
-                </div>
-                <div>
-                  <div className="text-xs font-medium">US Army Reserve</div>
-                  <div className="text-[10px] text-muted-foreground">Plans Officer – USACE (2021-Present)</div>
-                </div>
-              </a>
-            </motion.div>
-            
-            {/* H2L Intern: 2021 */}
-            <motion.div
-              initial={{ opacity: 0, width: 0 }}
-              whileInView={{ opacity: 1, width: '3%' }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="absolute h-12 bg-blue-400/10 border-l-4 border-blue-400 rounded-r-md flex items-center left-[20%] top-4"
-              style={{ width: '3%' }}
-            >
-              <a href="#h2l-intern" className="flex items-center pl-2 hover:underline">
-                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
-                  <div className="w-6 h-6 flex items-center justify-center text-[8px] text-center text-blue-400 font-bold bg-blue-400/5">
-                    H2L
-                  </div>
-                </div>
-                <div className="absolute -top-5 left-2 whitespace-nowrap">
-                  <div className="text-xs font-medium">H2L</div>
-                  <div className="text-[10px] text-muted-foreground">Product Management Intern (2021)</div>
-                </div>
-              </a>
-            </motion.div>
-            
-            {/* OSU Assistant Professor: 2018-2021 */}
-            <motion.div
-              initial={{ opacity: 0, width: 0 }}
-              whileInView={{ opacity: 1, width: '15%' }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="absolute h-12 bg-amber-500/10 border-l-4 border-amber-500 rounded-r-md flex items-center left-[23%] top-20"
-              style={{ width: '15%' }}
-            >
-              <a href="#osu-professor" className="flex items-center pl-2 hover:underline">
-                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
-                  <img 
-                    src="/src/assets/images/logos/osu-logo.svg" 
-                    alt="OSU logo"
-                    className="w-6 h-6 object-contain"
-                  />
-                </div>
-                <div>
-                  <div className="text-xs font-medium">OSU</div>
-                  <div className="text-[10px] text-muted-foreground">Assistant Professor (2018-2021)</div>
-                </div>
-              </a>
-            </motion.div>
-            
-            {/* Army Commander: 2017-2018 */}
-            <motion.div
-              initial={{ opacity: 0, width: 0 }}
-              whileInView={{ opacity: 1, width: '5%' }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="absolute h-12 bg-green-500/10 border-l-4 border-green-500 rounded-r-md flex items-center left-[38%] top-36"
-              style={{ width: '5%' }}
-            >
-              <a href="#army-commander" className="flex items-center pl-2 hover:underline">
-                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
-                  <img 
-                    src="/src/assets/images/logos/us-army-logo.svg" 
-                    alt="US Army logo"
-                    className="w-6 h-6 object-contain"
-                  />
-                </div>
-                <div>
-                  <div className="text-xs font-medium">US Army</div>
-                  <div className="text-[10px] text-muted-foreground">Company Commander (2017-2018)</div>
-                </div>
-              </a>
-            </motion.div>
-            
-            {/* Army Program Manager: 2016-2017 */}
-            <motion.div
-              initial={{ opacity: 0, width: 0 }}
-              whileInView={{ opacity: 1, width: '5%' }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="absolute h-12 bg-purple-500/10 border-l-4 border-purple-500 rounded-r-md flex items-center left-[43%] top-4"
-              style={{ width: '5%' }}
-            >
-              <a href="#army-pm" className="flex items-center pl-2 hover:underline">
-                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
-                  <img 
-                    src="/src/assets/images/logos/us-army-logo.svg" 
-                    alt="US Army logo"
-                    className="w-6 h-6 object-contain"
-                  />
-                </div>
-                <div>
-                  <div className="text-xs font-medium">US Army</div>
-                  <div className="text-[10px] text-muted-foreground">Program Manager (2016-2017)</div>
-                </div>
-              </a>
-            </motion.div>
-            
-            {/* MBA OSU: 2019-2021 */}
-            <motion.div
-              initial={{ opacity: 0, width: 0 }}
-              whileInView={{ opacity: 1, width: '10%' }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-              className="absolute h-12 bg-indigo-500/10 border-l-4 border-indigo-500 rounded-r-md flex items-center left-[23%] top-52"
-              style={{ width: '10%' }}
-            >
-              <a href="#mba-osu" className="flex items-center pl-2 hover:underline">
-                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
-                  <img 
-                    src="/src/assets/images/logos/osu-logo.svg" 
-                    alt="OSU logo"
-                    className="w-6 h-6 object-contain"
-                  />
-                </div>
-                <div>
-                  <div className="text-xs font-medium">OSU</div>
-                  <div className="text-[10px] text-muted-foreground">MBA (2019-2021)</div>
-                </div>
-              </a>
-            </motion.div>
-            
-            {/* MS Missouri: 2014-2016 */}
-            <motion.div
-              initial={{ opacity: 0, width: 0 }}
-              whileInView={{ opacity: 1, width: '10%' }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="absolute h-12 bg-pink-500/10 border-l-4 border-pink-500 rounded-r-md flex items-center left-[48%] top-52"
-              style={{ width: '10%' }}
-            >
-              <a href="#ms-missouri" className="flex items-center pl-2 hover:underline">
-                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
-                  <div className="w-6 h-6 flex items-center justify-center text-[8px] text-center text-pink-500 font-bold bg-pink-500/5">
-                    MS&T
-                  </div>
-                </div>
-                <div>
-                  <div className="text-xs font-medium">MS&T</div>
-                  <div className="text-[10px] text-muted-foreground">MS, Engineering Management (2014-2016)</div>
-                </div>
-              </a>
-            </motion.div>
-            
-            {/* BS NCSU: 2007-2011 */}
-            <motion.div
-              initial={{ opacity: 0, width: 0 }}
-              whileInView={{ opacity: 1, width: '20%' }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.9 }}
-              className="absolute h-12 bg-cyan-500/10 border-l-4 border-cyan-500 rounded-r-md flex items-center right-0 top-52"
-              style={{ width: '20%' }}
-            >
-              <a href="#bs-ncsu" className="flex items-center pl-2 hover:underline">
-                <div className="w-8 h-8 bg-card mr-2 shadow-md rounded-md overflow-hidden flex items-center justify-center">
-                  <div className="w-6 h-6 flex items-center justify-center text-[8px] text-center text-cyan-500 font-bold bg-cyan-500/5">
-                    NCSU
-                  </div>
-                </div>
-                <div>
-                  <div className="text-xs font-medium">NCSU</div>
-                  <div className="text-[10px] text-muted-foreground">BS, Civil Engineering (2007-2011)</div>
                 </div>
               </a>
             </motion.div>
@@ -649,7 +815,15 @@ const ExperiencePage = () => {
               </div>
               <div className="flex items-center">
                 <div className="w-3 h-3 rounded-sm bg-purple-500 mr-1"></div>
-                <span>Program Management</span>
+                <span>Project/Program Mgmt</span>
+              </div>
+              <div className="flex items-center">
+                <div className="w-3 h-3 rounded-sm bg-yellow-500 mr-1"></div>
+                <span>Military Training</span>
+              </div>
+              <div className="flex items-center">
+                <div className="w-3 h-3 rounded-sm bg-orange-500 mr-1"></div>
+                <span>Operations</span>
               </div>
               <div className="flex items-center">
                 <div className="w-3 h-3 rounded-sm bg-indigo-500 mr-1"></div>
