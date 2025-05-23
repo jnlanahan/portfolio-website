@@ -22,7 +22,7 @@ export function getLists(): ListsType {
     {
       title: "Dev Tools I Can't Live Without",
       icon: "ri-code-box-line",
-      color: "#22c55e", // Green for development
+      color: "#22c55e",
       description: "Tools that have significantly improved my development workflow and productivity.",
       items: [
         {
@@ -53,7 +53,7 @@ export function getLists(): ListsType {
     {
       title: "Tech Books That Changed My Perspective",
       icon: "ri-book-read-line",
-      color: "#3b82f6", // Blue for books/reading
+      color: "#22c55e",
       description: "Books that fundamentally altered how I approach software development and design.",
       items: [
         {
@@ -84,7 +84,7 @@ export function getLists(): ListsType {
     {
       title: "Podcasts for Developers",
       icon: "ri-mic-line",
-      color: "#ec4899", // Pink for podcasts/media
+      color: "#22c55e",
       description: "Audio content that keeps me informed and inspired during commutes and workouts.",
       items: [
         {
@@ -115,7 +115,7 @@ export function getLists(): ListsType {
     {
       title: "Top Learning Resources",
       icon: "ri-graduation-cap-line",
-      color: "#9333ea", // Purple for education
+      color: "#22c55e",
       description: "Platforms and sites I consistently turn to for expanding my knowledge and skills.",
       items: [
         {
