@@ -114,9 +114,6 @@ const BlogPage = () => {
                   </span>
                 ))}
               </div>
-              <Link href={`/blog/${post.id}`} className="inline-flex items-center text-secondary hover:underline">
-                Read More <i className="ri-arrow-right-line ml-2"></i>
-              </Link>
             </div>
           </motion.article>
         ))}
