@@ -30,7 +30,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 md:px-6 py-4">
         <div className="flex justify-between items-center">
           <Link href="/" className="text-xl font-bold font-space text-foreground">
-            Alex<span className="text-secondary">.</span>Chen
+            Nick<span className="text-secondary">.</span>Lanahan
           </Link>
 
           <div className="hidden md:flex space-x-8 items-center">

@@ -53,7 +53,7 @@ const AboutPage = () => {
             >
               <p className="text-secondary font-sora mb-4">Hello, I'm</p>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-space mb-6">
-                Alex Chen
+                Nick Lanahan
                 <span className="block text-2xl md:text-3xl text-muted-foreground mt-2">
                   Full-Stack Developer & UX Enthusiast
                 </span>
