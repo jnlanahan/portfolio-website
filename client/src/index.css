@@ -86,11 +86,43 @@
   }
 
   .timeline-line {
-    @apply absolute left-0 top-0 bottom-0 w-[1px] bg-border;
+    @apply absolute left-[80px] top-0 h-full w-[2px] bg-border;
   }
 
   .timeline-dot {
-    @apply h-4 w-4 rounded-full bg-primary absolute -left-2 top-6;
+    @apply absolute left-[73px] h-4 w-4 rounded-full border-2 border-secondary bg-background;
+    transition: transform 0.3s ease;
+  }
+
+  .timeline-item {
+    @apply relative;
+  }
+
+  .timeline-year {
+    @apply absolute left-0 text-lg font-bold text-secondary opacity-0;
+    transform: translateX(-20px);
+    transition: all 0.5s ease;
+  }
+
+  .timeline-item.visible .timeline-year {
+    @apply opacity-100;
+    transform: translateX(0);
+  }
+
+  .timeline-item.visible .timeline-dot {
+    transform: scale(1.3);
+  }
+
+  .timeline-content {
+    @apply pl-28;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.5s ease 0.2s;
+  }
+
+  .timeline-item.visible .timeline-content {
+    opacity: 1;
+    transform: translateX(0);
   }
 
   .project-card:hover .project-overlay {

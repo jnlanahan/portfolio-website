@@ -39,12 +39,19 @@ const ResumePage = () => {
           <motion.div
             key={index}
             className={`timeline-item relative mb-16 ${index === resume.length - 1 ? "" : "mb-16"}`}
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5 }}
+            onViewportEnter={(e) => {
+              if (e?.target) {
+                e.target.classList.add('visible');
+              }
+            }}
           >
+            <div className="timeline-year">{job.period.split(" - ")[0]}</div>
             <div className="timeline-dot"></div>
-            <div className="pl-8">
+            <div className="timeline-content">
               <h3 className="text-2xl font-space font-semibold">{job.title}</h3>
               <div className="flex flex-wrap items-center text-muted-foreground mb-4">
                 <span className="font-medium text-secondary">{job.company}</span>
