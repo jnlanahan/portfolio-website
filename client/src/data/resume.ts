@@ -76,6 +76,30 @@ export function getResume(): ExperienceEntry[] {
 const experienceData: ExperienceProfile = {
   workExperience: [
     {
+      id: "lanahan-innovations",
+      title: "Founder",
+      company: {
+        name: "Lanahan Innovations",
+        location: "Columbus, OH"
+      },
+      period: {
+        start: "2023",
+        end: "Present"
+      },
+      description: "Started a wellness-focused product company to explore design, licensing, and direct-to-consumer innovation.",
+      achievements: [
+        "Virtually prototyped first product concept; preparing for licensing pitch",
+        "Researched 400+ pieces of fitness equipment to identify gaps in the industry",
+        "Developed a short and long term supplement formula for memory, focus, and anxiety"
+      ],
+      skills: [
+        { name: "Product Design", category: "product" },
+        { name: "Startups", category: "product" },
+        { name: "Consumer Innovation", category: "product" },
+        { name: "Licensing", category: "product" }
+      ]
+    },
+    {
       id: "ey-manager",
       title: "Manager – Product Management",
       company: {
@@ -103,30 +127,6 @@ const experienceData: ExperienceProfile = {
         { name: "Product Transformation", category: "product" },
         { name: "OKRs", category: "product" },
         { name: "Client Engagement", category: "business" }
-      ]
-    },
-    {
-      id: "lanahan-innovations",
-      title: "Founder",
-      company: {
-        name: "Lanahan Innovations",
-        location: "Columbus, OH"
-      },
-      period: {
-        start: "2023",
-        end: "Present"
-      },
-      description: "Started a wellness-focused product company to explore design, licensing, and direct-to-consumer innovation.",
-      achievements: [
-        "Virtually prototyped first product concept; preparing for licensing pitch",
-        "Researched 400+ pieces of fitness equipment to identify gaps in the industry",
-        "Developed a short and long term supplement formula for memory, focus, and anxiety"
-      ],
-      skills: [
-        { name: "Product Design", category: "product" },
-        { name: "Startups", category: "product" },
-        { name: "Consumer Innovation", category: "product" },
-        { name: "Licensing", category: "product" }
       ]
     },
     {
