@@ -17,41 +17,35 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-8">
-            <Link 
-              href="/about"
-              className="text-muted-foreground hover:text-secondary transition-colors"
-            >
-              About
+            <Link href="/about">
+              <a className="text-muted-foreground hover:text-secondary transition-colors">
+                About
+              </a>
             </Link>
-            <Link 
-              href="/resume"
-              className="text-muted-foreground hover:text-secondary transition-colors"
-            >
-              Resume
+            <Link href="/resume">
+              <a className="text-muted-foreground hover:text-secondary transition-colors">
+                Resume
+              </a>
             </Link>
-            <Link 
-              href="/portfolio"
-              className="text-muted-foreground hover:text-secondary transition-colors"
-            >
-              Portfolio
+            <Link href="/portfolio">
+              <a className="text-muted-foreground hover:text-secondary transition-colors">
+                Portfolio
+              </a>
             </Link>
-            <Link 
-              href="/blog"
-              className="text-muted-foreground hover:text-secondary transition-colors"
-            >
-              Blog
+            <Link href="/blog">
+              <a className="text-muted-foreground hover:text-secondary transition-colors">
+                Blog
+              </a>
             </Link>
-            <Link 
-              href="/top5"
-              className="text-muted-foreground hover:text-secondary transition-colors"
-            >
-              Top 5
+            <Link href="/top5">
+              <a className="text-muted-foreground hover:text-secondary transition-colors">
+                Top 5
+              </a>
             </Link>
-            <Link 
-              href="/contact"
-              className="text-muted-foreground hover:text-secondary transition-colors"
-            >
-              Contact
+            <Link href="/contact">
+              <a className="text-muted-foreground hover:text-secondary transition-colors">
+                Contact
+              </a>
             </Link>
           </div>
         </div>
