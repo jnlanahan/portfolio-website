@@ -96,52 +96,99 @@ export function getPortfolio(): ProjectType[] {
     {
       id: 2,
       title: "FitTrack Mobile App",
+      slug: "fittrack-mobile-app",
       shortDescription: "Fitness tracking with social features",
-      description: "Fitness tracking application with social features and progress analytics.",
+      description: "Fitness tracking application with social features, progress analytics, and personalized workout recommendations.",
       image: "https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      technologies: ["React Native", "Redux", "Node.js"],
+      technologies: ["React Native", "Redux", "Node.js", "Express", "MongoDB"],
       demoUrl: "https://example.com/demo2",
-      codeUrl: "https://github.com/example/demo2"
+      codeUrl: "https://github.com/example/demo2",
+      category: getCategoryById('mobile'),
+      date: "2023-08-15",
+      client: "FitLife Health Co.",
+      challenge: "Create a fitness app that stands out in a crowded market by adding social connectivity and data-driven insights.",
+      solution: "Built a cross-platform mobile app that combines workout tracking with social networking features. Implemented machine learning for personalized workout recommendations and a gamification system to increase engagement.",
+      results: "The app reached 50,000 downloads in the first month with a 4.8/5 rating on app stores. User retention rate is 25% higher than industry average."
     },
     {
       id: 3,
       title: "CodeCollab Platform",
+      slug: "codecollab-platform",
       shortDescription: "Real-time collaborative code editor",
-      description: "Real-time collaborative code editor with integrated version control.",
+      description: "Real-time collaborative code editor with integrated version control and code execution environment.",
       image: "https://images.unsplash.com/photo-1587620962725-abab7fe55159?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      technologies: ["WebSockets", "Monaco Editor", "Express"],
+      technologies: ["WebSockets", "Monaco Editor", "Express", "Docker", "Redis"],
       demoUrl: "https://example.com/demo3",
-      codeUrl: "https://github.com/example/demo3"
+      codeUrl: "https://github.com/example/demo3",
+      featured: true,
+      category: getCategoryById('web-development'),
+      date: "2023-06-20",
+      client: "EdTech Solutions",
+      challenge: "Create an educational platform that allows students to collaborate on coding projects in real-time while giving instructors the ability to monitor and provide feedback.",
+      solution: "Developed a web-based collaborative code editor with real-time syncing using WebSockets, syntax highlighting for multiple languages, and an integrated terminal for running code. Added features for version control, commenting, and code reviews.",
+      results: "The platform is now used by 15 universities and coding bootcamps, serving over 5,000 students. Average assignment completion rates increased by 30%."
     },
     {
       id: 4,
       title: "Modern E-commerce",
+      slug: "modern-ecommerce",
       shortDescription: "Headless e-commerce platform",
-      description: "Full-featured online store with headless CMS and payment integration.",
+      description: "Full-featured online store with headless CMS, payment integration, and advanced product filtering capabilities.",
       image: "https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      technologies: ["Next.js", "Stripe", "Sanity CMS"],
+      technologies: ["Next.js", "Stripe", "Sanity CMS", "Tailwind CSS", "TypeScript"],
       demoUrl: "https://example.com/demo4",
-      codeUrl: "https://github.com/example/demo4"
+      codeUrl: "https://github.com/example/demo4",
+      category: getCategoryById('web-development'),
+      date: "2023-09-05",
+      client: "Boutique Brands Inc.",
+      testimonial: {
+        quote: "Our online sales increased by 200% within the first quarter of launching the new platform. The user experience is excellent, and the backend is incredibly easy to manage.",
+        author: "Michael Thompson",
+        role: "E-commerce Director"
+      },
+      challenge: "The client needed to transition from a legacy e-commerce platform to a modern, high-performance solution that could handle their growing product catalog and support custom checkout flows.",
+      solution: "Implemented a JAMstack e-commerce architecture with Next.js for the frontend, Sanity CMS for content management, and Stripe for payment processing. Created a custom checkout flow with multi-step validation and shipping calculator.",
+      results: "Page load times decreased by 65%, cart abandonment rate dropped by 28%, and mobile conversions increased by 45%. The business saw a 200% increase in online sales within three months of launch."
     },
     {
       id: 5,
       title: "AI Experiment Platform",
+      slug: "ai-experiment-platform",
       shortDescription: "ML model visualization tool",
-      description: "Interactive platform for visualizing and experimenting with machine learning models.",
-      image: "https://pixabay.com/get/g8fd4c906ca442a7a80dc5367c617042a9edcb35705af86113b56c2436accd038a8f7562ccf4176787a60b0eac531de50e316bb4d5adfe9083484d9cd5977c950_1280.jpg",
-      technologies: ["TensorFlow.js", "Three.js", "WebGL"],
+      description: "Interactive platform for visualizing and experimenting with machine learning models in the browser.",
+      image: "https://images.unsplash.com/photo-1677442135416-4078e85a9a2a?q=80&w=2532&auto=format&fit=crop",
+      technologies: ["TensorFlow.js", "Three.js", "WebGL", "React", "Python"],
       demoUrl: "https://example.com/demo5",
-      codeUrl: "https://github.com/example/demo5"
+      codeUrl: "https://github.com/example/demo5",
+      featured: true,
+      category: getCategoryById('ai-ml'),
+      date: "2023-11-15",
+      client: "AI Research Lab",
+      challenge: "Create an accessible platform for data scientists and ML engineers to visualize complex neural networks and experiment with different model architectures without requiring specialized hardware.",
+      solution: "Developed a browser-based platform that leverages TensorFlow.js to run machine learning models directly in the browser. Created interactive 3D visualizations of neural networks with Three.js and implemented a no-code interface for model experimentation.",
+      results: "The platform is now used by over 3,000 data scientists and has been featured in several AI conferences. It has significantly reduced the barrier to entry for machine learning experimentation."
     },
     {
       id: 6,
       title: "MindSpace App",
+      slug: "mindspace-app",
       shortDescription: "Mental wellness mobile application",
-      description: "Mental wellness application with guided meditation and mood tracking.",
+      description: "Mental wellness application with guided meditation, mood tracking, and personalized mental health insights.",
       image: "https://images.unsplash.com/photo-1579762593175-20226054cad0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      technologies: ["Flutter", "Firebase", "TensorFlow Lite"],
+      technologies: ["Flutter", "Firebase", "TensorFlow Lite", "Dart", "Cloud Functions"],
       demoUrl: "https://example.com/demo6",
-      codeUrl: "https://github.com/example/demo6"
+      codeUrl: "https://github.com/example/demo6",
+      category: getCategoryById('mobile'),
+      date: "2023-10-01",
+      client: "Wellness Partners LLC",
+      testimonial: {
+        quote: "The MindSpace app has transformed how we deliver mental wellness resources to our customers. The personalized recommendations and beautiful interface have set us apart from competitors.",
+        author: "Jennifer Lee",
+        role: "Wellness Program Director"
+      },
+      challenge: "Create a mental wellness app that goes beyond basic meditation features to provide a comprehensive and personalized mental health companion.",
+      solution: "Built a cross-platform mobile app using Flutter with a clean, calming UI. Implemented mood tracking with visual analytics, a library of guided meditations, and a journaling feature. Used TensorFlow Lite to analyze mood patterns and provide personalized recommendations.",
+      results: "The app has a 4.9/5 star rating on app stores with over 100,000 downloads. User retention is 45% higher than the industry average, and 92% of users report improved well-being after 30 days of use."
     }
   ];
 }
