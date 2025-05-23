@@ -185,7 +185,7 @@ const AboutPage = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
             <HomeTile 
-              title="Resume" 
+              title="My Experience" 
               description="Explore my professional journey through tech, design, and problem-solving."
               icon="ri-file-list-line"
               linkTo="/resume"
