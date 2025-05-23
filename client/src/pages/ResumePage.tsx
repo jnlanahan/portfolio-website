@@ -362,18 +362,34 @@ const ExperiencePage = () => {
       </div>
 
       {/* Career Timeline Navigator */}
-      <div className="mb-16 max-w-4xl mx-auto px-4">
+      <div className="mb-28 max-w-4xl mx-auto px-4 mt-10">
         <motion.div
-          className="horizontal-timeline relative"
+          className="horizontal-timeline relative bg-card/30 p-5 rounded-lg shadow-sm border border-border"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
+          <h3 className="text-lg font-semibold mb-8 text-center text-secondary">Career Timeline</h3>
+          
           {/* Timeline Bar */}
-          <div className="h-1 bg-border relative w-full mx-auto my-14">
+          <div className="h-1 bg-border relative w-full mx-auto mb-28 mt-14">
+            {/* Significant year markers along timeline */}
+            <div className="absolute left-0 -top-6 text-xs font-medium text-secondary">2025</div>
+            <div className="absolute left-20% -top-6 text-xs font-medium">2021</div>
+            <div className="absolute left-1/2 -top-6 transform -translate-x-1/2 text-xs font-medium">2016</div>
+            <div className="absolute left-80% -top-6 text-xs font-medium">2011</div>
+            <div className="absolute right-0 -top-6 text-xs font-medium text-secondary">2007</div>
+            
             {/* Combine work experience and education items for the timeline */}
-            {[...resume, ...(education || [])].map((item, index) => {
+            {[...resume, ...(education || [])]
+              // Filter to just keep a reasonable number of major positions
+              .filter(item => {
+                const id = 'institution' in item ? (item as any).id : (item as any).id;
+                // Keep main positions only
+                return ['ey-manager', 'osu-professor', 'army-pm', 'ms-missouri', 'bs-ncsu'].includes(id);
+              })
+              .map((item, index) => {
                 // Determine if this is an education item
                 const isEducation = 'institution' in item;
                 
@@ -398,12 +414,26 @@ const ExperiencePage = () => {
                 
                 // Create a shorter version of the title for display
                 let shortTitle = title;
-                if (title.length > 20) {
+                if (title.length > 15) {
                   const titleParts = title.split('–');
                   shortTitle = titleParts[0].trim();
-                  if (shortTitle.length > 20) {
-                    shortTitle = shortTitle.substring(0, 20) + '...';
+                  if (shortTitle.length > 15) {
+                    shortTitle = shortTitle.substring(0, 15) + '...';
                   }
+                }
+                
+                // Extract organization short name for display
+                let orgShortName = name;
+                if (name.includes('Ohio State')) {
+                  orgShortName = 'OSU';
+                } else if (name.includes('Missouri')) {
+                  orgShortName = 'MS&T';
+                } else if (name.includes('Carolina')) {
+                  orgShortName = 'NCSU';
+                } else if (name.includes('Army')) {
+                  orgShortName = 'US ARMY';
+                } else if (name.length > 10) {
+                  orgShortName = name.substring(0, 10);
                 }
                 
                 return (
@@ -422,49 +452,44 @@ const ExperiencePage = () => {
                       aria-label={`Jump to ${title} at ${name}`}
                     >
                       {/* Year label */}
-                      <span className="absolute whitespace-nowrap text-xs text-muted-foreground -top-6 left-1/2 transform -translate-x-1/2">
+                      <span className="absolute whitespace-nowrap text-xs font-medium -top-6 left-1/2 transform -translate-x-1/2">
                         {item.period.start}
                       </span>
                       
-                      {/* Timeline point - all same color now */}
+                      {/* Timeline point - all same color */}
                       <div className="w-5 h-5 rounded-full bg-secondary border-2 border-background absolute -top-2 left-1/2 transform -translate-x-1/2 transition-all duration-300 group-hover:ring-4 group-hover:ring-secondary/20"></div>
                       
                       {/* Logo (always shown, placeholder if no logo) */}
-                      <div className="absolute top-8 left-1/2 transform -translate-x-1/2 opacity-80 hover:opacity-100 transition-all duration-300">
-                        <div className="w-12 h-12 bg-card shadow-lg border border-border p-1 overflow-hidden flex items-center justify-center">
+                      <div className="absolute top-8 left-1/2 transform -translate-x-1/2 opacity-90 hover:opacity-100 transition-all duration-300">
+                        <div className="w-14 h-14 bg-card shadow-lg border border-border p-1 overflow-hidden flex items-center justify-center hover:shadow-md hover:scale-105 transition-all duration-300">
                           {logoUrl ? (
                             <img 
                               src={logoUrl} 
                               alt={`${name} logo`}
-                              className="w-10 h-10 object-contain"
+                              className="w-12 h-12 object-contain"
                             />
                           ) : (
-                            <div className="w-10 h-10 flex items-center justify-center text-xs text-center text-secondary">
-                              {name.substring(0, 2).toUpperCase()}
+                            <div className="w-12 h-12 flex items-center justify-center text-sm text-center text-secondary font-bold bg-secondary/5">
+                              {orgShortName}
                             </div>
                           )}
                         </div>
                         
                         {/* Role label below logo */}
-                        <div className="text-[10px] text-center text-muted-foreground mt-1 max-w-[80px] mx-auto overflow-hidden text-ellipsis whitespace-nowrap">
+                        <div className="text-[10px] text-center text-muted-foreground mt-1.5 max-w-[80px] mx-auto">
                           {shortTitle}
                         </div>
                       </div>
                       
-                      {/* Name tooltip */}
-                      <div className="absolute opacity-0 group-hover:opacity-100 -top-10 left-1/2 transform -translate-x-1/2 bg-card shadow-md rounded-md p-1 text-xs whitespace-nowrap transition-all duration-300 border border-border z-10">
+                      {/* Full name tooltip */}
+                      <div className="absolute opacity-0 group-hover:opacity-100 -top-12 left-1/2 transform -translate-x-1/2 bg-card shadow-md rounded-md p-2 text-xs whitespace-nowrap transition-all duration-300 border border-border z-10">
                         <div className="font-medium">{name}</div>
-                        <div className="text-muted-foreground text-[10px]">{title}</div>
+                        <div className="text-muted-foreground text-[10px] mt-0.5">{title}</div>
                       </div>
                     </a>
                   </motion.div>
                 );
               })}
-              
-            {/* Fixed year markers - adjusted placement */}
-            <div className="absolute left-0 -top-6 text-xs font-medium">2025</div>
-            <div className="absolute left-1/2 -top-6 transform -translate-x-1/2 text-xs font-medium">2016</div>
-            <div className="absolute right-0 -top-6 text-xs font-medium">2007</div>
           </div>
         </motion.div>
       </div>
