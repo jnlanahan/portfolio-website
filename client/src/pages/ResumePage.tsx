@@ -46,7 +46,7 @@ const ResumePage = () => {
           >
             <a
               href="/resume.pdf"
-              className="inline-flex items-center px-6 py-3 bg-transparent border border-border hover:border-secondary text-foreground font-medium rounded-md transition-colors"
+              className="inline-flex items-center px-6 py-3 bg-secondary/10 border-2 border-secondary text-secondary font-medium rounded-md transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground hover:scale-105 hover:shadow-lg hover:shadow-secondary/20"
               target="_blank"
               rel="noopener noreferrer"
             >
