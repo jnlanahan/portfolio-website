@@ -24,8 +24,8 @@ const HomeTile = ({
     >
       <Link href={linkTo}>
         <GlowingCard 
-          className="bg-background/30 backdrop-blur-sm rounded-xl border border-border hover:border-secondary p-6 transition-all duration-300 h-full cursor-pointer group"
-          glowColor="rgba(67, 186, 147, 0.4)"
+          className="bg-background/50 backdrop-blur-md rounded-xl border border-border hover:border-secondary hover:bg-background/70 p-6 transition-all duration-300 h-full cursor-pointer group"
+          glowColor="rgba(67, 186, 147, 0.6)"
         >
           <div className="flex items-center mb-4">
             <div className="bg-primary/20 p-3 rounded-full mr-3">
