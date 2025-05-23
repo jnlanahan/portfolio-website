@@ -134,14 +134,14 @@ const AboutPage = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               {/* Enhanced profile picture with fade effect */}
-              <div className="relative mx-auto w-80 h-80 md:w-96 md:h-96">
+              <div className="relative mx-auto w-[500px] h-[300px]">
                 {/* Animated gradient border effect with increased blur for fade effect */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-secondary via-primary to-secondary animate-spin-slow blur-lg"></div>
-                <div className="absolute inset-1 rounded-full bg-gradient-to-r from-secondary via-secondary to-secondary animate-spin-slow blur-lg"></div>
+                <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-secondary via-primary to-secondary animate-spin-slow blur-lg"></div>
+                <div className="absolute inset-1 rounded-lg bg-gradient-to-r from-secondary via-secondary to-secondary animate-spin-slow blur-lg"></div>
                 
                 {/* Enhanced Image with text fade effect */}
-                <div className="absolute inset-2 rounded-full overflow-hidden shadow-xl z-10">
-                  <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-transparent z-20 opacity-50"></div>
+                <div className="absolute inset-2 rounded-lg overflow-hidden shadow-xl z-10">
+                  <div className="absolute inset-0 bg-gradient-to-l from-background via-background/50 to-transparent z-20"></div>
                   <img
                     src="https://images.unsplash.com/photo-1555952517-2e8e729e0b44?q=80&w=1964&auto=format&fit=crop"
                     alt="Alex Chen - Portfolio headshot"
