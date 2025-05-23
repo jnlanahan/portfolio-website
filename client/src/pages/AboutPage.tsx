@@ -35,7 +35,7 @@ const HomeTile = ({
           </div>
           <p className="text-muted-foreground mb-6">{description}</p>
           <div className="inline-flex items-center text-secondary group-hover:underline">
-            Explore <i className="ri-arrow-right-line ml-2 group-hover:translate-x-1 transition-transform"></i>
+            <i className="ri-arrow-right-line group-hover:translate-x-1 transition-transform"></i>
           </div>
         </GlowingCard>
       </Link>
