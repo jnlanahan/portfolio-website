@@ -94,17 +94,7 @@ const PortfolioPage = () => {
         ))}
       </div>
 
-      <div className="mt-16 text-center">
-        <a
-          href="https://github.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center px-6 py-3 bg-primary hover:bg-primary/90 text-white font-medium rounded-md transition-colors"
-        >
-          View All Projects <i className="ri-arrow-right-line ml-2"></i>
-        </a>
       </div>
-    </div>
   );
 };
 
