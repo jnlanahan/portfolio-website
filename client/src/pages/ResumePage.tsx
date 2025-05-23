@@ -269,7 +269,8 @@ const ExperiencePage = () => {
   const resume = profile.workExperience;
   const education = profile.education;
 
-  const combinedItems = [...resume, ...education.map(edu => ({
+  // Convert education items to the right format
+  const educationItems = education?.map(edu => ({
     id: edu.id,
     title: edu.degree,
     company: { name: edu.institution, location: edu.location || "" },
@@ -278,11 +279,25 @@ const ExperiencePage = () => {
     achievements: edu.highlightedCourses?.map(course => `Completed ${course}`) || [],
     skills: edu.highlightedCourses?.map(course => ({ name: course, category: 'education' })) || [],
     isEducation: true
-  }))].sort((a, b) => {
+  })) || [];
+
+  // Find the EY manager position to put at the top
+  const eyManagerPosition = resume.find(job => job.id === "ey-manager");
+  const otherPositions = resume.filter(job => job.id !== "ey-manager");
+  
+  // Sort other positions by date (newest first)
+  const sortedOtherPositions = [...otherPositions].sort((a, b) => {
     const dateA = new Date(a.period.start);
     const dateB = new Date(b.period.start);
     return dateB.getTime() - dateA.getTime();
   });
+  
+  // Combine all items with EY position at the top, followed by other sorted positions, then education
+  const combinedItems = [
+    ...(eyManagerPosition ? [eyManagerPosition] : []),
+    ...sortedOtherPositions,
+    ...educationItems
+  ];
 
 
   return (
