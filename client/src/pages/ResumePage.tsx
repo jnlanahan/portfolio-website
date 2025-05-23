@@ -361,6 +361,81 @@ const ExperiencePage = () => {
         </motion.div>
       </div>
 
+      {/* Career Timeline Navigator */}
+      <div className="mb-16 max-w-4xl mx-auto">
+        <motion.div
+          className="horizontal-timeline relative"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          {/* Timeline Bar */}
+          <div className="h-1 bg-border relative w-full mx-auto my-8">
+            {/* Generate timeline points from resume data */}
+            {resume
+              .sort((a, b) => parseInt(a.period.start) - parseInt(b.period.start))
+              .map((job, index) => {
+                // Calculate position based on start year (adjust min/max years as needed)
+                const minYear = 2007; // Earliest year in timeline
+                const maxYear = 2025; // Latest year (current)
+                const rangeWidth = maxYear - minYear;
+                const position = ((parseInt(job.period.start) - minYear) / rangeWidth) * 100;
+                
+                return (
+                  <motion.div
+                    key={job.id}
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 * index, duration: 0.5 }}
+                    className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group"
+                    style={{ left: `${position}%`, top: '50%' }}
+                  >
+                    <a 
+                      href={`#${job.id}`} 
+                      className="block relative"
+                      aria-label={`Jump to ${job.title} at ${job.company.name}`}
+                    >
+                      {/* Year label */}
+                      <span className="absolute whitespace-nowrap text-xs text-muted-foreground bottom-6 left-1/2 transform -translate-x-1/2">
+                        {job.period.start}
+                      </span>
+                      
+                      {/* Timeline point */}
+                      <div className={`w-3 h-3 rounded-full bg-secondary transition-all duration-300 group-hover:ring-4 group-hover:ring-secondary/20`}></div>
+                      
+                      {/* Company logo (if available) */}
+                      {job.company.logoUrl && (
+                        <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 opacity-80 hover:opacity-100 transition-all duration-300">
+                          <div className="w-10 h-10 rounded-full bg-card shadow-lg border border-border p-1 overflow-hidden flex items-center justify-center">
+                            <img 
+                              src={job.company.logoUrl} 
+                              alt={`${job.company.name} logo`}
+                              className="w-8 h-8 object-contain"
+                            />
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Company name tooltip */}
+                      <div className="absolute opacity-0 group-hover:opacity-100 bottom-8 left-1/2 transform -translate-x-1/2 bg-card shadow-md rounded-md p-1 text-xs whitespace-nowrap transition-all duration-300 border border-border">
+                        <div className="font-medium">{job.company.name}</div>
+                        <div className="text-muted-foreground text-[10px]">{job.title}</div>
+                      </div>
+                    </a>
+                  </motion.div>
+                );
+              })}
+              
+            {/* Fixed year markers */}
+            <div className="absolute left-0 -top-3 text-xs text-muted-foreground">2007</div>
+            <div className="absolute left-1/2 -top-3 transform -translate-x-1/2 text-xs text-muted-foreground">2016</div>
+            <div className="absolute right-0 -top-3 text-xs text-muted-foreground">2025</div>
+          </div>
+        </motion.div>
+      </div>
+
       {/* Work Experience Timeline */}
       <div ref={timelineRef} className="timeline relative pl-8 md:pl-12 max-w-4xl mx-auto" style={{ position: 'relative' }}>
         {/* Animated timeline line that grows with scroll */}
@@ -371,6 +446,7 @@ const ExperiencePage = () => {
 
         {combinedItems.map((item, index) => (
           <motion.div
+            id={item.id}
             key={item.id}
             className={`timeline-item relative mb-16 ${index === combinedItems.length - 1 ? "" : "mb-16"} ${item.isEducation ? 'education-entry' : ''}`}
             initial={{ opacity: 0, y: 50 }}
