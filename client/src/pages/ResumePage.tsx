@@ -374,13 +374,14 @@ const ExperiencePage = () => {
           <div className="h-1 bg-border relative w-full mx-auto my-8">
             {/* Generate timeline points from resume data */}
             {resume
-              .sort((a, b) => parseInt(a.period.start) - parseInt(b.period.start))
+              .sort((a, b) => parseInt(b.period.start) - parseInt(a.period.start)) // Reverse sort: newest first
               .map((job, index) => {
                 // Calculate position based on start year (adjust min/max years as needed)
                 const minYear = 2007; // Earliest year in timeline
                 const maxYear = 2025; // Latest year (current)
                 const rangeWidth = maxYear - minYear;
-                const position = ((parseInt(job.period.start) - minYear) / rangeWidth) * 100;
+                // Reverse the position calculation (100 - position) to flip the timeline direction
+                const position = 100 - ((parseInt(job.period.start) - minYear) / rangeWidth) * 100;
                 
                 return (
                   <motion.div
@@ -405,18 +406,22 @@ const ExperiencePage = () => {
                       {/* Timeline point */}
                       <div className={`w-3 h-3 rounded-full bg-secondary transition-all duration-300 group-hover:ring-4 group-hover:ring-secondary/20`}></div>
                       
-                      {/* Company logo (if available) */}
-                      {job.company.logoUrl && (
-                        <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 opacity-80 hover:opacity-100 transition-all duration-300">
-                          <div className="w-10 h-10 rounded-full bg-card shadow-lg border border-border p-1 overflow-hidden flex items-center justify-center">
+                      {/* Company logo (always shown, placeholder if no logo) */}
+                      <div className="absolute top-6 left-1/2 transform -translate-x-1/2 opacity-80 hover:opacity-100 transition-all duration-300">
+                        <div className="w-10 h-10 bg-card shadow-lg border border-border p-1 overflow-hidden flex items-center justify-center">
+                          {job.company.logoUrl ? (
                             <img 
                               src={job.company.logoUrl} 
                               alt={`${job.company.name} logo`}
                               className="w-8 h-8 object-contain"
                             />
-                          </div>
+                          ) : (
+                            <div className="w-8 h-8 flex items-center justify-center text-xs text-center text-secondary">
+                              {job.company.name.substring(0, 2).toUpperCase()}
+                            </div>
+                          )}
                         </div>
-                      )}
+                      </div>
                       
                       {/* Company name tooltip */}
                       <div className="absolute opacity-0 group-hover:opacity-100 bottom-8 left-1/2 transform -translate-x-1/2 bg-card shadow-md rounded-md p-1 text-xs whitespace-nowrap transition-all duration-300 border border-border">
@@ -428,10 +433,10 @@ const ExperiencePage = () => {
                 );
               })}
               
-            {/* Fixed year markers */}
-            <div className="absolute left-0 -top-3 text-xs text-muted-foreground">2007</div>
+            {/* Fixed year markers - reversed order */}
+            <div className="absolute left-0 -top-3 text-xs text-muted-foreground">2025</div>
             <div className="absolute left-1/2 -top-3 transform -translate-x-1/2 text-xs text-muted-foreground">2016</div>
-            <div className="absolute right-0 -top-3 text-xs text-muted-foreground">2025</div>
+            <div className="absolute right-0 -top-3 text-xs text-muted-foreground">2007</div>
           </div>
         </motion.div>
       </div>
