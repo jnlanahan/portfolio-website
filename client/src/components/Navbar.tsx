@@ -18,8 +18,7 @@ const Navbar = () => {
 
   // Navigation items to avoid repetition
   const navItems = [
-    { path: "/", label: "Home", isActiveCheck: (path: string) => isActive(path) && location === path },
-    { path: "/about", label: "About", isActiveCheck: (path: string) => isActive(path) },
+    { path: "/", label: "About", isActiveCheck: (path: string) => isActive(path) && location === path },
     { path: "/resume", label: "Resume", isActiveCheck: (path: string) => isActive(path) },
     { path: "/portfolio", label: "Portfolio", isActiveCheck: (path: string) => isActive(path) },
     { path: "/blog", label: "Blog", isActiveCheck: (path: string) => isActive(path) && location !== '/blog/[id]' },
