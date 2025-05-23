@@ -67,7 +67,7 @@ const AboutPage = () => {
                 With 8+ years of experience crafting digital experiences since 2015, I specialize in building impactful web applications. My journey began with a Computer Science degree from UC Berkeley, followed by roles at startups and tech companies. I create intuitive, accessible interfaces backed by robust architecture, combining technical excellence with empathetic design thinking.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="bg-secondary/20 p-6 rounded-lg">
+                <div className="border border-secondary/20 p-6 rounded-lg">
                   <h4 className="text-xl font-space font-medium mb-4 text-secondary">Front-End</h4>
                   <ul className="space-y-2 text-muted-foreground">
                     <li className="flex items-center"><i className="ri-check-line text-secondary mr-2"></i> React & Next.js</li>
@@ -76,7 +76,7 @@ const AboutPage = () => {
                     <li className="flex items-center"><i className="ri-check-line text-secondary mr-2"></i> Framer Motion</li>
                   </ul>
                 </div>
-                <div className="bg-secondary/20 p-6 rounded-lg">
+                <div className="border border-secondary/20 p-6 rounded-lg">
                   <h4 className="text-xl font-space font-medium mb-4 text-secondary">Back-End</h4>
                   <ul className="space-y-2 text-muted-foreground">
                     <li className="flex items-center"><i className="ri-check-line text-secondary mr-2"></i> Node.js & Express</li>
