@@ -2,7 +2,7 @@
 // Types for experience data structure
 export interface Skill {
   name: string;
-  category?: 'frontend' | 'backend' | 'design' | 'leadership' | 'other';
+  category?: 'leadership' | 'business' | 'product' | 'other';
   icon?: string;
 }
 
@@ -51,9 +51,9 @@ export interface ExperienceProfile {
   education?: Education[];
   certifications?: Certification[];
   skills?: {
-    technical: string[];
     leadership: string[];
-    other: string[];
+    business: string[];
+    product: string[];
   };
 }
 
@@ -96,13 +96,13 @@ const experienceData: ExperienceProfile = {
         "Supported critical internal and external communications during a regional bank acquisition"
       ],
       skills: [
-        { name: "Strategy", category: "leadership" },
-        { name: "Critical Thinking", category: "leadership" },
-        { name: "Change Management", category: "leadership" },
-        { name: "Financial Services", category: "other" },
-        { name: "Product Transformation", category: "other" },
-        { name: "OKRs", category: "other" },
-        { name: "Client Engagement", category: "leadership" }
+        { name: "Strategy", category: "product" },
+        { name: "Critical Thinking", category: "business" },
+        { name: "Change Management", category: "business" },
+        { name: "Financial Services", category: "business" },
+        { name: "Product Transformation", category: "product" },
+        { name: "OKRs", category: "product" },
+        { name: "Client Engagement", category: "business" }
       ]
     },
     {
@@ -123,10 +123,10 @@ const experienceData: ExperienceProfile = {
         "Developed a short and long term supplement formula for memory, focus, and anxiety"
       ],
       skills: [
-        { name: "Product Design", category: "design" },
-        { name: "Startups", category: "other" },
-        { name: "Consumer Innovation", category: "other" },
-        { name: "Licensing", category: "other" }
+        { name: "Product Design", category: "product" },
+        { name: "Startups", category: "product" },
+        { name: "Consumer Innovation", category: "product" },
+        { name: "Licensing", category: "product" }
       ]
     },
     {
@@ -146,8 +146,8 @@ const experienceData: ExperienceProfile = {
         "Annually leads multiple strategic planning efforts for USACE Pacific Ocean Division Commander"
       ],
       skills: [
-        { name: "Strategic Planning", category: "leadership" },
-        { name: "Military Engineering", category: "other" },
+        { name: "Strategic Planning", category: "business" },
+        { name: "Military Engineering", category: "leadership" },
         { name: "Joint Operations", category: "leadership" }
       ]
     },
@@ -169,9 +169,9 @@ const experienceData: ExperienceProfile = {
         "Conducted 20+ user interviews to refine early-stage concepts"
       ],
       skills: [
-        { name: "Market Research", category: "other" },
-        { name: "MVP Validation", category: "other" },
-        { name: "Startups", category: "other" }
+        { name: "Market Research", category: "product" },
+        { name: "MVP Validation", category: "product" },
+        { name: "Startups", category: "product" }
       ]
     },
     {
@@ -194,7 +194,7 @@ const experienceData: ExperienceProfile = {
       ],
       skills: [
         { name: "Leadership Development", category: "leadership" },
-        { name: "Education", category: "other" },
+        { name: "Education", category: "leadership" },
         { name: "Coaching", category: "leadership" }
       ]
     },
@@ -217,8 +217,8 @@ const experienceData: ExperienceProfile = {
       ],
       skills: [
         { name: "Operational Leadership", category: "leadership" },
-        { name: "Strategic Planning", category: "leadership" },
-        { name: "SOP Development", category: "other" }
+        { name: "Strategic Planning", category: "business" },
+        { name: "SOP Development", category: "leadership" }
       ]
     },
     {
@@ -240,9 +240,9 @@ const experienceData: ExperienceProfile = {
         "Defined project scope and requirements for $900M+ in new construction"
       ],
       skills: [
-        { name: "Program Management", category: "leadership" },
-        { name: "Military Infrastructure", category: "other" },
-        { name: "International Negotiation", category: "leadership" }
+        { name: "Program Management", category: "business" },
+        { name: "Military Infrastructure", category: "business" },
+        { name: "International Negotiation", category: "business" }
       ]
     }
   ],
@@ -332,26 +332,37 @@ const experienceData: ExperienceProfile = {
     }
   ],
   skills: {
-    technical: [
-      "Project Management",
-      "Data Analysis",
-      "Process Optimization",
-      "Strategic Planning",
-      "Risk Management"
-    ],
     leadership: [
-      "Team Leadership",
-      "Change Management",
-      "Stakeholder Management",
-      "Cross-functional Leadership",
-      "Mentoring"
+      "Leadership Development",
+      "Education",
+      "Coaching",
+      "Operational Leadership",
+      "SOP Development",
+      "Military Engineering",
+      "Joint Operations",
+      "Tactical Planning"
     ],
-    other: [
-      "Product Strategy",
-      "Business Development",
-      "Client Relations",
-      "Military Operations",
-      "Educational Development"
+    business: [
+      "Critical Thinking",
+      "Change Management",
+      "Financial Services",
+      "Client Engagement",
+      "Military Infrastructure",
+      "International Negotiation",
+      "Logistics",
+      "Operations",
+      "Strategic Planning"
+    ],
+    product: [
+      "Strategy",
+      "Product Transformation",
+      "OKRs",
+      "Product Design",
+      "Startups",
+      "Consumer Innovation",
+      "Licensing",
+      "Market Research",
+      "MVP Validation"
     ]
   }
 };

@@ -442,7 +442,7 @@ const ExperiencePage = () => {
           </motion.h2>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {/* Technical Skills */}
+            {/* Leadership Skills */}
             <motion.div
               className="p-6 rounded-lg bg-card shadow-md"
               initial={{ opacity: 0, y: 20 }}
@@ -450,12 +450,12 @@ const ExperiencePage = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.1, duration: 0.5 }}
             >
-              <h3 className="text-xl font-bold mb-4 text-center text-secondary">Technical</h3>
+              <h3 className="text-xl font-bold mb-4 text-center text-blue-500">Leadership</h3>
               <div className="flex flex-wrap gap-2">
-                {profile.skills.technical.map((skill, idx) => (
+                {profile.skills.leadership.map((skill, idx) => (
                   <span 
                     key={idx} 
-                    className="text-sm bg-secondary/10 text-secondary px-3 py-1 rounded-full"
+                    className="text-sm bg-blue-500/10 text-blue-500 px-3 py-1 rounded-full"
                   >
                     {skill}
                   </span>
@@ -463,7 +463,7 @@ const ExperiencePage = () => {
               </div>
             </motion.div>
 
-            {/* Leadership Skills */}
+            {/* Business Skills */}
             <motion.div
               className="p-6 rounded-lg bg-card shadow-md"
               initial={{ opacity: 0, y: 20 }}
@@ -471,9 +471,9 @@ const ExperiencePage = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-              <h3 className="text-xl font-bold mb-4 text-center text-amber-500">Leadership</h3>
+              <h3 className="text-xl font-bold mb-4 text-center text-amber-500">Business</h3>
               <div className="flex flex-wrap gap-2">
-                {profile.skills.leadership.map((skill, idx) => (
+                {profile.skills.business.map((skill, idx) => (
                   <span 
                     key={idx} 
                     className="text-sm bg-amber-500/10 text-amber-500 px-3 py-1 rounded-full"
@@ -484,7 +484,7 @@ const ExperiencePage = () => {
               </div>
             </motion.div>
 
-            {/* Other Skills */}
+            {/* Product Management Skills */}
             <motion.div
               className="p-6 rounded-lg bg-card shadow-md"
               initial={{ opacity: 0, y: 20 }}
@@ -492,12 +492,12 @@ const ExperiencePage = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.5 }}
             >
-              <h3 className="text-xl font-bold mb-4 text-center text-purple-500">Additional</h3>
+              <h3 className="text-xl font-bold mb-4 text-center text-green-500">Product Management</h3>
               <div className="flex flex-wrap gap-2">
-                {profile.skills.other.map((skill, idx) => (
+                {profile.skills.product.map((skill, idx) => (
                   <span 
                     key={idx} 
-                    className="text-sm bg-purple-500/10 text-purple-500 px-3 py-1 rounded-full"
+                    className="text-sm bg-green-500/10 text-green-500 px-3 py-1 rounded-full"
                   >
                     {skill}
                   </span>
