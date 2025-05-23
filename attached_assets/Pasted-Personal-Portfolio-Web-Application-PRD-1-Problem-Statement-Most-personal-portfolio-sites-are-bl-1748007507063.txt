@@ -1,0 +1,142 @@
+Personal Portfolio Web Application - PRD
+1. Problem Statement
+Most personal portfolio sites are bland, static, and impersonal—making it difficult for professionals to stand out or communicate their unique story and skills. Current web presences are often fragmented (e.g., separate resumes, blogs, and code repos), which dilutes personal brand impact and fails to drive meaningful engagement. The opportunity is to create a single, immersive, visually distinctive platform that not only showcases work and experience, but also captures the creator’s personality and professional focus.
+
+Evidence: Review of competitor and peer portfolios shows a surplus of templated designs with limited interactivity or narrative. Feedback from recruiters and collaborators indicates that a unified, engaging presentation can influence both first impressions and follow-up actions.
+
+2. Goals
+Primary Goals
+
+Secure 3+ inbound job or collaboration inquiries via the website within 3 months of launch.
+Attain at least 200 unique monthly visitors post-launch.
+Make the website an authentic, dynamic extension of the user’s personality and brand.
+Streamline navigation so any visitor can find contact details within 10 seconds.
+Secondary Goals
+
+Drive 100+ blog post reads per month.
+Receive at least 10 social shares/month of portfolio content.
+3. Metrics
+Type	Metric	Target / Guardrail
+North Star	Inbound contacts via website	3+ per quarter
+Secondary	Unique visitors/month	200+
+Secondary	Blog post reads/month	100+
+Secondary	Portfolio outbound clicks/month	30+
+Guardrail	Page load time	<2 seconds
+Guardrail	Uptime	99%+
+Guardrail	Navigation time to contact	<10 seconds
+Alignment: Each metric supports overall goals of increased engagement, stronger brand presence, and measurable career opportunity creation.
+
+4. High-Level Approach
+The site will be a single-user, dark-themed modern web app, built with React, styled using Tailwind CSS, and brought to life with subtle animations via Framer Motion. Emphasis will be on an interactive user experience, clean layouts, and visually rich storytelling—rather than technical overload. Content (resume, portfolio, blog, top lists) will be structured and easily updatable, prioritizing authenticity and ease of navigation. The tone and visuals will reflect the creator’s personal brand, setting it apart from cookie-cutter alternatives.
+
+5. User Narrative & Key Flows
+5.1 First Time Visitor Flow
+Lands on site, greeted by a bold, visually distinct homepage with "About Me" and profile image.
+Skims the short intro and catches key highlights (tagline, skills, contact icons upfront).
+Uses the top navigation to preview “Portfolio.” Sees a visually engaging grid, explores a project by clicking, which opens in a new tab.
+Returns, scrolls quickly over the interactive Resume timeline—impressed by smooth animations and clarity.
+Decides to reach out; finds contact options instantly in the nav or homepage.
+5.2 Returning Recruiter Flow
+Returns to the site via a bookmarked Resume page.
+Uses the scroll-driven timeline to quickly scan recent roles and key achievements.
+Checks for new portfolio pieces or recent blog posts.
+Finds contact links and exports/downloads resume if available (or emails directly).
+5.3 Casual Blog Reader Flow
+Clicks into the /blog route from a social share or Google search.
+Reads a featured post in a distraction-free, legible environment.
+Is enticed by a “Top 5 Lists” section and browses a few; recognizes shared interests (“aha!” moment).
+May return to “Portfolio” or contact for more information.
+6. Implementation Roadmap & Milestones
+Phase 1: App Initialization & Routing
+
+Objectives: Scaffold the entire app, implement routing, and apply global dark theme.
+Deliverable: Navigable skeleton deployed (basic content, no real data), nav bar styled.
+Launch Criteria: Routing functions for all main pages, globally styled nav and dark mode, deployed on Vercel or Replit.
+Risks/Blockers: Tailwind config errors, Vercel build issues.
+Phase 2: Interactive Resume
+
+Objectives: Create interactive, scroll-driven timeline for professional history.
+Deliverable: Animated timeline live with actual resume data.
+Launch Criteria: Timeline must be navigable, performant on mobile/desktop, and accessible.
+Risks: Animation library learning curve, cross-browser bugs.
+Phase 3: Portfolio Section
+
+Objectives: Build project cards/grid with outbound links and tooltips.
+Deliverable: Fully responsive, visually appealing project showcase.
+Launch Criteria: All current projects presented, images/links work, layout adapts to screen sizes.
+Risks: Handling large image files, mobile layout refinements.
+Phase 4: Blog Integration
+
+Objectives: Display content from markdown or CMS, clean reading UX.
+Deliverable: List/excerpt view and full blog post pages.
+Launch Criteria: At least 3 posts live, reading experience optimized for legibility.
+Risks: CMS integration bugs, content parsing issues.
+Phase 5: Top 5 Lists
+
+Objectives: Visual cards grouped by category, sourced from backend or flat file.
+Deliverable: Distinct Top 5 Lists page with updateable content.
+Launch Criteria: At least two categories live, each with 5+ entries, mobile layout correct.
+Risks: Data structure mismatches, layout “card” styling issues.
+Milestones
+
+Site skeleton up and deployed - Week 1
+Resume timeline interactive - Week 2
+Portfolio/gallery complete - Week 3
+Blog section functioning + sample posts - Week 4
+Top 5 Lists shipped, full site “v1” launched - Week 5
+7. Design & UX Guidelines
+Visual Style
+
+Modern, minimal, fully dark theme (no toggle)
+Font families: Inter, Space Grotesk, Sora (prioritize clarity and style)
+Subtle, elegant use of animation/micro-interactions (Framer Motion)
+Ample whitespace, readable line lengths, clean grids
+Accessibility & Usability
+
+Contrast ratios meet WCAG AA for dark backgrounds
+All interactive elements keyboard navigable
+Alt text for all images, focus indicators present
+No blinking/flashing elements
+Do
+
+Use clear section headings and spacing
+Prioritize legibility and intuitive navigation
+Keep UI uncluttered and focused on content
+Don't
+
+Use excessive shadows, skeuomorphic effects, or fuzzy fonts
+Overload with technical terms or unnecessary widgets
+Allow content to become stale/unupdated
+8. Impact Sizing Model
+Status Quo: Scattered content with minimal inbound engagement or personal brand recognition.
+
+Post-Launch Model:
+
+If the site achieves 200 unique monthly visitors (modest for a personal portfolio) and 1.5% convert to outbound contact, expect at least 3 contacts/month.
+Blog engagement: With targeted social shares, attainable to reach ~100 reads/month, increasing professional visibility.
+Portfolio links: If each project receives 10+ clicks/month, that is valuable evidence of interest in showcased work.
+Summary: Cohesive, compelling presence could 3–5X opportunities vs. fragmented status quo—across jobs, partnerships, readership, and social credibility.
+
+9. Non-Goals
+No user authentication or login flows
+No comment system for blog or portfolio
+No light/dark theme toggle—dark mode only for visual identity
+No downloadable “portfolio package” (focus is on interactivity)
+No feature bloat (e.g., embedded social feeds, analytics dashboards)
+10. Key Features, Alignment, and Future Considerations
+Must-Have for v1 (Aligned Features)
+Home/About landing page with bio, photo, core links
+Interactive resume timeline with image/content sync
+Portfolio/project grid with links, descriptions, and visuals
+Blog: readable posts, list/excerpt, full-view, and author voice
+Top 5 Lists: curated, visually rich lists by category
+Persistent, styled navigation bar matching the brand
+Fully responsive layout and accessibility basics
+Possible for v2+ (Future Considerations)
+Advanced analytics/dashboard for traffic/tracking goals
+Multi-language support for broader reach
+Portfolio filtering by tag/technology
+Podcast or video section integration
+Blog commenting (with spam prevention) if needed
+Resume/CV PDF download
+Search functionality across posts/projects
