@@ -1,19 +1,20 @@
+
 // Types for experience data structure
 export interface Skill {
   name: string;
   category?: 'frontend' | 'backend' | 'design' | 'leadership' | 'other';
-  icon?: string; // Optional icon name for future enhancement
+  icon?: string;
 }
 
 export interface Company {
   name: string;
   location?: string;
-  industry?: string; 
-  logoUrl?: string; // For future enhancement to display logos
+  industry?: string;
+  logoUrl?: string;
 }
 
 export interface ExperienceEntry {
-  id: string;  // Unique identifier
+  id: string;
   title: string;
   company: Company;
   period: {
@@ -21,9 +22,8 @@ export interface ExperienceEntry {
     end: string | 'Present';
   };
   description: string;
-  achievements?: string[]; // Bullet points of key achievements
+  achievements?: string[];
   skills: Skill[];
-  projectImageUrl?: string; // For future enhancement to display work samples
 }
 
 export interface Education {
@@ -35,6 +35,7 @@ export interface Education {
     end: string;
   };
   description?: string;
+  courses?: string[];
 }
 
 export interface Certification {
@@ -45,7 +46,6 @@ export interface Certification {
   credentialUrl?: string;
 }
 
-// Complete experience profile structure
 export interface ExperienceProfile {
   workExperience: ExperienceEntry[];
   education?: Education[];
@@ -57,163 +57,278 @@ export interface ExperienceProfile {
   };
 }
 
-// Helper function to format period for display
 export const formatPeriod = (period: ExperienceEntry['period']): string => {
   return `${period.start} - ${period.end}`;
 };
 
-// Get work experience entries only
 export function getWorkExperience(): ExperienceEntry[] {
   return experienceData.workExperience;
 }
 
-// Get complete experience profile
 export function getExperienceProfile(): ExperienceProfile {
   return experienceData;
 }
 
-// Legacy function for compatibility
 export function getResume(): ExperienceEntry[] {
   return experienceData.workExperience;
 }
 
-// Single source of truth for experience data
 const experienceData: ExperienceProfile = {
   workExperience: [
     {
-      id: "job-1",
-      title: "Senior Frontend Developer",
+      id: "ey-manager",
+      title: "Manager – Product Management",
       company: {
-        name: "TechVision Inc.",
-        location: "San Francisco, CA"
+        name: "EY",
+        location: "Columbus, OH"
       },
       period: {
-        start: "2022",
+        start: "2021",
         end: "Present"
       },
-      description: "Leading the frontend development team for an AI-powered analytics platform with 50,000+ users. Architected a component system that increased development velocity by 35%.",
+      description: "I lead high-impact product transformations for major financial institutions, often under urgent conditions that require creative problem-solving, clear communication, and quick execution. My work balances delivering value to demanding clients with aligning diverse stakeholders—helping teams stay focused and strategic under pressure.",
       achievements: [
-        "Led a team of 5 developers to deliver a major platform redesign on time and under budget",
-        "Reduced bundle size by 45% through code splitting and lazy loading strategies",
-        "Implemented modern state management techniques that improved performance by 60%"
+        "Led modernization efforts for global product orgs, impacting 1,000s of PMs, engineers, and functional partners",
+        "Designed and deployed a global OKR framework at a multinational bank to drive decentralized, strategic decision-making",
+        "Shaped the product strategy for a major consumer bank's partner ecosystem shift—enabling self-service tooling at scale",
+        "Co-authored EY's global Product Playbook, components of it used by 100+ product teams",
+        "Supported critical internal and external communications during a regional bank acquisition"
       ],
       skills: [
-        { name: "React", category: "frontend" },
-        { name: "TypeScript", category: "frontend" },
-        { name: "GraphQL", category: "frontend" },
-        { name: "Tailwind", category: "frontend" }
+        { name: "Strategy", category: "leadership" },
+        { name: "Critical Thinking", category: "leadership" },
+        { name: "Change Management", category: "leadership" },
+        { name: "Financial Services", category: "other" },
+        { name: "Product Transformation", category: "other" },
+        { name: "OKRs", category: "other" },
+        { name: "Client Engagement", category: "leadership" }
       ]
     },
     {
-      id: "job-2",
-      title: "Full-Stack Developer",
+      id: "lanahan-innovations",
+      title: "Founder",
       company: {
-        name: "InnovateLab",
-        location: "Austin, TX"
+        name: "Lanahan Innovations",
+        location: "Columbus, OH"
       },
       period: {
-        start: "2019",
-        end: "2022"
+        start: "2023",
+        end: "Present"
       },
-      description: "Developed and scaled a SaaS platform serving 200+ business clients. Built RESTful APIs, implemented CI/CD pipelines, and led migration to a microservices architecture.",
+      description: "Started a wellness-focused product company to explore design, licensing, and direct-to-consumer innovation.",
       achievements: [
-        "Architected and implemented a microservices-based backend that scales to 10,000+ concurrent users",
-        "Reduced infrastructure costs by 30% through AWS optimization",
-        "Delivered 99.9% service uptime through robust error handling and monitoring"
+        "Virtually prototyped first product concept; preparing for licensing pitch",
+        "Researched 400+ pieces of fitness equipment to identify gaps in the industry",
+        "Developed a short and long term supplement formula for memory, focus, and anxiety"
       ],
       skills: [
-        { name: "Node.js", category: "backend" },
-        { name: "React", category: "frontend" },
-        { name: "PostgreSQL", category: "backend" },
-        { name: "Docker", category: "backend" }
+        { name: "Product Design", category: "design" },
+        { name: "Startups", category: "other" },
+        { name: "Consumer Innovation", category: "other" },
+        { name: "Licensing", category: "other" }
       ]
     },
     {
-      id: "job-3",
-      title: "Frontend Developer",
+      id: "usace-officer",
+      title: "Plans Officer – U.S. Army Corps of Engineers (USACE)",
       company: {
-        name: "Digital Wave Agency",
-        location: "Seattle, WA"
+        name: "U.S. Army Reserve",
+        location: "Seoul, South Korea"
+      },
+      period: {
+        start: "2021",
+        end: "Present"
+      },
+      description: "Supports multinational engineering and contingency planning across U.S. and Korean forces.",
+      achievements: [
+        "Developed engineering contingency plans supporting joint U.S. and South Korean military operations",
+        "Annually leads multiple strategic planning efforts for USACE Pacific Ocean Division Commander"
+      ],
+      skills: [
+        { name: "Strategic Planning", category: "leadership" },
+        { name: "Military Engineering", category: "other" },
+        { name: "Joint Operations", category: "leadership" }
+      ]
+    },
+    {
+      id: "h2l-intern",
+      title: "Product Management Intern",
+      company: {
+        name: "Horizon Two Labs",
+        location: "Columbus, OH"
+      },
+      period: {
+        start: "2021",
+        end: "2021"
+      },
+      description: "Worked in a venture studio supporting MVP validation and early product research.",
+      achievements: [
+        "Led beta testing for QA tool; results led to product pivot and saved efforts",
+        "Delivered competitive analysis for blockchain and IT services markets",
+        "Conducted 20+ user interviews to refine early-stage concepts"
+      ],
+      skills: [
+        { name: "Market Research", category: "other" },
+        { name: "MVP Validation", category: "other" },
+        { name: "Startups", category: "other" }
+      ]
+    },
+    {
+      id: "osu-professor",
+      title: "Assistant Professor of Military Science",
+      company: {
+        name: "U.S. Army – Ohio State University",
+        location: "Columbus, OH"
+      },
+      period: {
+        start: "2018",
+        end: "2021"
+      },
+      description: "Taught, coached, and developed future Army leaders through experiential curriculum.",
+      achievements: [
+        "Trained and coached 70+ cadets, leading to the program's highest-ever number of Distinguished Graduates",
+        "Redesigned hybrid training model that improved content delivery efficiency",
+        "Boosted cadet retention by 20% through leadership engagement and mentorship"
+      ],
+      skills: [
+        { name: "Leadership Development", category: "leadership" },
+        { name: "Education", category: "other" },
+        { name: "Coaching", category: "leadership" }
+      ]
+    },
+    {
+      id: "army-commander",
+      title: "Company Commander",
+      company: {
+        name: "U.S. Army",
+        location: "Pyeongtaek, South Korea"
       },
       period: {
         start: "2017",
-        end: "2019"
+        end: "2018"
       },
-      description: "Created responsive interfaces for enterprise clients in finance and healthcare. Collaborated with designers to implement pixel-perfect UIs and improve accessibility.",
+      description: "Commanded 138 soldiers and managed $24M in assets while leading strategic relocation and integration missions.",
       achievements: [
-        "Improved accessibility scores to 98/100 across all client projects",
-        "Reduced page load times by 40% through performance optimization",
-        "Created a reusable component library that reduced development time by 25%"
+        "Led organizational transformation to build and train a new combat engineer unit",
+        "Rated most disciplined of 6 companies and earned top readiness scores",
+        "Cut training cycle time by 50% by implementing bottom-up SOP development"
       ],
       skills: [
-        { name: "JavaScript", category: "frontend" },
-        { name: "Vue.js", category: "frontend" },
-        { name: "SCSS", category: "frontend" },
-        { name: "Webpack", category: "frontend" }
+        { name: "Operational Leadership", category: "leadership" },
+        { name: "Strategic Planning", category: "leadership" },
+        { name: "SOP Development", category: "other" }
       ]
     },
     {
-      id: "job-4",
-      title: "Junior Web Developer",
+      id: "army-pm",
+      title: "Program Manager – Host Nation Construction",
       company: {
-        name: "CodeCraft Studios",
-        location: "Portland, OR"
+        name: "U.S. Army",
+        location: "Seoul, South Korea"
       },
       period: {
-        start: "2015",
+        start: "2016",
         end: "2017"
       },
-      description: "Built and maintained websites for small businesses and startups. Developed custom WordPress themes and plugins to enhance site functionality.",
+      description: "Oversaw $901M in military construction, leading one of DoD's largest overseas realignment efforts.",
       achievements: [
-        "Developed 20+ custom WordPress themes for client websites",
-        "Created an e-commerce solution that increased client sales by 35%",
-        "Implemented SEO best practices that improved client search rankings by 40%"
+        "Negotiated 50% of $350M joint construction budget with service branches",
+        "Created strategically aligned prioritization system for 150+ projects",
+        "Defined project scope and requirements for $900M+ in new construction"
       ],
       skills: [
-        { name: "HTML/CSS", category: "frontend" },
-        { name: "JavaScript", category: "frontend" },
-        { name: "PHP", category: "backend" },
-        { name: "WordPress", category: "backend" }
+        { name: "Program Management", category: "leadership" },
+        { name: "Military Infrastructure", category: "other" },
+        { name: "International Negotiation", category: "leadership" }
       ]
     }
   ],
   education: [
     {
-      degree: "B.S. Computer Science",
-      institution: "UC Berkeley",
-      location: "Berkeley, CA",
+      degree: "MBA",
+      institution: "The Ohio State University – Fisher College of Business",
+      location: "Columbus, OH",
       period: {
-        start: "2011",
-        end: "2015"
+        start: "2019",
+        end: "2021"
       },
-      description: "Focused on web technologies and software engineering. Senior project: Developing an AI-driven content recommendation system."
-    }
-  ],
-  certifications: [
-    {
-      name: "AWS Certified Solutions Architect",
-      issuer: "Amazon Web Services",
-      date: "2020",
-      credentialUrl: "https://aws.amazon.com/certification/"
+      courses: [
+        "Corporate Financing",
+        "Investment Theory and Practice",
+        "FINTECH",
+        "Organizational Business Coaching",
+        "Marketing",
+        "Organizational Behavior",
+        "Data Analysis",
+        "Entrepreneurship & The Business Plan",
+        "Global Environment of Business",
+        "Strategy",
+        "Entrepreneurial Finance",
+        "Data Visualization",
+        "Discovery Workshop",
+        "Innovation Practice"
+      ]
     },
     {
-      name: "Professional Scrum Master I",
-      issuer: "Scrum.org",
-      date: "2019",
-      credentialUrl: "https://www.scrum.org/certificates"
+      degree: "MS, Engineering Management",
+      institution: "Missouri University of Science and Technology",
+      period: {
+        start: "2014",
+        end: "2016"
+      },
+      courses: [
+        "Global Project Management",
+        "Case Studies in Project Management",
+        "Advanced Financial Management",
+        "Strategic Human Resource Management & Measurement",
+        "Operations Management Science",
+        "Economic Decision Analysis",
+        "Organizational Behavior",
+        "Managerial Decision Making"
+      ]
+    },
+    {
+      degree: "BS, Civil Engineering (Structural)",
+      institution: "North Carolina State University",
+      period: {
+        start: "2007",
+        end: "2011"
+      },
+      courses: [
+        "Fundamentals of Economics",
+        "Engineering Mechanics Statics",
+        "Mechanics of Solids",
+        "Civil Engineering Systems",
+        "Structural Analysis",
+        "Structural Steel Design",
+        "Engineering Behavior of Soils",
+        "Principles of Pavement Design",
+        "Military Leadership Training Management",
+        "Military Ethics & Professional Development"
+      ]
     }
   ],
   skills: {
     technical: [
-      "JavaScript/TypeScript", "React/Next.js", "Vue.js", "Node.js", 
-      "GraphQL", "REST API Design", "PostgreSQL", "MongoDB", 
-      "AWS", "Docker", "CI/CD", "TailwindCSS"
+      "Project Management",
+      "Data Analysis",
+      "Process Optimization",
+      "Strategic Planning",
+      "Risk Management"
     ],
     leadership: [
-      "Team Leadership", "Agile/Scrum", "Technical Planning", "Mentoring"
+      "Team Leadership",
+      "Change Management",
+      "Stakeholder Management",
+      "Cross-functional Leadership",
+      "Mentoring"
     ],
     other: [
-      "UI/UX Principles", "Performance Optimization", "Accessibility", "SEO"
+      "Product Strategy",
+      "Business Development",
+      "Client Relations",
+      "Military Operations",
+      "Educational Development"
     ]
   }
 };
