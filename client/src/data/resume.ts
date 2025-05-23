@@ -61,7 +61,186 @@ export const formatPeriod = (period: ExperienceEntry['period']): string => {
 };
 
 export function getWorkExperience(): ExperienceEntry[] {
-  return experienceData.workExperience;
+  // Add the newly provided experience details
+  const additionalExperience: ExperienceEntry[] = [
+    {
+      id: "captains-career-course",
+      title: "Engineer Captain's Career Course Student",
+      company: {
+        name: "U.S. Army",
+        location: "Fort Leonard Wood, MO",
+      },
+      period: {
+        start: "2015",
+        end: "2016",
+      },
+      description: "Advanced leadership and tactics training focused on complex engineering scenarios and combined arms operations.",
+      achievements: [
+        "Led complex engineering projects in bridging, combat engineering, and construction, driving operational readiness",
+        "Drafted comprehensive operational orders shaping strategic approaches",
+        "Facilitated cross-disciplinary coordination across units",
+        "Enhanced professional leadership and critical thinking skills",
+        "Acted as sponsor and mentor for international military students from Vietnam and Moldova"
+      ],
+      skills: [
+        { name: "Leadership" },
+        { name: "Problem Solving" },
+        { name: "Communication" },
+        { name: "Civil Engineering" },
+        { name: "Cross-team Collaboration" }
+      ]
+    },
+    {
+      id: "assistant-project-engineer",
+      title: "Assistant Project Engineer",
+      company: {
+        name: "U.S. Army Corps of Engineers",
+        location: "Fort Hood, TX",
+      },
+      period: {
+        start: "2015",
+        end: "2015",
+      },
+      description: "Provided project management and engineering support for significant infrastructure projects.",
+      achievements: [
+        "Managed contract administration for renovations exceeding $98M, ensuring safety and environmental compliance",
+        "Facilitated contract modifications adapting to changing project objectives",
+        "Supported diverse construction projects, enhancing critical infrastructure",
+        "Conducted analysis mitigating a significant contract dispute, enhancing collaboration with contractors"
+      ],
+      skills: [
+        { name: "Project Management" },
+        { name: "Civil Engineering" },
+        { name: "Government Contract Administration" },
+        { name: "Negotiation" },
+        { name: "Management" }
+      ]
+    },
+    {
+      id: "operations-logistics-manager",
+      title: "Operations and Logistics Manager - Executive Officer",
+      company: {
+        name: "U.S. Army",
+        location: "Fort Hood, TX",
+      },
+      period: {
+        start: "2013",
+        end: "2015",
+      },
+      description: "Directed operational logistics and administrative management for a combat engineer company.",
+      achievements: [
+        "Managed logistical and maintenance operations for assets exceeding $39M",
+        "Anticipated and provided sustainment and training resource requirements",
+        "Facilitated effective property transfers enhancing mission capabilities",
+        "Enhanced clarity in communications, fostering effective information flow"
+      ],
+      skills: [
+        { name: "Operational Leadership" },
+        { name: "Logistics Management" },
+        { name: "Personnel Management" },
+        { name: "Strategic Planning" }
+      ]
+    },
+    {
+      id: "platoon-leader",
+      title: "Manager - Platoon Leader",
+      company: {
+        name: "U.S. Army",
+        location: "Fort Hood, TX",
+      },
+      period: {
+        start: "2013",
+        end: "2013",
+      },
+      description: "Led and managed operational readiness for an Engineer platoon preparing for global deployments.",
+      achievements: [
+        "Managed training, operations, security, and logistics for assets valued at over $13M",
+        "Implemented training plans enhancing combat vehicle operations",
+        "Executed skills testing and training certifications, achieving top performance ratings"
+      ],
+      skills: [
+        { name: "Leadership Development" },
+        { name: "Training Program Design" },
+        { name: "Resource Management" },
+        { name: "Tactical Planning" }
+      ]
+    },
+    {
+      id: "assistant-operations-officer",
+      title: "Strategic and Operational Planner - Assistant Operations Officer",
+      company: {
+        name: "U.S. Army",
+        location: "Fort Hood, TX",
+      },
+      period: {
+        start: "2011",
+        end: "2013",
+      },
+      description: "Coordinated strategic and operational planning, enhancing communication and efficiency at battalion level.",
+      achievements: [
+        "Organized and executed over 89 diverse training events",
+        "Managed resource scheduling optimizing operations for over 1000 personnel",
+        "Enhanced strategic decision-making through clear situational reporting",
+        "Served dual roles managing HAZMAT and energy conservation programs"
+      ],
+      skills: [
+        { name: "Strategic Planning" },
+        { name: "Cross-team Collaboration" },
+        { name: "Training Program Design" },
+        { name: "Operational Planning" }
+      ]
+    },
+    {
+      id: "bolc-student",
+      title: "Basic Officer Leadership Course Student",
+      company: {
+        name: "U.S. Army",
+        location: "Fort Leonard Wood, MO",
+      },
+      period: {
+        start: "2011",
+        end: "2011",
+      },
+      description: "Foundational leadership and engineering training in tactical military scenarios.",
+      achievements: [
+        "Gained competencies in construction, combat engineering, and explosives",
+        "Developed skills in teamwork, project management, and ethical decision-making",
+        "Engaged with modern engineering technologies and tactical scenarios"
+      ],
+      skills: [
+        { name: "Leadership" },
+        { name: "Problem Solving" },
+        { name: "Communication" },
+        { name: "Engineering Management" }
+      ]
+    },
+    {
+      id: "trainer-fort-knox",
+      title: "Trainer - Leadership and Military Tactics (CTLT)",
+      company: {
+        name: "U.S. Army",
+        location: "Fort Knox, KY",
+      },
+      period: {
+        start: "2011",
+        end: "2011",
+      },
+      description: "Delivered training and mentorship focused on leadership and tactical proficiency.",
+      achievements: [
+        "Conducted leadership and tactical training enhancing team effectiveness",
+        "Promoted cross-functional collaboration and effective communication"
+      ],
+      skills: [
+        { name: "Leadership" },
+        { name: "Communication" },
+        { name: "Mentoring" },
+        { name: "Cross-team Collaboration" }
+      ]
+    }
+  ];
+  
+  // Combine original experience with additional experience
+  return [...experienceData.workExperience, ...additionalExperience];
 }
 
 export function getExperienceProfile(): ExperienceProfile {
