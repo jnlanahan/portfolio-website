@@ -22,24 +22,23 @@ const HomeTile = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
     >
-      <GlowingCard 
-        className="bg-background/30 backdrop-blur-sm rounded-xl border border-border hover:border-secondary p-6 transition-all duration-300 h-full"
-        glowColor="rgba(67, 186, 147, 0.4)"
-      >
-        <div className="flex items-center mb-4">
-          <div className="bg-primary/20 p-3 rounded-full mr-3">
-            <i className={`${icon} text-primary text-xl`}></i>
-          </div>
-          <h3 className="text-xl font-space font-semibold">{title}</h3>
-        </div>
-        <p className="text-muted-foreground mb-6">{description}</p>
-        <Link 
-          href={linkTo}
-          className="inline-flex items-center text-secondary hover:underline"
+      <Link href={linkTo}>
+        <GlowingCard 
+          className="bg-background/30 backdrop-blur-sm rounded-xl border border-border hover:border-secondary p-6 transition-all duration-300 h-full cursor-pointer group"
+          glowColor="rgba(67, 186, 147, 0.4)"
         >
-          Explore <i className="ri-arrow-right-line ml-2"></i>
-        </Link>
-      </GlowingCard>
+          <div className="flex items-center mb-4">
+            <div className="bg-primary/20 p-3 rounded-full mr-3">
+              <i className={`${icon} text-primary text-xl`}></i>
+            </div>
+            <h3 className="text-xl font-space font-semibold">{title}</h3>
+          </div>
+          <p className="text-muted-foreground mb-6">{description}</p>
+          <div className="inline-flex items-center text-secondary group-hover:underline">
+            Explore <i className="ri-arrow-right-line ml-2 group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </GlowingCard>
+      </Link>
     </motion.div>
   );
 };
