@@ -10,6 +10,7 @@ import { z } from "zod";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
 import { generateResumePDF } from "./pdf-generator";
+import { sendContactEmail, verifyConnection } from "./mailer";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Handle API routes with prefix
@@ -107,15 +108,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/contact", async (req, res) => {
     try {
       const contactData = insertContactSchema.parse(req.body);
+      
+      // Save to database
       await storage.saveContactSubmission(contactData);
-      res.status(201).json({ message: "Contact form submitted successfully" });
+      
+      // Send email notification
+      const emailResult = await sendContactEmail({
+        name: contactData.name,
+        email: contactData.email,
+        subject: contactData.subject,
+        message: contactData.message
+      });
+      
+      if (!emailResult.success) {
+        console.warn("Email notification could not be sent:", emailResult.error);
+        // Still return success since we saved to database
+        return res.status(201).json({ 
+          message: "Contact form submitted successfully, but email notification could not be sent."
+        });
+      }
+      
+      res.status(201).json({ 
+        message: "Contact form submitted successfully and notification email sent."
+      });
     } catch (error) {
       if (error instanceof ZodError) {
         const validationError = fromZodError(error);
         return res.status(400).json({ message: validationError.message });
       }
       
-      console.error("Error saving contact submission:", error);
+      console.error("Error processing contact submission:", error);
       res.status(500).json({ message: "Failed to submit contact form" });
     }
   });

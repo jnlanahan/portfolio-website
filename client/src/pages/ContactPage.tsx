@@ -31,16 +31,29 @@ const ContactPage = () => {
   const onSubmit = async (data: ContactFormValues) => {
     setIsSubmitting(true);
     try {
-      await apiRequest("POST", "/api/contact", data);
-      toast({
-        title: "Message sent!",
-        description: "Thank you for your message. I'll get back to you soon.",
-      });
+      const response = await apiRequest("POST", "/api/contact", data);
+      
+      // Show feedback based on whether the email was sent successfully
+      if (response.message.includes("notification email sent")) {
+        toast({
+          title: "Message sent successfully!",
+          description: "Thank you for your message. I'll get back to you soon.",
+        });
+      } else {
+        // Email was saved but not sent
+        toast({
+          title: "Message received!",
+          description: "Your message was saved but there was an issue sending the email notification. I'll still review your message.",
+          variant: "default",
+        });
+      }
+      
       reset();
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Contact form error:", error);
       toast({
         title: "Error sending message",
-        description: "Please try again later.",
+        description: error?.message || "Please try again later.",
         variant: "destructive",
       });
     } finally {

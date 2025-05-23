@@ -76,6 +76,19 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Initialize data
+  console.log("Initializing project data...");
+  // Project and blog data initialization happens here
+  
+  // Verify email connection
+  try {
+    const { verifyConnection } = require('./mailer');
+    await verifyConnection();
+  } catch (error) {
+    console.warn("Email service connection failed:", error);
+    console.warn("Contact form will save to database but won't send notification emails");
+  }
+  
   const server = await registerRoutes(app);
 
   // Enhanced error handling middleware
