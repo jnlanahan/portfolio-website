@@ -136,8 +136,8 @@ const AboutPage = () => {
               {/* Enhanced profile picture with fade effect */}
               <div className="relative mx-auto w-80 h-80 md:w-96 md:h-96">
                 {/* Animated gradient border effect with increased blur for fade effect */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-secondary to-primary animate-spin-slow blur-lg"></div>
-                <div className="absolute inset-1 rounded-full bg-gradient-to-r from-secondary via-primary to-secondary animate-spin-slow blur-lg"></div>
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-secondary via-primary to-secondary animate-spin-slow blur-lg"></div>
+                <div className="absolute inset-1 rounded-full bg-gradient-to-r from-secondary via-secondary to-secondary animate-spin-slow blur-lg"></div>
                 
                 {/* Enhanced Image with text fade effect */}
                 <div className="absolute inset-2 rounded-full overflow-hidden shadow-xl z-10">
