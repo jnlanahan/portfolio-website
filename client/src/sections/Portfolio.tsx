@@ -69,7 +69,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({ projects }) => {
                   {project.technologies.map((tech, techIndex) => (
                     <span
                       key={techIndex}
-                      className="px-3 py-1 bg-[#1E1E1E] text-muted-foreground text-xs rounded-full"
+                      className="px-3 py-1 bg-secondary/80 text-secondary-foreground text-xs rounded-full"
                     >
                       {tech}
                     </span>
