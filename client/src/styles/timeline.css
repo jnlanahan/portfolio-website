@@ -1,0 +1,19 @@
+/* Image placeholders styling for timeline */
+.company-logo-placeholder {
+  background: radial-gradient(circle at center, rgba(67, 186, 147, 0.2) 0%, transparent 70%);
+  transition: all 0.3s ease;
+}
+
+.company-logo-placeholder:hover {
+  background: radial-gradient(circle at center, rgba(67, 186, 147, 0.3) 0%, transparent 80%);
+  box-shadow: 0 0 15px rgba(67, 186, 147, 0.3) inset;
+}
+
+.project-image-placeholder {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+  transition: all 0.3s ease;
+}
+
+.project-image-placeholder:hover {
+  box-shadow: 0 0 15px rgba(67, 186, 147, 0.3) inset;
+}

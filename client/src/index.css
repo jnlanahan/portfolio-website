@@ -103,11 +103,22 @@ body {
   }
 
   .timeline-line {
-    @apply absolute left-0 top-0 bottom-0 w-[1px] bg-border;
+    @apply absolute left-0 top-0 bottom-0 w-[2px] bg-secondary/30;
+    box-shadow: 0 0 8px rgba(67, 186, 147, 0.4);
   }
 
   .timeline-dot {
-    @apply h-4 w-4 rounded-full bg-primary absolute -left-2 top-6;
+    @apply h-4 w-4 rounded-full bg-secondary absolute -left-2 top-6 border-2 border-black;
+    box-shadow: 0 0 10px rgba(67, 186, 147, 0.7);
+    z-index: 2;
+  }
+  
+  .timeline-item {
+    transition: transform 0.3s ease;
+  }
+  
+  .timeline-item:hover {
+    transform: translateX(5px);
   }
 
   .project-card:hover .project-overlay {

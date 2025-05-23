@@ -1,13 +1,25 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { getResume } from "@/data/resume";
 import { GlowingCard } from "@/components/ui/glowing-card";
+import { useRef } from "react";
+import '../styles/timeline.css';
 
 const ResumePage = () => {
   const { data: resume, isLoading } = useQuery({
     queryKey: ["/api/resume"],
     initialData: getResume(),
   });
+
+  // Timeline scrolling animation
+  const timelineRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start end", "end end"]
+  });
+  
+  // Timeline line growing animation
+  const timelineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   if (isLoading) {
     return (
@@ -55,42 +67,95 @@ const ResumePage = () => {
         </motion.div>
       </div>
 
-      <div className="timeline relative pl-8 md:pl-12 max-w-4xl mx-auto">
-        <div className="timeline-line"></div>
+      <div ref={timelineRef} className="timeline relative pl-8 md:pl-12 max-w-4xl mx-auto">
+        {/* Animated timeline line that grows with scroll */}
+        <motion.div 
+          className="timeline-line"
+          style={{ height: timelineHeight }}
+        ></motion.div>
 
         {resume.map((job, index) => (
           <motion.div
             key={index}
             className={`timeline-item relative mb-16 ${index === resume.length - 1 ? "" : "mb-16"}`}
             initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 0.7, 
+              delay: index * 0.15,
+              type: "spring",
+              stiffness: 50
+            }}
           >
-            <div className="timeline-dot"></div>
-            <div className="pl-8">
-              <h3 className="text-2xl font-space font-semibold">{job.title}</h3>
-              <div className="flex flex-wrap items-center text-muted-foreground mb-4">
-                <span className="font-medium text-secondary">{job.company}</span>
-                <span className="mx-2">•</span>
-                <span>{job.period}</span>
+            {/* Animated dot */}
+            <motion.div 
+              className="timeline-dot"
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ 
+                duration: 0.5, 
+                delay: 0.2 + index * 0.15,
+                type: "spring", 
+                bounce: 0.4 
+              }}
+            ></motion.div>
+            
+            <div className="md:grid md:grid-cols-3 md:gap-6 pl-8">
+              {/* Left content - Company info */}
+              <div className="col-span-1">
+                <h3 className="text-2xl font-space font-semibold">{job.title}</h3>
+                <div className="flex flex-wrap items-center text-muted-foreground mb-4">
+                  <span className="font-medium text-secondary">{job.company}</span>
+                  <span className="mx-2">•</span>
+                  <span>{job.period}</span>
+                </div>
+                
+                {/* Image placeholder */}
+                <div className="hidden md:block w-full aspect-square relative mb-4 overflow-hidden rounded-lg company-logo-placeholder">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-secondary text-xs">
+                      {job.company} Logo
+                    </span>
+                  </div>
+                </div>
               </div>
-              <p className="text-muted-foreground mb-4">{job.description}</p>
-              <div className="flex flex-wrap gap-2">
-                {job.skills.map((skill, skillIndex) => (
-                  <span
-                    key={skillIndex}
-                    className="px-3 py-1 bg-background/30 backdrop-blur-sm text-muted-foreground text-sm rounded-full"
-                  >
-                    {skill}
-                  </span>
-                ))}
+              
+              {/* Right content - Job details */}
+              <div className="col-span-2">
+                {/* Project image placeholder */}
+                <div className="w-full aspect-video relative mb-4 overflow-hidden rounded-lg project-image-placeholder">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-secondary text-sm">
+                      Project Image
+                    </span>
+                  </div>
+                </div>
+                
+                <p className="text-muted-foreground mb-4">{job.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {job.skills.map((skill, skillIndex) => (
+                    <motion.span
+                      key={skillIndex}
+                      className="px-3 py-1 bg-background/30 backdrop-blur-sm text-muted-foreground text-sm rounded-full"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ 
+                        delay: 0.3 + index * 0.1 + skillIndex * 0.05,
+                        duration: 0.3
+                      }}
+                    >
+                      {skill}
+                    </motion.span>
+                  ))}
+                </div>
               </div>
             </div>
           </motion.div>
         ))}
       </div>
-
-      
     </div>
   );
 };
