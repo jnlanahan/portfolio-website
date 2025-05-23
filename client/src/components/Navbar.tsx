@@ -7,7 +7,7 @@ export interface NavItem {
   label: string;
   icon?: string;
   highlight?: boolean;
-  isActiveCheck?: (path: string, currentLocation: string) => boolean;
+  isActiveCheck?: (path: string) => boolean;
 }
 
 const Navbar = () => {

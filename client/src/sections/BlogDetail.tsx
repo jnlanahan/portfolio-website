@@ -1,15 +1,42 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "wouter";
-import { getBlogPostById } from "@/data/blog";
+import { getBlogPostById, BlogTag, formatBlogDate } from "@/data/blog";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+
+// BlogTag component for consistent styling (same as in BlogPage)
+const BlogTagBadge = ({ tag }: { tag: BlogTag }) => {
+  const style = {
+    backgroundColor: tag.color ? `${tag.color}15` : 'rgba(34, 197, 94, 0.1)',
+    color: tag.color || '#22c55e',
+  };
+
+  return (
+    <span
+      className="px-3 py-1 text-xs rounded-full transition-all duration-300 hover:scale-105"
+      style={style}
+    >
+      {tag.name}
+    </span>
+  );
+};
 
 export const BlogDetail: React.FC = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
+  const { toast } = useToast();
+  const [hasLiked, setHasLiked] = useState(false);
+  
   const { data: post, isLoading, error } = useQuery({
-    queryKey: [`/api/blog/${id}`],
-    queryFn: () => getBlogPostById(parseInt(id || "0")),
+    queryKey: [`/api/blog/${slug}`],
+    queryFn: () => {
+      const posts = getBlogPostById(parseInt(slug || "0")) || 
+                   getBlogPostById(1); // Fallback to first post if slug is invalid
+      return posts;
+    },
   });
 
+  // Loading skeleton
   if (isLoading) {
     return (
       <div className="page-container relative">
@@ -27,77 +54,181 @@ export const BlogDetail: React.FC = () => {
     );
   }
 
+  // Error state
   if (error || !post) {
     return (
       <div className="page-container relative">
         <h1 className="text-3xl font-bold mb-4">Post not found</h1>
         <p className="mb-6">Sorry, the blog post you're looking for doesn't exist.</p>
-        <Link href="/blog">
-          <a className="text-secondary hover:underline">← Back to blog</a>
+        <Link href="/blog" className="text-secondary hover:underline inline-flex items-center">
+          <i className="ri-arrow-left-line mr-2"></i> Back to blog
         </Link>
       </div>
     );
   }
 
+  // Handle like button click
+  const handleLike = () => {
+    if (!hasLiked) {
+      setHasLiked(true);
+      toast({
+        title: "Thanks for the love!",
+        description: "Your appreciation has been noted.",
+      });
+    }
+  };
+
+  // Copy link to clipboard
+  const copyLinkToClipboard = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast({
+      title: "Link copied",
+      description: "The link to this article has been copied to your clipboard.",
+    });
+  };
+
   return (
     <div className="page-container relative">
+      {/* Back button */}
       <Link href="/blog" className="inline-flex items-center text-muted-foreground hover:text-secondary mb-8 transition-colors">
         <i className="ri-arrow-left-line mr-2"></i> Back to all posts
       </Link>
 
+      {/* Article container */}
       <motion.article
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-background/30 backdrop-blur-sm p-8 rounded-xl border border-border"
+        className="bg-background/30 backdrop-blur-sm p-6 md:p-8 rounded-xl border border-border"
       >
-        <h1 className="text-3xl md:text-4xl font-bold font-space mb-4">{post.title}</h1>
+        {/* Category badge (if available) */}
+        {post.category && (
+          <Link href={`/blog/category/${post.category.slug}`} className="inline-block mb-4">
+            <span className="px-3 py-1 bg-secondary/10 text-secondary rounded-full text-xs font-medium">
+              {post.category.name}
+            </span>
+          </Link>
+        )}
 
-        <div className="flex items-center text-muted-foreground mb-6">
-          <div className="flex items-center">
-            <img
-              src="https://images.unsplash.com/photo-1555952517-2e8e729e0b44?q=80&w=1964&auto=format&fit=crop"
-              alt="Alex Chen"
-              className="w-10 h-10 rounded-full mr-3"
-            />
-            <span>Alex Chen</span>
-          </div>
-          <span className="mx-2">•</span>
-          <time dateTime={post.date}>
-            {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-          </time>
-          <span className="mx-2">•</span>
-          <span>{post.readTime} min read</span>
+        {/* Title */}
+        <h1 className="text-3xl md:text-4xl font-bold font-space mb-4 leading-tight">
+          {post.title}
+        </h1>
+
+        {/* Tags */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          {post.tags.map((tag) => (
+            <BlogTagBadge key={tag.id} tag={tag} />
+          ))}
         </div>
 
-        <img
-          src={post.coverImage}
-          alt={post.title}
-          className="w-full h-auto rounded-xl mb-8"
-        />
+        {/* Author and meta information */}
+        <div className="flex flex-wrap items-center text-muted-foreground mb-8 gap-y-3">
+          {post.author && (
+            <div className="flex items-center mr-4">
+              {post.author.avatar ? (
+                <img
+                  src={post.author.avatar}
+                  alt={post.author.name}
+                  className="w-10 h-10 rounded-full mr-3 border-2 border-secondary/20"
+                />
+              ) : (
+                <div className="w-10 h-10 rounded-full bg-secondary/20 text-secondary flex items-center justify-center mr-3">
+                  {post.author.name.charAt(0)}
+                </div>
+              )}
+              <div>
+                <div className="font-medium text-foreground">{post.author.name}</div>
+                {post.author.role && <div className="text-xs">{post.author.role}</div>}
+              </div>
+            </div>
+          )}
 
+          <div className="flex items-center flex-wrap gap-x-2 gap-y-1">
+            <div className="flex items-center">
+              <i className="ri-calendar-line mr-1"></i>
+              <time dateTime={post.date}>
+                {formatBlogDate(post.date)}
+              </time>
+            </div>
+            <span className="mx-1">•</span>
+            <div className="flex items-center">
+              <i className="ri-time-line mr-1"></i>
+              <span>{post.readTime} min read</span>
+            </div>
+            {post.views && (
+              <>
+                <span className="mx-1">•</span>
+                <div className="flex items-center">
+                  <i className="ri-eye-line mr-1"></i>
+                  <span>{post.views} views</span>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Cover image */}
+        <div className="relative rounded-xl overflow-hidden mb-8">
+          <img
+            src={post.coverImage}
+            alt={post.title}
+            className="w-full h-auto object-cover rounded-xl"
+          />
+          {post.featured && (
+            <div className="absolute top-4 right-4 bg-secondary px-3 py-1 rounded text-xs font-medium text-secondary-foreground">
+              Featured
+            </div>
+          )}
+        </div>
+
+        {/* Article content */}
         <div 
-          className="blog-content text-muted-foreground"
+          className="blog-content prose prose-lg dark:prose-invert max-w-none prose-headings:font-space prose-a:text-secondary prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
 
+        {/* Action and share section */}
         <div className="mt-12 pt-8 border-t border-border">
+          <div className="flex flex-wrap justify-between items-center gap-4 mb-8">
+            {/* Like button */}
+            <button
+              onClick={handleLike}
+              className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${
+                hasLiked 
+                  ? "bg-red-500/10 text-red-500" 
+                  : "bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <i className={`${hasLiked ? "ri-heart-fill" : "ri-heart-line"} text-lg`}></i>
+              <span>{hasLiked ? post.likes + 1 : post.likes} likes</span>
+            </button>
+
+            {/* Last updated */}
+            {post.lastUpdated && (
+              <div className="text-sm text-muted-foreground">
+                Updated: {formatBlogDate(post.lastUpdated)}
+              </div>
+            )}
+          </div>
+
+          {/* Share section */}
           <h3 className="text-xl font-space font-semibold mb-4">Share this post</h3>
-          <div className="flex space-x-4">
+          <div className="flex flex-wrap gap-3">
             <a
               href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(window.location.href)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 bg-background/40 backdrop-blur-sm rounded-full text-muted-foreground hover:text-secondary transition-colors"
+              className="p-3 bg-background/40 backdrop-blur-sm rounded-full text-muted-foreground hover:text-[#1DA1F2] hover:bg-[#1DA1F2]/10 transition-colors"
               aria-label="Share on Twitter"
             >
-              <i className="ri-twitter-fill text-lg"></i>
+              <i className="ri-twitter-x-fill text-lg"></i>
             </a>
             <a
               href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 bg-background/40 backdrop-blur-sm rounded-full text-muted-foreground hover:text-secondary transition-colors"
+              className="p-3 bg-background/40 backdrop-blur-sm rounded-full text-muted-foreground hover:text-[#0A66C2] hover:bg-[#0A66C2]/10 transition-colors"
               aria-label="Share on LinkedIn"
             >
               <i className="ri-linkedin-fill text-lg"></i>
@@ -106,23 +237,22 @@ export const BlogDetail: React.FC = () => {
               href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 bg-background/40 backdrop-blur-sm rounded-full text-muted-foreground hover:text-secondary transition-colors"
+              className="p-3 bg-background/40 backdrop-blur-sm rounded-full text-muted-foreground hover:text-[#1877F2] hover:bg-[#1877F2]/10 transition-colors"
               aria-label="Share on Facebook"
             >
               <i className="ri-facebook-fill text-lg"></i>
             </a>
             <button
-              onClick={() => {
-                navigator.clipboard.writeText(window.location.href);
-                alert("Link copied to clipboard!");
-              }}
-              className="p-3 bg-background/40 backdrop-blur-sm rounded-full text-muted-foreground hover:text-secondary transition-colors"
+              onClick={copyLinkToClipboard}
+              className="p-3 bg-background/40 backdrop-blur-sm rounded-full text-muted-foreground hover:text-secondary hover:bg-secondary/10 transition-colors"
               aria-label="Copy link"
             >
               <i className="ri-link text-lg"></i>
             </button>
           </div>
         </div>
+
+        {/* Related posts section would go here */}
       </motion.article>
     </div>
   );

@@ -1,24 +1,130 @@
+export interface Author {
+  id: string;
+  name: string;
+  avatar?: string;
+  role?: string;
+  bio?: string;
+}
+
+export interface BlogCategory {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string;
+}
+
+export interface BlogTag {
+  id: string;
+  name: string;
+  slug: string;
+  color?: string;
+}
+
 export interface BlogPostType {
   id: number;
   title: string;
+  slug: string;
   excerpt: string;
   date: string;
+  lastUpdated?: string;
   readTime: number;
   coverImage: string;
   content: string;
-  tags: string[];
+  tags: BlogTag[];
+  category?: BlogCategory;
+  author?: Author;
+  featured?: boolean;
+  views?: number;
+  likes?: number;
+  relatedPosts?: number[]; // IDs of related posts
 }
+
+// Author information
+export const authors: Author[] = [
+  {
+    id: 'nick-lanahan',
+    name: 'Nick Lanahan',
+    avatar: '/assets/avatar.jpg',
+    role: 'Product Manager & Developer',
+    bio: 'With 8+ years of experience building digital products, I write about development, design, and product strategy.'
+  }
+];
+
+// Blog categories
+export const categories: BlogCategory[] = [
+  {
+    id: 'development',
+    name: 'Development',
+    slug: 'development',
+    description: 'Articles about coding, development practices, and technical tutorials'
+  },
+  {
+    id: 'design',
+    name: 'Design',
+    slug: 'design',
+    description: 'Insights on UI/UX design, design systems, and creative processes'
+  },
+  {
+    id: 'strategy',
+    name: 'Strategy',
+    slug: 'strategy',
+    description: 'Discussions on product strategy, team management, and career growth'
+  }
+];
+
+// Blog tags with color coding
+export const tags: BlogTag[] = [
+  { id: 'react', name: 'React', slug: 'react', color: '#61dafb' },
+  { id: 'javascript', name: 'JavaScript', slug: 'javascript', color: '#f7df1e' },
+  { id: 'typescript', name: 'TypeScript', slug: 'typescript', color: '#3178c6' },
+  { id: 'performance', name: 'Performance', slug: 'performance', color: '#00c853' },
+  { id: 'accessibility', name: 'Accessibility', slug: 'accessibility', color: '#7952b3' },
+  { id: 'design', name: 'Design', slug: 'design', color: '#ff5722' },
+  { id: 'product-management', name: 'Product Management', slug: 'product-management', color: '#0288d1' },
+  { id: 'strategy', name: 'Strategy', slug: 'strategy', color: '#9c27b0' }
+];
+
+// Helper function to get a tag by ID
+export const getTagById = (id: string): BlogTag => {
+  return tags.find(tag => tag.id === id) || { id, name: id, slug: id };
+};
+
+// Helper function to get category by ID
+export const getCategoryById = (id: string): BlogCategory | undefined => {
+  return categories.find(category => category.id === id);
+};
+
+// Helper function to format date
+export const formatBlogDate = (dateString: string): string => {
+  const options: Intl.DateTimeFormatOptions = { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  };
+  return new Date(dateString).toLocaleDateString('en-US', options);
+};
 
 export function getBlogPosts(): BlogPostType[] {
   return [
     {
       id: 1,
       title: "Building Accessible React Components from Scratch",
+      slug: "building-accessible-react-components",
       excerpt: "A deep dive into creating React components that are both beautiful and accessible, following WCAG guidelines and best practices.",
       date: "2023-04-15",
+      lastUpdated: "2023-04-20",
       readTime: 5,
       coverImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=450",
-      tags: ["Development", "Accessibility", "React"],
+      tags: [
+        getTagById('react'),
+        getTagById('accessibility'),
+        getTagById('javascript'),
+      ],
+      category: getCategoryById('development'),
+      author: authors[0],
+      featured: true,
+      views: 1248,
+      likes: 56,
       content: `
         <p>
           Creating truly accessible components is more than just adding ARIA attributes—it's about understanding how people with disabilities actually use the web. In this post, I'll share what I've learned building accessible UI libraries.
@@ -54,11 +160,21 @@ export function getBlogPosts(): BlogPostType[] {
     {
       id: 2,
       title: "10 Performance Optimization Tips for Modern Web Apps",
+      slug: "performance-optimization-tips",
       excerpt: "Practical strategies to improve load times, reduce bundle sizes, and create smoother user experiences in JavaScript applications.",
       date: "2023-03-22",
+      lastUpdated: "2023-03-25",
       readTime: 8,
       coverImage: "https://images.unsplash.com/photo-1563089145-599997674d42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=450",
-      tags: ["Development", "Performance", "Strategy"],
+      tags: [
+        getTagById('javascript'),
+        getTagById('performance'),
+        getTagById('strategy'),
+      ],
+      category: getCategoryById('development'),
+      author: authors[0],
+      views: 892,
+      likes: 42,
       content: `
         <p>
           With users expecting near-instant interactions, web performance has never been more critical. In this post, I'll share 10 battle-tested strategies to optimize your JavaScript applications.
@@ -97,11 +213,22 @@ export function getBlogPosts(): BlogPostType[] {
     {
       id: 3,
       title: "Creating a Design System That Scales with Your Project",
+      slug: "creating-scalable-design-system",
       excerpt: "How to build a comprehensive design system that maintains consistency while allowing flexibility as your application grows.",
       date: "2023-02-08",
+      lastUpdated: "2023-02-15",
       readTime: 12,
       coverImage: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=450",
-      tags: ["Design", "Product Management", "Strategy"],
+      tags: [
+        getTagById('design'),
+        getTagById('product-management'),
+        getTagById('strategy'),
+      ],
+      category: getCategoryById('design'),
+      author: authors[0],
+      views: 1467,
+      likes: 87,
+      featured: true,
       content: `
         <p>
           A well-crafted design system is the backbone of any polished product. It ensures consistency, speeds up development, and creates a cohesive user experience. Here's how to build one that scales.

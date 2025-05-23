@@ -21,7 +21,8 @@ function Router() {
       <Route path="/resume" component={ResumePage} />
       <Route path="/portfolio" component={PortfolioPage} />
       <Route path="/blog" component={BlogPage} />
-      <Route path="/blog/:id" component={BlogDetail} />
+      <Route path="/blog/:slug" component={BlogDetail} />
+      <Route path="/blog/category/:category" component={BlogPage} />
       <Route path="/top5" component={TopFiveListsPage} />
       <Route path="/contact" component={ContactPage} />
       {/* Fallback to 404 */}
