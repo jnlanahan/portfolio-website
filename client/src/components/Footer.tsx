@@ -4,7 +4,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-12 bg-[#1E1E1E]">
+    <footer className="py-12 bg-background/30 backdrop-blur-sm border-t border-border">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
@@ -17,42 +17,36 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-8">
-            <a
-              href="#about"
-              className="text-muted-foreground hover:text-secondary transition-colors"
-            >
-              About
-            </a>
-            <a
-              href="#resume"
-              className="text-muted-foreground hover:text-secondary transition-colors"
-            >
-              Resume
-            </a>
-            <a
-              href="#portfolio"
-              className="text-muted-foreground hover:text-secondary transition-colors"
-            >
-              Portfolio
-            </a>
-            <a
-              href="#blog"
-              className="text-muted-foreground hover:text-secondary transition-colors"
-            >
-              Blog
-            </a>
-            <a
-              href="#top5"
-              className="text-muted-foreground hover:text-secondary transition-colors"
-            >
-              Top 5
-            </a>
-            <a
-              href="#contact"
-              className="text-muted-foreground hover:text-secondary transition-colors"
-            >
-              Contact
-            </a>
+            <Link href="/about">
+              <a className="text-muted-foreground hover:text-secondary transition-colors">
+                About
+              </a>
+            </Link>
+            <Link href="/resume">
+              <a className="text-muted-foreground hover:text-secondary transition-colors">
+                Resume
+              </a>
+            </Link>
+            <Link href="/portfolio">
+              <a className="text-muted-foreground hover:text-secondary transition-colors">
+                Portfolio
+              </a>
+            </Link>
+            <Link href="/blog">
+              <a className="text-muted-foreground hover:text-secondary transition-colors">
+                Blog
+              </a>
+            </Link>
+            <Link href="/top5">
+              <a className="text-muted-foreground hover:text-secondary transition-colors">
+                Top 5
+              </a>
+            </Link>
+            <Link href="/contact">
+              <a className="text-muted-foreground hover:text-secondary transition-colors">
+                Contact
+              </a>
+            </Link>
           </div>
         </div>
 

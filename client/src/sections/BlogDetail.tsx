@@ -12,7 +12,7 @@ export const BlogDetail: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto px-4 md:px-6 py-24 max-w-4xl">
+      <div className="page-container">
         <div className="animate-pulse">
           <div className="h-8 bg-muted rounded w-3/4 mb-4"></div>
           <div className="h-4 bg-muted rounded w-1/2 mb-8"></div>
@@ -29,10 +29,10 @@ export const BlogDetail: React.FC = () => {
 
   if (error || !post) {
     return (
-      <div className="container mx-auto px-4 md:px-6 py-24 max-w-4xl">
+      <div className="page-container">
         <h1 className="text-3xl font-bold mb-4">Post not found</h1>
         <p className="mb-6">Sorry, the blog post you're looking for doesn't exist.</p>
-        <Link href="/#blog">
+        <Link href="/blog">
           <a className="text-secondary hover:underline">← Back to blog</a>
         </Link>
       </div>
@@ -40,93 +40,92 @@ export const BlogDetail: React.FC = () => {
   }
 
   return (
-    <section className="py-24">
-      <div className="container mx-auto px-4 md:px-6 max-w-4xl">
-        <Link href="/#blog">
-          <a className="inline-flex items-center text-muted-foreground hover:text-secondary mb-8 transition-colors">
-            <i className="ri-arrow-left-line mr-2"></i> Back to all posts
-          </a>
-        </Link>
+    <div className="page-container">
+      <Link href="/blog">
+        <a className="inline-flex items-center text-muted-foreground hover:text-secondary mb-8 transition-colors">
+          <i className="ri-arrow-left-line mr-2"></i> Back to all posts
+        </a>
+      </Link>
 
-        <motion.article
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h1 className="text-3xl md:text-4xl font-bold font-space mb-4">{post.title}</h1>
+      <motion.article
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="bg-background/30 backdrop-blur-sm p-8 rounded-xl border border-border"
+      >
+        <h1 className="text-3xl md:text-4xl font-bold font-space mb-4">{post.title}</h1>
 
-          <div className="flex items-center text-muted-foreground mb-6">
-            <div className="flex items-center">
-              <img
-                src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=64&h=64"
-                alt="Alex Chen"
-                className="w-10 h-10 rounded-full mr-3"
-              />
-              <span>Alex Chen</span>
-            </div>
-            <span className="mx-2">•</span>
-            <time dateTime={post.date}>
-              {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-            </time>
-            <span className="mx-2">•</span>
-            <span>{post.readTime} min read</span>
+        <div className="flex items-center text-muted-foreground mb-6">
+          <div className="flex items-center">
+            <img
+              src="https://images.unsplash.com/photo-1555952517-2e8e729e0b44?q=80&w=1964&auto=format&fit=crop"
+              alt="Alex Chen"
+              className="w-10 h-10 rounded-full mr-3"
+            />
+            <span>Alex Chen</span>
           </div>
+          <span className="mx-2">•</span>
+          <time dateTime={post.date}>
+            {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </time>
+          <span className="mx-2">•</span>
+          <span>{post.readTime} min read</span>
+        </div>
 
-          <img
-            src={post.coverImage}
-            alt={post.title}
-            className="w-full h-auto rounded-xl mb-8"
-          />
+        <img
+          src={post.coverImage}
+          alt={post.title}
+          className="w-full h-auto rounded-xl mb-8"
+        />
 
-          <div 
-            className="blog-content text-muted-foreground"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
+        <div 
+          className="blog-content text-muted-foreground"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
 
-          <div className="mt-12 pt-8 border-t border-border">
-            <h3 className="text-xl font-space font-semibold mb-4">Share this post</h3>
-            <div className="flex space-x-4">
-              <a
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(window.location.href)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-[#1E1E1E] rounded-full text-muted-foreground hover:text-secondary transition-colors"
-                aria-label="Share on Twitter"
-              >
-                <i className="ri-twitter-fill text-lg"></i>
-              </a>
-              <a
-                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-[#1E1E1E] rounded-full text-muted-foreground hover:text-secondary transition-colors"
-                aria-label="Share on LinkedIn"
-              >
-                <i className="ri-linkedin-fill text-lg"></i>
-              </a>
-              <a
-                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-[#1E1E1E] rounded-full text-muted-foreground hover:text-secondary transition-colors"
-                aria-label="Share on Facebook"
-              >
-                <i className="ri-facebook-fill text-lg"></i>
-              </a>
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText(window.location.href);
-                  alert("Link copied to clipboard!");
-                }}
-                className="p-3 bg-[#1E1E1E] rounded-full text-muted-foreground hover:text-secondary transition-colors"
-                aria-label="Copy link"
-              >
-                <i className="ri-link text-lg"></i>
-              </button>
-            </div>
+        <div className="mt-12 pt-8 border-t border-border">
+          <h3 className="text-xl font-space font-semibold mb-4">Share this post</h3>
+          <div className="flex space-x-4">
+            <a
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(window.location.href)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 bg-background/40 backdrop-blur-sm rounded-full text-muted-foreground hover:text-secondary transition-colors"
+              aria-label="Share on Twitter"
+            >
+              <i className="ri-twitter-fill text-lg"></i>
+            </a>
+            <a
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 bg-background/40 backdrop-blur-sm rounded-full text-muted-foreground hover:text-secondary transition-colors"
+              aria-label="Share on LinkedIn"
+            >
+              <i className="ri-linkedin-fill text-lg"></i>
+            </a>
+            <a
+              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 bg-background/40 backdrop-blur-sm rounded-full text-muted-foreground hover:text-secondary transition-colors"
+              aria-label="Share on Facebook"
+            >
+              <i className="ri-facebook-fill text-lg"></i>
+            </a>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(window.location.href);
+                alert("Link copied to clipboard!");
+              }}
+              className="p-3 bg-background/40 backdrop-blur-sm rounded-full text-muted-foreground hover:text-secondary transition-colors"
+              aria-label="Copy link"
+            >
+              <i className="ri-link text-lg"></i>
+            </button>
           </div>
-        </motion.article>
-      </div>
-    </section>
+        </div>
+      </motion.article>
+    </div>
   );
 };
