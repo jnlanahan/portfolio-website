@@ -17,8 +17,7 @@ import { BlogDetail } from "./sections/BlogDetail";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={NewHomePage} />
-      <Route path="/about" component={AboutPage} />
+      <Route path="/" component={AboutPage} />
       <Route path="/resume" component={ResumePage} />
       <Route path="/portfolio" component={PortfolioPage} />
       <Route path="/blog" component={BlogPage} />
