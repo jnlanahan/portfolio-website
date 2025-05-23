@@ -53,14 +53,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  // Download resume as PDF
+  // Download CV as PDF
   app.get("/api/resume/download", async (req, res) => {
     try {
       const resume = await storage.getResume();
       await generateResumePDF(res, resume);
     } catch (error) {
       console.error("Error generating PDF:", error);
-      res.status(500).json({ message: "Failed to generate resume PDF" });
+      res.status(500).json({ message: "Failed to generate CV PDF" });
     }
   });
 

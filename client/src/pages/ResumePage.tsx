@@ -49,9 +49,9 @@ const ResumePage = () => {
               className="inline-flex items-center px-6 py-3 bg-secondary/10 border-2 border-secondary text-secondary font-medium rounded-md transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground hover:scale-105 hover:shadow-lg hover:shadow-secondary/20"
               target="_blank"
               rel="noopener noreferrer"
-              download="nick-lanahan-resume.pdf"
+              download="nick-lanahan-cv.pdf"
             >
-              <i className="ri-download-line mr-2"></i> Download Full Resume
+              <i className="ri-download-line mr-2"></i> Download CV
             </a>
           </GlowingCard>
         </motion.div>
