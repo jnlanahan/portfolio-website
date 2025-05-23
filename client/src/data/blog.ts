@@ -6,6 +6,7 @@ export interface BlogPostType {
   readTime: number;
   coverImage: string;
   content: string;
+  tags: string[];
 }
 
 export function getBlogPosts(): BlogPostType[] {
@@ -17,6 +18,7 @@ export function getBlogPosts(): BlogPostType[] {
       date: "2023-04-15",
       readTime: 5,
       coverImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=450",
+      tags: ["Development", "Accessibility", "React"],
       content: `
         <p>
           Creating truly accessible components is more than just adding ARIA attributes—it's about understanding how people with disabilities actually use the web. In this post, I'll share what I've learned building accessible UI libraries.
@@ -56,6 +58,7 @@ export function getBlogPosts(): BlogPostType[] {
       date: "2023-03-22",
       readTime: 8,
       coverImage: "https://images.unsplash.com/photo-1563089145-599997674d42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=450",
+      tags: ["Development", "Performance", "Strategy"],
       content: `
         <p>
           With users expecting near-instant interactions, web performance has never been more critical. In this post, I'll share 10 battle-tested strategies to optimize your JavaScript applications.
@@ -98,6 +101,7 @@ export function getBlogPosts(): BlogPostType[] {
       date: "2023-02-08",
       readTime: 12,
       coverImage: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=450",
+      tags: ["Design", "Product Management", "Strategy"],
       content: `
         <p>
           A well-crafted design system is the backbone of any polished product. It ensures consistency, speeds up development, and creates a cohesive user experience. Here's how to build one that scales.

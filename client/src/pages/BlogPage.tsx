@@ -1,13 +1,28 @@
+
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { getBlogPosts } from "@/data/blog";
+import { useState, useMemo } from "react";
 
 const BlogPage = () => {
   const { data: posts, isLoading } = useQuery({
     queryKey: ["/api/blog"],
     initialData: getBlogPosts(),
   });
+
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
+  const allTags = useMemo(() => {
+    const tags = new Set<string>();
+    posts.forEach(post => post.tags.forEach(tag => tags.add(tag)));
+    return Array.from(tags).sort();
+  }, [posts]);
+
+  const filteredPosts = useMemo(() => {
+    if (!selectedTag) return posts;
+    return posts.filter(post => post.tags.includes(selectedTag));
+  }, [posts, selectedTag]);
 
   if (isLoading) {
     return (
@@ -28,13 +43,38 @@ const BlogPage = () => {
         transition={{ duration: 0.5 }}
       >
         <h1 className="text-4xl md:text-5xl font-bold mb-6">My Blog</h1>
-        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+        <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
           Thoughts, tutorials, and insights from my journey in tech.
         </p>
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          <button
+            onClick={() => setSelectedTag(null)}
+            className={`px-4 py-2 rounded-full text-sm transition-colors ${
+              !selectedTag
+                ? "bg-secondary text-secondary-foreground"
+                : "bg-muted hover:bg-muted/80"
+            }`}
+          >
+            All
+          </button>
+          {allTags.map(tag => (
+            <button
+              key={tag}
+              onClick={() => setSelectedTag(tag)}
+              className={`px-4 py-2 rounded-full text-sm transition-colors ${
+                selectedTag === tag
+                  ? "bg-secondary text-secondary-foreground"
+                  : "bg-muted hover:bg-muted/80"
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {posts.map((post, index) => (
+        {filteredPosts.map((post, index) => (
           <motion.article
             key={post.id}
             className="bg-background/30 backdrop-blur-sm rounded-xl overflow-hidden border border-border hover:border-secondary transition-all duration-300"
@@ -52,7 +92,9 @@ const BlogPage = () => {
             <div className="p-6">
               <div className="flex items-center text-muted-foreground text-sm mb-3">
                 <i className="ri-calendar-line mr-2"></i>
-                <time dateTime={post.date}>{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+                <time dateTime={post.date}>
+                  {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </time>
                 <span className="mx-2">•</span>
                 <span>{post.readTime} min read</span>
               </div>
@@ -62,6 +104,16 @@ const BlogPage = () => {
                 </Link>
               </h3>
               <p className="text-muted-foreground mb-4">{post.excerpt}</p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {post.tags.map(tag => (
+                  <span
+                    key={tag}
+                    className="px-2 py-1 text-xs rounded-full bg-secondary/10 text-secondary"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
               <Link href={`/blog/${post.id}`} className="inline-flex items-center text-secondary hover:underline">
                 Read More <i className="ri-arrow-right-line ml-2"></i>
               </Link>
