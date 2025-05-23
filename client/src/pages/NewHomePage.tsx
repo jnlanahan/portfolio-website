@@ -109,23 +109,22 @@ const NewHomePage = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <img
-                src="https://images.unsplash.com/photo-1555952517-2e8e729e0b44?q=80&w=1964&auto=format&fit=crop"
-                alt="Alex Chen - Portfolio headshot"
-                className="rounded-full mx-auto w-64 h-64 md:w-80 md:h-80 object-cover border-4 border-primary shadow-lg"
-              />
-
-              <motion.div
-                className="absolute -bottom-4 -right-4 md:bottom-4 md:right-16 bg-background/40 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-border"
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.5, duration: 0.3 }}
-              >
-                <div className="flex items-center">
-                  <div className="w-3 h-3 rounded-full bg-secondary animate-pulse mr-2"></div>
-                  <span className="text-sm font-medium">Currently Available for Work</span>
+              <div className="relative mx-auto w-64 h-64 md:w-80 md:h-80">
+                {/* Animated border effect */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-secondary to-primary animate-spin-slow blur-sm"></div>
+                <div className="absolute inset-1 rounded-full bg-gradient-to-r from-secondary via-primary to-secondary animate-spin-slow blur-sm"></div>
+                
+                {/* Image */}
+                <div className="absolute inset-2 rounded-full overflow-hidden shadow-xl z-10">
+                  <img
+                    src="https://images.unsplash.com/photo-1555952517-2e8e729e0b44?q=80&w=1964&auto=format&fit=crop"
+                    alt="Alex Chen - Portfolio headshot"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-              </motion.div>
+              </div>
+
+{/* "Currently Available for Work" tile removed */}
             </motion.div>
           </div>
         </div>
