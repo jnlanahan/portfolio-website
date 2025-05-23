@@ -61,10 +61,10 @@ const AboutPage = () => {
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-space mb-6">
                 Nick Lanahan
                 <span className="block text-2xl md:text-3xl mt-2">
-                  <span className="text-muted-foreground">I am a </span>
                   <RotatingWords 
                     words={["Leader", "Coach", "Product Manager", "Family Man", "Strategist", "Critical Thinker"]} 
                     interval={2500}
+                    prefixText="I am a"
                   />
                 </span>
               </h1>
