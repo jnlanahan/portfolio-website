@@ -414,12 +414,12 @@ const ExperiencePage = () => {
                 )}
 
                 {/* Logo placeholder or actual logo if available */}
-                <div className="hidden md:block w-full aspect-square relative mb-4 overflow-hidden rounded-lg company-logo-placeholder">
+                <div className="hidden md:block w-full aspect-square relative mb-4 overflow-hidden rounded-lg bg-card">
                   {item.company.logoUrl ? (
                     <img 
                       src={item.company.logoUrl} 
                       alt={`${item.company.name} logo`}
-                      className="w-full h-full object-contain" 
+                      className="w-full h-full object-contain p-4" 
                     />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center">
