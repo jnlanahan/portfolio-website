@@ -2,6 +2,8 @@
 .company-logo-placeholder {
   background: radial-gradient(circle at center, rgba(67, 186, 147, 0.2) 0%, transparent 70%);
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .company-logo-placeholder:hover {
@@ -9,11 +11,66 @@
   box-shadow: 0 0 15px rgba(67, 186, 147, 0.3) inset;
 }
 
+.company-logo-placeholder::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(67, 186, 147, 0.1), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.company-logo-placeholder:hover::before {
+  opacity: 1;
+  animation: pulse 2s infinite;
+}
+
 .project-image-placeholder {
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .project-image-placeholder:hover {
   box-shadow: 0 0 15px rgba(67, 186, 147, 0.3) inset;
+}
+
+.project-image-placeholder::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(67, 186, 147, 0.2),
+    transparent
+  );
+  transition: left 0.7s ease;
+}
+
+.project-image-placeholder:hover::after {
+  left: 100%;
+}
+
+/* Animation keyframes */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
 }
