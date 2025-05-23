@@ -252,7 +252,7 @@ const experienceData: ExperienceProfile = {
       id: "mba-osu",
       degree: "MBA",
       institution: "The Ohio State University – Fisher College of Business",
-      logoUrl: "/src/assets/images/logos/osu-logo.svg",
+      logoUrl: "/src/assets/images/logos/osu-logo.png",
       location: "Columbus, OH",
       period: {
         start: "2019",
@@ -285,6 +285,7 @@ const experienceData: ExperienceProfile = {
       id: "ms-missouri",
       degree: "MS, Engineering Management",
       institution: "Missouri University of Science and Technology",
+      logoUrl: "/src/assets/images/logos/mst-logo.png",
       period: {
         start: "2014",
         end: "2016"
@@ -309,6 +310,7 @@ const experienceData: ExperienceProfile = {
       id: "bs-ncsu",
       degree: "BS, Civil Engineering (Structural)",
       institution: "North Carolina State University",
+      logoUrl: "/src/assets/images/logos/ncsu-logo.png",
       period: {
         start: "2007",
         end: "2011"
