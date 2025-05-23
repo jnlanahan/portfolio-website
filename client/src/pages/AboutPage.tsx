@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 
+import { GlowingCard } from "@/components/ui/glowing-card";
+
 const HomeTile = ({ 
   title, 
   description, 
@@ -19,21 +21,25 @@ const HomeTile = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
-      className="bg-background/30 backdrop-blur-sm rounded-xl border border-border hover:border-secondary p-6 transition-all duration-300"
     >
-      <div className="flex items-center mb-4">
-        <div className="bg-primary/20 p-3 rounded-full mr-3">
-          <i className={`${icon} text-primary text-xl`}></i>
-        </div>
-        <h3 className="text-xl font-space font-semibold">{title}</h3>
-      </div>
-      <p className="text-muted-foreground mb-6">{description}</p>
-      <Link 
-        href={linkTo}
-        className="inline-flex items-center text-secondary hover:underline"
+      <GlowingCard 
+        className="bg-background/30 backdrop-blur-sm rounded-xl border border-border hover:border-secondary p-6 transition-all duration-300 h-full"
+        glowColor="rgba(67, 186, 147, 0.4)"
       >
-        Explore <i className="ri-arrow-right-line ml-2"></i>
-      </Link>
+        <div className="flex items-center mb-4">
+          <div className="bg-primary/20 p-3 rounded-full mr-3">
+            <i className={`${icon} text-primary text-xl`}></i>
+          </div>
+          <h3 className="text-xl font-space font-semibold">{title}</h3>
+        </div>
+        <p className="text-muted-foreground mb-6">{description}</p>
+        <Link 
+          href={linkTo}
+          className="inline-flex items-center text-secondary hover:underline"
+        >
+          Explore <i className="ri-arrow-right-line ml-2"></i>
+        </Link>
+      </GlowingCard>
     </motion.div>
   );
 };
