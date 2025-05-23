@@ -67,25 +67,36 @@ export class MemStorage implements IStorage {
   }
   
   private initializeData() {
-    // Initialize projects
-    const portfolioData = getPortfolio();
-    portfolioData.forEach(project => {
-      this.projects.set(project.id, {
-        ...project,
-        createdAt: new Date()
-      } as Project);
-      this.projectId = Math.max(this.projectId, project.id + 1);
-    });
-    
-    // Initialize blog posts
-    const blogData = getBlogPosts();
-    blogData.forEach(post => {
-      this.blogPosts.set(post.id, {
-        ...post,
-        date: new Date(post.date)
-      } as BlogPost);
-      this.blogPostId = Math.max(this.blogPostId, post.id + 1);
-    });
+    try {
+      // Initialize projects
+      console.log("Initializing project data...");
+      const portfolioData = getPortfolio();
+      portfolioData.forEach(project => {
+        this.projects.set(project.id, {
+          ...project,
+          createdAt: new Date()
+        } as Project);
+        this.projectId = Math.max(this.projectId, project.id + 1);
+      });
+      console.log(`Loaded ${portfolioData.length} projects successfully.`);
+      
+      // Initialize blog posts
+      console.log("Initializing blog post data...");
+      const blogData = getBlogPosts();
+      blogData.forEach(post => {
+        // Ensure the date is a valid Date object
+        const parsedDate = post.date ? new Date(post.date) : new Date();
+        this.blogPosts.set(post.id, {
+          ...post,
+          date: parsedDate
+        } as BlogPost);
+        this.blogPostId = Math.max(this.blogPostId, post.id + 1);
+      });
+      console.log(`Loaded ${blogData.length} blog posts successfully.`);
+    } catch (error) {
+      console.error("Error initializing data:", error);
+      throw error;
+    }
   }
 
   // User methods (existing)
@@ -128,22 +139,34 @@ export class MemStorage implements IStorage {
   
   // Blog post methods
   async getAllBlogPosts(): Promise<BlogPost[]> {
-    return Array.from(this.blogPosts.values()).sort(
+    console.log("Fetching all blog posts");
+    const posts = Array.from(this.blogPosts.values()).sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
+    console.log(`Returning ${posts.length} blog posts`);
+    return posts;
   }
   
   async getBlogPostById(id: number): Promise<BlogPost | undefined> {
-    return this.blogPosts.get(id);
+    console.log(`Fetching blog post with ID: ${id}`);
+    const post = this.blogPosts.get(id);
+    if (post) {
+      console.log(`Found blog post: "${post.title}"`);
+    } else {
+      console.log(`Blog post with ID ${id} not found`);
+    }
+    return post;
   }
   
   async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
     const id = this.blogPostId++;
     const post: BlogPost = {
       ...insertPost,
-      id
+      id,
+      date: new Date() // Ensure date is always a valid Date object
     };
     this.blogPosts.set(id, post);
+    console.log(`Created new blog post: ID=${id}, Title="${post.title}"`);
     return post;
   }
   
