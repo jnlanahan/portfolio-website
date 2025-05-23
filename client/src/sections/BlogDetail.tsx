@@ -41,10 +41,8 @@ export const BlogDetail: React.FC = () => {
 
   return (
     <div className="page-container relative">
-      <Link href="/blog">
-        <a className="inline-flex items-center text-muted-foreground hover:text-secondary mb-8 transition-colors">
-          <i className="ri-arrow-left-line mr-2"></i> Back to all posts
-        </a>
+      <Link href="/blog" className="inline-flex items-center text-muted-foreground hover:text-secondary mb-8 transition-colors">
+        <i className="ri-arrow-left-line mr-2"></i> Back to all posts
       </Link>
 
       <motion.article
