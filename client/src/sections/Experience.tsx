@@ -20,7 +20,19 @@ export const Experience: React.FC<ExperienceProps> = ({ resume }) => {
         <div className="timeline relative pl-8 md:pl-12 max-w-4xl mx-auto">
           <div className="timeline-line"></div>
 
-          {resume.map((job, index) => (
+          {[...resume, ...education.map(edu => ({
+  id: edu.id,
+  title: edu.degree,
+  company: { name: edu.institution, location: edu.location || "" },
+  period: { start: edu.period.start, end: edu.period.end },
+  description: `Key coursework: ${edu.highlightedCourses.join(", ")}`,
+  skills: edu.highlightedCourses.map(course => ({ name: course, category: 'education' })),
+  isEducation: true
+}))].sort((a, b) => {
+  const aYear = parseInt(a.period.start);
+  const bYear = parseInt(b.period.start);
+  return bYear - aYear;
+}).map((item, index) => (
             <motion.div
               key={index}
               className={`timeline-item relative mb-16 ${index === resume.length - 1 ? "" : "mb-16"}`}
@@ -31,11 +43,17 @@ export const Experience: React.FC<ExperienceProps> = ({ resume }) => {
             >
               <div className="timeline-dot"></div>
               <div className="pl-8">
-                <h3 className="text-2xl font-space font-semibold">{job.title}</h3>
+                <h3 className="text-2xl font-space font-semibold">{item.title}</h3>
                 <div className="flex flex-wrap items-center text-muted-foreground mb-4">
-                  <span className="font-medium text-secondary">{job.company}</span>
+                  <span className="font-medium text-secondary">{item.company.name}</span>
+                  {item.company.location && (
+                    <>
+                      <span className="mx-2">•</span>
+                      <span>{item.company.location}</span>
+                    </>
+                  )}
                   <span className="mx-2">•</span>
-                  <span>{job.period}</span>
+                  <span>{`${item.period.start} - ${item.period.end}`}</span>
                 </div>
                 <p className="text-muted-foreground mb-4">{job.description}</p>
                 <div className="flex flex-wrap gap-2">

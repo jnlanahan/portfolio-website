@@ -245,6 +245,7 @@ const experienceData: ExperienceProfile = {
   ],
   education: [
     {
+      id: "mba-osu",
       degree: "MBA",
       institution: "The Ohio State University – Fisher College of Business",
       location: "Columbus, OH",
@@ -267,9 +268,16 @@ const experienceData: ExperienceProfile = {
         "Data Visualization",
         "Discovery Workshop",
         "Innovation Practice"
+      ],
+      highlightedCourses: [
+        "Corporate Financing",
+        "FINTECH",
+        "Data Analysis",
+        "Strategy"
       ]
     },
     {
+      id: "ms-missouri",
       degree: "MS, Engineering Management",
       institution: "Missouri University of Science and Technology",
       period: {
@@ -285,9 +293,15 @@ const experienceData: ExperienceProfile = {
         "Economic Decision Analysis",
         "Organizational Behavior",
         "Managerial Decision Making"
+      ],
+      highlightedCourses: [
+        "Global Project Management",
+        "Advanced Financial Management",
+        "Operations Management Science"
       ]
     },
     {
+      id: "bs-ncsu",
       degree: "BS, Civil Engineering (Structural)",
       institution: "North Carolina State University",
       period: {
@@ -305,6 +319,11 @@ const experienceData: ExperienceProfile = {
         "Principles of Pavement Design",
         "Military Leadership Training Management",
         "Military Ethics & Professional Development"
+      ],
+      highlightedCourses: [
+        "Civil Engineering Systems",
+        "Structural Analysis",
+        "Military Leadership Training Management"
       ]
     }
   ],
