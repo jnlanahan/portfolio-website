@@ -52,7 +52,7 @@ export function GlowingCard({
     setIsTouch(true);
     setIsHovering(true);
     setOpacity(1);
-    
+
     // For touch devices, position the glow in the center
     if (cardRef.current) {
       const rect = cardRef.current.getBoundingClientRect();
@@ -103,7 +103,7 @@ export function GlowingCard({
           zIndex: 1,
         }}
       />
-      
+
       {/* Card content */}
       <div className="relative z-10">{children}</div>
     </div>
