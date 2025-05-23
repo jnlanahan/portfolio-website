@@ -7,6 +7,7 @@ import NotFound from "@/pages/not-found";
 import NewHomePage from "@/pages/NewHomePage";
 import AboutPage from "@/pages/AboutPage";
 import ResumePage from "@/pages/ResumePage";
+import ResumePage2 from "@/pages/ResumePage2";
 import PortfolioPage from "@/pages/PortfolioPage";
 import BlogPage from "@/pages/BlogPage";
 import TopFiveListsPage from "@/pages/TopFiveListsPage";
@@ -19,6 +20,7 @@ function Router() {
     <Switch>
       <Route path="/" component={AboutPage} />
       <Route path="/my-experience" component={ResumePage} />
+      <Route path="/my-experience-2" component={ResumePage2} />
       <Route path="/portfolio" component={PortfolioPage} />
       <Route path="/blog" component={BlogPage} />
       <Route path="/blog/:slug" component={BlogDetail} />

@@ -46,8 +46,14 @@ const Navbar = () => {
     },
     { 
       path: "/my-experience", 
-      label: "My Experience", 
+      label: "Experience Timeline", 
       icon: "ri-file-list-line",
+      isActiveCheck: (path: string) => isActive(path) 
+    },
+    { 
+      path: "/my-experience-2", 
+      label: "Experience Overview", 
+      icon: "ri-timeline-line",
       isActiveCheck: (path: string) => isActive(path) 
     },
     { 
