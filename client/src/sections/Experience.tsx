@@ -10,11 +10,12 @@ interface ExperienceProps {
 export const Experience: React.FC<ExperienceProps> = ({ resume, education }) => {
   const combinedItems = [...resume, ...education.map(edu => ({
     id: edu.id,
-    title: edu.degree,
+    title: `Student: ${edu.degree}`,
     company: { name: edu.institution, location: edu.location || "" },
     period: edu.period,
-    description: edu.highlightedCourses ? `Key coursework: ${edu.highlightedCourses.join(", ")}` : "",
-    skills: edu.highlightedCourses?.map(course => ({ name: course, category: 'education' })) || [],
+    description: "Relevant Coursework:",
+    achievements: edu.courses || [],
+    skills: [],
     isEducation: true
   }))].sort((a, b) => {
     const aYear = parseInt(a.period.start);
