@@ -66,7 +66,7 @@ const AboutPage = () => {
               <p className="text-lg text-muted-foreground mb-8 max-w-xl">
                 With 8+ years of experience crafting digital experiences since 2015, I specialize in building impactful web applications. My journey began with a Computer Science degree from UC Berkeley, followed by roles at startups and tech companies. I create intuitive, accessible interfaces backed by robust architecture, combining technical excellence with empathetic design thinking.
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 border border-secondary rounded-lg p-6">
                 <div>
                   <h4 className="text-xl font-space font-medium mb-4 text-secondary">Front-End</h4>
                   <ul className="space-y-2 text-muted-foreground">
