@@ -18,13 +18,9 @@ const RotatingWords: React.FC<RotatingWordsProps> = ({
   const [key, setKey] = useState(0);
   
   useEffect(() => {
-    // Log to make sure the component is working
-    console.log('RotatingWords mounted, words:', words);
-    
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) => {
         const newIndex = (prevIndex + 1) % words.length;
-        console.log('Rotating to word:', words[newIndex]);
         setKey(prev => prev + 1); // Force re-render of animation
         return newIndex;
       });
