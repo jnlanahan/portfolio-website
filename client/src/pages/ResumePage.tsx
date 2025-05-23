@@ -20,17 +20,34 @@ const ResumePage = () => {
 
   return (
     <div className="page-container">
-      <motion.div
-        className="text-center mb-12"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <h1 className="text-4xl md:text-5xl font-bold mb-6">My Experience</h1>
-        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-          My professional journey through tech, design, and problem-solving.
-        </p>
-      </motion.div>
+      <div className="relative">
+        <motion.div
+          className="absolute right-0 top-0"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <a
+            href="/resume.pdf"
+            className="inline-flex items-center px-6 py-3 bg-background/30 backdrop-blur-sm border border-border hover:border-secondary text-foreground font-medium rounded-md transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="ri-download-line mr-2"></i> Download Full Resume
+          </a>
+        </motion.div>
+        <motion.div
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">My Experience</h1>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            My professional journey through tech, design, and problem-solving.
+          </p>
+        </motion.div>
+      </div>
 
       <div className="timeline relative pl-8 md:pl-12 max-w-4xl mx-auto">
         <div className="timeline-line"></div>
@@ -67,16 +84,7 @@ const ResumePage = () => {
         ))}
       </div>
 
-      <div className="mt-16 text-center">
-        <a
-          href="/resume.pdf"
-          className="inline-flex items-center px-6 py-3 bg-background/30 backdrop-blur-sm border border-border hover:border-secondary text-foreground font-medium rounded-md transition-colors"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <i className="ri-download-line mr-2"></i> Download Full Resume
-        </a>
-      </div>
+      
     </div>
   );
 };
