@@ -150,9 +150,9 @@ const AboutPage = () => {
       </section>
 
       {/* About Me Section */}
-      <section className="py-8">
+      <section>
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
