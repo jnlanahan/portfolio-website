@@ -1,9 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
+
+// Define navigation item type
+export interface NavItem {
+  path: string;
+  label: string;
+  icon?: string;
+  highlight?: boolean;
+  isActiveCheck?: (path: string, currentLocation: string) => boolean;
+}
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [location] = useLocation();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Handle navbar transparency on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -16,13 +36,38 @@ const Navbar = () => {
     return location.startsWith(path);
   };
 
-  // Navigation items to avoid repetition
-  const navItems = [
-    { path: "/", label: "About", isActiveCheck: (path: string) => isActive(path) && location === path },
-    { path: "/resume", label: "My Experience", isActiveCheck: (path: string) => isActive(path) },
-    { path: "/portfolio", label: "Portfolio", isActiveCheck: (path: string) => isActive(path) },
-    { path: "/blog", label: "Blog", isActiveCheck: (path: string) => isActive(path) && location !== '/blog/[id]' },
-    { path: "/top5", label: "Top 5", isActiveCheck: (path: string) => isActive(path) },
+  // Navigation items with enhanced structure
+  const navItems: NavItem[] = [
+    { 
+      path: "/", 
+      label: "About", 
+      icon: "ri-home-line",
+      isActiveCheck: (path: string) => isActive(path) && location === path 
+    },
+    { 
+      path: "/resume", 
+      label: "My Experience", 
+      icon: "ri-file-list-line",
+      isActiveCheck: (path: string) => isActive(path) 
+    },
+    { 
+      path: "/portfolio", 
+      label: "Portfolio", 
+      icon: "ri-folder-line",
+      isActiveCheck: (path: string) => isActive(path) 
+    },
+    { 
+      path: "/blog", 
+      label: "Blog", 
+      icon: "ri-article-line",
+      isActiveCheck: (path: string) => isActive(path) && location !== '/blog/[id]' 
+    },
+    { 
+      path: "/top5", 
+      label: "Top 5", 
+      icon: "ri-star-line",
+      isActiveCheck: (path: string) => isActive(path) 
+    },
   ];
 
   return (

@@ -1,18 +1,248 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { getResume } from "@/data/resume";
+import { getExperienceProfile, formatPeriod, ExperienceEntry, Skill } from "@/data/resume";
 import { GlowingCard } from "@/components/ui/glowing-card";
 import { useRef } from "react";
 import '../styles/timeline.css';
 
-const ResumePage = () => {
-  const { data: resume, isLoading } = useQuery({
+// Component for displaying skills with category-based styling
+const SkillBadge = ({ 
+  skill, 
+  index, 
+  parentIndex 
+}: { 
+  skill: Skill; 
+  index: number; 
+  parentIndex: number;
+}) => {
+  // Determine color based on skill category
+  const getBgColor = (category?: string) => {
+    switch (category) {
+      case 'frontend': return 'bg-secondary/80';
+      case 'backend': return 'bg-blue-500/80';
+      case 'design': return 'bg-purple-500/80';
+      case 'leadership': return 'bg-amber-500/80';
+      default: return 'bg-secondary/80';
+    }
+  };
+  
+  return (
+    <motion.span
+      key={index}
+      className={`px-3 py-1 ${getBgColor(skill.category)} text-secondary-foreground text-sm rounded-full`}
+      initial={{ opacity: 0, scale: 0.8 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ 
+        delay: 0.3 + parentIndex * 0.1 + index * 0.05,
+        duration: 0.3
+      }}
+    >
+      {skill.name}
+    </motion.span>
+  );
+};
+
+// Component for displaying achievements as bullet points
+const Achievements = ({ 
+  achievements, 
+  parentIndex 
+}: { 
+  achievements?: string[]; 
+  parentIndex: number;
+}) => {
+  if (!achievements || achievements.length === 0) return null;
+  
+  return (
+    <div className="mb-4">
+      <h4 className="font-medium text-sm text-secondary mb-2">Key Achievements</h4>
+      <ul className="space-y-1 text-sm text-muted-foreground">
+        {achievements.map((achievement, idx) => (
+          <motion.li 
+            key={idx}
+            className="list-disc ml-4"
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ 
+              delay: 0.4 + parentIndex * 0.1 + idx * 0.1,
+              duration: 0.3
+            }}
+          >
+            {achievement}
+          </motion.li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+// Component for a single experience entry
+const ExperienceItem = ({ 
+  job, 
+  index, 
+  totalItems 
+}: { 
+  job: ExperienceEntry; 
+  index: number; 
+  totalItems: number;
+}) => {
+  return (
+    <motion.div
+      key={job.id}
+      className={`timeline-item relative mb-16 ${index === totalItems - 1 ? "" : "mb-16"}`}
+      initial={{ opacity: 0, y: 50 }}
+      viewport={{ once: true, amount: 0.3 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ 
+        duration: 0.7, 
+        delay: index * 0.15,
+        type: "spring",
+        stiffness: 50
+      }}
+    >
+      {/* Animated dot */}
+      <motion.div 
+        className="timeline-dot"
+        initial={{ scale: 0 }}
+        whileInView={{ scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ 
+          duration: 0.5, 
+          delay: 0.2 + index * 0.15,
+          type: "spring", 
+          bounce: 0.4 
+        }}
+      ></motion.div>
+      
+      <div className="md:grid md:grid-cols-3 md:gap-6 pl-8">
+        {/* Left content - Company info */}
+        <div className="col-span-1">
+          <h3 className="text-2xl font-space font-semibold">{job.title}</h3>
+          <div className="flex flex-wrap items-center text-muted-foreground mb-4">
+            <span className="font-medium text-secondary">{job.company.name}</span>
+            <span className="mx-2">•</span>
+            <span>{formatPeriod(job.period)}</span>
+          </div>
+          
+          {job.company.location && (
+            <div className="text-sm text-muted-foreground mb-4">
+              <i className="ri-map-pin-line mr-1"></i> {job.company.location}
+            </div>
+          )}
+          
+          {/* Logo placeholder or actual logo if available */}
+          <div className="hidden md:block w-full aspect-square relative mb-4 overflow-hidden rounded-lg company-logo-placeholder">
+            {job.company.logoUrl ? (
+              <img 
+                src={job.company.logoUrl} 
+                alt={`${job.company.name} logo`}
+                className="w-full h-full object-contain" 
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-secondary text-xs">
+                  {job.company.name} Logo
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+        
+        {/* Right content - Job details */}
+        <div className="col-span-2">
+          {/* Project image placeholder or actual image if available */}
+          <div className="w-full aspect-video relative mb-4 overflow-hidden rounded-lg project-image-placeholder">
+            {job.projectImageUrl ? (
+              <img 
+                src={job.projectImageUrl} 
+                alt="Project showcase" 
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-secondary text-sm">
+                  Project Image
+                </span>
+              </div>
+            )}
+          </div>
+          
+          <p className="text-muted-foreground mb-4">{job.description}</p>
+          
+          {/* Achievements section */}
+          <Achievements achievements={job.achievements} parentIndex={index} />
+          
+          {/* Skills section */}
+          <div className="flex flex-wrap gap-2">
+            {job.skills.map((skill, skillIndex) => (
+              <SkillBadge 
+                key={skillIndex}
+                skill={skill} 
+                index={skillIndex} 
+                parentIndex={index} 
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+// Component for education section
+const EducationSection = ({ 
+  education 
+}: { 
+  education: any[] 
+}) => {
+  if (!education || education.length === 0) return null;
+  
+  return (
+    <div className="mt-20 mb-12">
+      <motion.h2 
+        className="text-3xl font-bold mb-8 text-center"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        Education & Certification
+      </motion.h2>
+      
+      <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        {education.map((edu, index) => (
+          <motion.div 
+            key={index}
+            className="bg-card p-6 rounded-lg shadow-md"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.1, duration: 0.5 }}
+          >
+            <h3 className="text-xl font-bold">{edu.degree}</h3>
+            <div className="text-secondary font-medium">{edu.institution}</div>
+            <div className="text-sm text-muted-foreground mb-2">
+              {edu.period.start} - {edu.period.end}
+              {edu.location && ` • ${edu.location}`}
+            </div>
+            {edu.description && <p className="text-muted-foreground text-sm">{edu.description}</p>}
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// Main Experience Page Component
+const ExperiencePage = () => {
+  const { data: profile, isLoading } = useQuery({
     queryKey: ["/api/resume"],
-    initialData: getResume(),
+    initialData: getExperienceProfile(),
   });
 
   // Timeline scrolling animation
-  const timelineRef = useRef(null);
+  const timelineRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: timelineRef,
     offset: ["start end", "end end"]
@@ -68,6 +298,7 @@ const ResumePage = () => {
         </motion.div>
       </div>
 
+      {/* Work Experience Timeline */}
       <div ref={timelineRef} className="timeline relative pl-8 md:pl-12 max-w-4xl mx-auto" style={{ position: 'relative' }}>
         {/* Animated timeline line that grows with scroll */}
         <motion.div 
@@ -75,90 +306,100 @@ const ResumePage = () => {
           style={{ height: timelineHeight }}
         ></motion.div>
 
-        {resume.map((job, index) => (
-          <motion.div
-            key={index}
-            className={`timeline-item relative mb-16 ${index === resume.length - 1 ? "" : "mb-16"}`}
-            initial={{ opacity: 0, y: 50 }}
-            viewport={{ once: true, amount: 0.3 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ 
-              duration: 0.7, 
-              delay: index * 0.15,
-              type: "spring",
-              stiffness: 50
-            }}
-          >
-            {/* Animated dot */}
-            <motion.div 
-              className="timeline-dot"
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ 
-                duration: 0.5, 
-                delay: 0.2 + index * 0.15,
-                type: "spring", 
-                bounce: 0.4 
-              }}
-            ></motion.div>
-            
-            <div className="md:grid md:grid-cols-3 md:gap-6 pl-8">
-              {/* Left content - Company info */}
-              <div className="col-span-1">
-                <h3 className="text-2xl font-space font-semibold">{job.title}</h3>
-                <div className="flex flex-wrap items-center text-muted-foreground mb-4">
-                  <span className="font-medium text-secondary">{job.company}</span>
-                  <span className="mx-2">•</span>
-                  <span>{job.period}</span>
-                </div>
-                
-                {/* Image placeholder */}
-                <div className="hidden md:block w-full aspect-square relative mb-4 overflow-hidden rounded-lg company-logo-placeholder">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-secondary text-xs">
-                      {job.company} Logo
-                    </span>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Right content - Job details */}
-              <div className="col-span-2">
-                {/* Project image placeholder */}
-                <div className="w-full aspect-video relative mb-4 overflow-hidden rounded-lg project-image-placeholder">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-secondary text-sm">
-                      Project Image
-                    </span>
-                  </div>
-                </div>
-                
-                <p className="text-muted-foreground mb-4">{job.description}</p>
-                <div className="flex flex-wrap gap-2">
-                  {job.skills.map((skill, skillIndex) => (
-                    <motion.span
-                      key={skillIndex}
-                      className="px-3 py-1 bg-secondary/80 text-secondary-foreground text-sm rounded-full"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ 
-                        delay: 0.3 + index * 0.1 + skillIndex * 0.05,
-                        duration: 0.3
-                      }}
-                    >
-                      {skill}
-                    </motion.span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
+        {profile.workExperience.map((job, index) => (
+          <ExperienceItem 
+            key={job.id} 
+            job={job} 
+            index={index} 
+            totalItems={profile.workExperience.length} 
+          />
         ))}
       </div>
+      
+      {/* Education Section */}
+      {profile.education && <EducationSection education={profile.education} />}
+      
+      {/* Skills Section */}
+      {profile.skills && (
+        <div className="mt-12 mb-20 max-w-4xl mx-auto">
+          <motion.h2 
+            className="text-3xl font-bold mb-8 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            Technical Skills
+          </motion.h2>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Technical Skills */}
+            <motion.div
+              className="p-6 rounded-lg bg-card shadow-md"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1, duration: 0.5 }}
+            >
+              <h3 className="text-xl font-bold mb-4 text-center text-secondary">Technical</h3>
+              <div className="flex flex-wrap gap-2">
+                {profile.skills.technical.map((skill, idx) => (
+                  <span 
+                    key={idx} 
+                    className="text-sm bg-secondary/10 text-secondary px-3 py-1 rounded-full"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+            
+            {/* Leadership Skills */}
+            <motion.div
+              className="p-6 rounded-lg bg-card shadow-md"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
+              <h3 className="text-xl font-bold mb-4 text-center text-amber-500">Leadership</h3>
+              <div className="flex flex-wrap gap-2">
+                {profile.skills.leadership.map((skill, idx) => (
+                  <span 
+                    key={idx} 
+                    className="text-sm bg-amber-500/10 text-amber-500 px-3 py-1 rounded-full"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+            
+            {/* Other Skills */}
+            <motion.div
+              className="p-6 rounded-lg bg-card shadow-md"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              <h3 className="text-xl font-bold mb-4 text-center text-purple-500">Additional</h3>
+              <div className="flex flex-wrap gap-2">
+                {profile.skills.other.map((skill, idx) => (
+                  <span 
+                    key={idx} 
+                    className="text-sm bg-purple-500/10 text-purple-500 px-3 py-1 rounded-full"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default ResumePage;
+export default ExperiencePage;

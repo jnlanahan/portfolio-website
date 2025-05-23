@@ -1,11 +1,11 @@
 import PDFDocument from 'pdfkit';
 import { Response } from 'express';
-import { ResumeJobType } from '../client/src/data/resume';
+import { ExperienceEntry, getExperienceProfile } from '../client/src/data/resume';
 import path from 'path';
 import fs from 'fs';
 
 // Function to generate a PDF resume
-export const generateResumePDF = async (res: Response, resumeData: ResumeJobType[]) => {
+export const generateResumePDF = async (res: Response, resumeData: any) => {
   // Create a new PDF document
   const doc = new PDFDocument({
     margin: 50,
@@ -20,14 +20,16 @@ export const generateResumePDF = async (res: Response, resumeData: ResumeJobType
   res.setHeader('Content-Disposition', 'attachment; filename=nick-lanahan-cv.pdf');
 
   // Add styling and content to the PDF
-  generateProfessionalResume(doc);
+  // Get full profile to access all data
+  const fullProfile = getExperienceProfile();
+  generateProfessionalResume(doc, fullProfile);
 
   // Finalize the PDF and end the stream
   doc.end();
 };
 
 // Function to generate a professional resume
-const generateProfessionalResume = (doc: PDFKit.PDFDocument) => {
+const generateProfessionalResume = (doc: PDFKit.PDFDocument, profile: any) => {
   // Add document metadata
   doc.info.Title = 'Nick Lanahan - Professional Resume';
   doc.info.Author = 'Nick Lanahan';
