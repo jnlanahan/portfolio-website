@@ -362,7 +362,7 @@ const ExperiencePage = () => {
       </div>
 
       {/* Career Timeline Navigator */}
-      <div className="mb-16 max-w-4xl mx-auto">
+      <div className="mb-16 max-w-4xl mx-auto px-4">
         <motion.div
           className="horizontal-timeline relative"
           initial={{ opacity: 0, y: 20 }}
@@ -371,9 +371,9 @@ const ExperiencePage = () => {
           transition={{ duration: 0.5 }}
         >
           {/* Timeline Bar */}
-          <div className="h-1 bg-border relative w-full mx-auto my-8">
+          <div className="h-1 bg-border relative w-full mx-auto my-14">
             {/* Combine work experience and education items for the timeline */}
-            {[...resume, ...education].map((item, index) => {
+            {[...resume, ...(education || [])].map((item, index) => {
                 // Determine if this is an education item
                 const isEducation = 'institution' in item;
                 
@@ -396,6 +396,16 @@ const ExperiencePage = () => {
                   ? (item as any).logoUrl 
                   : (item as any).company.logoUrl;
                 
+                // Create a shorter version of the title for display
+                let shortTitle = title;
+                if (title.length > 20) {
+                  const titleParts = title.split('–');
+                  shortTitle = titleParts[0].trim();
+                  if (shortTitle.length > 20) {
+                    shortTitle = shortTitle.substring(0, 20) + '...';
+                  }
+                }
+                
                 return (
                   <motion.div
                     key={`timeline-${id}`}
@@ -403,8 +413,8 @@ const ExperiencePage = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.1 * index, duration: 0.5 }}
-                    className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group"
-                    style={{ left: `${position}%`, top: '50%' }}
+                    className="absolute transform -translate-x-1/2 cursor-pointer group"
+                    style={{ left: `${position}%`, top: '-2px' }}
                   >
                     <a 
                       href={`#${id}`} 
@@ -412,32 +422,37 @@ const ExperiencePage = () => {
                       aria-label={`Jump to ${title} at ${name}`}
                     >
                       {/* Year label */}
-                      <span className="absolute whitespace-nowrap text-xs text-muted-foreground bottom-6 left-1/2 transform -translate-x-1/2">
+                      <span className="absolute whitespace-nowrap text-xs text-muted-foreground -top-6 left-1/2 transform -translate-x-1/2">
                         {item.period.start}
                       </span>
                       
-                      {/* Timeline point */}
-                      <div className={`w-3 h-3 rounded-full ${isEducation ? 'bg-blue-500' : 'bg-secondary'} transition-all duration-300 group-hover:ring-4 group-hover:ring-secondary/20`}></div>
+                      {/* Timeline point - all same color now */}
+                      <div className="w-5 h-5 rounded-full bg-secondary border-2 border-background absolute -top-2 left-1/2 transform -translate-x-1/2 transition-all duration-300 group-hover:ring-4 group-hover:ring-secondary/20"></div>
                       
                       {/* Logo (always shown, placeholder if no logo) */}
-                      <div className="absolute top-6 left-1/2 transform -translate-x-1/2 opacity-80 hover:opacity-100 transition-all duration-300">
-                        <div className="w-10 h-10 bg-card shadow-lg border border-border p-1 overflow-hidden flex items-center justify-center">
+                      <div className="absolute top-8 left-1/2 transform -translate-x-1/2 opacity-80 hover:opacity-100 transition-all duration-300">
+                        <div className="w-12 h-12 bg-card shadow-lg border border-border p-1 overflow-hidden flex items-center justify-center">
                           {logoUrl ? (
                             <img 
                               src={logoUrl} 
                               alt={`${name} logo`}
-                              className="w-8 h-8 object-contain"
+                              className="w-10 h-10 object-contain"
                             />
                           ) : (
-                            <div className="w-8 h-8 flex items-center justify-center text-xs text-center text-secondary">
+                            <div className="w-10 h-10 flex items-center justify-center text-xs text-center text-secondary">
                               {name.substring(0, 2).toUpperCase()}
                             </div>
                           )}
                         </div>
+                        
+                        {/* Role label below logo */}
+                        <div className="text-[10px] text-center text-muted-foreground mt-1 max-w-[80px] mx-auto overflow-hidden text-ellipsis whitespace-nowrap">
+                          {shortTitle}
+                        </div>
                       </div>
                       
                       {/* Name tooltip */}
-                      <div className="absolute opacity-0 group-hover:opacity-100 bottom-8 left-1/2 transform -translate-x-1/2 bg-card shadow-md rounded-md p-1 text-xs whitespace-nowrap transition-all duration-300 border border-border">
+                      <div className="absolute opacity-0 group-hover:opacity-100 -top-10 left-1/2 transform -translate-x-1/2 bg-card shadow-md rounded-md p-1 text-xs whitespace-nowrap transition-all duration-300 border border-border z-10">
                         <div className="font-medium">{name}</div>
                         <div className="text-muted-foreground text-[10px]">{title}</div>
                       </div>
@@ -446,10 +461,10 @@ const ExperiencePage = () => {
                 );
               })}
               
-            {/* Fixed year markers - reversed order */}
-            <div className="absolute left-0 -top-3 text-xs text-muted-foreground">2025</div>
-            <div className="absolute left-1/2 -top-3 transform -translate-x-1/2 text-xs text-muted-foreground">2016</div>
-            <div className="absolute right-0 -top-3 text-xs text-muted-foreground">2007</div>
+            {/* Fixed year markers - adjusted placement */}
+            <div className="absolute left-0 -top-6 text-xs font-medium">2025</div>
+            <div className="absolute left-1/2 -top-6 transform -translate-x-1/2 text-xs font-medium">2016</div>
+            <div className="absolute right-0 -top-6 text-xs font-medium">2007</div>
           </div>
         </motion.div>
       </div>
