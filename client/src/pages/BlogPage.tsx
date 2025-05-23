@@ -57,17 +57,13 @@ const BlogPage = () => {
                 <span>{post.readTime} min read</span>
               </div>
               <h3 className="text-xl font-space font-semibold mb-3">
-                <Link href={`/blog/${post.id}`}>
-                  <a className="hover:text-secondary transition-colors">
-                    {post.title}
-                  </a>
+                <Link href={`/blog/${post.id}`} className="hover:text-secondary transition-colors">
+                  {post.title}
                 </Link>
               </h3>
               <p className="text-muted-foreground mb-4">{post.excerpt}</p>
-              <Link href={`/blog/${post.id}`}>
-                <a className="inline-flex items-center text-secondary hover:underline">
-                  Read More <i className="ri-arrow-right-line ml-2"></i>
-                </a>
+              <Link href={`/blog/${post.id}`} className="inline-flex items-center text-secondary hover:underline">
+                Read More <i className="ri-arrow-right-line ml-2"></i>
               </Link>
             </div>
           </motion.article>

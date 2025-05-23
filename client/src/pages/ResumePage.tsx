@@ -67,7 +67,7 @@ const ResumePage = () => {
         </motion.div>
       </div>
 
-      <div ref={timelineRef} className="timeline relative pl-8 md:pl-12 max-w-4xl mx-auto">
+      <div ref={timelineRef} className="timeline relative pl-8 md:pl-12 max-w-4xl mx-auto" style={{ position: 'relative' }}>
         {/* Animated timeline line that grows with scroll */}
         <motion.div 
           className="timeline-line"
