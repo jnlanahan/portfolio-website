@@ -16,20 +16,25 @@ const SkillBadge = ({
   parentIndex: number;
 }) => {
   // Determine color based on skill category
-  const getBgColor = (category?: string) => {
+  const getSkillStyles = (category?: string) => {
     switch (category) {
-      case 'frontend': return 'bg-secondary/80';
-      case 'backend': return 'bg-blue-500/80';
-      case 'design': return 'bg-purple-500/80';
-      case 'leadership': return 'bg-amber-500/80';
-      default: return 'bg-secondary/80';
+      case 'leadership': 
+        return { bg: 'bg-blue-500/10', text: 'text-blue-500' };
+      case 'business': 
+        return { bg: 'bg-amber-500/10', text: 'text-amber-500' };
+      case 'product': 
+        return { bg: 'bg-green-500/10', text: 'text-green-500' };
+      default: 
+        return { bg: 'bg-secondary/10', text: 'text-secondary' };
     }
   };
 
+  const styles = getSkillStyles(skill.category);
+  
   return (
     <motion.span
       key={index}
-      className={`px-3 py-1 ${getBgColor(skill.category)} text-secondary-foreground text-sm rounded-full`}
+      className={`px-3 py-1 ${styles.bg} ${styles.text} text-sm rounded-full`}
       initial={{ opacity: 0, scale: 0.8 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
@@ -438,7 +443,7 @@ const ExperiencePage = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            Technical Skills
+            Skills Overview
           </motion.h2>
 
           <div className="grid md:grid-cols-3 gap-8">
