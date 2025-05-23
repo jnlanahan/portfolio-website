@@ -372,20 +372,33 @@ const ExperiencePage = () => {
         >
           {/* Timeline Bar */}
           <div className="h-1 bg-border relative w-full mx-auto my-8">
-            {/* Generate timeline points from resume data */}
-            {resume
-              .sort((a, b) => parseInt(b.period.start) - parseInt(a.period.start)) // Reverse sort: newest first
-              .map((job, index) => {
+            {/* Combine work experience and education items for the timeline */}
+            {[...resume, ...education].map((item, index) => {
+                // Determine if this is an education item
+                const isEducation = 'institution' in item;
+                
+                // Get the start year from the item
+                const startYear = parseInt(item.period.start);
+                
                 // Calculate position based on start year (adjust min/max years as needed)
                 const minYear = 2007; // Earliest year in timeline
                 const maxYear = 2025; // Latest year (current)
                 const rangeWidth = maxYear - minYear;
                 // Reverse the position calculation (100 - position) to flip the timeline direction
-                const position = 100 - ((parseInt(job.period.start) - minYear) / rangeWidth) * 100;
+                const position = 100 - ((startYear - minYear) / rangeWidth) * 100;
+                
+                // Determine the ID, name, and title based on whether it's education or work experience
+                const id = item.id;
+                const name = isEducation ? (item as any).institution : (item as any).company.name;
+                const title = isEducation ? (item as any).degree : (item as any).title;
+                // Get the logo if available
+                const logoUrl = isEducation 
+                  ? (item as any).logoUrl 
+                  : (item as any).company.logoUrl;
                 
                 return (
                   <motion.div
-                    key={job.id}
+                    key={`timeline-${id}`}
                     initial={{ opacity: 0, scale: 0 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
@@ -394,39 +407,39 @@ const ExperiencePage = () => {
                     style={{ left: `${position}%`, top: '50%' }}
                   >
                     <a 
-                      href={`#${job.id}`} 
+                      href={`#${id}`} 
                       className="block relative"
-                      aria-label={`Jump to ${job.title} at ${job.company.name}`}
+                      aria-label={`Jump to ${title} at ${name}`}
                     >
                       {/* Year label */}
                       <span className="absolute whitespace-nowrap text-xs text-muted-foreground bottom-6 left-1/2 transform -translate-x-1/2">
-                        {job.period.start}
+                        {item.period.start}
                       </span>
                       
                       {/* Timeline point */}
-                      <div className={`w-3 h-3 rounded-full bg-secondary transition-all duration-300 group-hover:ring-4 group-hover:ring-secondary/20`}></div>
+                      <div className={`w-3 h-3 rounded-full ${isEducation ? 'bg-blue-500' : 'bg-secondary'} transition-all duration-300 group-hover:ring-4 group-hover:ring-secondary/20`}></div>
                       
-                      {/* Company logo (always shown, placeholder if no logo) */}
+                      {/* Logo (always shown, placeholder if no logo) */}
                       <div className="absolute top-6 left-1/2 transform -translate-x-1/2 opacity-80 hover:opacity-100 transition-all duration-300">
                         <div className="w-10 h-10 bg-card shadow-lg border border-border p-1 overflow-hidden flex items-center justify-center">
-                          {job.company.logoUrl ? (
+                          {logoUrl ? (
                             <img 
-                              src={job.company.logoUrl} 
-                              alt={`${job.company.name} logo`}
+                              src={logoUrl} 
+                              alt={`${name} logo`}
                               className="w-8 h-8 object-contain"
                             />
                           ) : (
                             <div className="w-8 h-8 flex items-center justify-center text-xs text-center text-secondary">
-                              {job.company.name.substring(0, 2).toUpperCase()}
+                              {name.substring(0, 2).toUpperCase()}
                             </div>
                           )}
                         </div>
                       </div>
                       
-                      {/* Company name tooltip */}
+                      {/* Name tooltip */}
                       <div className="absolute opacity-0 group-hover:opacity-100 bottom-8 left-1/2 transform -translate-x-1/2 bg-card shadow-md rounded-md p-1 text-xs whitespace-nowrap transition-all duration-300 border border-border">
-                        <div className="font-medium">{job.company.name}</div>
-                        <div className="text-muted-foreground text-[10px]">{job.title}</div>
+                        <div className="font-medium">{name}</div>
+                        <div className="text-muted-foreground text-[10px]">{title}</div>
                       </div>
                     </a>
                   </motion.div>
