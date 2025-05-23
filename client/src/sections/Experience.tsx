@@ -1,11 +1,27 @@
+
 import { motion } from "framer-motion";
-import { ResumeType } from "@/data/resume";
+import { ExperienceEntry } from "@/data/resume";
 
 interface ExperienceProps {
-  resume: ResumeType;
+  resume: ExperienceEntry[];
+  education: any[];
 }
 
-export const Experience: React.FC<ExperienceProps> = ({ resume }) => {
+export const Experience: React.FC<ExperienceProps> = ({ resume, education }) => {
+  const combinedItems = [...resume, ...education.map(edu => ({
+    id: edu.id,
+    title: edu.degree,
+    company: { name: edu.institution, location: edu.location || "" },
+    period: edu.period,
+    description: edu.highlightedCourses ? `Key coursework: ${edu.highlightedCourses.join(", ")}` : "",
+    skills: edu.highlightedCourses?.map(course => ({ name: course, category: 'education' })) || [],
+    isEducation: true
+  }))].sort((a, b) => {
+    const aYear = parseInt(a.period.start);
+    const bYear = parseInt(b.period.start);
+    return bYear - aYear;
+  });
+
   return (
     <section id="resume" className="py-24">
       <div className="container mx-auto px-4 md:px-6">
@@ -13,29 +29,17 @@ export const Experience: React.FC<ExperienceProps> = ({ resume }) => {
           <h2 className="text-3xl md:text-4xl font-bold font-space mb-4">Experience</h2>
           <div className="w-24 h-1 bg-secondary mb-8"></div>
           <p className="text-lg text-muted-foreground text-center max-w-3xl">
-            My professional journey through tech, design, and problem-solving.
+            My professional journey through tech, design, and learning.
           </p>
         </div>
 
         <div className="timeline relative pl-8 md:pl-12 max-w-4xl mx-auto">
           <div className="timeline-line"></div>
 
-          {[...resume, ...education.map(edu => ({
-  id: edu.id,
-  title: edu.degree,
-  company: { name: edu.institution, location: edu.location || "" },
-  period: { start: edu.period.start, end: edu.period.end },
-  description: `Key coursework: ${edu.highlightedCourses.join(", ")}`,
-  skills: edu.highlightedCourses.map(course => ({ name: course, category: 'education' })),
-  isEducation: true
-}))].sort((a, b) => {
-  const aYear = parseInt(a.period.start);
-  const bYear = parseInt(b.period.start);
-  return bYear - aYear;
-}).map((item, index) => (
+          {combinedItems.map((item, index) => (
             <motion.div
-              key={index}
-              className={`timeline-item relative mb-16 ${index === resume.length - 1 ? "" : "mb-16"}`}
+              key={item.id}
+              className={`timeline-item relative mb-16 ${index === combinedItems.length - 1 ? "" : "mb-16"}`}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -55,14 +59,14 @@ export const Experience: React.FC<ExperienceProps> = ({ resume }) => {
                   <span className="mx-2">•</span>
                   <span>{`${item.period.start} - ${item.period.end}`}</span>
                 </div>
-                <p className="text-muted-foreground mb-4">{job.description}</p>
+                <p className="text-muted-foreground mb-4">{item.description}</p>
                 <div className="flex flex-wrap gap-2">
-                  {job.skills.map((skill, skillIndex) => (
+                  {item.skills.map((skill, skillIndex) => (
                     <span
                       key={skillIndex}
                       className="px-3 py-1 bg-background text-muted-foreground text-sm rounded-full"
                     >
-                      {skill}
+                      {skill.name}
                     </span>
                   ))}
                 </div>
