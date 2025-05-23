@@ -81,7 +81,7 @@ const experienceData: ExperienceProfile = {
       company: {
         name: "EY",
         location: "Columbus, OH",
-        logoUrl: "/src/assets/images/logos/ey-logo.svg"
+        logoUrl: "/src/assets/images/logos/ey-logo.png"
       },
       period: {
         start: "2021",
@@ -180,7 +180,7 @@ const experienceData: ExperienceProfile = {
       company: {
         name: "U.S. Army – Ohio State University",
         location: "Columbus, OH",
-        logoUrl: "/src/assets/images/logos/osu-logo.svg"
+        logoUrl: "/src/assets/images/logos/osu-logo.png"
       },
       period: {
         start: "2018",
@@ -203,7 +203,8 @@ const experienceData: ExperienceProfile = {
       title: "Company Commander",
       company: {
         name: "U.S. Army",
-        location: "Pyeongtaek, South Korea"
+        location: "Pyeongtaek, South Korea",
+        logoUrl: "/src/assets/images/logos/army-logo.png"
       },
       period: {
         start: "2017",
@@ -227,7 +228,7 @@ const experienceData: ExperienceProfile = {
       company: {
         name: "U.S. Army",
         location: "Seoul, South Korea",
-        logoUrl: "/src/assets/images/logos/us-army-logo.svg"
+        logoUrl: "/src/assets/images/logos/army-logo.png"
       },
       period: {
         start: "2016",
