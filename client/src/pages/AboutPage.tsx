@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
+import RotatingWords from "@/components/RotatingWords";
 
 import { GlowingCard } from "@/components/ui/glowing-card";
 
@@ -59,8 +60,12 @@ const AboutPage = () => {
               <p className="text-secondary font-sora mb-4">Hello, I'm</p>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-space mb-6">
                 Nick Lanahan
-                <span className="block text-2xl md:text-3xl text-muted-foreground mt-2">
-                  Full-Stack Developer & UX Enthusiast
+                <span className="block text-2xl md:text-3xl mt-2">
+                  <span className="text-muted-foreground">I am a </span>
+                  <RotatingWords 
+                    words={["Leader", "Coach", "Product Manager", "Family Man", "Strategist", "Critical Thinker"]} 
+                    interval={2500}
+                  />
                 </span>
               </h1>
               <p className="text-lg text-muted-foreground mb-8 max-w-xl">
