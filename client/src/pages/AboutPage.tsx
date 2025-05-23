@@ -131,19 +131,8 @@ const AboutPage = () => {
       </section>
 
       {/* About Me Section */}
-      <section className="py-16">
+      <section className="py-8">
         <div className="container mx-auto px-4 md:px-6">
-          <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              A bit more about my background, skills, and what drives me to create exceptional digital experiences.
-            </p>
-          </motion.div>
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
