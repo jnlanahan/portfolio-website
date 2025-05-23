@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { getResume } from "@/data/resume";
+import { GlowingCard } from "@/components/ui/glowing-card";
 
 const ResumePage = () => {
   const { data: resume, isLoading } = useQuery({
@@ -27,14 +28,19 @@ const ResumePage = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <a
-            href="/resume.pdf"
-            className="inline-flex items-center px-6 py-3 bg-background/30 backdrop-blur-sm border border-border hover:border-secondary text-foreground font-medium rounded-md transition-colors"
-            target="_blank"
-            rel="noopener noreferrer"
+          <GlowingCard 
+            className="inline-block"
+            glowColor="rgba(67, 186, 147, 0.4)"
           >
-            <i className="ri-download-line mr-2"></i> Download Full Resume
-          </a>
+            <a
+              href="/resume.pdf"
+              className="inline-flex items-center px-6 py-3 bg-transparent border border-border hover:border-secondary text-foreground font-medium rounded-md transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="ri-download-line mr-2"></i> Download Full Resume
+            </a>
+          </GlowingCard>
         </motion.div>
         <motion.div
           className="text-center mb-12"
