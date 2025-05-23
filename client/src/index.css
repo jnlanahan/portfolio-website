@@ -4,6 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Ensure pure black background */
+body {
+  background-color: #000000 !important;
+  background: #000000 !important;
+}
+
 :root {
   --background: 0 0% 0%; /* Pure black background */
   --foreground: 0 0% 100%; /* White text */
