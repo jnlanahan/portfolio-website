@@ -75,6 +75,36 @@ export function getResume(): ExperienceEntry[] {
 const experienceData: ExperienceProfile = {
   workExperience: [
     {
+      id: "ey-manager",
+      title: "Manager – Product Management",
+      company: {
+        name: "EY",
+        location: "Columbus, OH",
+        logoUrl: "/src/assets/images/logos/ey-logo.svg"
+      },
+      period: {
+        start: "2021",
+        end: "Present"
+      },
+      description: "I lead high-impact product transformations for major financial institutions, often under urgent conditions that require creative problem-solving, clear communication, and quick execution. My work balances delivering value to demanding clients with aligning diverse stakeholders—helping teams stay focused and strategic under pressure.",
+      achievements: [
+        "Led modernization efforts for global product orgs, impacting 1,000s of PMs, engineers, and functional partners",
+        "Designed and deployed a global OKR framework at a multinational bank to drive decentralized, strategic decision-making",
+        "Shaped the product strategy for a major consumer bank's partner ecosystem shift—enabling self-service tooling at scale",
+        "Co-authored EY's global Product Playbook, components of it used by 100+ product teams",
+        "Supported critical internal and external communications during a regional bank acquisition"
+      ],
+      skills: [
+        { name: "Strategy", category: "product" },
+        { name: "Critical Thinking", category: "business" },
+        { name: "Change Management", category: "business" },
+        { name: "Financial Services", category: "business" },
+        { name: "Product Transformation", category: "product" },
+        { name: "OKRs", category: "product" },
+        { name: "Client Engagement", category: "business" }
+      ]
+    },
+    {
       id: "lanahan-innovations",
       title: "Founder",
       company: {
