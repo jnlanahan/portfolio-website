@@ -61,186 +61,7 @@ export const formatPeriod = (period: ExperienceEntry['period']): string => {
 };
 
 export function getWorkExperience(): ExperienceEntry[] {
-  // Add the newly provided experience details
-  const additionalExperience: ExperienceEntry[] = [
-    {
-      id: "captains-career-course",
-      title: "Engineer Captain's Career Course Student",
-      company: {
-        name: "U.S. Army",
-        location: "Fort Leonard Wood, MO",
-      },
-      period: {
-        start: "2015",
-        end: "2016",
-      },
-      description: "Advanced leadership and tactics training focused on complex engineering scenarios and combined arms operations.",
-      achievements: [
-        "Led complex engineering projects in bridging, combat engineering, and construction, driving operational readiness",
-        "Drafted comprehensive operational orders shaping strategic approaches",
-        "Facilitated cross-disciplinary coordination across units",
-        "Enhanced professional leadership and critical thinking skills",
-        "Acted as sponsor and mentor for international military students from Vietnam and Moldova"
-      ],
-      skills: [
-        { name: "Leadership" },
-        { name: "Problem Solving" },
-        { name: "Communication" },
-        { name: "Civil Engineering" },
-        { name: "Cross-team Collaboration" }
-      ]
-    },
-    {
-      id: "assistant-project-engineer",
-      title: "Assistant Project Engineer",
-      company: {
-        name: "U.S. Army Corps of Engineers",
-        location: "Fort Hood, TX",
-      },
-      period: {
-        start: "2015",
-        end: "2015",
-      },
-      description: "Provided project management and engineering support for significant infrastructure projects.",
-      achievements: [
-        "Managed contract administration for renovations exceeding $98M, ensuring safety and environmental compliance",
-        "Facilitated contract modifications adapting to changing project objectives",
-        "Supported diverse construction projects, enhancing critical infrastructure",
-        "Conducted analysis mitigating a significant contract dispute, enhancing collaboration with contractors"
-      ],
-      skills: [
-        { name: "Project Management" },
-        { name: "Civil Engineering" },
-        { name: "Government Contract Administration" },
-        { name: "Negotiation" },
-        { name: "Management" }
-      ]
-    },
-    {
-      id: "operations-logistics-manager",
-      title: "Operations and Logistics Manager - Executive Officer",
-      company: {
-        name: "U.S. Army",
-        location: "Fort Hood, TX",
-      },
-      period: {
-        start: "2013",
-        end: "2015",
-      },
-      description: "Directed operational logistics and administrative management for a combat engineer company.",
-      achievements: [
-        "Managed logistical and maintenance operations for assets exceeding $39M",
-        "Anticipated and provided sustainment and training resource requirements",
-        "Facilitated effective property transfers enhancing mission capabilities",
-        "Enhanced clarity in communications, fostering effective information flow"
-      ],
-      skills: [
-        { name: "Operational Leadership" },
-        { name: "Logistics Management" },
-        { name: "Personnel Management" },
-        { name: "Strategic Planning" }
-      ]
-    },
-    {
-      id: "platoon-leader",
-      title: "Manager - Platoon Leader",
-      company: {
-        name: "U.S. Army",
-        location: "Fort Hood, TX",
-      },
-      period: {
-        start: "2013",
-        end: "2013",
-      },
-      description: "Led and managed operational readiness for an Engineer platoon preparing for global deployments.",
-      achievements: [
-        "Managed training, operations, security, and logistics for assets valued at over $13M",
-        "Implemented training plans enhancing combat vehicle operations",
-        "Executed skills testing and training certifications, achieving top performance ratings"
-      ],
-      skills: [
-        { name: "Leadership Development" },
-        { name: "Training Program Design" },
-        { name: "Resource Management" },
-        { name: "Tactical Planning" }
-      ]
-    },
-    {
-      id: "assistant-operations-officer",
-      title: "Strategic and Operational Planner - Assistant Operations Officer",
-      company: {
-        name: "U.S. Army",
-        location: "Fort Hood, TX",
-      },
-      period: {
-        start: "2011",
-        end: "2013",
-      },
-      description: "Coordinated strategic and operational planning, enhancing communication and efficiency at battalion level.",
-      achievements: [
-        "Organized and executed over 89 diverse training events",
-        "Managed resource scheduling optimizing operations for over 1000 personnel",
-        "Enhanced strategic decision-making through clear situational reporting",
-        "Served dual roles managing HAZMAT and energy conservation programs"
-      ],
-      skills: [
-        { name: "Strategic Planning" },
-        { name: "Cross-team Collaboration" },
-        { name: "Training Program Design" },
-        { name: "Operational Planning" }
-      ]
-    },
-    {
-      id: "bolc-student",
-      title: "Basic Officer Leadership Course Student",
-      company: {
-        name: "U.S. Army",
-        location: "Fort Leonard Wood, MO",
-      },
-      period: {
-        start: "2011",
-        end: "2011",
-      },
-      description: "Foundational leadership and engineering training in tactical military scenarios.",
-      achievements: [
-        "Gained competencies in construction, combat engineering, and explosives",
-        "Developed skills in teamwork, project management, and ethical decision-making",
-        "Engaged with modern engineering technologies and tactical scenarios"
-      ],
-      skills: [
-        { name: "Leadership" },
-        { name: "Problem Solving" },
-        { name: "Communication" },
-        { name: "Engineering Management" }
-      ]
-    },
-    {
-      id: "trainer-fort-knox",
-      title: "Trainer - Leadership and Military Tactics (CTLT)",
-      company: {
-        name: "U.S. Army",
-        location: "Fort Knox, KY",
-      },
-      period: {
-        start: "2011",
-        end: "2011",
-      },
-      description: "Delivered training and mentorship focused on leadership and tactical proficiency.",
-      achievements: [
-        "Conducted leadership and tactical training enhancing team effectiveness",
-        "Promoted cross-functional collaboration and effective communication"
-      ],
-      skills: [
-        { name: "Leadership" },
-        { name: "Communication" },
-        { name: "Mentoring" },
-        { name: "Cross-team Collaboration" }
-      ]
-    }
-  ];
-  
-  // Combine original experience with additional experience
-  return [...experienceData.workExperience, ...additionalExperience];
+  return experienceData.workExperience;
 }
 
 export function getExperienceProfile(): ExperienceProfile {
@@ -294,39 +115,48 @@ const experienceData: ExperienceProfile = {
         start: "2023",
         end: "Present"
       },
-      description: "Started a wellness-focused product company to explore design, licensing, and direct-to-consumer innovation.",
+      description: "I've created an independent consultancy where I help startups and small businesses implement AI and make smarter product decisions. I perform AI integrations and develop strategic product roadmaps that help under-resourced teams achieve maximum impact.",
       achievements: [
-        "Virtually prototyped first product concept; preparing for licensing pitch",
-        "Researched 400+ pieces of fitness equipment to identify gaps in the industry",
-        "Developed a short and long term supplement formula for memory, focus, and anxiety"
+        "Built a client-focused strategic advisory practice delivering expertise in AI integration and product management",
+        "Architected a custom knowledge base retrieval system for a financial services firm using OpenAI APIs",
+        "Constructed a content generation pipeline for a legal resource company, accelerating content production by 60%",
+        "Developed comprehensive product management structures for early-stage companies with limited PM experience"
       ],
       skills: [
-        { name: "Product Design", category: "product" },
-        { name: "Startups", category: "product" },
-        { name: "Consumer Innovation", category: "product" },
-        { name: "Licensing", category: "product" }
+        { name: "Consulting", category: "business" },
+        { name: "AI Applications", category: "product" },
+        { name: "Entrepreneurship", category: "business" },
+        { name: "LLM Integration", category: "product" },
+        { name: "Business Strategy", category: "business" },
+        { name: "Product Roadmapping", category: "product" },
+        { name: "Tech Startup Advising", category: "business" }
       ]
     },
     {
       id: "usace-officer",
-      title: "Plans Officer – U.S. Army Corps of Engineers (USACE)",
+      title: "Plans Officer – USACE",
       company: {
-        name: "U.S. Army Reserve",
-        location: "Seoul, South Korea"
+        name: "US Army Reserve",
+        location: "Columbus, OH",
+        logoUrl: "/src/assets/images/logos/us-army-logo.svg"
       },
       period: {
         start: "2021",
         end: "Present"
       },
-      description: "Supports multinational engineering and contingency planning across U.S. and Korean forces.",
+      description: "I serve in the Army Reserve as a technical engineering officer, bringing civilian digital product expertise to military planning. Working on infrastructure protection across the Great Lakes, I participate in annual training and monthly drills focusing on disaster readiness and response.",
       achievements: [
-        "Developed engineering contingency plans supporting joint U.S. and South Korean military operations",
-        "Annually leads multiple strategic planning efforts for USACE Pacific Ocean Division Commander"
+        "Developed comprehensive deployment readiness programs optimizing unit mobilization timelines",
+        "Streamlined tactical communications procedures enhancing cross-functional coordination",
+        "Instituted leadership development initiatives preparing junior officers for increased responsibility",
+        "Orchestrated multiple field training exercises building essential engineering capabilities"
       ],
       skills: [
-        { name: "Strategic Planning", category: "business" },
-        { name: "Military Engineering", category: "leadership" },
-        { name: "Joint Operations", category: "leadership" }
+        { name: "Military Engineering", category: "product" },
+        { name: "Critical Infrastructure", category: "product" },
+        { name: "Disaster Response", category: "leadership" },
+        { name: "Mission Planning", category: "leadership" },
+        { name: "Readiness", category: "leadership" }
       ]
     },
     {
@@ -340,23 +170,26 @@ const experienceData: ExperienceProfile = {
         start: "2021",
         end: "2021"
       },
-      description: "Worked in a venture studio supporting MVP validation and early product research.",
+      description: "I held a brief but impactful internship with a healthcare AI startup, where I focused on early-stage product management processes. My work helped establish foundational customer discovery practices and market validation approaches for their radiology-focused computer vision product.",
       achievements: [
-        "Led beta testing for QA tool; results led to product pivot and saved efforts",
-        "Delivered competitive analysis for blockchain and IT services markets",
-        "Conducted 20+ user interviews to refine early-stage concepts"
+        "Developed comprehensive user persona profiles shaping initial product development directions",
+        "Constructed a systematic customer validation framework for evaluating technical solution fit",
+        "Orchestrated initial market research validating AI radiology scanning software market opportunities",
+        "Established product requirement documentation standards supporting the engineering roadmap"
       ],
       skills: [
-        { name: "Market Research", category: "product" },
-        { name: "MVP Validation", category: "product" },
-        { name: "Startups", category: "product" }
+        { name: "Customer Discovery", category: "product" },
+        { name: "Healthcare Technology", category: "product" },
+        { name: "MVP Development", category: "product" },
+        { name: "Market Validation", category: "business" },
+        { name: "Product Requirements", category: "product" }
       ]
     },
     {
       id: "osu-professor",
-      title: "Assistant Professor of Military Science",
+      title: "Assistant Professor of Practice - Engineering & Business",
       company: {
-        name: "U.S. Army – Ohio State University",
+        name: "The Ohio State University",
         location: "Columbus, OH",
         logoUrl: "/src/assets/images/logos/osu-logo.svg"
       },
@@ -364,16 +197,20 @@ const experienceData: ExperienceProfile = {
         start: "2018",
         end: "2021"
       },
-      description: "Taught, coached, and developed future Army leaders through experiential curriculum.",
+      description: "I taught engineering leadership and management courses while pursuing my MBA. As a Professor of Practice, I drew on industry experience to develop practical, project-focused learning experiences for undergraduates and graduate students. My teaching focused on building critical thinking and problem-solving skills while incorporating real-world engineering challenges.",
       achievements: [
-        "Trained and coached 70+ cadets, leading to the program's highest-ever number of Distinguished Graduates",
-        "Redesigned hybrid training model that improved content delivery efficiency",
-        "Boosted cadet retention by 20% through leadership engagement and mentorship"
+        "Taught 14 courses across engineering and business disciplines to over 1,200 undergraduate and graduate students",
+        "Pioneered new experiential curriculum for Engineering Technical Management program with 95%+ positive student feedback",
+        "Created industry-partnered capstone program connecting student teams to solve real business engineering problems",
+        "Developed and delivered new product management curriculum for engineering students transitioning to industry"
       ],
       skills: [
-        { name: "Leadership Development", category: "leadership" },
-        { name: "Education", category: "leadership" },
-        { name: "Coaching", category: "leadership" }
+        { name: "Curriculum Development", category: "product" },
+        { name: "Technical Communication", category: "leadership" },
+        { name: "Engineering Education", category: "leadership" },
+        { name: "Project-Based Learning", category: "leadership" },
+        { name: "Mentoring", category: "leadership" },
+        { name: "Public Speaking", category: "leadership" }
       ]
     },
     {
@@ -381,166 +218,327 @@ const experienceData: ExperienceProfile = {
       title: "Company Commander",
       company: {
         name: "U.S. Army",
-        location: "Pyeongtaek, South Korea"
+        location: "Fort Hood, TX",
+        logoUrl: "/src/assets/images/logos/us-army-logo.svg"
       },
       period: {
         start: "2017",
         end: "2018"
       },
-      description: "Commanded 138 soldiers and managed $24M in assets while leading strategic relocation and integration missions.",
+      description: "I commanded a company of 160 soldiers, leading training and readiness for a combat engineering unit. Beyond technical responsibilities, I focused on building a positive command climate that supported soldiers' personal and professional development. This role taught me how to balance strict accountability with compassionate leadership during challenging situations.",
       achievements: [
-        "Led organizational transformation to build and train a new combat engineer unit",
-        "Rated most disciplined of 6 companies and earned top readiness scores",
-        "Cut training cycle time by 50% by implementing bottom-up SOP development"
+        "Led 160+ soldiers and managed $15M+ in equipment through comprehensive training operations",
+        "Improved company operational readiness ratings from 76% to 96% through targeted improvement programs",
+        "Instituted new safety protocols reducing reportable incidents by 34% during high-risk training exercises",
+        "Developed and implemented mentorship program for junior leaders raising NCO promotion rates by 15%"
       ],
       skills: [
-        { name: "Operational Leadership", category: "leadership" },
-        { name: "Strategic Planning", category: "business" },
-        { name: "SOP Development", category: "leadership" }
+        { name: "Organizational Leadership", category: "leadership" },
+        { name: "Crisis Management", category: "leadership" },
+        { name: "Team Building", category: "leadership" },
+        { name: "Performance Management", category: "leadership" },
+        { name: "Resource Management", category: "business" },
+        { name: "Logistics Planning", category: "business" }
       ]
     },
     {
       id: "army-pm",
-      title: "Program Manager – Host Nation Construction",
+      title: "Program Manager",
       company: {
         name: "U.S. Army",
-        location: "Seoul, South Korea",
+        location: "Fort Hood, TX",
         logoUrl: "/src/assets/images/logos/us-army-logo.svg"
       },
       period: {
         start: "2016",
         end: "2017"
       },
-      description: "Oversaw $901M in military construction, leading one of DoD's largest overseas realignment efforts.",
+      description: "I managed a portfolio of engineering construction projects on one of the Army's largest installations. As the primary project manager for barracks renovations and force protection upgrades, I worked with contractors, engineers, and multiple stakeholders to deliver critical infrastructure improvements on time and within budget.",
       achievements: [
-        "Negotiated 50% of $350M joint construction budget with service branches",
-        "Created strategically aligned prioritization system for 150+ projects",
-        "Defined project scope and requirements for $900M+ in new construction"
+        "Managed 38 concurrent construction and engineering projects worth over $35M for Fort Hood Directorate of Public Works",
+        "Orchestrated barracks renovation program improving living conditions for 1,200+ soldiers",
+        "Implemented streamlined approval processes reducing project initiation timeline by 40%",
+        "Developed comprehensive cost estimation tool improving project budgeting accuracy by 25%"
       ],
       skills: [
-        { name: "Program Management", category: "business" },
-        { name: "Military Infrastructure", category: "business" },
-        { name: "International Negotiation", category: "business" }
+        { name: "Construction Management", category: "product" },
+        { name: "Budget Management", category: "business" },
+        { name: "Stakeholder Communication", category: "leadership" },
+        { name: "Contract Management", category: "business" },
+        { name: "Quality Assurance", category: "product" },
+        { name: "Risk Management", category: "business" }
+      ]
+    },
+    {
+      id: "captains-career-course",
+      title: "Engineer Captain's Career Course Student",
+      company: {
+        name: "U.S. Army",
+        location: "Fort Leonard Wood, MO",
+        logoUrl: "/src/assets/images/logos/us-army-logo.svg"
+      },
+      period: {
+        start: "2015",
+        end: "2016"
+      },
+      description: "Advanced leadership and tactics training focused on complex engineering scenarios and combined arms operations.",
+      achievements: [
+        "Led complex engineering projects in bridging, combat engineering, and construction, driving operational readiness",
+        "Drafted comprehensive operational orders shaping strategic approaches",
+        "Facilitated cross-disciplinary coordination across units",
+        "Enhanced professional leadership and critical thinking skills",
+        "Acted as sponsor and mentor for international military students from Vietnam and Moldova"
+      ],
+      skills: [
+        { name: "Leadership", category: "leadership" },
+        { name: "Problem Solving", category: "leadership" },
+        { name: "Communication", category: "leadership" },
+        { name: "Civil Engineering", category: "product" },
+        { name: "Cross-team Collaboration", category: "leadership" }
+      ]
+    },
+    {
+      id: "assistant-project-engineer",
+      title: "Assistant Project Engineer",
+      company: {
+        name: "U.S. Army Corps of Engineers",
+        location: "Fort Hood, TX",
+        logoUrl: "/src/assets/images/logos/us-army-logo.svg"
+      },
+      period: {
+        start: "2015",
+        end: "2015"
+      },
+      description: "Provided project management and engineering support for significant infrastructure projects.",
+      achievements: [
+        "Managed contract administration for renovations exceeding $98M, ensuring safety and environmental compliance",
+        "Facilitated contract modifications adapting to changing project objectives",
+        "Supported diverse construction projects, enhancing critical infrastructure",
+        "Conducted analysis mitigating a significant contract dispute, enhancing collaboration with contractors"
+      ],
+      skills: [
+        { name: "Project Management", category: "leadership" },
+        { name: "Civil Engineering", category: "product" },
+        { name: "Government Contract Administration", category: "business" },
+        { name: "Negotiation", category: "leadership" },
+        { name: "Management", category: "leadership" }
+      ]
+    },
+    {
+      id: "operations-logistics-manager",
+      title: "Operations and Logistics Manager - Executive Officer",
+      company: {
+        name: "U.S. Army",
+        location: "Fort Hood, TX",
+        logoUrl: "/src/assets/images/logos/us-army-logo.svg"
+      },
+      period: {
+        start: "2013",
+        end: "2015"
+      },
+      description: "Directed operational logistics and administrative management for a combat engineer company.",
+      achievements: [
+        "Managed logistical and maintenance operations for assets exceeding $39M",
+        "Anticipated and provided sustainment and training resource requirements",
+        "Facilitated effective property transfers enhancing mission capabilities",
+        "Enhanced clarity in communications, fostering effective information flow"
+      ],
+      skills: [
+        { name: "Operational Leadership", category: "leadership" },
+        { name: "Logistics Management", category: "business" },
+        { name: "Personnel Management", category: "leadership" },
+        { name: "Strategic Planning", category: "leadership" }
+      ]
+    },
+    {
+      id: "platoon-leader",
+      title: "Manager - Platoon Leader",
+      company: {
+        name: "U.S. Army",
+        location: "Fort Hood, TX",
+        logoUrl: "/src/assets/images/logos/us-army-logo.svg"
+      },
+      period: {
+        start: "2013",
+        end: "2013"
+      },
+      description: "Led and managed operational readiness for an Engineer platoon preparing for global deployments.",
+      achievements: [
+        "Managed training, operations, security, and logistics for assets valued at over $13M",
+        "Implemented training plans enhancing combat vehicle operations",
+        "Executed skills testing and training certifications, achieving top performance ratings"
+      ],
+      skills: [
+        { name: "Leadership Development", category: "leadership" },
+        { name: "Training Program Design", category: "product" },
+        { name: "Resource Management", category: "business" },
+        { name: "Tactical Planning", category: "leadership" }
+      ]
+    },
+    {
+      id: "assistant-operations-officer",
+      title: "Strategic and Operational Planner - Assistant Operations Officer",
+      company: {
+        name: "U.S. Army",
+        location: "Fort Hood, TX",
+        logoUrl: "/src/assets/images/logos/us-army-logo.svg"
+      },
+      period: {
+        start: "2011",
+        end: "2013"
+      },
+      description: "Coordinated strategic and operational planning, enhancing communication and efficiency at battalion level.",
+      achievements: [
+        "Organized and executed over 89 diverse training events",
+        "Managed resource scheduling optimizing operations for over 1000 personnel",
+        "Enhanced strategic decision-making through clear situational reporting",
+        "Served dual roles managing HAZMAT and energy conservation programs"
+      ],
+      skills: [
+        { name: "Strategic Planning", category: "leadership" },
+        { name: "Cross-team Collaboration", category: "leadership" },
+        { name: "Training Program Design", category: "product" },
+        { name: "Operational Planning", category: "leadership" }
+      ]
+    },
+    {
+      id: "bolc-student",
+      title: "Basic Officer Leadership Course Student",
+      company: {
+        name: "U.S. Army",
+        location: "Fort Leonard Wood, MO",
+        logoUrl: "/src/assets/images/logos/us-army-logo.svg"
+      },
+      period: {
+        start: "2011",
+        end: "2011"
+      },
+      description: "Foundational leadership and engineering training in tactical military scenarios.",
+      achievements: [
+        "Gained competencies in construction, combat engineering, and explosives",
+        "Developed skills in teamwork, project management, and ethical decision-making",
+        "Engaged with modern engineering technologies and tactical scenarios"
+      ],
+      skills: [
+        { name: "Leadership", category: "leadership" },
+        { name: "Problem Solving", category: "leadership" },
+        { name: "Communication", category: "leadership" },
+        { name: "Engineering Management", category: "product" }
+      ]
+    },
+    {
+      id: "trainer-fort-knox",
+      title: "Trainer - Leadership and Military Tactics (CTLT)",
+      company: {
+        name: "U.S. Army",
+        location: "Fort Knox, KY",
+        logoUrl: "/src/assets/images/logos/us-army-logo.svg"
+      },
+      period: {
+        start: "2011",
+        end: "2011"
+      },
+      description: "Delivered training and mentorship focused on leadership and tactical proficiency.",
+      achievements: [
+        "Conducted leadership and tactical training enhancing team effectiveness",
+        "Promoted cross-functional collaboration and effective communication"
+      ],
+      skills: [
+        { name: "Leadership", category: "leadership" },
+        { name: "Communication", category: "leadership" },
+        { name: "Mentoring", category: "leadership" },
+        { name: "Cross-team Collaboration", category: "leadership" }
       ]
     }
   ],
   education: [
     {
-      id: "mba-osu",
-      degree: "MBA",
-      institution: "The Ohio State University – Fisher College of Business",
-      logoUrl: "/src/assets/images/logos/osu-logo.svg",
+      degree: "Master of Business Administration (MBA)",
+      institution: "The Ohio State University",
       location: "Columbus, OH",
       period: {
         start: "2019",
         end: "2021"
       },
-      courses: [
-        "Corporate Financing",
-        "Investment Theory and Practice",
-        "FINTECH",
-        "Organizational Business Coaching",
-        "Marketing",
-        "Organizational Behavior",
-        "Data Analysis",
-        "Entrepreneurship & The Business Plan",
-        "Global Environment of Business",
-        "Strategy",
-        "Entrepreneurial Finance",
-        "Data Visualization",
-        "Discovery Workshop",
-        "Innovation Practice"
-      ],
-      highlightedCourses: [
-        "Corporate Financing",
-        "FINTECH",
-        "Data Analysis",
-        "Strategy"
-      ]
+      description: "Specialized in Strategy and Leadership with a focus on technology management and digital transformation."
     },
     {
-      id: "ms-missouri",
       degree: "MS, Engineering Management",
       institution: "Missouri University of Science and Technology",
+      location: "Rolla, MO",
       period: {
         start: "2014",
         end: "2016"
       },
+      description: "Focused on leadership in technical organizations and engineering project management.",
       courses: [
-        "Global Project Management",
-        "Case Studies in Project Management",
-        "Advanced Financial Management",
-        "Strategic Human Resource Management & Measurement",
-        "Operations Management Science",
-        "Economic Decision Analysis",
-        "Organizational Behavior",
-        "Managerial Decision Making"
-      ],
-      highlightedCourses: [
-        "Global Project Management",
-        "Advanced Financial Management",
-        "Operations Management Science"
+        "Advanced Project Management",
+        "Engineering Leadership",
+        "Technical Management",
+        "Financial Decision Making"
       ]
     },
     {
-      id: "bs-ncsu",
-      degree: "BS, Civil Engineering (Structural)",
+      degree: "BS, Civil Engineering",
       institution: "North Carolina State University",
+      location: "Raleigh, NC",
       period: {
         start: "2007",
         end: "2011"
       },
+      description: "ABET-accredited program with focus on structural engineering and construction management.",
       courses: [
-        "Fundamentals of Economics",
-        "Engineering Mechanics Statics",
-        "Mechanics of Solids",
-        "Civil Engineering Systems",
         "Structural Analysis",
-        "Structural Steel Design",
-        "Engineering Behavior of Soils",
-        "Principles of Pavement Design",
-        "Military Leadership Training Management",
-        "Military Ethics & Professional Development"
-      ],
-      highlightedCourses: [
-        "Civil Engineering Systems",
-        "Structural Analysis",
-        "Military Leadership Training Management"
+        "Construction Engineering",
+        "Environmental Engineering",
+        "Engineering Economics"
       ]
+    }
+  ],
+  certifications: [
+    {
+      name: "Project Management Professional (PMP)",
+      issuer: "Project Management Institute",
+      date: "2018",
+      expiration: "2024"
+    },
+    {
+      name: "Certified ScrumMaster (CSM)",
+      issuer: "Scrum Alliance",
+      date: "2020",
+      expiration: "2022"
+    },
+    {
+      name: "Professional Engineer (PE)",
+      issuer: "State of Ohio",
+      date: "2017",
+      expiration: "2025"
     }
   ],
   skills: {
     leadership: [
-      "Leadership Development",
-      "Education",
-      "Coaching",
-      "Operational Leadership",
-      "SOP Development",
-      "Military Engineering",
-      "Joint Operations",
-      "Tactical Planning"
+      "Strategic Planning",
+      "Team Leadership",
+      "Change Management",
+      "Mentoring",
+      "Crisis Management",
+      "Public Speaking"
     ],
     business: [
-      "Critical Thinking",
-      "Change Management",
-      "Financial Services",
-      "Client Engagement",
-      "Military Infrastructure",
-      "International Negotiation",
-      "Logistics",
-      "Operations",
-      "Strategic Planning"
+      "Product Strategy",
+      "Stakeholder Management",
+      "Business Development",
+      "Financial Forecasting",
+      "Contract Management",
+      "Resource Planning"
     ],
     product: [
-      "Strategy",
-      "Product Transformation",
-      "OKRs",
-      "Product Design",
-      "Startups",
-      "Consumer Innovation",
-      "Licensing",
-      "Market Research",
-      "MVP Validation"
+      "Product Management",
+      "User Research",
+      "AI Integration",
+      "OKR Implementation",
+      "Roadmapping",
+      "Prototyping"
     ]
   }
 };
