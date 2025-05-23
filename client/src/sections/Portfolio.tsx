@@ -21,7 +21,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({ projects }) => {
           {projects.map((project, index) => (
             <motion.div
               key={index}
-              className="project-card group relative rounded-xl overflow-hidden border border-border hover:border-secondary transition-all duration-300 bg-background"
+              className="project-card group relative rounded-xl overflow-hidden border border-border hover:border-secondary transition-all duration-300 bg-background relative"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -69,7 +69,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({ projects }) => {
                   {project.technologies.map((tech, techIndex) => (
                     <span
                       key={techIndex}
-                      className="px-3 py-1 bg-[#4ade80] text-black text-xs font-medium rounded-full shadow-sm"
+                      className="px-3 py-1 bg-[#00ff00] text-black text-xs font-bold rounded-full shadow-md z-10"
                     >
                       {tech}
                     </span>
