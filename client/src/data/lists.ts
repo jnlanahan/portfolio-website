@@ -120,7 +120,10 @@ export function getLists(): ListsType {
       items: [
         {
           title: "Frontend Masters",
-          description: "In-depth courses taught by industry experts on modern web development."
+          description: "In-depth courses taught by industry experts on modern web development.",
+          link: "https://frontendmasters.com/",
+          linkText: "Start Learning",
+          highlight: true
         },
         {
           title: "Josh Comeau's Courses",

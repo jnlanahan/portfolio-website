@@ -34,17 +34,27 @@ const ContactPage = () => {
       const response = await apiRequest("POST", "/api/contact", data);
       
       // Show feedback based on whether the email was sent successfully
-      if (response.message.includes("notification email sent")) {
-        toast({
-          title: "Message sent successfully!",
-          description: "Thank you for your message. I'll get back to you soon.",
-        });
+      if (response && typeof response === 'object' && 'message' in response) {
+        const message = response.message as string;
+        
+        if (message.includes("notification email sent")) {
+          toast({
+            title: "Message sent successfully!",
+            description: "Thank you for your message. I'll get back to you soon.",
+          });
+        } else {
+          // Email was saved but not sent
+          toast({
+            title: "Message received!",
+            description: "Your message was saved but there was an issue sending the email notification. I'll still review your message.",
+            variant: "default",
+          });
+        }
       } else {
-        // Email was saved but not sent
+        // Generic success message if we can't determine email status
         toast({
-          title: "Message received!",
-          description: "Your message was saved but there was an issue sending the email notification. I'll still review your message.",
-          variant: "default",
+          title: "Message submitted!",
+          description: "Thank you for your message. I'll review it soon.",
         });
       }
       

@@ -6,6 +6,7 @@ interface GlowingCardProps extends React.HTMLAttributes<HTMLDivElement> {
   glowColor?: string;
   borderRadius?: string;
   className?: string;
+  strength?: number; // Intensity of the glow effect (0-1)
 }
 
 export function GlowingCard({
@@ -13,6 +14,7 @@ export function GlowingCard({
   glowColor = 'rgba(67, 186, 147, 0.5)', // Default to our secondary color
   borderRadius = '0.75rem',
   className,
+  strength = 0.5, // Default strength
   ...props
 }: GlowingCardProps) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -34,7 +36,7 @@ export function GlowingCard({
   const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
     setIsHovering(true);
     updatePosition(event);
-    setOpacity(1);
+    setOpacity(strength);
   };
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -51,7 +53,7 @@ export function GlowingCard({
   const handleTouchStart = () => {
     setIsTouch(true);
     setIsHovering(true);
-    setOpacity(1);
+    setOpacity(strength);
 
     // For touch devices, position the glow in the center
     if (cardRef.current) {
