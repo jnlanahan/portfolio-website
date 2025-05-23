@@ -81,7 +81,7 @@ const experienceData: ExperienceProfile = {
       company: {
         name: "EY",
         location: "Columbus, OH",
-        logoUrl: "/src/assets/images/logos/ey-logo.png"
+        logoUrl: "/src/assets/images/logos/ey-logo.svg"
       },
       period: {
         start: "2021",
@@ -180,7 +180,7 @@ const experienceData: ExperienceProfile = {
       company: {
         name: "U.S. Army – Ohio State University",
         location: "Columbus, OH",
-        logoUrl: "/src/assets/images/logos/osu-logo.png"
+        logoUrl: "/src/assets/images/logos/osu-logo.svg"
       },
       period: {
         start: "2018",
@@ -203,8 +203,7 @@ const experienceData: ExperienceProfile = {
       title: "Company Commander",
       company: {
         name: "U.S. Army",
-        location: "Pyeongtaek, South Korea",
-        logoUrl: "/src/assets/images/logos/army-logo.png"
+        location: "Pyeongtaek, South Korea"
       },
       period: {
         start: "2017",
@@ -228,7 +227,7 @@ const experienceData: ExperienceProfile = {
       company: {
         name: "U.S. Army",
         location: "Seoul, South Korea",
-        logoUrl: "/src/assets/images/logos/army-logo.png"
+        logoUrl: "/src/assets/images/logos/us-army-logo.svg"
       },
       period: {
         start: "2016",
@@ -252,7 +251,7 @@ const experienceData: ExperienceProfile = {
       id: "mba-osu",
       degree: "MBA",
       institution: "The Ohio State University – Fisher College of Business",
-      logoUrl: "/src/assets/images/logos/osu-logo.png",
+      logoUrl: "/src/assets/images/logos/osu-logo.svg",
       location: "Columbus, OH",
       period: {
         start: "2019",
@@ -285,7 +284,6 @@ const experienceData: ExperienceProfile = {
       id: "ms-missouri",
       degree: "MS, Engineering Management",
       institution: "Missouri University of Science and Technology",
-      logoUrl: "/src/assets/images/logos/mst-logo.png",
       period: {
         start: "2014",
         end: "2016"
@@ -310,7 +308,6 @@ const experienceData: ExperienceProfile = {
       id: "bs-ncsu",
       degree: "BS, Civil Engineering (Structural)",
       institution: "North Carolina State University",
-      logoUrl: "/src/assets/images/logos/ncsu-logo.png",
       period: {
         start: "2007",
         end: "2011"

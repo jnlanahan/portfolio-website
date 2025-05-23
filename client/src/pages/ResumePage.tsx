@@ -401,13 +401,11 @@ const ExperiencePage = () => {
                 {/* Logo placeholder or actual logo if available */}
                 <div className="hidden md:block w-full aspect-square relative mb-4 overflow-hidden rounded-lg company-logo-placeholder">
                   {item.company.logoUrl ? (
-                    <div className="w-full h-full flex items-center justify-center bg-white rounded-lg p-2">
-                      <img 
-                        src={item.company.logoUrl} 
-                        alt={`${item.company.name} logo`}
-                        className="w-full h-full object-contain max-h-[80%]" 
-                      />
-                    </div>
+                    <img 
+                      src={item.company.logoUrl} 
+                      alt={`${item.company.name} logo`}
+                      className="w-full h-full object-contain" 
+                    />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center">
                       <span className="text-secondary text-xs">
