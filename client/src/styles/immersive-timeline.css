@@ -1,0 +1,68 @@
+.perspective-container {
+  perspective: 1000px;
+  min-height: 500px;
+}
+
+.timeline-event-card {
+  transform-style: preserve-3d;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.perspective-line-left,
+.perspective-line-right {
+  position: absolute;
+  height: 100%;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(var(--primary), 0.2), transparent);
+  transform: translateZ(-100px);
+}
+
+.perspective-line-left {
+  left: 15%;
+}
+
+.perspective-line-right {
+  right: 15%;
+}
+
+.perspective-grid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background-image: linear-gradient(rgba(var(--primary), 0.1) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(var(--primary), 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  transform: rotateX(60deg) translateZ(-100px);
+  transform-origin: bottom;
+  opacity: 0.3;
+}
+
+.timeline-scroller {
+  user-select: none;
+  cursor: grab;
+}
+
+.timeline-scroller:active {
+  cursor: grabbing;
+}
+
+.timeline-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Create a grid pattern for the background */
+.grid-pattern {
+  background-size: 50px 50px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+@media (max-width: 768px) {
+  .perspective-container {
+    perspective: 600px;
+  }
+}
