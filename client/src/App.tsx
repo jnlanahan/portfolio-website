@@ -7,6 +7,7 @@ import NotFound from "@/pages/not-found";
 import NewHomePage from "@/pages/NewHomePage";
 import AboutPage from "@/pages/AboutPage";
 import ResumePage from "@/pages/ResumePage";
+import ImmersiveTimelinePage from "@/pages/ImmersiveTimelinePage";
 import PortfolioPage from "@/pages/PortfolioPage";
 import BlogPage from "@/pages/BlogPage";
 import TopFiveListsPage from "@/pages/TopFiveListsPage";
