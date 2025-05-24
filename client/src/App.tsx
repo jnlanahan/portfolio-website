@@ -8,6 +8,7 @@ import NewHomePage from "@/pages/NewHomePage";
 import AboutPage from "@/pages/AboutPage";
 import ResumePage from "@/pages/ResumePage";
 import ImmersiveTimelinePage from "./pages/ImmersiveTimelinePage";
+import CarouselTimelinePage from "./pages/CarouselTimelinePage";
 import PortfolioPage from "@/pages/PortfolioPage";
 import BlogPage from "@/pages/BlogPage";
 import TopFiveListsPage from "@/pages/TopFiveListsPage";
@@ -21,6 +22,7 @@ function Router() {
       <Route path="/" component={AboutPage} />
       <Route path="/my-experience" component={ResumePage} />
       <Route path="/my-experience-2" component={ImmersiveTimelinePage} />
+      <Route path="/my-experience-3" component={CarouselTimelinePage} />
       <Route path="/portfolio" component={PortfolioPage} />
       <Route path="/blog" component={BlogPage} />
       <Route path="/blog/:slug" component={BlogDetail} />
