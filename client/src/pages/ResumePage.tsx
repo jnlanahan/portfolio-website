@@ -1,9 +1,12 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { getExperienceProfile, formatPeriod, ExperienceEntry, Skill } from "@/data/resume";
 import { GlowingCard } from "@/components/ui/glowing-card";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import '../styles/timeline.css';
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { X, Briefcase, Calendar, MapPin, GraduationCap, Award } from "lucide-react";
 
 // Component for displaying skills with category-based styling
 const SkillBadge = ({ 
@@ -361,7 +364,178 @@ const ExperiencePage = () => {
         </motion.div>
       </div>
 
-
+      {/* Interactive Timeline */}
+      <div className="mb-16 max-w-6xl mx-auto px-4">
+        <motion.div
+          className="interactive-timeline relative bg-card/30 p-5 rounded-lg shadow-sm border border-border overflow-hidden"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <h3 className="text-lg font-semibold mb-8 text-center text-secondary">Career Journey</h3>
+          
+          {/* Horizontal Timeline */}
+          <div className="relative pb-12">
+            {/* Timeline Line */}
+            <div className="absolute top-14 left-0 right-0 h-1 bg-border"></div>
+            
+            {/* Timeline Items */}
+            <div className="flex justify-between">
+              {/* Professional Experience Group */}
+              <div className="relative px-4 flex flex-col items-center">
+                <motion.button
+                  onClick={() => openExperienceDialog(workExperience.find(job => job.id === 'ey-manager')!)}
+                  className="timeline-marker w-12 h-12 bg-card rounded-full border-2 border-secondary flex items-center justify-center z-10 hover:scale-110 transition-transform"
+                  whileHover={{ y: -5 }}
+                >
+                  <img src="/src/assets/images/logos/ey-logo.svg" alt="EY" className="w-7 h-7" />
+                </motion.button>
+                <span className="absolute -bottom-10 text-sm font-medium">2021-Present</span>
+                <motion.div 
+                  className="mt-4 w-48 text-center"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 }}
+                >
+                  <h4 className="font-semibold">EY</h4>
+                  <p className="text-xs text-muted-foreground">Product Manager</p>
+                </motion.div>
+              </div>
+              
+              <div className="relative px-4 flex flex-col items-center">
+                <motion.button
+                  onClick={() => openExperienceDialog(workExperience.find(job => job.id === 'osu-professor')!)}
+                  className="timeline-marker w-12 h-12 bg-card rounded-full border-2 border-amber-500 flex items-center justify-center z-10 hover:scale-110 transition-transform"
+                  whileHover={{ y: -5 }}
+                >
+                  <img src="/src/assets/images/logos/osu-logo.svg" alt="OSU" className="w-7 h-7" />
+                </motion.button>
+                <span className="absolute -bottom-10 text-sm font-medium">2018-2021</span>
+                <motion.div 
+                  className="mt-4 w-48 text-center"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <h4 className="font-semibold">Ohio State University</h4>
+                  <p className="text-xs text-muted-foreground">Assistant Professor</p>
+                </motion.div>
+              </div>
+              
+              <div className="relative px-4 flex flex-col items-center">
+                <motion.button
+                  onClick={() => openExperienceDialog(workExperience.find(job => job.id === 'army-commander')!)}
+                  className="timeline-marker w-12 h-12 bg-card rounded-full border-2 border-green-700 flex items-center justify-center z-10 hover:scale-110 transition-transform"
+                  whileHover={{ y: -5 }}
+                >
+                  <img src="/src/assets/images/logos/us-army-logo.svg" alt="Army" className="w-7 h-7" />
+                </motion.button>
+                <span className="absolute -bottom-10 text-sm font-medium">2017-2018</span>
+                <motion.div 
+                  className="mt-4 w-48 text-center"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <h4 className="font-semibold">US Army</h4>
+                  <p className="text-xs text-muted-foreground">Company Commander</p>
+                </motion.div>
+              </div>
+              
+              <div className="relative px-4 flex flex-col items-center">
+                <motion.button
+                  onClick={() => openExperienceDialog(workExperience.find(job => job.id === 'army-pm')!)}
+                  className="timeline-marker w-12 h-12 bg-card rounded-full border-2 border-purple-500 flex items-center justify-center z-10 hover:scale-110 transition-transform"
+                  whileHover={{ y: -5 }}
+                >
+                  <img src="/src/assets/images/logos/us-army-logo.svg" alt="Army" className="w-7 h-7" />
+                </motion.button>
+                <span className="absolute -bottom-10 text-sm font-medium">2016-2017</span>
+                <motion.div 
+                  className="mt-4 w-48 text-center"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 }}
+                >
+                  <h4 className="font-semibold">US Army</h4>
+                  <p className="text-xs text-muted-foreground">Program Manager</p>
+                </motion.div>
+              </div>
+              
+              <div className="relative px-4 flex flex-col items-center">
+                <motion.button
+                  onClick={() => openExperienceDialog(workExperience.find(job => job.id === 'operations-logistics-manager')!)}
+                  className="timeline-marker w-12 h-12 bg-card rounded-full border-2 border-orange-500 flex items-center justify-center z-10 hover:scale-110 transition-transform"
+                  whileHover={{ y: -5 }}
+                >
+                  <img src="/src/assets/images/logos/us-army-logo.svg" alt="Army" className="w-7 h-7" />
+                </motion.button>
+                <span className="absolute -bottom-10 text-sm font-medium">2013-2015</span>
+                <motion.div 
+                  className="mt-4 w-48 text-center"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5 }}
+                >
+                  <h4 className="font-semibold">US Army</h4>
+                  <p className="text-xs text-muted-foreground">Operations Manager</p>
+                </motion.div>
+              </div>
+            </div>
+            
+            {/* Second Row */}
+            <div className="flex justify-center mt-24">
+              <div className="relative px-4 flex flex-col items-center">
+                <motion.button
+                  onClick={() => openExperienceDialog(workExperience.find(job => job.id === 'usace-officer')!)}
+                  className="timeline-marker w-12 h-12 bg-card rounded-full border-2 border-secondary flex items-center justify-center z-10 hover:scale-110 transition-transform"
+                  whileHover={{ y: -5 }}
+                >
+                  <img src="/src/assets/images/logos/us-army-logo.svg" alt="USACE" className="w-7 h-7" />
+                </motion.button>
+                <span className="absolute -bottom-10 text-sm font-medium">2021-Present</span>
+                <motion.div 
+                  className="mt-4 w-48 text-center"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.6 }}
+                >
+                  <h4 className="font-semibold">US Army Reserve</h4>
+                  <p className="text-xs text-muted-foreground">USACE Plans Officer</p>
+                </motion.div>
+              </div>
+              
+              <div className="relative px-4 flex flex-col items-center">
+                <motion.button
+                  onClick={() => openExperienceDialog(workExperience.find(job => job.id === 'h2l-intern')!)}
+                  className="timeline-marker w-12 h-12 bg-card rounded-full border-2 border-blue-400 flex items-center justify-center z-10 hover:scale-110 transition-transform"
+                  whileHover={{ y: -5 }}
+                >
+                  <span className="text-sm font-bold text-blue-400">H2L</span>
+                </motion.button>
+                <span className="absolute -bottom-10 text-sm font-medium">2021</span>
+                <motion.div 
+                  className="mt-4 w-48 text-center"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.7 }}
+                >
+                  <h4 className="font-semibold">H2L</h4>
+                  <p className="text-xs text-muted-foreground">Product Management Intern</p>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
 
       {/* Work Experience Timeline */}
       <div ref={timelineRef} className="timeline relative pl-8 md:pl-12 max-w-4xl mx-auto" style={{ position: 'relative' }}>
