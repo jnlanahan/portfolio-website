@@ -91,19 +91,10 @@ const CarouselTimelinePage = () => {
   
   // Initialize GSAP animations
   useEffect(() => {
-    if (jobList.length === 0 || !boxesRef.current) {
-      console.log("Not initializing carousel - jobList empty or boxesRef not ready", { 
-        jobListLength: jobList.length, 
-        boxesRefExists: !!boxesRef.current 
-      });
-      return;
-    }
-    
-    console.log("Setting up carousel with jobs:", jobList);
+    if (jobList.length === 0 || !boxesRef.current) return;
     
     // Clean up any existing animations
     const cleanup = () => {
-      console.log("Cleaning up existing ScrollTrigger animations");
       const triggers = ScrollTrigger.getAll();
       triggers.forEach(trigger => trigger.kill());
     };
@@ -111,11 +102,7 @@ const CarouselTimelinePage = () => {
     // Set up the carousel
     const setupCarousel = () => {
       const boxes = gsap.utils.toArray('.carousel-card');
-      console.log("Found carousel cards:", boxes.length);
-      if (!boxes.length) {
-        console.error("No carousel cards found!");
-        return;
-      }
+      if (!boxes.length) return;
       
       // Position cards in 3D space
       gsap.set('.carousel-card', {
@@ -365,23 +352,6 @@ const CarouselTimelinePage = () => {
   
   if (isLoading) return <div className="py-20 text-center">Loading timeline...</div>;
   
-  // Use fixed data to test the carousel
-  useEffect(() => {
-    const testNextButton = () => {
-      console.log("Testing next button click");
-      const nextButton = document.querySelector('.next-button');
-      if (nextButton) {
-        (nextButton as HTMLElement).click();
-      } else {
-        console.error("Next button not found");
-      }
-    };
-    
-    // Click button after a delay to test carousel behavior
-    const timer = setTimeout(testNextButton, 3000);
-    return () => clearTimeout(timer);
-  }, []);
-  
   return (
     <div className="timeline-container">
       <div className="py-12">
@@ -393,30 +363,16 @@ const CarouselTimelinePage = () => {
       
       <div className="timeline-main">
         <div className="timeline-carousel" ref={boxesRef}>
-          {jobList.length > 0 && (
-            <>
-              {jobList.map((job, index) => (
-                <CarouselCard key={job.id} job={job} index={index} />
-              ))}
-            </>
-          )}
+          {jobList.map((job, index) => (
+            <CarouselCard key={job.id} job={job} index={index} />
+          ))}
           
           <div className="timeline-controls">
-            <Button 
-              className="prev-button control-button" 
-              variant="secondary" 
-              size="lg"
-              onClick={() => console.log("Previous button clicked")}
-            >
+            <Button className="prev-button control-button" variant="secondary" size="lg">
               <ChevronLeft className="w-6 h-6" />
               <span className="sr-only">Previous</span>
             </Button>
-            <Button 
-              className="next-button control-button" 
-              variant="secondary" 
-              size="lg"
-              onClick={() => console.log("Next button clicked")}
-            >
+            <Button className="next-button control-button" variant="secondary" size="lg">
               <ChevronRight className="w-6 h-6" />
               <span className="sr-only">Next</span>
             </Button>
