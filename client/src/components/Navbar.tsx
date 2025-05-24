@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
+import { trackEvent } from "@/lib/analytics";
 
 // Define navigation item type
 export interface NavItem {
@@ -90,6 +91,7 @@ const Navbar = () => {
               <Link 
                 key={item.path}
                 href={item.path}
+                onClick={() => trackEvent('nav_click', { section: item.label, path: item.path })}
                 className={`nav-link font-medium hover:text-secondary transition-colors flex items-center ${
                   item.isActiveCheck ? (item.isActiveCheck(item.path) ? 'text-secondary' : '') : ''
                 }`}
@@ -100,6 +102,7 @@ const Navbar = () => {
             ))}
             <Link 
               href="/contact"
+              onClick={() => trackEvent('contact_button_click', { location: 'navbar' })}
               className="ml-4 px-5 py-2 bg-secondary text-background rounded-md font-medium hover:bg-secondary/90 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
             >
               <i className="ri-chat-3-line mr-1.5"></i>
@@ -138,7 +141,10 @@ const Navbar = () => {
               className={`py-2 font-medium hover:text-secondary transition-colors flex items-center ${
                 item.isActiveCheck ? (item.isActiveCheck(item.path) ? 'text-secondary' : '') : ''
               }`}
-              onClick={() => setIsMenuOpen(false)}
+              onClick={() => {
+                trackEvent('nav_click', { section: item.label, path: item.path, device: 'mobile' });
+                setIsMenuOpen(false);
+              }}
               style={{ 
                 transitionDelay: `${index * 50}ms`, 
                 opacity: isMenuOpen ? 1 : 0,
