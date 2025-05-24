@@ -19,7 +19,8 @@ export const initAnalytics = () => {
       }
     );
     
-    console.log('PostHog analytics initialized');
+    console.log('PostHog analytics initialized with key:', import.meta.env.VITE_POSTHOG_API_KEY?.substring(0, 4) + '...');
+    console.log('PostHog host:', import.meta.env.VITE_POSTHOG_HOST);
   } else {
     console.log('PostHog analytics not initialized in development mode');
   }
