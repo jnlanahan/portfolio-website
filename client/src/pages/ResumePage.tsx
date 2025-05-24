@@ -661,7 +661,7 @@ const ExperiencePage = () => {
               whileInView={{ opacity: 1, width: '15%' }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="absolute h-12 bg-amber-500/10 border-l-4 border-amber-500 rounded-r-md flex items-center left-[23%] top-260"
+              className="absolute h-12 bg-amber-500/10 border-l-4 border-amber-500 rounded-r-md flex items-center left-[23%] top-80"
               style={{ width: '15%' }}
             >
               <a href="#osu-professor" className="flex items-center pl-2 hover:underline">
@@ -685,7 +685,7 @@ const ExperiencePage = () => {
               whileInView={{ opacity: 1, width: '10%' }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.65 }}
-              className="absolute h-12 bg-indigo-500/10 border-l-4 border-indigo-500 rounded-r-md flex items-center left-[23%] top-224"
+              className="absolute h-12 bg-indigo-500/10 border-l-4 border-indigo-500 rounded-r-md flex items-center left-[23%] top-116"
               style={{ width: '10%' }}
             >
               <a href="#mba-osu" className="flex items-center pl-2 hover:underline">
@@ -709,7 +709,7 @@ const ExperiencePage = () => {
               whileInView={{ opacity: 1, width: '3%' }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.7 }}
-              className="absolute h-12 bg-blue-400/10 border-l-4 border-blue-400 rounded-r-md flex items-center left-[20%] top-188"
+              className="absolute h-12 bg-blue-400/10 border-l-4 border-blue-400 rounded-r-md flex items-center left-[20%] top-44"
               style={{ width: '3%' }}
             >
               <a href="#h2l-intern" className="flex items-center pl-2 hover:underline">
@@ -731,7 +731,7 @@ const ExperiencePage = () => {
               whileInView={{ opacity: 1, width: '20%' }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.75 }}
-              className="absolute h-12 bg-secondary/10 border-l-4 border-secondary rounded-r-md flex items-center left-0 top-152"
+              className="absolute h-12 bg-secondary/10 border-l-4 border-secondary rounded-r-md flex items-center left-0 top-80"
               style={{ width: '20%' }}
             >
               <a href="#usace-officer" className="flex items-center pl-2 hover:underline">
@@ -779,7 +779,7 @@ const ExperiencePage = () => {
               whileInView={{ opacity: 1, width: '12%' }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.85 }}
-              className="absolute h-12 bg-secondary/10 border-l-4 border-secondary rounded-r-md flex items-center left-0 top-80"
+              className="absolute h-12 bg-secondary/10 border-l-4 border-secondary rounded-r-md flex items-center left-0 top-44"
               style={{ width: '12%' }}
             >
               <a href="#lanahan-innovations" className="flex items-center pl-2 hover:underline">
