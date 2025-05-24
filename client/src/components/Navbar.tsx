@@ -159,7 +159,10 @@ const Navbar = () => {
           <Link 
             href="/contact"
             className="py-2 px-4 bg-secondary text-background rounded-md font-medium hover:bg-secondary/90 transition-colors text-center mt-4 flex items-center justify-center"
-            onClick={() => setIsMenuOpen(false)}
+            onClick={() => {
+              trackEvent('contact_button_click', { location: 'mobile_menu' });
+              setIsMenuOpen(false);
+            }}
             style={{ 
               transitionDelay: `${navItems.length * 50}ms`, 
               opacity: isMenuOpen ? 1 : 0,

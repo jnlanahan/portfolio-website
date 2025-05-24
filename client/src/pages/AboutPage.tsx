@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import RotatingWords from "@/components/RotatingWords";
+import { trackEvent } from "@/lib/analytics";
 
 import { GlowingCard } from "@/components/ui/glowing-card";
 
@@ -23,7 +24,13 @@ const HomeTile = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
     >
-      <Link href={linkTo}>
+      <Link 
+        href={linkTo}
+        onClick={() => trackEvent('homepage_tile_click', { 
+          tile: title, 
+          destination: linkTo 
+        })}
+      >
         <GlowingCard 
           className="bg-background/50 backdrop-blur-md rounded-xl border-2 border-secondary/20 hover:border-secondary hover:bg-background/80 hover:shadow-lg hover:shadow-secondary/20 p-6 transition-all duration-300 h-full cursor-pointer group"
           glowColor="rgba(67, 186, 147, 0.6)"

@@ -5,6 +5,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
+import { trackEvent } from "@/lib/analytics";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -31,6 +32,11 @@ const ContactPage = () => {
   const onSubmit = async (data: ContactFormValues) => {
     setIsSubmitting(true);
     try {
+      // Track form submission attempt
+      trackEvent('contact_form_submitted', {
+        has_subject: !!data.subject.trim()
+      });
+      
       const response = await apiRequest("POST", "/api/contact", data);
       
       // Show feedback based on whether the email was sent successfully
@@ -42,6 +48,9 @@ const ContactPage = () => {
             title: "Message sent successfully!",
             description: "Thank you for your message. I'll get back to you soon.",
           });
+          
+          // Track successful form submission with email notification
+          trackEvent('contact_form_success', { email_sent: true });
         } else {
           // Email was saved but not sent
           toast({
@@ -49,6 +58,9 @@ const ContactPage = () => {
             description: "Your message was saved but there was an issue sending the email notification. I'll still review your message.",
             variant: "default",
           });
+          
+          // Track successful form submission without email notification
+          trackEvent('contact_form_success', { email_sent: false });
         }
       } else {
         // Generic success message if we can't determine email status
@@ -56,6 +68,9 @@ const ContactPage = () => {
           title: "Message submitted!",
           description: "Thank you for your message. I'll review it soon.",
         });
+        
+        // Track generic success
+        trackEvent('contact_form_success', { email_status: 'unknown' });
       }
       
       reset();
@@ -65,6 +80,11 @@ const ContactPage = () => {
         title: "Error sending message",
         description: error?.message || "Please try again later.",
         variant: "destructive",
+      });
+      
+      // Track form submission error
+      trackEvent('contact_form_error', { 
+        error_message: error?.message || 'Unknown error'
       });
     } finally {
       setIsSubmitting(false);
