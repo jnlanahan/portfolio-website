@@ -193,7 +193,7 @@ const AboutPage = () => {
               title="My Experience" 
               description="Explore my professional journey through tech, design, and problem-solving."
               icon="ri-file-list-line"
-              linkTo="/resume"
+              linkTo="/my-experience"
               delay={0.1}
             />
             
