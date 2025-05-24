@@ -462,89 +462,142 @@ const ExperiencePage = () => {
               </div>
             </div>
             
-            {/* Military Career row - combines all military positions into one block */}
-            <div className="grid grid-cols-11 gap-1 mb-4">
+            {/* Professional row 2 - Military Career */}
+            <div className="grid grid-cols-12 gap-1 mb-4 relative">
               <div className="col-span-1 flex flex-col justify-center items-center pr-2 border-r border-border">
                 <span className="text-xs font-bold text-green-700 mb-1">Military</span>
               </div>
+
+              {/* Timeline bar */}
+              <div className="absolute top-[40px] left-[8.33%] right-[8.33%] h-1 bg-green-700/10"></div>
               
-              {/* Combined US Army Experience: 2011-Present */}
-              <div className="col-span-8 col-start-3">
-                <div className="block bg-gradient-to-r from-green-700/20 to-green-700/5 border border-green-700/30 rounded p-3 relative">
+              {/* US Army timeline - 2011-2018 */}
+              <div className="col-span-7 col-start-3">
+                <div className="block bg-gradient-to-r from-green-700/20 to-green-700/5 border border-green-700/30 rounded p-3">
                   {/* Army logo and title */}
                   <div className="flex items-center mb-2">
                     <img src="/src/assets/images/logos/us-army-logo.svg" alt="US Army logo" className="h-6 mr-2" />
                     <div>
-                      <div className="text-sm font-medium">United States Army</div>
-                      <div className="text-xs text-muted-foreground">10 Year Military Career (2011-Present)</div>
+                      <div className="text-sm font-medium">United States Army (Active Duty)</div>
+                      <div className="text-xs text-muted-foreground">Military Career (2011-2018)</div>
                     </div>
                   </div>
                   
-                  {/* Military positions grid */}
-                  <div className="grid grid-cols-4 gap-2 mt-3">
-                    {/* USACE Officer: 2021-Present */}
-                    <a href="#usace-officer" className="block bg-secondary/20 border border-secondary/30 rounded p-1.5 text-center hover:bg-secondary/30 transition-colors">
-                      <div className="text-[11px] font-medium">USACE Plans Officer</div>
-                      <div className="text-[9px] text-muted-foreground">2021-Present</div>
-                    </a>
+                  {/* Timeline visual representation - shows positions in chronological order */}
+                  <div className="relative h-28 mt-4 mb-1">
+                    {/* Time indicators */}
+                    <div className="absolute top-[-12px] left-0 text-[9px]">2011</div>
+                    <div className="absolute top-[-12px] left-[25%] text-[9px]">2013</div>
+                    <div className="absolute top-[-12px] left-[50%] text-[9px]">2015</div>
+                    <div className="absolute top-[-12px] left-[75%] text-[9px]">2017</div>
+                    <div className="absolute top-[-12px] right-0 text-[9px]">2018</div>
                     
-                    {/* Army Commander: 2017-2018 */}
-                    <a href="#army-commander" className="block bg-green-600/10 border border-green-600/20 rounded p-1.5 text-center hover:bg-green-600/20 transition-colors">
-                      <div className="text-[11px] font-medium">Company Commander</div>
-                      <div className="text-[9px] text-muted-foreground">2017-2018</div>
-                    </a>
+                    {/* Grid lines */}
+                    <div className="absolute h-full w-[1px] bg-border left-0"></div>
+                    <div className="absolute h-full w-[1px] bg-border left-[25%]"></div>
+                    <div className="absolute h-full w-[1px] bg-border left-[50%]"></div>
+                    <div className="absolute h-full w-[1px] bg-border left-[75%]"></div>
+                    <div className="absolute h-full w-[1px] bg-border right-0"></div>
                     
-                    {/* Army Program Manager: 2016-2017 */}
-                    <a href="#army-pm" className="block bg-purple-500/10 border border-purple-500/30 rounded p-1.5 text-center hover:bg-purple-500/20 transition-colors">
-                      <div className="text-[11px] font-medium">Program Manager</div>
-                      <div className="text-[9px] text-muted-foreground">2016-2017</div>
-                    </a>
-                    
-                    {/* Engineer Captain's Career Course: Jun 2015-Jun 2016 */}
-                    <a href="#captains-career-course" className="block bg-yellow-500/10 border border-yellow-500/30 rounded p-1.5 text-center hover:bg-yellow-500/20 transition-colors">
-                      <div className="text-[11px] font-medium">Captain's Course</div>
-                      <div className="text-[9px] text-muted-foreground">2015-2016</div>
-                    </a>
-                    
-                    {/* Assistant Project Engineer: Jan 2015-Jun 2015 */}
-                    <a href="#assistant-project-engineer" className="block bg-purple-500/10 border border-purple-500/30 rounded p-1.5 text-center hover:bg-purple-500/20 transition-colors">
-                      <div className="text-[11px] font-medium">USACE Project Engineer</div>
-                      <div className="text-[9px] text-muted-foreground">Jan-Jun 2015</div>
-                    </a>
-                    
-                    {/* Operations and Logistics Manager: Oct 2013-Jan 2015 */}
-                    <a href="#operations-logistics-manager" className="block bg-orange-500/10 border border-orange-500/30 rounded p-1.5 text-center hover:bg-orange-500/20 transition-colors">
-                      <div className="text-[11px] font-medium">Operations Manager</div>
-                      <div className="text-[9px] text-muted-foreground">2013-2015</div>
-                    </a>
-                    
-                    {/* Platoon Leader: Jan 2013-Oct 2013 */}
-                    <a href="#platoon-leader" className="block bg-green-500/10 border border-green-500/30 rounded p-1.5 text-center hover:bg-green-500/20 transition-colors">
-                      <div className="text-[11px] font-medium">Platoon Leader</div>
-                      <div className="text-[9px] text-muted-foreground">Jan-Oct 2013</div>
+                    {/* Positions */}
+                    {/* Basic Officer Leadership Course: Aug 2011-Dec 2011 */}
+                    <a 
+                      href="#bolc-student" 
+                      className="absolute h-8 bg-yellow-500/10 hover:bg-yellow-500/20 transition-all duration-300 border border-yellow-500/30 rounded-sm flex items-center px-1 overflow-hidden"
+                      style={{left: '0%', width: '5%', top: '0px'}}
+                    >
+                      <div className="text-[9px] font-medium leading-tight">BOLC</div>
                     </a>
                     
                     {/* Assistant Operations Officer: Dec 2011-Jan 2013 */}
-                    <a href="#assistant-operations-officer" className="block bg-purple-500/10 border border-purple-500/30 rounded p-1.5 text-center hover:bg-purple-500/20 transition-colors">
-                      <div className="text-[11px] font-medium">Operations Officer</div>
-                      <div className="text-[9px] text-muted-foreground">2011-2013</div>
+                    <a 
+                      href="#assistant-operations-officer" 
+                      className="absolute h-8 bg-purple-500/10 hover:bg-purple-500/20 transition-all duration-300 border border-purple-500/30 rounded-sm flex items-center px-1 overflow-hidden"
+                      style={{left: '5%', width: '20%', top: '0px'}}
+                    >
+                      <div className="text-[9px] font-medium leading-tight">Operations Officer</div>
                     </a>
-                  </div>
-                  
-                  {/* Year markers on timeline */}
-                  <div className="absolute top-[90%] left-0 right-0 h-1 bg-green-700/20 mt-2">
-                    <div className="absolute -bottom-4 left-0 text-[9px]">2021</div>
-                    <div className="absolute -bottom-4 left-[30%] text-[9px]">2017</div>
-                    <div className="absolute -bottom-4 left-[50%] text-[9px]">2015</div>
-                    <div className="absolute -bottom-4 left-[70%] text-[9px]">2013</div>
-                    <div className="absolute -bottom-4 right-0 text-[9px]">2011</div>
+                    
+                    {/* Platoon Leader: Jan 2013-Oct 2013 */}
+                    <a 
+                      href="#platoon-leader" 
+                      className="absolute h-8 bg-green-500/10 hover:bg-green-500/20 transition-all duration-300 border border-green-500/30 rounded-sm flex items-center px-1 overflow-hidden"
+                      style={{left: '25%', width: '12%', top: '0px'}}
+                    >
+                      <div className="text-[9px] font-medium leading-tight">Platoon Leader</div>
+                    </a>
+                    
+                    {/* Operations and Logistics Manager: Oct 2013-Jan 2015 */}
+                    <a 
+                      href="#operations-logistics-manager" 
+                      className="absolute h-8 bg-orange-500/10 hover:bg-orange-500/20 transition-all duration-300 border border-orange-500/30 rounded-sm flex items-center px-1 overflow-hidden"
+                      style={{left: '37%', width: '18%', top: '0px'}}
+                    >
+                      <div className="text-[9px] font-medium leading-tight">Operations Manager</div>
+                    </a>
+                    
+                    {/* Assistant Project Engineer: Jan 2015-Jun 2015 */}
+                    <a 
+                      href="#assistant-project-engineer" 
+                      className="absolute h-8 bg-purple-500/10 hover:bg-purple-500/20 transition-all duration-300 border border-purple-500/30 rounded-sm flex items-center px-1 overflow-hidden"
+                      style={{left: '55%', width: '7%', top: '0px'}}
+                    >
+                      <div className="text-[9px] font-medium leading-tight">Project Engineer</div>
+                    </a>
+                    
+                    {/* Engineer Captain's Career Course: Jun 2015-Jun 2016 */}
+                    <a 
+                      href="#captains-career-course" 
+                      className="absolute h-8 bg-yellow-500/10 hover:bg-yellow-500/20 transition-all duration-300 border border-yellow-500/30 rounded-sm flex items-center px-1 overflow-hidden"
+                      style={{left: '62%', width: '14%', top: '0px'}}
+                    >
+                      <div className="text-[9px] font-medium leading-tight">Captain's Course</div>
+                    </a>
+                    
+                    {/* Army Program Manager: 2016-2017 */}
+                    <a 
+                      href="#army-pm" 
+                      className="absolute h-8 bg-purple-500/10 hover:bg-purple-500/20 transition-all duration-300 border border-purple-500/30 rounded-sm flex items-center px-1 overflow-hidden"
+                      style={{left: '76%', width: '11%', top: '0px'}}
+                    >
+                      <div className="text-[9px] font-medium leading-tight">Program Manager</div>
+                    </a>
+                    
+                    {/* Army Commander: 2017-2018 */}
+                    <a 
+                      href="#army-commander" 
+                      className="absolute h-8 bg-green-600/10 hover:bg-green-600/20 transition-all duration-300 border border-green-600/20 rounded-sm flex items-center px-1 overflow-hidden"
+                      style={{left: '87%', width: '13%', top: '0px'}}
+                    >
+                      <div className="text-[9px] font-medium leading-tight">Company Commander</div>
+                    </a>
+                    
+                    {/* OSU Assistant Professor: 2018-2021 */}
+                    <a 
+                      href="#osu-professor" 
+                      className="absolute h-8 bg-amber-500/10 hover:bg-amber-500/20 transition-all duration-300 border border-amber-500/30 rounded-sm flex items-center px-1 overflow-hidden"
+                      style={{left: '62%', width: '38%', top: '12px'}}
+                    >
+                      <div className="text-[9px] font-medium leading-tight">Assistant Professor (OSU)</div>
+                    </a>
                   </div>
                 </div>
               </div>
               
+              {/* USACE Officer: 2021-Present - Separate as requested */}
+              <div className="col-span-2 col-start-10 flex items-start">
+                <a href="#usace-officer" className="block bg-secondary/10 border border-secondary/30 rounded p-2 text-center hover:bg-secondary/20 transition-colors w-full">
+                  <div className="flex justify-center mb-1">
+                    <img src="/src/assets/images/logos/us-army-logo.svg" alt="US Army logo" className="h-5" />
+                  </div>
+                  <div className="text-[10px] font-medium">US Army Reserve</div>
+                  <div className="text-[9px] text-muted-foreground">USACE Plans Officer (2021-Present)</div>
+                </a>
+              </div>
+              
               {/* H2L Intern: 2021 - Keep separate since it's not military */}
-              <div className="col-span-1 col-start-3 row-start-2 mt-12">
-                <a href="#h2l-intern" className="block bg-blue-400/10 border border-blue-400/30 rounded p-2 text-center hover:bg-blue-400/20 transition-colors mt-2">
+              <div className="col-span-1 col-start-3 row-start-2 mt-4">
+                <a href="#h2l-intern" className="block bg-blue-400/10 border border-blue-400/30 rounded p-2 text-center hover:bg-blue-400/20 transition-colors">
                   <div className="flex justify-center mb-1">
                     <span className="text-[10px] font-bold text-blue-400">H2L</span>
                   </div>
