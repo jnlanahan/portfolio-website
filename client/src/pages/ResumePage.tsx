@@ -2,11 +2,12 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { useQuery } from "@tanstack/react-query";
 import { getExperienceProfile, formatPeriod, ExperienceEntry, Skill } from "@/data/resume";
 import { GlowingCard } from "@/components/ui/glowing-card";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import '../styles/timeline.css';
+import '../styles/horizontal-timeline.css';
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { X, Briefcase, Calendar, MapPin, GraduationCap, Award } from "lucide-react";
+import { X, Briefcase, Calendar, MapPin, GraduationCap, Award, ChevronLeft, ChevronRight } from "lucide-react";
 
 // Component for displaying skills with category-based styling
 const SkillBadge = ({ 
@@ -242,6 +243,85 @@ const EducationSection = ({
   );
 };
 
+// Define timeline entries based on the exact dates provided
+interface TimelineEntry {
+  id: string;
+  period: string;
+  title: string;
+  company: string;
+  location: string;
+  groupDate?: string;
+  type: 'education' | 'military' | 'industry';
+  job?: ExperienceEntry;
+}
+
+const HorizontalTimeline = ({ entries, openJobDialog }: { 
+  entries: TimelineEntry[], 
+  openJobDialog: (job: any) => void 
+}) => {
+  const timelineRef = useRef<HTMLDivElement>(null);
+  
+  const scrollLeft = () => {
+    if (timelineRef.current) {
+      timelineRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+    }
+  };
+  
+  const scrollRight = () => {
+    if (timelineRef.current) {
+      timelineRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <div className="timeline-container">
+      <div className="timeline-wrapper">
+        <button className="scroll-button scroll-left" onClick={scrollLeft}>
+          <ChevronLeft size={18} />
+        </button>
+        
+        <button className="scroll-button scroll-right" onClick={scrollRight}>
+          <ChevronRight size={18} />
+        </button>
+        
+        <div className="timeline-line"></div>
+        
+        <div className="timeline-events" ref={timelineRef}>
+          {entries.map((entry, index) => (
+            <div key={entry.id} className="timeline-event">
+              {entry.groupDate && (
+                <div className="group-date">
+                  {entry.groupDate}
+                </div>
+              )}
+              
+              <div className={`timeline-marker ${entry.type}`}></div>
+              
+              <div className="timeline-year">
+                {entry.period}
+              </div>
+              
+              <div className="timeline-content" onClick={() => entry.job && openJobDialog(entry.job)}>
+                <span className="timeline-content-date">{entry.period}</span>
+                <h3>{entry.title}</h3>
+                <div className="timeline-content-company">
+                  <Briefcase size={14} />
+                  <span>{entry.company}</span>
+                </div>
+                <div className="timeline-content-company">
+                  <MapPin size={14} />
+                  <span>{entry.location}</span>
+                </div>
+                <div className={`${entry.type}-indicator`}></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Main Experience Page Component
 const ExperiencePage = () => {
   const { data: profile, isLoading } = useQuery({
@@ -258,6 +338,182 @@ const ExperiencePage = () => {
 
   // Timeline line growing animation
   const timelineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  // For the horizontal timeline
+  const [timelineEntries, setTimelineEntries] = useState<TimelineEntry[]>([]);
+  const [selectedItem, setSelectedItem] = useState<ExperienceEntry | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  // Initialize timeline data with the exact dates provided
+  useEffect(() => {
+    if (profile) {
+      // Find matching jobs from the profile data to link to entries
+      const findJob = (title: string) => {
+        return profile.workExperience.find((job: ExperienceEntry) => 
+          job.title.toLowerCase().includes(title.toLowerCase())
+        );
+      };
+
+      const entries: TimelineEntry[] = [
+        {
+          id: "current1",
+          period: "October 2021 – Present",
+          title: "Manager – Technology Consulting",
+          company: "EY",
+          location: "Columbus, OH",
+          groupDate: "2021 – Present",
+          type: "industry",
+          job: findJob("Technology Consulting")
+        },
+        {
+          id: "current2",
+          period: "July 2021 – Present",
+          title: "Major – Plans Officer (S3)",
+          company: "U.S. Army Corps of Engineers",
+          location: "U.S. Army Reserve",
+          type: "military",
+          job: findJob("Plans Officer")
+        },
+        {
+          id: "current3",
+          period: "June 2023 – Present",
+          title: "Founder",
+          company: "Lanahan Innovations",
+          location: "Columbus, OH",
+          type: "industry",
+          job: findJob("Founder")
+        },
+        {
+          id: "education1",
+          period: "May 2021",
+          title: "Master of Business Administration (MBA)",
+          company: "The Ohio State University, Fisher College of Business",
+          location: "Columbus, OH",
+          groupDate: "May 2021",
+          type: "education",
+          job: null
+        },
+        {
+          id: "military1",
+          period: "Nov 2018 – Jun 2021",
+          title: "Assistant Professor of Military Science & Leadership",
+          company: "U.S. Army",
+          location: "Columbus, OH",
+          groupDate: "May 2011 – June 2021",
+          type: "military",
+          job: findJob("Professor")
+        },
+        {
+          id: "military2",
+          period: "Jun 2017 – Nov 2018",
+          title: "Senior Manager – Company Commander",
+          company: "U.S. Army",
+          location: "Pyeongtaek, South Korea",
+          type: "military",
+          job: findJob("Company Commander")
+        },
+        {
+          id: "military3",
+          period: "Jun 2016 – Jun 2017",
+          title: "Program Manager – Host Nation Funded Construction",
+          company: "U.S. Army",
+          location: "Seoul, South Korea",
+          type: "military",
+          job: findJob("Program Manager")
+        },
+        {
+          id: "education2",
+          period: "May 2016",
+          title: "Master of Science in Engineering Management",
+          company: "Missouri University of Science and Technology",
+          location: "Rolla, MO",
+          groupDate: "May 2016",
+          type: "education",
+          job: null
+        },
+        {
+          id: "military4",
+          period: "Jun 2015 – Jun 2016",
+          title: "Engineer Captain's Career Course Student",
+          company: "U.S. Army",
+          location: "Fort Leonard Wood, MO",
+          type: "military",
+          job: findJob("Engineer Captain")
+        },
+        {
+          id: "military5",
+          period: "Jan 2015 – Jun 2015",
+          title: "Assistant Project Engineer",
+          company: "U.S. Army",
+          location: "Fort Hood, TX",
+          type: "military",
+          job: findJob("Project Engineer")
+        },
+        {
+          id: "military6",
+          period: "Oct 2013 – Jan 2015",
+          title: "Operations and Logistics Manager – Executive Officer",
+          company: "U.S. Army",
+          location: "Fort Hood, TX",
+          type: "military",
+          job: findJob("Executive Officer")
+        },
+        {
+          id: "military7",
+          period: "Jan 2013 – Oct 2013",
+          title: "Manager – Platoon Leader",
+          company: "U.S. Army",
+          location: "Fort Hood, TX",
+          type: "military",
+          job: findJob("Platoon Leader")
+        },
+        {
+          id: "military8",
+          period: "Dec 2011 – Jan 2013",
+          title: "Strategic and Operational Planner – Assistant Operations Officer",
+          company: "U.S. Army",
+          location: "Fort Hood, TX",
+          type: "military",
+          job: findJob("Assistant Operations Officer")
+        },
+        {
+          id: "military9",
+          period: "Aug 2011 – Dec 2011",
+          title: "Basic Officer Leadership Course Student",
+          company: "U.S. Army",
+          location: "Fort Leonard Wood, MO",
+          type: "military",
+          job: findJob("Basic Officer")
+        },
+        {
+          id: "military10",
+          period: "May 2011 – Aug 2011",
+          title: "Trainer – Leadership and Military Tactics (CTLT)",
+          company: "U.S. Army",
+          location: "Fort Knox, KY",
+          type: "military",
+          job: findJob("Trainer")
+        },
+        {
+          id: "education3",
+          period: "May 2011",
+          title: "Bachelor of Science in Civil Engineering",
+          company: "North Carolina State University",
+          location: "Raleigh, NC",
+          groupDate: "May 2011",
+          type: "education",
+          job: null
+        }
+      ];
+      
+      setTimelineEntries(entries);
+    }
+  }, [profile]);
+
+  const openJobDialog = (job: ExperienceEntry) => {
+    setSelectedItem(job);
+    setIsDialogOpen(true);
+  };
 
   if (isLoading) {
     return (
