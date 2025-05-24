@@ -362,8 +362,10 @@ const ExperiencePage = () => {
         </motion.div>
       </div>
 
-      {/* Interactive Timeline - Using the separate component */}
-      {!isLoading && !error && data && <InteractiveTimeline experiences={data.workExperience} />}
+      {/* Interactive Timeline using the separate component */}
+      {data?.workExperience && (
+        <InteractiveTimeline experiences={data.workExperience} />
+      )}
 
       {/* Work Experience Timeline */}
       <div ref={timelineRef} className="timeline relative pl-8 md:pl-12 max-w-4xl mx-auto" style={{ position: 'relative' }}>
