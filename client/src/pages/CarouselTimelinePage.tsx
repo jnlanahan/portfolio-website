@@ -368,12 +368,12 @@ const CarouselTimelinePage = () => {
           ))}
           
           <div className="timeline-controls">
-            <Button className="prev-button control-button" variant="secondary">
-              <ChevronLeft className="w-5 h-5" />
+            <Button className="prev-button control-button" variant="secondary" size="lg">
+              <ChevronLeft className="w-6 h-6" />
               <span className="sr-only">Previous</span>
             </Button>
-            <Button className="next-button control-button" variant="secondary">
-              <ChevronRight className="w-5 h-5" />
+            <Button className="next-button control-button" variant="secondary" size="lg">
+              <ChevronRight className="w-6 h-6" />
               <span className="sr-only">Next</span>
             </Button>
           </div>
@@ -387,6 +387,9 @@ const CarouselTimelinePage = () => {
           </div>
         </div>
       </div>
+      
+      {/* Space to avoid footer overlap */}
+      <div className="py-16"></div>
     </div>
   );
 };
