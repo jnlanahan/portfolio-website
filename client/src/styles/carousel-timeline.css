@@ -36,7 +36,8 @@
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  display: none;
+  /* Changed from display: none to block so cards are visible */
+  display: block;
 }
 
 .carousel-card::after {

@@ -93,12 +93,16 @@ const CarouselTimelinePage = () => {
     // Dynamically import ScrollTrigger and Draggable
     const initGSAP = async () => {
       try {
+        // Import GSAP plugins
         ScrollTrigger = (await import('gsap/ScrollTrigger')).ScrollTrigger;
         Draggable = (await import('gsap/Draggable')).Draggable;
         
         // Register plugins
         gsap.registerPlugin(ScrollTrigger);
         gsap.registerPlugin(Draggable);
+        
+        // Display all cards by default so they're visible even without animation
+        gsap.set('.carousel-card', { display: 'block' });
         
         // Now we can set up the carousel if jobList is loaded
         if (jobList.length > 0 && boxesRef.current) {
@@ -122,7 +126,17 @@ const CarouselTimelinePage = () => {
   
   // Set up carousel when jobList changes
   useEffect(() => {
-    if (jobList.length === 0 || !boxesRef.current || !ScrollTrigger || !Draggable) return;
+    if (jobList.length === 0 || !boxesRef.current) return;
+    
+    // Make sure GSAP plugins are loaded
+    if (!ScrollTrigger || !Draggable) {
+      // Just to be safe, make the cards visible immediately
+      const cards = document.querySelectorAll('.carousel-card');
+      cards.forEach((card: any) => {
+        card.style.display = 'block';
+      });
+      return;
+    }
     
     // Clean up existing animations first
     const cleanup = () => {
@@ -133,7 +147,23 @@ const CarouselTimelinePage = () => {
     };
     
     cleanup();
-    setupCarousel();
+    
+    // Simple fallback position if animation fails
+    const positionCards = () => {
+      const cards = document.querySelectorAll('.carousel-card');
+      cards.forEach((card: any, index: number) => {
+        card.style.display = 'block';
+        card.style.transform = `translate(-50%, -50%) translateX(${index * 50 - 100}px)`;
+        card.style.zIndex = 10 - Math.abs(index * 50 - 100);
+      });
+    };
+    
+    try {
+      setupCarousel();
+    } catch (error) {
+      console.error('Failed to set up carousel:', error);
+      positionCards(); // Fallback to simple positioning
+    }
     
     return cleanup;
   }, [jobList]); // Run this effect when jobList changes
