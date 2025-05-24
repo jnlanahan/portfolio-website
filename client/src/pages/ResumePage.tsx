@@ -361,6 +361,152 @@ const ExperiencePage = () => {
         </motion.div>
       </div>
 
+      {/* Interactive Career Navigator */}
+      <motion.div
+        className="mb-14 max-w-4xl mx-auto bg-card/30 rounded-lg border border-border p-5 shadow-sm"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <h3 className="text-lg font-semibold mb-5 text-center">Career Timeline Navigator</h3>
+
+        {/* Professional Experience Group */}
+        <div className="p-4 rounded-md mb-6 border border-border">
+          <h4 className="text-sm font-medium text-secondary mb-3 border-b border-border pb-2">Professional Positions</h4>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {/* EY Product Manager */}
+            <a href="#ey-manager" className="bg-card hover:bg-card/80 transition-colors rounded-md p-3 border border-border flex flex-col items-center text-center">
+              <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center mb-2">
+                <img src="/src/assets/images/logos/ey-logo.svg" alt="EY logo" className="h-6" />
+              </div>
+              <div className="text-sm font-medium">Product Manager</div>
+              <div className="text-xs text-muted-foreground">EY • 2021-Present</div>
+            </a>
+
+            {/* Lanahan Innovations */}
+            <a href="#lanahan-innovations" className="bg-card hover:bg-card/80 transition-colors rounded-md p-3 border border-border flex flex-col items-center text-center">
+              <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center mb-2">
+                <span className="text-sm font-bold text-secondary">LA</span>
+              </div>
+              <div className="text-sm font-medium">Founder</div>
+              <div className="text-xs text-muted-foreground">Lanahan • 2023-Present</div>
+            </a>
+
+            {/* H2L Intern */}
+            <a href="#h2l-intern" className="bg-card hover:bg-card/80 transition-colors rounded-md p-3 border border-border flex flex-col items-center text-center">
+              <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center mb-2">
+                <span className="text-sm font-bold text-blue-500">H2L</span>
+              </div>
+              <div className="text-sm font-medium">Product Intern</div>
+              <div className="text-xs text-muted-foreground">H2L • 2021</div>
+            </a>
+
+            {/* OSU Professor */}
+            <a href="#osu-professor" className="bg-card hover:bg-card/80 transition-colors rounded-md p-3 border border-border flex flex-col items-center text-center">
+              <div className="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center mb-2">
+                <img src="/src/assets/images/logos/osu-logo.svg" alt="OSU logo" className="h-6" />
+              </div>
+              <div className="text-sm font-medium">Assistant Professor</div>
+              <div className="text-xs text-muted-foreground">OSU • 2018-2021</div>
+            </a>
+          </div>
+        </div>
+
+        {/* Military Experience Accordion */}
+        <div className="p-4 rounded-md mb-6 border border-green-700/30 bg-gradient-to-r from-green-700/5 to-transparent">
+          <div className="flex items-center justify-between border-b border-green-700/20 pb-2 mb-3">
+            <h4 className="text-sm font-medium text-green-700">Military Experience</h4>
+            <div className="text-xs text-muted-foreground">US Army • 2011-Present</div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-3">
+            {/* USACE Reserve Officer */}
+            <a href="#usace-officer" className="bg-card/70 hover:bg-card transition-colors rounded-md p-3 border border-border flex items-center">
+              <div className="w-10 h-10 flex-shrink-0 rounded-full bg-secondary/10 flex items-center justify-center mr-3">
+                <img src="/src/assets/images/logos/us-army-logo.svg" alt="US Army logo" className="h-6" />
+              </div>
+              <div>
+                <div className="text-sm font-medium">USACE Plans Officer</div>
+                <div className="text-xs text-muted-foreground">US Army Reserve • 2021-Present</div>
+              </div>
+            </a>
+            
+            {/* Interactive Army Timeline */}
+            <div className="relative mt-1 pt-2 pl-3 pr-3 pb-0 rounded-md">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-green-700/10 mt-6"></div>
+              
+              {/* Army positions */}
+              <div className="relative pt-4 flex flex-wrap gap-1 justify-between">
+                <a href="#army-commander" className="px-2 py-1 mb-2 rounded text-xs font-medium bg-green-600/10 hover:bg-green-600/20 transition-colors text-green-700">
+                  Company Commander <span className="text-muted-foreground">(2017-2018)</span>
+                </a>
+                
+                <a href="#army-pm" className="px-2 py-1 mb-2 rounded text-xs font-medium bg-purple-500/10 hover:bg-purple-500/20 transition-colors text-purple-700">
+                  Program Manager <span className="text-muted-foreground">(2016-2017)</span>
+                </a>
+                
+                <a href="#captains-career-course" className="px-2 py-1 mb-2 rounded text-xs font-medium bg-yellow-500/10 hover:bg-yellow-500/20 transition-colors text-yellow-700">
+                  Captain's Course <span className="text-muted-foreground">(2015-2016)</span>
+                </a>
+                
+                <a href="#assistant-project-engineer" className="px-2 py-1 mb-2 rounded text-xs font-medium bg-purple-500/10 hover:bg-purple-500/20 transition-colors text-purple-700">
+                  Project Engineer <span className="text-muted-foreground">(2015)</span>
+                </a>
+                
+                <a href="#operations-logistics-manager" className="px-2 py-1 mb-2 rounded text-xs font-medium bg-orange-500/10 hover:bg-orange-500/20 transition-colors text-orange-700">
+                  Operations Manager <span className="text-muted-foreground">(2013-2015)</span>
+                </a>
+                
+                <a href="#platoon-leader" className="px-2 py-1 mb-2 rounded text-xs font-medium bg-green-500/10 hover:bg-green-500/20 transition-colors text-green-700">
+                  Platoon Leader <span className="text-muted-foreground">(2013)</span>
+                </a>
+                
+                <a href="#assistant-operations-officer" className="px-2 py-1 mb-2 rounded text-xs font-medium bg-purple-500/10 hover:bg-purple-500/20 transition-colors text-purple-700">
+                  Operations Officer <span className="text-muted-foreground">(2011-2013)</span>
+                </a>
+                
+                <a href="#bolc-student" className="px-2 py-1 mb-2 rounded text-xs font-medium bg-yellow-500/10 hover:bg-yellow-500/20 transition-colors text-yellow-700">
+                  BOLC <span className="text-muted-foreground">(2011)</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Education Group */}
+        <div className="p-4 rounded-md border border-cyan-500/30 bg-gradient-to-r from-cyan-500/5 to-transparent">
+          <h4 className="text-sm font-medium text-cyan-500 border-b border-cyan-500/20 pb-2 mb-3">Education</h4>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            {/* MBA OSU */}
+            <a href="#mba-osu" className="bg-card/70 hover:bg-card transition-colors rounded-md p-3 border border-border flex flex-col items-center text-center">
+              <div className="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center mb-2">
+                <img src="/src/assets/images/logos/osu-logo.svg" alt="OSU logo" className="h-6" />
+              </div>
+              <div className="text-sm font-medium">MBA</div>
+              <div className="text-xs text-muted-foreground">Ohio State • 2019-2021</div>
+            </a>
+            
+            {/* MS Missouri */}
+            <a href="#ms-missouri" className="bg-card/70 hover:bg-card transition-colors rounded-md p-3 border border-border flex flex-col items-center text-center">
+              <div className="w-10 h-10 rounded-full bg-pink-500/10 flex items-center justify-center mb-2">
+                <span className="text-sm font-bold text-pink-500">MS&T</span>
+              </div>
+              <div className="text-sm font-medium">MS Engineering</div>
+              <div className="text-xs text-muted-foreground">Missouri S&T • 2014-2016</div>
+            </a>
+            
+            {/* BS NCSU */}
+            <a href="#bs-ncsu" className="bg-card/70 hover:bg-card transition-colors rounded-md p-3 border border-border flex flex-col items-center text-center">
+              <div className="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center mb-2">
+                <span className="text-sm font-bold text-cyan-500">NCSU</span>
+              </div>
+              <div className="text-sm font-medium">BS Civil Engineering</div>
+              <div className="text-xs text-muted-foreground">NC State • 2007-2011</div>
+            </a>
+          </div>
+        </div>
+      </motion.div>
 
 
       {/* Work Experience Timeline */}
