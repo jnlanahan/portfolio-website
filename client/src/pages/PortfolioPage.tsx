@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { ProjectCategory, projectCategories } from "@/data/portfolio";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { Link } from "wouter";
 
 // Tech badge component
@@ -11,22 +11,101 @@ const TechBadge = ({ tech }: { tech: string }) => (
   </span>
 );
 
-// Project card component
-const ProjectCard = ({ project, index }: { project: any; index: number }) => (
-  <motion.div
-    key={project.id}
-    className="group relative rounded-xl overflow-hidden border border-border hover:border-secondary transition-all duration-300 bg-background/30 backdrop-blur-sm"
-    initial={{ opacity: 0, y: 30 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay: index * 0.1 }}
-    whileHover={{ y: -5 }}
-  >
+// Scrollable Image Component
+const ScrollableImageContainer = ({ project }: { project: any }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  
+  const images = project.mediaFiles && project.mediaFiles.length > 0 
+    ? project.mediaFiles 
+    : [project.image];
+  
+  const scrollToImage = (index: number) => {
+    if (scrollRef.current) {
+      const scrollWidth = scrollRef.current.scrollWidth;
+      const containerWidth = scrollRef.current.clientWidth;
+      const scrollLeft = (scrollWidth / images.length) * index;
+      scrollRef.current.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+    }
+    setCurrentImageIndex(index);
+  };
+
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const scrollLeft = scrollRef.current.scrollLeft;
+      const containerWidth = scrollRef.current.clientWidth;
+      const newIndex = Math.round(scrollLeft / containerWidth);
+      setCurrentImageIndex(newIndex);
+    }
+  };
+
+  return (
     <div className="relative overflow-hidden">
-      <img
-        src={project.image}
-        alt={project.title}
-        className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
-      />
+      <div 
+        ref={scrollRef}
+        className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+        onScroll={handleScroll}
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
+        {images.map((image: string, index: number) => (
+          <div key={index} className="min-w-full snap-start">
+            <img
+              src={image}
+              alt={`${project.title} - Image ${index + 1}`}
+              className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+        ))}
+      </div>
+      
+      {/* Image indicators */}
+      {images.length > 1 && (
+        <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          {images.map((_, index) => (
+            <button
+              key={index}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                scrollToImage(index);
+              }}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                index === currentImageIndex 
+                  ? 'bg-secondary scale-125' 
+                  : 'bg-white/50 hover:bg-white/70'
+              }`}
+            />
+          ))}
+        </div>
+      )}
+      
+      {/* Navigation arrows */}
+      {images.length > 1 && (
+        <>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              const prevIndex = currentImageIndex > 0 ? currentImageIndex - 1 : images.length - 1;
+              scrollToImage(prevIndex);
+            }}
+            className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100"
+          >
+            <i className="ri-arrow-left-line text-sm"></i>
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              const nextIndex = currentImageIndex < images.length - 1 ? currentImageIndex + 1 : 0;
+              scrollToImage(nextIndex);
+            }}
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100"
+          >
+            <i className="ri-arrow-right-line text-sm"></i>
+          </button>
+        </>
+      )}
       
       {/* Category badge */}
       {project.category && (
@@ -41,7 +120,30 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => (
           Featured
         </div>
       )}
+      
+      {/* Image counter */}
+      {images.length > 1 && (
+        <div className={`absolute top-3 bg-black/50 text-white px-2 py-1 rounded-full text-xs ${
+          project.featured ? 'right-20' : 'right-3'
+        }`}>
+          {currentImageIndex + 1} / {images.length}
+        </div>
+      )}
     </div>
+  );
+};
+
+// Project card component
+const ProjectCard = ({ project, index }: { project: any; index: number }) => (
+  <motion.div
+    key={project.id}
+    className="group relative rounded-xl overflow-hidden border border-border hover:border-secondary transition-all duration-300 bg-background/30 backdrop-blur-sm"
+    initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, delay: index * 0.1 }}
+    whileHover={{ y: -5 }}
+  >
+    <ScrollableImageContainer project={project} />
 
     <div className="p-6">
       {/* Project date */}
