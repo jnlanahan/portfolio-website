@@ -57,7 +57,9 @@ export default function RichTextEditor({ content, onChange, placeholder = "Start
 
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        codeBlock: false, // Disable default codeBlock to avoid conflict
+      }),
       Underline,
       TextStyle,
       Color,

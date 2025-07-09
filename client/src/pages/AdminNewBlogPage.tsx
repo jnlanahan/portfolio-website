@@ -13,7 +13,7 @@ import RichTextEditor from "@/components/RichTextEditor";
 import { Switch } from "@/components/ui/switch";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Upload, X } from "lucide-react";
 
 const blogSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -35,6 +35,8 @@ export default function AdminNewBlogPage() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [content, setContent] = useState("");
+  const [coverImage, setCoverImage] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
 
   const {
     register,
@@ -77,10 +79,51 @@ export default function AdminNewBlogPage() {
     },
   });
 
+  const handleFileUpload = async (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+
+    setIsUploading(true);
+    try {
+      const formData = new FormData();
+      for (let i = 0; i < files.length; i++) {
+        formData.append('files', files[i]);
+      }
+
+      const response = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        throw new Error('Upload failed');
+      }
+
+      const data = await response.json();
+      if (data.files && data.files.length > 0) {
+        setCoverImage(data.files[0]);
+        setValue("coverImage", data.files[0]);
+        toast({
+          title: "Upload successful",
+          description: "Cover image uploaded successfully",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Upload failed",
+        description: "Failed to upload cover image",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   const onSubmit = (data: BlogFormData) => {
     createBlogMutation.mutate({
       ...data,
       content: content,
+      coverImage: coverImage || data.coverImage,
     });
   };
 
@@ -174,15 +217,75 @@ export default function AdminNewBlogPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="coverImage">Cover Image URL</Label>
-                <Input
-                  id="coverImage"
-                  {...register("coverImage")}
-                  className={errors.coverImage ? "border-red-500" : ""}
-                />
-                {errors.coverImage && (
-                  <p className="text-sm text-red-500">{errors.coverImage.message}</p>
-                )}
+                <Label>Cover Image</Label>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => {
+                        const input = document.createElement('input');
+                        input.type = 'file';
+                        input.accept = 'image/*';
+                        input.onchange = (e) => {
+                          const files = (e.target as HTMLInputElement).files;
+                          handleFileUpload(files);
+                        };
+                        input.click();
+                      }}
+                      disabled={isUploading}
+                      className="flex items-center gap-2"
+                    >
+                      <Upload size={16} />
+                      {isUploading ? 'Uploading...' : 'Upload Cover Image'}
+                    </Button>
+                    <span className="text-sm text-gray-600">
+                      or enter URL manually
+                    </span>
+                  </div>
+                  
+                  {coverImage && (
+                    <div className="flex items-center gap-2 p-2 bg-gray-50 dark:bg-gray-800 rounded">
+                      <img 
+                        src={coverImage} 
+                        alt="Cover preview" 
+                        className="w-16 h-16 object-cover rounded"
+                      />
+                      <div className="flex-1">
+                        <p className="text-sm font-medium">Cover Image</p>
+                        <p className="text-xs text-gray-600 truncate">{coverImage}</p>
+                      </div>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setCoverImage("");
+                          setValue("coverImage", "");
+                        }}
+                      >
+                        <X size={14} />
+                      </Button>
+                    </div>
+                  )}
+
+                  <div className="space-y-2">
+                    <Label htmlFor="coverImageUrl">Or enter URL manually</Label>
+                    <Input
+                      id="coverImageUrl"
+                      {...register("coverImage")}
+                      className={errors.coverImage ? "border-red-500" : ""}
+                      placeholder="https://example.com/image.jpg"
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setCoverImage(value);
+                      }}
+                    />
+                    {errors.coverImage && (
+                      <p className="text-sm text-red-500">{errors.coverImage.message}</p>
+                    )}
+                  </div>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
