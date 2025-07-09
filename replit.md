@@ -28,6 +28,7 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Improved admin dashboard layout with clearer separation of actions
   - Built complete admin system for content management with hidden authentication
   - Default admin credentials: username: admin, password: admin123
+  - **Fixed project creation issues**: Made only title and description mandatory fields, added proper date handling for form submissions, and corrected image upload path issues
 
 - **January 2025**: Removed "My Experience" section completely
   - Removed navigation items and routes

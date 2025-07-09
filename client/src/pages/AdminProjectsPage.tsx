@@ -412,13 +412,13 @@ export default function AdminProjectsPage() {
                             <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden">
                               {file.match(/\.(jpg|jpeg|png|gif|webp)$/i) ? (
                                 <img
-                                  src={`/uploads/${file}`}
+                                  src={file}
                                   alt={`Media ${index + 1}`}
                                   className="w-full h-full object-cover"
                                 />
                               ) : (
                                 <video
-                                  src={`/uploads/${file}`}
+                                  src={file}
                                   className="w-full h-full object-cover"
                                   muted
                                   controls={false}

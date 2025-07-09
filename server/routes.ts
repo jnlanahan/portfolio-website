@@ -251,6 +251,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin project management routes
   app.post("/api/admin/projects", requireAdmin, async (req, res) => {
     try {
+      // Handle date conversion from string to Date object
+      if (req.body.date && typeof req.body.date === 'string') {
+        req.body.date = new Date(req.body.date);
+      }
+      
       const validatedData = insertProjectSchema.parse(req.body);
       const project = await storage.createProject(validatedData);
       res.json(project);
