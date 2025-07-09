@@ -85,24 +85,28 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => (
           View Details <i className="ri-arrow-right-line ml-1"></i>
         </Link>
         <div className="flex space-x-3">
-          <a
-            href={project.demoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 bg-secondary/10 rounded-full text-secondary hover:bg-secondary/20 transition-colors"
-            aria-label="View Live Demo"
-          >
-            <i className="ri-eye-line"></i>
-          </a>
-          <a
-            href={project.codeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 bg-background/60 border border-border rounded-full text-foreground hover:border-secondary transition-colors"
-            aria-label="View Code"
-          >
-            <i className="ri-github-line"></i>
-          </a>
+          {project.demoUrl && (
+            <a
+              href={project.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 bg-secondary/10 rounded-full text-secondary hover:bg-secondary/20 transition-colors"
+              aria-label="View Live Demo"
+            >
+              <i className="ri-eye-line"></i>
+            </a>
+          )}
+          {project.codeUrl && (
+            <a
+              href={project.codeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 bg-background/60 border border-border rounded-full text-foreground hover:border-secondary transition-colors"
+              aria-label="View Code"
+            >
+              <i className="ri-github-line"></i>
+            </a>
+          )}
         </div>
       </div>
     </div>

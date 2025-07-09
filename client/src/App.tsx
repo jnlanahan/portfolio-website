@@ -21,6 +21,7 @@ import AdminResumePage from "@/pages/AdminResumePage";
 import AdminResumeUploadPage from "@/pages/AdminResumeUploadPage";
 import Layout from "./components/Layout";
 import { BlogDetail } from "./sections/BlogDetail";
+import { ProjectDetail } from "./sections/ProjectDetail";
 
 function Router() {
   return (
@@ -28,6 +29,7 @@ function Router() {
       <Route path="/" component={AboutPage} />
 
       <Route path="/portfolio" component={PortfolioPage} />
+      <Route path="/portfolio/:slug" component={ProjectDetail} />
       <Route path="/blog" component={BlogPage} />
       <Route path="/blog/:slug" component={BlogDetail} />
       <Route path="/blog/category/:category" component={BlogPage} />

@@ -222,11 +222,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get specific project
-  app.get("/api/portfolio/:id", async (req, res) => {
+  // Get specific project by ID or slug
+  app.get("/api/portfolio/:identifier", async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
-      const project = await storage.getProjectById(id);
+      const identifier = req.params.identifier;
+      let project;
+      
+      // Try as ID first if identifier is a number
+      const numericId = parseInt(identifier);
+      if (!isNaN(numericId) && numericId.toString() === identifier) {
+        project = await storage.getProjectById(numericId);
+      }
+      
+      // If not found as ID or identifier is not numeric, try as slug
+      if (!project) {
+        const projects = await storage.getAllProjects();
+        project = projects.find(p => p.slug === identifier);
+      }
       
       if (!project) {
         return res.status(404).json({ message: "Project not found" });
@@ -252,11 +264,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get specific blog post
-  app.get("/api/blog/:id", async (req, res) => {
+  // Get specific blog post by ID or slug
+  app.get("/api/blog/:identifier", async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
-      const post = await storage.getBlogPostById(id);
+      const identifier = req.params.identifier;
+      let post;
+      
+      // Try as ID first if identifier is a number
+      const numericId = parseInt(identifier);
+      if (!isNaN(numericId) && numericId.toString() === identifier) {
+        post = await storage.getBlogPostById(numericId);
+      }
+      
+      // If not found as ID or identifier is not numeric, try as slug
+      if (!post) {
+        const posts = await storage.getAllBlogPosts();
+        post = posts.find(p => p.slug === identifier);
+      }
       
       if (!post) {
         return res.status(404).json({ message: "Blog post not found" });

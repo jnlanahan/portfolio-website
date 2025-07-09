@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "wouter";
-import { getBlogPostById, BlogTag, formatBlogDate, getBlogPosts, BlogPostType } from "@/data/blog";
+import { BlogTag, formatBlogDate } from "@/data/blog";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -27,21 +27,12 @@ export const BlogDetail: React.FC = () => {
   const { toast } = useToast();
   const [hasLiked, setHasLiked] = useState(false);
   
-  const { data: post, isLoading, error } = useQuery({
-    queryKey: [`/api/blog/${slug}`],
-    queryFn: () => {
-      // First try to get post by slug
-      const allPosts = getBlogPosts();
-      let foundPost = allPosts.find((p: BlogPostType) => p.slug === slug);
-      
-      // If not found by slug, try as an ID (for backward compatibility)
-      if (!foundPost && !isNaN(parseInt(slug || "0"))) {
-        foundPost = getBlogPostById(parseInt(slug || "0"));
-      }
-      
-      return foundPost;
-    },
+  const { data: posts, isLoading: isLoadingPosts } = useQuery({
+    queryKey: ["/api/blog"],
   });
+
+  const post = posts?.find((p: any) => p.slug === slug);
+  const isLoading = isLoadingPosts;
 
   // Loading skeleton
   if (isLoading) {
@@ -62,7 +53,7 @@ export const BlogDetail: React.FC = () => {
   }
 
   // Error state
-  if (error || !post) {
+  if (!post && !isLoading) {
     return (
       <div className="page-container relative">
         <h1 className="text-3xl font-bold mb-4">Post not found</h1>
