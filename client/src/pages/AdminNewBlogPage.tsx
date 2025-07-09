@@ -3,11 +3,13 @@ import { useLocation } from "wouter";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import RichTextEditor from "@/components/RichTextEditor";
 import { Switch } from "@/components/ui/switch";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -32,6 +34,7 @@ export default function AdminNewBlogPage() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [content, setContent] = useState("");
 
   const {
     register,
@@ -75,7 +78,10 @@ export default function AdminNewBlogPage() {
   });
 
   const onSubmit = (data: BlogFormData) => {
-    createBlogMutation.mutate(data);
+    createBlogMutation.mutate({
+      ...data,
+      content: content,
+    });
   };
 
   const featuredValue = watch("featured");
@@ -157,11 +163,10 @@ export default function AdminNewBlogPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="content">Content</Label>
-                <Textarea
-                  id="content"
-                  {...register("content")}
-                  className={errors.content ? "border-red-500" : ""}
-                  rows={10}
+                <RichTextEditor
+                  content={content}
+                  onChange={setContent}
+                  placeholder="Start writing your blog post..."
                 />
                 {errors.content && (
                   <p className="text-sm text-red-500">{errors.content.message}</p>
