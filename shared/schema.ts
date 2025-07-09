@@ -47,16 +47,23 @@ export type Project = typeof projects.$inferSelect;
 // Blog posts model
 export const blogPosts = pgTable("blog_posts", {
   id: serial("id").primaryKey(),
-  title: text("title").notNull(),
-  excerpt: text("excerpt").notNull(),
-  content: text("content").notNull(),
-  coverImage: text("cover_image").notNull(),
-  readTime: integer("read_time").notNull(),
+  title: text("title"),
+  slug: text("slug"),
+  excerpt: text("excerpt"),
+  content: text("content"),
+  coverImage: text("cover_image"),
+  tags: text("tags").array().default([]).notNull(),
+  category: text("category"),
+  featured: boolean("featured").default(false).notNull(),
+  published: boolean("published").default(false).notNull(),
+  readTime: integer("read_time").default(5).notNull(),
   date: timestamp("date").defaultNow().notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
   id: true,
+  createdAt: true,
 });
 
 export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;

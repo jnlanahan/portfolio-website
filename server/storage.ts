@@ -131,8 +131,19 @@ export class MemStorage implements IStorage {
         // Ensure the date is a valid Date object
         const parsedDate = post.date ? new Date(post.date) : new Date();
         this.blogPosts.set(post.id, {
-          ...post,
-          date: parsedDate
+          id: post.id,
+          title: post.title,
+          slug: post.slug,
+          excerpt: post.excerpt,
+          content: post.content,
+          coverImage: post.coverImage,
+          tags: post.tags ? post.tags.map(tag => tag.name) : [],
+          category: post.category?.name || null,
+          featured: post.featured || false,
+          published: true, // Existing posts are published
+          readTime: post.readTime,
+          date: parsedDate,
+          createdAt: new Date()
         } as BlogPost);
         this.blogPostId = Math.max(this.blogPostId, post.id + 1);
       });
@@ -264,9 +275,19 @@ export class MemStorage implements IStorage {
   async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
     const id = this.blogPostId++;
     const post: BlogPost = {
-      ...insertPost,
       id,
-      date: new Date() // Ensure date is always a valid Date object
+      title: insertPost.title || null,
+      slug: insertPost.slug || null,
+      excerpt: insertPost.excerpt || null,
+      content: insertPost.content || null,
+      coverImage: insertPost.coverImage || null,
+      tags: insertPost.tags || [],
+      category: insertPost.category || null,
+      featured: insertPost.featured || false,
+      published: insertPost.published || false,
+      readTime: insertPost.readTime || 5,
+      date: insertPost.date || new Date(),
+      createdAt: new Date()
     };
     this.blogPosts.set(id, post);
     console.log(`Created new blog post: ID=${id}, Title="${post.title}"`);
@@ -282,6 +303,8 @@ export class MemStorage implements IStorage {
     const updatedPost: BlogPost = {
       ...existingPost,
       ...updateData,
+      id: existingPost.id, // Preserve ID
+      createdAt: existingPost.createdAt, // Preserve created timestamp
     };
     
     this.blogPosts.set(id, updatedPost);
