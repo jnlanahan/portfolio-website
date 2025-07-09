@@ -36,6 +36,19 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
     - Added separate "Save as Draft" and "Publish" buttons
     - Dynamic validation based on publish status
     - Fixed Tiptap extension conflicts
+  - **Completed blog editing functionality**:
+    - Fixed blog edit navigation paths and routing
+    - Added comprehensive edit mode detection and data loading
+    - Implemented proper form population for existing blog posts
+    - Updated mutations to handle both create and update operations
+    - Added loading states and dynamic UI text for edit mode
+  - **Redesigned admin dashboard**:
+    - Moved Quick Actions section to top of dashboard
+    - Changed "Edit Resume" to "Upload Resume" button
+    - Implemented single-resume system with automatic replacement
+    - Added resume upload page with drag-and-drop functionality
+    - Created resume file management with PDF-only support
+    - Added public resume download endpoint
 
 - **January 2025**: Removed "My Experience" section completely
   - Removed navigation items and routes

@@ -18,6 +18,7 @@ import AdminNewProjectPage from "@/pages/AdminNewProjectPage";
 import AdminBlogPage from "@/pages/AdminBlogPage";
 import AdminNewBlogPage from "@/pages/AdminNewBlogPage";
 import AdminResumePage from "@/pages/AdminResumePage";
+import AdminResumeUploadPage from "@/pages/AdminResumeUploadPage";
 import Layout from "./components/Layout";
 import { BlogDetail } from "./sections/BlogDetail";
 
@@ -42,6 +43,7 @@ function Router() {
       <Route path="/admin/blog/new" component={AdminNewBlogPage} />
       <Route path="/admin/blog/edit/:id" component={AdminNewBlogPage} />
       <Route path="/admin/resume" component={AdminResumePage} />
+      <Route path="/admin/resume/upload" component={AdminResumeUploadPage} />
       
       {/* Fallback to 404 */}
       <Route component={NotFound} />

@@ -149,12 +149,8 @@ export class MemStorage implements IStorage {
       });
       console.log(`Loaded ${blogData.length} blog posts successfully.`);
       
-      // Initialize default resume content
-      this.resumeContent = {
-        id: 1,
-        content: "Default resume content - edit this in the admin panel",
-        updatedAt: new Date()
-      };
+      // Initialize default resume content (no resume by default)
+      this.resumeContent = undefined;
     } catch (error) {
       console.error("Error initializing data:", error);
       throw error;
@@ -331,6 +327,7 @@ export class MemStorage implements IStorage {
     const resume: Resume = {
       id: 1,
       ...insertResume,
+      uploadedAt: new Date(),
       updatedAt: new Date()
     };
     this.resumeContent = resume;

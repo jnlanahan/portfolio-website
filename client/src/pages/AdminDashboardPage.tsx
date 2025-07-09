@@ -16,7 +16,8 @@ import {
   Edit,
   Trash2,
   Plus,
-  Eye
+  Eye,
+  Upload
 } from "lucide-react";
 
 export default function AdminDashboardPage() {
@@ -140,6 +141,43 @@ export default function AdminDashboardPage() {
 
       {/* Dashboard Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Quick Actions */}
+        <div className="mb-8">
+          <Card>
+            <CardHeader>
+              <CardTitle>Quick Actions</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Button
+                  variant="outline"
+                  onClick={() => setLocation("/admin/resume/upload")}
+                  className="flex items-center gap-2"
+                >
+                  <Upload size={16} />
+                  Upload Resume
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => setLocation("/admin/blog/new")}
+                  className="flex items-center gap-2"
+                >
+                  <Edit size={16} />
+                  Write Blog Post
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => setLocation("/")}
+                  className="flex items-center gap-2"
+                >
+                  <Eye size={16} />
+                  View Live Site
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card>
@@ -347,42 +385,7 @@ export default function AdminDashboardPage() {
           </Card>
         </div>
 
-        {/* Quick Actions */}
-        <div className="mt-8">
-          <Card>
-            <CardHeader>
-              <CardTitle>Quick Actions</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <Button
-                  variant="outline"
-                  onClick={() => setLocation("/admin/resume")}
-                  className="flex items-center gap-2"
-                >
-                  <FileText size={16} />
-                  Edit Resume
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => setLocation("/admin/blog")}
-                  className="flex items-center gap-2"
-                >
-                  <Edit size={16} />
-                  Write Blog Post
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => setLocation("/")}
-                  className="flex items-center gap-2"
-                >
-                  <Eye size={16} />
-                  View Live Site
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+
       </div>
     </div>
   );

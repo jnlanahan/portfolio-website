@@ -106,12 +106,17 @@ export type Admin = typeof admins.$inferSelect;
 // Resume content model
 export const resumeContent = pgTable("resume_content", {
   id: serial("id").primaryKey(),
-  content: text("content").notNull(),
+  filename: text("filename").notNull(),
+  originalName: text("original_name").notNull(),
+  path: text("path").notNull(),
+  size: integer("size").notNull(),
+  uploadedAt: timestamp("uploaded_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export const insertResumeSchema = createInsertSchema(resumeContent).omit({
   id: true,
+  uploadedAt: true,
   updatedAt: true,
 });
 

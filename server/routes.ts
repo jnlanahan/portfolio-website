@@ -20,10 +20,12 @@ import { sendContactEmail, verifyConnection } from "./mailer";
 import express from "express";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Create uploads directory if it doesn't exist
+  // Create uploads directories if they don't exist
   const uploadsDir = path.join(process.cwd(), 'uploads', 'projects');
+  const resumeUploadsDir = path.join(process.cwd(), 'uploads', 'resumes');
   try {
     await fs.mkdir(uploadsDir, { recursive: true });
+    await fs.mkdir(resumeUploadsDir, { recursive: true });
   } catch (error) {
     console.error('Error creating uploads directory:', error);
   }
@@ -64,6 +66,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Resume upload configuration
+  const resumeUpload = multer({
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, resumeUploadsDir);
+      },
+      filename: (req, file, cb) => {
+        // Always use the same filename to replace the existing resume
+        cb(null, 'resume.pdf');
+      }
+    }),
+    limits: {
+      fileSize: 5 * 1024 * 1024, // 5MB limit for resumes
+    },
+    fileFilter: (req, file, cb) => {
+      // Accept only PDF files
+      if (file.mimetype === 'application/pdf') {
+        cb(null, true);
+      } else {
+        cb(new Error('Invalid file type. Only PDF files are allowed.'));
+      }
+    }
+  });
+
   // Serve uploaded files
   app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
@@ -93,6 +119,77 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error uploading files:', error);
       res.status(500).json({ error: 'Failed to upload files' });
+    }
+  });
+
+  // Resume upload endpoint
+  app.post('/api/admin/resume/upload', requireAdmin, resumeUpload.single('resume'), async (req, res) => {
+    try {
+      const file = req.file;
+      
+      if (!file) {
+        return res.status(400).json({ error: 'No resume file uploaded' });
+      }
+      
+      // Save resume metadata to storage
+      const resumeData = {
+        filename: file.filename,
+        originalName: file.originalname,
+        path: `/uploads/resumes/${file.filename}`,
+        size: file.size,
+        uploadedAt: new Date().toISOString()
+      };
+      
+      await storage.saveResume(resumeData);
+      
+      res.json({ 
+        message: 'Resume uploaded successfully',
+        resume: resumeData
+      });
+    } catch (error) {
+      console.error('Error uploading resume:', error);
+      res.status(500).json({ error: 'Failed to upload resume' });
+    }
+  });
+
+  // Resume status endpoint (for admin to check if resume exists)
+  app.get('/api/admin/resume/status', requireAdmin, async (req, res) => {
+    try {
+      const resume = await storage.getResume();
+      res.json({ 
+        hasResume: !!resume,
+        resume: resume || null
+      });
+    } catch (error) {
+      console.error('Error checking resume status:', error);
+      res.status(500).json({ error: 'Failed to check resume status' });
+    }
+  });
+
+  // Public resume download endpoint
+  app.get('/api/resume/download', async (req, res) => {
+    try {
+      const resume = await storage.getResume();
+      
+      if (!resume) {
+        return res.status(404).json({ error: 'No resume available' });
+      }
+      
+      const resumePath = path.join(process.cwd(), 'uploads', 'resumes', resume.filename);
+      
+      // Check if file exists
+      try {
+        await fs.access(resumePath);
+      } catch (err) {
+        return res.status(404).json({ error: 'Resume file not found' });
+      }
+      
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="${resume.originalName || 'resume.pdf'}"`);
+      res.sendFile(resumePath);
+    } catch (error) {
+      console.error('Error downloading resume:', error);
+      res.status(500).json({ error: 'Failed to download resume' });
     }
   });
 
