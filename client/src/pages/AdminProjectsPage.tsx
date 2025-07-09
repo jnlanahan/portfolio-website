@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Plus, Edit, Trash2, ExternalLink } from "lucide-react";
+import { ArrowLeft, Plus, Edit, Trash2, ExternalLink, Upload, X, Star } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 
 const projectSchema = z.object({
@@ -21,7 +21,9 @@ const projectSchema = z.object({
   slug: z.string().min(1, "Slug is required"),
   shortDescription: z.string().min(1, "Short description is required"),
   description: z.string().min(1, "Description is required"),
-  image: z.string().url("Must be a valid URL"),
+  image: z.string().min(1, "Image is required"),
+  mediaFiles: z.array(z.string()).default([]),
+  thumbnailIndex: z.number().default(0),
   technologies: z.string().min(1, "Technologies are required"),
   demoUrl: z.string().url("Must be a valid URL"),
   codeUrl: z.string().url("Must be a valid URL"),
@@ -36,6 +38,9 @@ export default function AdminProjectsPage() {
   const [, setLocation] = useLocation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<any>(null);
+  const [mediaFiles, setMediaFiles] = useState<string[]>([]);
+  const [thumbnailIndex, setThumbnailIndex] = useState(0);
+  const [uploading, setUploading] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -58,12 +63,53 @@ export default function AdminProjectsPage() {
     },
   });
 
+  const uploadFilesMutation = useMutation({
+    mutationFn: async (files: FileList) => {
+      const formData = new FormData();
+      Array.from(files).forEach(file => {
+        formData.append('files', file);
+      });
+      
+      const response = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+        credentials: 'include',
+      });
+      
+      if (!response.ok) {
+        throw new Error('Upload failed');
+      }
+      
+      return response.json();
+    },
+    onSuccess: (data) => {
+      const newFiles = [...mediaFiles, ...data.files];
+      setMediaFiles(newFiles);
+      setValue('mediaFiles', newFiles);
+      setValue('image', newFiles[thumbnailIndex] || newFiles[0]);
+      toast({
+        title: "Files uploaded",
+        description: `${data.files.length} files uploaded successfully`,
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Upload failed",
+        description: error.message || "Failed to upload files",
+        variant: "destructive",
+      });
+    },
+  });
+
   const createProjectMutation = useMutation({
     mutationFn: async (data: ProjectFormData) => {
       const payload = {
         ...data,
         technologies: data.technologies.split(',').map(tech => tech.trim()),
         date: new Date(data.date).toISOString(),
+        mediaFiles: mediaFiles,
+        thumbnailIndex: thumbnailIndex,
+        image: mediaFiles[thumbnailIndex] || data.image,
       };
       return await apiRequest("/api/admin/projects", "POST", payload);
     },
@@ -92,6 +138,9 @@ export default function AdminProjectsPage() {
         ...data,
         technologies: data.technologies.split(',').map(tech => tech.trim()),
         date: new Date(data.date).toISOString(),
+        mediaFiles: mediaFiles,
+        thumbnailIndex: thumbnailIndex,
+        image: mediaFiles[thumbnailIndex] || data.image,
       };
       return await apiRequest(`/api/admin/projects/${editingProject.id}`, "PUT", payload);
     },
@@ -134,39 +183,83 @@ export default function AdminProjectsPage() {
     },
   });
 
-  const handleEdit = (project: any) => {
-    setEditingProject(project);
-    reset({
-      title: project.title,
-      slug: project.slug,
-      shortDescription: project.shortDescription,
-      description: project.description,
-      image: project.image,
-      technologies: Array.isArray(project.technologies) ? project.technologies.join(', ') : project.technologies,
-      demoUrl: project.demoUrl,
-      codeUrl: project.codeUrl,
-      featured: project.featured || false,
-      date: new Date(project.date).toISOString().split('T')[0],
-      client: project.client || '',
-    });
-    setIsDialogOpen(true);
-  };
-
-  const handleCreate = () => {
-    setEditingProject(null);
-    reset({
-      featured: false,
-      date: new Date().toISOString().split('T')[0],
-    });
-    setIsDialogOpen(true);
-  };
-
   const onSubmit = (data: ProjectFormData) => {
     if (editingProject) {
       updateProjectMutation.mutate(data);
     } else {
       createProjectMutation.mutate(data);
     }
+  };
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      if (mediaFiles.length + files.length > 8) {
+        toast({
+          title: "Too many files",
+          description: "Maximum 8 files allowed",
+          variant: "destructive",
+        });
+        return;
+      }
+      uploadFilesMutation.mutate(files);
+    }
+  };
+
+  const removeMediaFile = (index: number) => {
+    const newFiles = mediaFiles.filter((_, i) => i !== index);
+    setMediaFiles(newFiles);
+    setValue('mediaFiles', newFiles);
+    
+    // Update thumbnail index if necessary
+    if (thumbnailIndex >= newFiles.length) {
+      setThumbnailIndex(Math.max(0, newFiles.length - 1));
+    }
+    
+    // Update image field
+    setValue('image', newFiles[thumbnailIndex] || newFiles[0] || '');
+  };
+
+  const setThumbnail = (index: number) => {
+    setThumbnailIndex(index);
+    setValue('thumbnailIndex', index);
+    setValue('image', mediaFiles[index]);
+  };
+
+  const openDialog = (project: any = null) => {
+    setEditingProject(project);
+    setMediaFiles(project?.mediaFiles || []);
+    setThumbnailIndex(project?.thumbnailIndex || 0);
+    
+    if (project) {
+      setValue('title', project.title);
+      setValue('slug', project.slug);
+      setValue('shortDescription', project.shortDescription);
+      setValue('description', project.description);
+      setValue('image', project.image);
+      setValue('mediaFiles', project.mediaFiles || []);
+      setValue('thumbnailIndex', project.thumbnailIndex || 0);
+      setValue('technologies', project.technologies?.join(', ') || '');
+      setValue('demoUrl', project.demoUrl);
+      setValue('codeUrl', project.codeUrl);
+      setValue('featured', project.featured || false);
+      setValue('date', project.date ? project.date.split('T')[0] : new Date().toISOString().split('T')[0]);
+      setValue('client', project.client || '');
+    } else {
+      reset();
+      setMediaFiles([]);
+      setThumbnailIndex(0);
+    }
+    
+    setIsDialogOpen(true);
+  };
+
+  const handleCreate = () => {
+    openDialog();
+  };
+
+  const handleEdit = (project: any) => {
+    openDialog(project);
   };
 
   const featuredValue = watch("featured");
@@ -280,6 +373,103 @@ export default function AdminProjectsPage() {
                     />
                     {errors.image && (
                       <p className="text-sm text-red-500">{errors.image.message}</p>
+                    )}
+                  </div>
+
+                  {/* Media Files Section */}
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <Label>Media Files (Max 8)</Label>
+                      <Label
+                        htmlFor="file-upload"
+                        className="cursor-pointer inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+                      >
+                        <Upload size={16} />
+                        Upload Files
+                      </Label>
+                      <input
+                        id="file-upload"
+                        type="file"
+                        multiple
+                        accept="image/*,video/*,.gif"
+                        onChange={handleFileUpload}
+                        className="hidden"
+                        disabled={uploadFilesMutation.isPending}
+                      />
+                    </div>
+
+                    {uploadFilesMutation.isPending && (
+                      <div className="text-sm text-gray-600 dark:text-gray-400">
+                        Uploading files...
+                      </div>
+                    )}
+
+                    {mediaFiles.length > 0 && (
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        {mediaFiles.map((file, index) => (
+                          <div key={index} className="relative group">
+                            <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden">
+                              {file.match(/\.(jpg|jpeg|png|gif|webp)$/i) ? (
+                                <img
+                                  src={`/uploads/${file}`}
+                                  alt={`Media ${index + 1}`}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <video
+                                  src={`/uploads/${file}`}
+                                  className="w-full h-full object-cover"
+                                  muted
+                                  controls={false}
+                                />
+                              )}
+                            </div>
+                            
+                            {/* Thumbnail indicator */}
+                            {thumbnailIndex === index && (
+                              <div className="absolute top-1 left-1 bg-yellow-500 text-white p-1 rounded-full">
+                                <Star size={12} fill="currentColor" />
+                              </div>
+                            )}
+                            
+                            {/* Action buttons */}
+                            <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2">
+                              <Button
+                                type="button"
+                                size="sm"
+                                variant="secondary"
+                                onClick={() => setThumbnail(index)}
+                                className="p-2"
+                                title="Set as thumbnail"
+                              >
+                                <Star size={14} />
+                              </Button>
+                              <Button
+                                type="button"
+                                size="sm"
+                                variant="destructive"
+                                onClick={() => removeMediaFile(index)}
+                                className="p-2"
+                                title="Remove file"
+                              >
+                                <X size={14} />
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {mediaFiles.length === 0 && (
+                      <div className="text-center py-8 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg">
+                        <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                          No media files uploaded yet
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-500">
+                          Supports images, videos, and GIFs (max 8 files)
+                        </p>
+                      </div>
                     )}
                   </div>
 

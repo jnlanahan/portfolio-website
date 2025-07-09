@@ -23,7 +23,9 @@ export const projects = pgTable("projects", {
   title: text("title").notNull(),
   shortDescription: text("short_description").notNull(),
   description: text("description").notNull(),
-  image: text("image").notNull(),
+  image: text("image").notNull(), // Keep for backward compatibility - will be the thumbnail
+  mediaFiles: text("media_files").array().default([]).notNull(), // Array of file paths
+  thumbnailIndex: integer("thumbnail_index").default(0).notNull(), // Index of thumbnail in mediaFiles
   technologies: text("technologies").array().notNull(),
   demoUrl: text("demo_url").notNull(),
   codeUrl: text("code_url").notNull(),

@@ -2,6 +2,9 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import "./types"; // Import session types
+import multer from "multer";
+import path from "path";
+import { promises as fs } from "fs";
 import { 
   insertContactSchema,
   insertBlogPostSchema,
@@ -14,8 +17,85 @@ import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
 
 import { sendContactEmail, verifyConnection } from "./mailer";
+import express from "express";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Create uploads directory if it doesn't exist
+  const uploadsDir = path.join(process.cwd(), 'uploads', 'projects');
+  try {
+    await fs.mkdir(uploadsDir, { recursive: true });
+  } catch (error) {
+    console.error('Error creating uploads directory:', error);
+  }
+
+  // Multer configuration for file uploads
+  const upload = multer({
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, uploadsDir);
+      },
+      filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const ext = path.extname(file.originalname);
+        cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
+      }
+    }),
+    limits: {
+      fileSize: 10 * 1024 * 1024, // 10MB limit
+    },
+    fileFilter: (req, file, cb) => {
+      // Accept images, gifs, and videos
+      const allowedMimes = [
+        'image/jpeg',
+        'image/jpg', 
+        'image/png',
+        'image/gif',
+        'image/webp',
+        'video/mp4',
+        'video/webm',
+        'video/ogg'
+      ];
+      
+      if (allowedMimes.includes(file.mimetype)) {
+        cb(null, true);
+      } else {
+        cb(new Error('Invalid file type. Only images, GIFs, and videos are allowed.'));
+      }
+    }
+  });
+
+  // Serve uploaded files
+  app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+
+  // Middleware to check admin authentication
+  const requireAdmin = (req: any, res: any, next: any) => {
+    if (!req.session.isAdmin) {
+      return res.status(401).json({ error: "Admin authentication required" });
+    }
+    next();
+  };
+
+  // File upload endpoint
+  app.post('/api/admin/upload', requireAdmin, upload.array('files', 8), async (req, res) => {
+    try {
+      const files = req.files as Express.Multer.File[];
+      
+      if (!files || files.length === 0) {
+        return res.status(400).json({ error: 'No files uploaded' });
+      }
+      
+      const fileUrls = files.map(file => `/uploads/projects/${file.filename}`);
+      
+      res.json({ 
+        message: 'Files uploaded successfully',
+        files: fileUrls
+      });
+    } catch (error) {
+      console.error('Error uploading files:', error);
+      res.status(500).json({ error: 'Failed to upload files' });
+    }
+  });
+
   // Handle API routes with prefix
   
   // Get all projects
@@ -167,14 +247,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ isAdmin: false });
     }
   });
-
-  // Middleware to check admin authentication
-  const requireAdmin = (req: any, res: any, next: any) => {
-    if (!req.session.isAdmin) {
-      return res.status(401).json({ error: "Admin authentication required" });
-    }
-    next();
-  };
 
   // Admin project management routes
   app.post("/api/admin/projects", requireAdmin, async (req, res) => {

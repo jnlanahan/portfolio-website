@@ -105,6 +105,8 @@ export class MemStorage implements IStorage {
       portfolioData.forEach(project => {
         this.projects.set(project.id, {
           ...project,
+          mediaFiles: project.gallery || [project.image],
+          thumbnailIndex: 0,
           createdAt: new Date()
         } as Project);
         this.projectId = Math.max(this.projectId, project.id + 1);
@@ -187,6 +189,8 @@ export class MemStorage implements IStorage {
     const project: Project = { 
       ...insertProject, 
       id,
+      mediaFiles: insertProject.mediaFiles || [],
+      thumbnailIndex: insertProject.thumbnailIndex || 0,
       createdAt: new Date()
     };
     this.projects.set(id, project);
