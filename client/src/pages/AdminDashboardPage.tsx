@@ -214,10 +214,16 @@ export default function AdminDashboardPage() {
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <span>Project Management</span>
-                <Button size="sm" onClick={() => setLocation("/admin/projects")}>
-                  <Plus size={16} className="mr-2" />
-                  Manage Projects
-                </Button>
+                <div className="flex gap-2">
+                  <Button size="sm" onClick={() => setLocation("/admin/projects/new")}>
+                    <Plus size={16} className="mr-2" />
+                    Add New
+                  </Button>
+                  <Button size="sm" variant="outline" onClick={() => setLocation("/admin/projects")}>
+                    <Edit size={16} className="mr-2" />
+                    Manage
+                  </Button>
+                </div>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -253,10 +259,16 @@ export default function AdminDashboardPage() {
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <span>Blog Management</span>
-                <Button size="sm" onClick={() => setLocation("/admin/blog")}>
-                  <Plus size={16} className="mr-2" />
-                  Manage Blog
-                </Button>
+                <div className="flex gap-2">
+                  <Button size="sm" onClick={() => setLocation("/admin/blog/new")}>
+                    <Plus size={16} className="mr-2" />
+                    Add New
+                  </Button>
+                  <Button size="sm" variant="outline" onClick={() => setLocation("/admin/blog")}>
+                    <Edit size={16} className="mr-2" />
+                    Manage
+                  </Button>
+                </div>
               </CardTitle>
             </CardHeader>
             <CardContent>

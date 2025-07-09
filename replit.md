@@ -20,13 +20,13 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
 - Dark mode support
 
 ## Recent Changes
-- **January 2025**: Built complete admin system for content management
-  - Added hidden admin authentication system (/admin/login)
-  - Created admin dashboard with project, blog, and contact management
-  - Implemented admin routes for CRUD operations on content
-  - Added session-based authentication with express-session
-  - Built admin interface for project management with full CRUD
-  - Added resume editor with markdown support for content management
+- **January 2025**: Enhanced admin system with improved navigation and content management
+  - Added separate "Add New" and "Manage" buttons for better UX in admin dashboard
+  - Created dedicated pages for adding new projects (AdminNewProjectPage) and blog posts (AdminNewBlogPage)
+  - Enhanced project management with multi-media file upload support (up to 8 files per project)
+  - Added thumbnail selection functionality for project media files
+  - Improved admin dashboard layout with clearer separation of actions
+  - Built complete admin system for content management with hidden authentication
   - Default admin credentials: username: admin, password: admin123
 
 - **January 2025**: Removed "My Experience" section completely

@@ -14,6 +14,9 @@ import ContactPage from "@/pages/ContactPage";
 import AdminLoginPage from "@/pages/AdminLoginPage";
 import AdminDashboardPage from "@/pages/AdminDashboardPage";
 import AdminProjectsPage from "@/pages/AdminProjectsPage";
+import AdminNewProjectPage from "@/pages/AdminNewProjectPage";
+import AdminBlogPage from "@/pages/AdminBlogPage";
+import AdminNewBlogPage from "@/pages/AdminNewBlogPage";
 import AdminResumePage from "@/pages/AdminResumePage";
 import Layout from "./components/Layout";
 import { BlogDetail } from "./sections/BlogDetail";
@@ -34,6 +37,9 @@ function Router() {
       <Route path="/admin/login" component={AdminLoginPage} />
       <Route path="/admin/dashboard" component={AdminDashboardPage} />
       <Route path="/admin/projects" component={AdminProjectsPage} />
+      <Route path="/admin/projects/new" component={AdminNewProjectPage} />
+      <Route path="/admin/blog" component={AdminBlogPage} />
+      <Route path="/admin/blog/new" component={AdminNewBlogPage} />
       <Route path="/admin/resume" component={AdminResumePage} />
       
       {/* Fallback to 404 */}
