@@ -18,13 +18,13 @@ import { Switch } from "@/components/ui/switch";
 
 const projectSchema = z.object({
   title: z.string().min(1, "Title is required"),
-  slug: z.string().min(1, "Slug is required"),
-  shortDescription: z.string().min(1, "Short description is required"),
+  slug: z.string().optional(),
+  shortDescription: z.string().optional(),
   description: z.string().min(1, "Description is required"),
-  image: z.string().min(1, "Image is required"),
+  image: z.string().optional(),
   mediaFiles: z.array(z.string()).default([]),
   thumbnailIndex: z.number().default(0),
-  technologies: z.string().min(1, "Technologies are required"),
+  technologies: z.string().optional(),
   demoUrl: z.string().optional().refine((val) => !val || z.string().url().safeParse(val).success, {
     message: "Must be a valid URL if provided",
   }),
@@ -32,7 +32,7 @@ const projectSchema = z.object({
     message: "Must be a valid URL if provided",
   }),
   featured: z.boolean().default(false),
-  date: z.string().min(1, "Date is required"),
+  date: z.string().optional(),
   client: z.string().optional(),
 });
 
@@ -331,11 +331,12 @@ export default function AdminProjectsPage() {
                       )}
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="slug">Slug</Label>
+                      <Label htmlFor="slug">Slug (optional)</Label>
                       <Input
                         id="slug"
                         {...register("slug")}
                         className={errors.slug ? "border-red-500" : ""}
+                        placeholder="Auto-generated from title if empty"
                       />
                       {errors.slug && (
                         <p className="text-sm text-red-500">{errors.slug.message}</p>
@@ -344,7 +345,7 @@ export default function AdminProjectsPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="shortDescription">Short Description</Label>
+                    <Label htmlFor="shortDescription">Short Description (optional)</Label>
                     <Textarea
                       id="shortDescription"
                       {...register("shortDescription")}
@@ -370,7 +371,7 @@ export default function AdminProjectsPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="image">Image URL</Label>
+                    <Label htmlFor="image">Image URL (optional)</Label>
                     <Input
                       id="image"
                       {...register("image")}
@@ -479,7 +480,7 @@ export default function AdminProjectsPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="technologies">Technologies (comma separated)</Label>
+                    <Label htmlFor="technologies">Technologies (comma separated, optional)</Label>
                     <Input
                       id="technologies"
                       {...register("technologies")}
@@ -493,7 +494,7 @@ export default function AdminProjectsPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="demoUrl">Demo URL</Label>
+                      <Label htmlFor="demoUrl">Demo URL (optional)</Label>
                       <Input
                         id="demoUrl"
                         {...register("demoUrl")}
@@ -504,7 +505,7 @@ export default function AdminProjectsPage() {
                       )}
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="codeUrl">Code URL</Label>
+                      <Label htmlFor="codeUrl">Code URL (optional)</Label>
                       <Input
                         id="codeUrl"
                         {...register("codeUrl")}
@@ -518,7 +519,7 @@ export default function AdminProjectsPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="date">Date</Label>
+                      <Label htmlFor="date">Date (optional)</Label>
                       <Input
                         id="date"
                         type="date"
