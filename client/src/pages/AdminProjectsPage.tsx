@@ -623,24 +623,28 @@ export default function AdminProjectsPage() {
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => window.open(project.demoUrl, '_blank')}
-                      className="flex items-center gap-1"
-                    >
-                      <ExternalLink size={14} />
-                      Demo
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => window.open(project.codeUrl, '_blank')}
-                      className="flex items-center gap-1"
-                    >
-                      <ExternalLink size={14} />
-                      Code
-                    </Button>
+                    {project.demoUrl && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => window.open(project.demoUrl, '_blank')}
+                        className="flex items-center gap-1"
+                      >
+                        <ExternalLink size={14} />
+                        Demo
+                      </Button>
+                    )}
+                    {project.codeUrl && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => window.open(project.codeUrl, '_blank')}
+                        className="flex items-center gap-1"
+                      >
+                        <ExternalLink size={14} />
+                        Code
+                      </Button>
+                    )}
                   </div>
                   <span className="text-xs text-gray-500">
                     {new Date(project.date).toLocaleDateString()}

@@ -6,7 +6,8 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
 ## Current Architecture
 - Frontend: React with TypeScript, TailwindCSS, Shadcn UI components
 - Backend: Node.js with Express
-- Data: In-memory storage with flat file fallback
+- Database: PostgreSQL with Drizzle ORM for data persistence
+- Data: DatabaseStorage implementation for projects, blog posts, contact submissions, and resume files
 - Animations: Framer Motion for smooth page transitions
 - Analytics: PostHog for user behavior tracking
 
@@ -20,6 +21,15 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
 - Dark mode support
 
 ## Recent Changes
+- **January 2025**: Migrated from in-memory storage to PostgreSQL database persistence
+  - Replaced MemStorage with DatabaseStorage class implementation
+  - Created database tables for projects, blog posts, admins, contact submissions, and resume content
+  - Migrated existing sample data to database with proper seeding
+  - Updated API endpoints to use database storage instead of mock data
+  - Added database schema synchronization with proper column handling
+  - All content now persists across application restarts
+  - Database credentials handled securely through environment variables
+
 - **January 2025**: Created comprehensive test suite for quality assurance
   - Built automated API test suite covering all major functionality
   - Tests include admin authentication, project CRUD, blog management, contact forms, and public endpoints

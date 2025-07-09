@@ -366,4 +366,212 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Database storage implementation
+export class DatabaseStorage implements IStorage {
+  // User methods
+  async getUser(id: number): Promise<User | undefined> {
+    const { db } = await import('./db');
+    const { users } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const { db } = await import('./db');
+    const { users } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const { db } = await import('./db');
+    const { users } = await import('@shared/schema');
+    
+    const [user] = await db.insert(users).values(insertUser).returning();
+    return user;
+  }
+
+  // Admin methods
+  async getAdminByUsername(username: string): Promise<Admin | undefined> {
+    const { db } = await import('./db');
+    const { admins } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [admin] = await db.select().from(admins).where(eq(admins.username, username));
+    return admin || undefined;
+  }
+
+  async createAdmin(insertAdmin: InsertAdmin): Promise<Admin> {
+    const { db } = await import('./db');
+    const { admins } = await import('@shared/schema');
+    
+    const [admin] = await db.insert(admins).values(insertAdmin).returning();
+    return admin;
+  }
+
+  // Project methods
+  async getAllProjects(): Promise<Project[]> {
+    const { db } = await import('./db');
+    const { projects } = await import('@shared/schema');
+    const { desc } = await import('drizzle-orm');
+    
+    return await db.select().from(projects).orderBy(desc(projects.createdAt));
+  }
+
+  async getProjectById(id: number): Promise<Project | undefined> {
+    const { db } = await import('./db');
+    const { projects } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [project] = await db.select().from(projects).where(eq(projects.id, id));
+    return project || undefined;
+  }
+
+  async createProject(insertProject: InsertProject): Promise<Project> {
+    const { db } = await import('./db');
+    const { projects } = await import('@shared/schema');
+    
+    const [project] = await db.insert(projects).values(insertProject).returning();
+    console.log(`Created project: ID=${project.id}, Title="${project.title}"`);
+    return project;
+  }
+
+  async updateProject(id: number, updateData: Partial<InsertProject>): Promise<Project> {
+    const { db } = await import('./db');
+    const { projects } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [project] = await db.update(projects)
+      .set({ ...updateData, updatedAt: new Date() })
+      .where(eq(projects.id, id))
+      .returning();
+    
+    if (!project) {
+      throw new Error(`Project with ID ${id} not found`);
+    }
+    
+    console.log(`Updated project: ID=${id}, Title="${project.title}"`);
+    return project;
+  }
+
+  async deleteProject(id: number): Promise<void> {
+    const { db } = await import('./db');
+    const { projects } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const result = await db.delete(projects).where(eq(projects.id, id));
+    console.log(`Deleted project: ID=${id}`);
+  }
+
+  // Blog methods
+  async getAllBlogPosts(): Promise<BlogPost[]> {
+    const { db } = await import('./db');
+    const { blogPosts } = await import('@shared/schema');
+    const { desc } = await import('drizzle-orm');
+    
+    return await db.select().from(blogPosts).orderBy(desc(blogPosts.createdAt));
+  }
+
+  async getBlogPostById(id: number): Promise<BlogPost | undefined> {
+    const { db } = await import('./db');
+    const { blogPosts } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
+    return post || undefined;
+  }
+
+  async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
+    const { db } = await import('./db');
+    const { blogPosts } = await import('@shared/schema');
+    
+    const [post] = await db.insert(blogPosts).values(insertPost).returning();
+    console.log(`Created blog post: ID=${post.id}, Title="${post.title}"`);
+    return post;
+  }
+
+  async updateBlogPost(id: number, updateData: Partial<InsertBlogPost>): Promise<BlogPost> {
+    const { db } = await import('./db');
+    const { blogPosts } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [post] = await db.update(blogPosts)
+      .set({ ...updateData, updatedAt: new Date() })
+      .where(eq(blogPosts.id, id))
+      .returning();
+    
+    if (!post) {
+      throw new Error(`Blog post with ID ${id} not found`);
+    }
+    
+    console.log(`Updated blog post: ID=${id}, Title="${post.title}"`);
+    return post;
+  }
+
+  async deleteBlogPost(id: number): Promise<void> {
+    const { db } = await import('./db');
+    const { blogPosts } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const result = await db.delete(blogPosts).where(eq(blogPosts.id, id));
+    console.log(`Deleted blog post: ID=${id}`);
+  }
+
+  // Resume methods
+  async getResume(): Promise<Resume | undefined> {
+    const { db } = await import('./db');
+    const { resumeContent } = await import('@shared/schema');
+    
+    const [resume] = await db.select().from(resumeContent).limit(1);
+    return resume || undefined;
+  }
+
+  async saveResume(insertResume: InsertResume): Promise<Resume> {
+    const { db } = await import('./db');
+    const { resumeContent } = await import('@shared/schema');
+    
+    // Delete existing resume and insert new one
+    await db.delete(resumeContent);
+    const [resume] = await db.insert(resumeContent).values(insertResume).returning();
+    
+    console.log(`Updated resume content`);
+    return resume;
+  }
+
+  // Lists methods
+  async getLists(): Promise<any[]> {
+    const { getLists } = await import('../client/src/data/lists');
+    return getLists();
+  }
+
+  // Contact methods
+  async getAllContactSubmissions(): Promise<ContactSubmission[]> {
+    const { db } = await import('./db');
+    const { contactSubmissions } = await import('@shared/schema');
+    const { desc } = await import('drizzle-orm');
+    
+    return await db.select().from(contactSubmissions).orderBy(desc(contactSubmissions.createdAt));
+  }
+
+  async saveContactSubmission(insertSubmission: InsertContact): Promise<ContactSubmission> {
+    const { db } = await import('./db');
+    const { contactSubmissions } = await import('@shared/schema');
+    
+    const [submission] = await db.insert(contactSubmissions).values(insertSubmission).returning();
+    return submission;
+  }
+
+  async deleteContactSubmission(id: number): Promise<void> {
+    const { db } = await import('./db');
+    const { contactSubmissions } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    await db.delete(contactSubmissions).where(eq(contactSubmissions.id, id));
+  }
+}
+
+export const storage = new DatabaseStorage();
