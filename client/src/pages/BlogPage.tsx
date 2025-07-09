@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { getBlogPosts, formatBlogDate, BlogTag } from "@/data/blog";
+import { formatBlogDate, BlogTag } from "@/data/blog";
 import { useState, useMemo } from "react";
 
 // BlogTag component for consistent styling
@@ -110,13 +110,13 @@ const BlogCard = ({ post, index }: { post: any; index: number }) => {
 const BlogPage = () => {
   const { data: posts, isLoading } = useQuery({
     queryKey: ["/api/blog"],
-    initialData: getBlogPosts(),
   });
 
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   // Extract all unique tags from posts
   const allTags = useMemo(() => {
+    if (!posts) return [];
     const tagMap = new Map<string, BlogTag>();
     posts.forEach(post => {
       post.tags.forEach(tag => {
@@ -130,7 +130,7 @@ const BlogPage = () => {
 
   // Filter posts by selected tag
   const filteredPosts = useMemo(() => {
-    if (!selectedTag) return posts;
+    if (!posts || !selectedTag) return posts || [];
     return posts.filter(post => 
       post.tags.some(tag => tag.id === selectedTag)
     );
@@ -148,8 +148,8 @@ const BlogPage = () => {
   }
 
   // Featured posts at the top if any
-  const featuredPosts = posts.filter(post => post.featured);
-  const regularPosts = posts.filter(post => !post.featured);
+  const featuredPosts = posts ? posts.filter(post => post.featured) : [];
+  const regularPosts = posts ? posts.filter(post => !post.featured) : [];
 
   return (
     <div className="page-container">

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { getPortfolio, ProjectCategory, projectCategories } from "@/data/portfolio";
+import { ProjectCategory, projectCategories } from "@/data/portfolio";
 import { useState, useMemo } from "react";
 import { Link } from "wouter";
 
@@ -114,12 +114,11 @@ const PortfolioPage = () => {
   
   const { data: projects, isLoading } = useQuery({
     queryKey: ["/api/portfolio"],
-    initialData: getPortfolio(),
   });
 
   // Filter projects by category
   const filteredProjects = useMemo(() => {
-    if (!selectedCategory) return projects;
+    if (!projects || !selectedCategory) return projects || [];
     return projects.filter(project => 
       project.category && project.category.id === selectedCategory
     );
@@ -127,7 +126,7 @@ const PortfolioPage = () => {
 
   // Extract featured projects
   const featuredProjects = useMemo(() => 
-    projects.filter(project => project.featured), 
+    projects ? projects.filter(project => project.featured) : [], 
     [projects]
   );
 
@@ -210,7 +209,7 @@ const PortfolioPage = () => {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {(selectedCategory ? filteredProjects : projects.filter(p => !p.featured)).map((project, index) => (
+          {(selectedCategory ? filteredProjects : (projects || []).filter(p => !p.featured)).map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
         </div>
