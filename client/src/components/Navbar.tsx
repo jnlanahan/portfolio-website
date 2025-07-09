@@ -94,14 +94,36 @@ const Navbar = () => {
                 {item.label}
               </Link>
             ))}
-            <Link 
-              href="/contact"
-              onClick={() => trackEvent('contact_button_click', { location: 'navbar' })}
-              className="ml-4 px-5 py-2 bg-secondary text-background rounded-md font-medium hover:bg-secondary/90 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
-            >
-              <i className="ri-chat-3-line mr-1.5"></i>
-              Contact
-            </Link>
+            <div className="flex space-x-3 ml-4">
+              <a 
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackEvent('resume_download_click', { location: 'navbar' })}
+                className="px-5 py-2 bg-secondary text-background rounded-md font-medium hover:bg-secondary/90 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <i className="ri-download-line mr-1.5"></i>
+                Resume
+              </a>
+              <Link 
+                href="/contact"
+                onClick={() => trackEvent('contact_button_click', { location: 'navbar' })}
+                className="px-5 py-2 bg-secondary text-background rounded-md font-medium hover:bg-secondary/90 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <i className="ri-mail-line mr-1.5"></i>
+                Email
+              </Link>
+              <a 
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackEvent('linkedin_button_click', { location: 'navbar' })}
+                className="px-5 py-2 bg-secondary text-background rounded-md font-medium hover:bg-secondary/90 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <i className="ri-linkedin-box-line mr-1.5"></i>
+                LinkedIn
+              </a>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -150,23 +172,63 @@ const Navbar = () => {
               {item.label}
             </Link>
           ))}
-          <Link 
-            href="/contact"
-            className="py-2 px-4 bg-secondary text-background rounded-md font-medium hover:bg-secondary/90 transition-colors text-center mt-4 flex items-center justify-center"
-            onClick={() => {
-              trackEvent('contact_button_click', { location: 'mobile_menu' });
-              setIsMenuOpen(false);
-            }}
-            style={{ 
-              transitionDelay: `${navItems.length * 50}ms`, 
-              opacity: isMenuOpen ? 1 : 0,
-              transform: isMenuOpen ? 'translateY(0)' : 'translateY(-10px)',
-              transition: 'opacity 300ms, transform 300ms'
-            }}
-          >
-            <i className="ri-chat-3-line mr-2"></i>
-            Contact
-          </Link>
+          <div className="flex flex-col space-y-3 mt-4">
+            <a 
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-2 px-4 bg-secondary text-background rounded-md font-medium hover:bg-secondary/90 transition-colors text-center flex items-center justify-center"
+              onClick={() => {
+                trackEvent('resume_download_click', { location: 'mobile_menu' });
+                setIsMenuOpen(false);
+              }}
+              style={{ 
+                transitionDelay: `${navItems.length * 50}ms`, 
+                opacity: isMenuOpen ? 1 : 0,
+                transform: isMenuOpen ? 'translateY(0)' : 'translateY(-10px)',
+                transition: 'opacity 300ms, transform 300ms'
+              }}
+            >
+              <i className="ri-download-line mr-2"></i>
+              Resume
+            </a>
+            <Link 
+              href="/contact"
+              className="py-2 px-4 bg-secondary text-background rounded-md font-medium hover:bg-secondary/90 transition-colors text-center flex items-center justify-center"
+              onClick={() => {
+                trackEvent('contact_button_click', { location: 'mobile_menu' });
+                setIsMenuOpen(false);
+              }}
+              style={{ 
+                transitionDelay: `${(navItems.length + 1) * 50}ms`, 
+                opacity: isMenuOpen ? 1 : 0,
+                transform: isMenuOpen ? 'translateY(0)' : 'translateY(-10px)',
+                transition: 'opacity 300ms, transform 300ms'
+              }}
+            >
+              <i className="ri-mail-line mr-2"></i>
+              Email
+            </Link>
+            <a 
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-2 px-4 bg-secondary text-background rounded-md font-medium hover:bg-secondary/90 transition-colors text-center flex items-center justify-center"
+              onClick={() => {
+                trackEvent('linkedin_button_click', { location: 'mobile_menu' });
+                setIsMenuOpen(false);
+              }}
+              style={{ 
+                transitionDelay: `${(navItems.length + 2) * 50}ms`, 
+                opacity: isMenuOpen ? 1 : 0,
+                transform: isMenuOpen ? 'translateY(0)' : 'translateY(-10px)',
+                transition: 'opacity 300ms, transform 300ms'
+              }}
+            >
+              <i className="ri-linkedin-box-line mr-2"></i>
+              LinkedIn
+            </a>
+          </div>
         </div>
       </div>
     </nav>
