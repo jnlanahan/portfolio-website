@@ -21,14 +21,18 @@ export type User = typeof users.$inferSelect;
 export const projects = pgTable("projects", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
-  shortDescription: text("short_description").notNull(),
+  slug: text("slug"),
+  shortDescription: text("short_description"),
   description: text("description").notNull(),
-  image: text("image").notNull(), // Keep for backward compatibility - will be the thumbnail
+  image: text("image"), // Keep for backward compatibility - will be the thumbnail
   mediaFiles: text("media_files").array().default([]).notNull(), // Array of file paths
   thumbnailIndex: integer("thumbnail_index").default(0).notNull(), // Index of thumbnail in mediaFiles
-  technologies: text("technologies").array().notNull(),
-  demoUrl: text("demo_url").notNull(),
-  codeUrl: text("code_url").notNull(),
+  technologies: text("technologies").array().default([]).notNull(),
+  demoUrl: text("demo_url"),
+  codeUrl: text("code_url"),
+  featured: boolean("featured").default(false).notNull(),
+  date: timestamp("date").defaultNow().notNull(),
+  client: text("client"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

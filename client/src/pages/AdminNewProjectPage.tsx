@@ -16,17 +16,21 @@ import { ArrowLeft, Upload, X, Star } from "lucide-react";
 
 const projectSchema = z.object({
   title: z.string().min(1, "Title is required"),
-  slug: z.string().min(1, "Slug is required"),
-  shortDescription: z.string().min(1, "Short description is required"),
+  slug: z.string().optional(),
+  shortDescription: z.string().optional(),
   description: z.string().min(1, "Description is required"),
-  image: z.string().min(1, "Image is required"),
+  image: z.string().optional(),
   mediaFiles: z.array(z.string()).default([]),
   thumbnailIndex: z.number().default(0),
-  technologies: z.string().min(1, "Technologies are required"),
-  demoUrl: z.string().url("Must be a valid URL"),
-  codeUrl: z.string().url("Must be a valid URL"),
+  technologies: z.string().optional(),
+  demoUrl: z.string().optional().refine((val) => !val || z.string().url().safeParse(val).success, {
+    message: "Must be a valid URL if provided",
+  }),
+  codeUrl: z.string().optional().refine((val) => !val || z.string().url().safeParse(val).success, {
+    message: "Must be a valid URL if provided",
+  }),
   featured: z.boolean().default(false),
-  date: z.string().min(1, "Date is required"),
+  date: z.string().optional(),
   client: z.string().optional(),
 });
 
@@ -49,8 +53,17 @@ export default function AdminNewProjectPage() {
   } = useForm<ProjectFormData>({
     resolver: zodResolver(projectSchema),
     defaultValues: {
+      title: "",
+      slug: "",
+      shortDescription: "",
+      description: "",
+      image: "",
+      technologies: "",
+      demoUrl: "",
+      codeUrl: "",
       featured: false,
       date: new Date().toISOString().split('T')[0],
+      client: "",
       mediaFiles: [],
       thumbnailIndex: 0,
     },
@@ -98,11 +111,15 @@ export default function AdminNewProjectPage() {
     mutationFn: async (data: ProjectFormData) => {
       const payload = {
         ...data,
-        technologies: data.technologies.split(',').map(tech => tech.trim()),
-        date: new Date(data.date).toISOString(),
+        slug: data.slug || data.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
+        shortDescription: data.shortDescription || data.description.substring(0, 100) + '...',
+        image: mediaFiles[thumbnailIndex] || data.image || '/api/placeholder/600/400',
+        technologies: data.technologies ? data.technologies.split(',').map(tech => tech.trim()) : [],
+        demoUrl: data.demoUrl || '#',
+        codeUrl: data.codeUrl || '#',
+        date: data.date ? new Date(data.date).toISOString() : new Date().toISOString(),
         mediaFiles: mediaFiles,
         thumbnailIndex: thumbnailIndex,
-        image: mediaFiles[thumbnailIndex] || data.image,
       };
       return await apiRequest("/api/admin/projects", "POST", payload);
     },
@@ -213,11 +230,12 @@ export default function AdminNewProjectPage() {
                   )}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="slug">Slug</Label>
+                  <Label htmlFor="slug">Slug (optional)</Label>
                   <Input
                     id="slug"
                     {...register("slug")}
                     className={errors.slug ? "border-red-500" : ""}
+                    placeholder="Auto-generated from title if empty"
                   />
                   {errors.slug && (
                     <p className="text-sm text-red-500">{errors.slug.message}</p>
@@ -226,12 +244,13 @@ export default function AdminNewProjectPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="shortDescription">Short Description</Label>
+                <Label htmlFor="shortDescription">Short Description (optional)</Label>
                 <Textarea
                   id="shortDescription"
                   {...register("shortDescription")}
                   className={errors.shortDescription ? "border-red-500" : ""}
                   rows={2}
+                  placeholder="Auto-generated from description if empty"
                 />
                 {errors.shortDescription && (
                   <p className="text-sm text-red-500">{errors.shortDescription.message}</p>
@@ -252,11 +271,12 @@ export default function AdminNewProjectPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="image">Image URL</Label>
+                <Label htmlFor="image">Image URL (optional)</Label>
                 <Input
                   id="image"
                   {...register("image")}
                   className={errors.image ? "border-red-500" : ""}
+                  placeholder="Default placeholder image will be used if empty"
                 />
                 {errors.image && (
                   <p className="text-sm text-red-500">{errors.image.message}</p>
@@ -361,7 +381,7 @@ export default function AdminNewProjectPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="technologies">Technologies (comma separated)</Label>
+                <Label htmlFor="technologies">Technologies (optional, comma separated)</Label>
                 <Input
                   id="technologies"
                   {...register("technologies")}
@@ -375,22 +395,24 @@ export default function AdminNewProjectPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="demoUrl">Demo URL</Label>
+                  <Label htmlFor="demoUrl">Demo URL (optional)</Label>
                   <Input
                     id="demoUrl"
                     {...register("demoUrl")}
                     className={errors.demoUrl ? "border-red-500" : ""}
+                    placeholder="https://your-demo-url.com"
                   />
                   {errors.demoUrl && (
                     <p className="text-sm text-red-500">{errors.demoUrl.message}</p>
                   )}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="codeUrl">Code URL</Label>
+                  <Label htmlFor="codeUrl">Code URL (optional)</Label>
                   <Input
                     id="codeUrl"
                     {...register("codeUrl")}
                     className={errors.codeUrl ? "border-red-500" : ""}
+                    placeholder="https://github.com/username/repo"
                   />
                   {errors.codeUrl && (
                     <p className="text-sm text-red-500">{errors.codeUrl.message}</p>
@@ -400,12 +422,13 @@ export default function AdminNewProjectPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="date">Date</Label>
+                  <Label htmlFor="date">Date (optional)</Label>
                   <Input
                     id="date"
                     type="date"
                     {...register("date")}
                     className={errors.date ? "border-red-500" : ""}
+                    placeholder="Current date will be used if empty"
                   />
                   {errors.date && (
                     <p className="text-sm text-red-500">{errors.date.message}</p>
@@ -416,6 +439,7 @@ export default function AdminNewProjectPage() {
                   <Input
                     id="client"
                     {...register("client")}
+                    placeholder="Client name"
                   />
                 </div>
               </div>

@@ -104,9 +104,20 @@ export class MemStorage implements IStorage {
       const portfolioData = getPortfolio();
       portfolioData.forEach(project => {
         this.projects.set(project.id, {
-          ...project,
+          id: project.id,
+          title: project.title,
+          slug: project.slug,
+          shortDescription: project.shortDescription,
+          description: project.description,
+          image: project.image,
           mediaFiles: project.gallery || [project.image],
           thumbnailIndex: 0,
+          technologies: project.technologies,
+          demoUrl: project.demoUrl,
+          codeUrl: project.codeUrl,
+          featured: project.featured || false,
+          date: new Date(project.date),
+          client: project.client || null,
           createdAt: new Date()
         } as Project);
         this.projectId = Math.max(this.projectId, project.id + 1);
@@ -187,10 +198,20 @@ export class MemStorage implements IStorage {
   async createProject(insertProject: InsertProject): Promise<Project> {
     const id = this.projectId++;
     const project: Project = { 
-      ...insertProject, 
       id,
+      title: insertProject.title,
+      slug: insertProject.slug || null,
+      shortDescription: insertProject.shortDescription || null,
+      description: insertProject.description,
+      image: insertProject.image || null,
       mediaFiles: insertProject.mediaFiles || [],
       thumbnailIndex: insertProject.thumbnailIndex || 0,
+      technologies: insertProject.technologies || [],
+      demoUrl: insertProject.demoUrl || null,
+      codeUrl: insertProject.codeUrl || null,
+      featured: insertProject.featured || false,
+      date: insertProject.date || new Date(),
+      client: insertProject.client || null,
       createdAt: new Date()
     };
     this.projects.set(id, project);
