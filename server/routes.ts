@@ -90,6 +90,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Markdown upload configuration
+  const markdownUpload = multer({
+    storage: multer.memoryStorage(), // Store in memory for processing
+    limits: {
+      fileSize: 1 * 1024 * 1024, // 1MB limit for markdown files
+    },
+    fileFilter: (req, file, cb) => {
+      // Accept markdown files
+      if (file.mimetype === 'text/markdown' || file.mimetype === 'text/plain' || file.originalname.endsWith('.md')) {
+        cb(null, true);
+      } else {
+        cb(new Error('Invalid file type. Only markdown (.md) files are allowed.'));
+      }
+    }
+  });
+
   // Serve uploaded files
   app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
@@ -446,6 +462,130 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting blog post:", error);
       res.status(500).json({ error: "Failed to delete blog post" });
+    }
+  });
+
+  // Markdown import endpoint
+  app.post("/api/admin/blog/import", requireAdmin, markdownUpload.single('markdown'), async (req, res) => {
+    try {
+      const file = req.file;
+      
+      if (!file) {
+        return res.status(400).json({ error: 'No markdown file uploaded' });
+      }
+      
+      const markdownContent = file.buffer.toString('utf-8');
+      
+      // Simple markdown-to-HTML conversion and frontmatter parsing
+      const lines = markdownContent.split('\n');
+      let frontmatter = {};
+      let content = markdownContent;
+      
+      // Check for frontmatter
+      if (lines[0] === '---') {
+        const frontmatterEndIndex = lines.findIndex((line, index) => index > 0 && line === '---');
+        if (frontmatterEndIndex !== -1) {
+          const frontmatterLines = lines.slice(1, frontmatterEndIndex);
+          content = lines.slice(frontmatterEndIndex + 1).join('\n');
+          
+          // Parse simple YAML frontmatter
+          frontmatterLines.forEach(line => {
+            const [key, ...valueParts] = line.split(':');
+            if (key && valueParts.length > 0) {
+              const value = valueParts.join(':').trim();
+              frontmatter[key.trim()] = value.replace(/^["']|["']$/g, ''); // Remove quotes
+            }
+          });
+        }
+      }
+      
+      // Basic markdown to HTML conversion
+      const htmlContent = content
+        .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+        .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+        .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/^(.+)$/gm, '<p>$1</p>')
+        .replace(/<p><h/g, '<h')
+        .replace(/<\/h([1-6])><\/p>/g, '</h$1>');
+      
+      // Generate slug from title
+      const generateSlug = (title) => {
+        return title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '');
+      };
+      
+      const blogData = {
+        title: frontmatter.title || 'Imported Blog Post',
+        slug: frontmatter.slug || generateSlug(frontmatter.title || 'imported-blog-post'),
+        excerpt: frontmatter.excerpt || frontmatter.description || 'Imported from markdown file',
+        content: htmlContent,
+        coverImage: frontmatter.coverImage || frontmatter.image || '',
+        tags: frontmatter.tags ? frontmatter.tags.split(',').map(tag => tag.trim()) : [],
+        category: frontmatter.category || 'General',
+        featured: frontmatter.featured === 'true' || false,
+        published: frontmatter.published === 'true' || false,
+        date: frontmatter.date ? new Date(frontmatter.date) : new Date(),
+      };
+      
+      res.json({ 
+        message: 'Markdown imported successfully',
+        data: blogData
+      });
+    } catch (error) {
+      console.error('Error importing markdown:', error);
+      res.status(500).json({ error: 'Failed to import markdown file' });
+    }
+  });
+
+  // Markdown export endpoint
+  app.get("/api/admin/blog/:id/export", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const post = await storage.getBlogPostById(id);
+      
+      if (!post) {
+        return res.status(404).json({ error: "Blog post not found" });
+      }
+      
+      // Convert HTML back to markdown (basic conversion)
+      const markdownContent = post.content
+        .replace(/<h1>(.*?)<\/h1>/g, '# $1')
+        .replace(/<h2>(.*?)<\/h2>/g, '## $1')
+        .replace(/<h3>(.*?)<\/h3>/g, '### $1')
+        .replace(/<strong>(.*?)<\/strong>/g, '**$1**')
+        .replace(/<em>(.*?)<\/em>/g, '*$1*')
+        .replace(/<p>(.*?)<\/p>/g, '$1\n\n')
+        .replace(/<br\s*\/?>/g, '\n')
+        .replace(/<[^>]*>/g, ''); // Remove remaining HTML tags
+      
+      // Create frontmatter
+      const frontmatter = [
+        '---',
+        `title: "${post.title}"`,
+        `slug: "${post.slug}"`,
+        `excerpt: "${post.excerpt}"`,
+        `category: "${post.category}"`,
+        `tags: "${Array.isArray(post.tags) ? post.tags.join(', ') : post.tags}"`,
+        `featured: ${post.featured}`,
+        `published: ${post.published}`,
+        `date: "${post.date}"`,
+        post.coverImage ? `coverImage: "${post.coverImage}"` : '',
+        '---',
+        '',
+        markdownContent
+      ].filter(Boolean).join('\n');
+      
+      res.setHeader('Content-Type', 'text/markdown');
+      res.setHeader('Content-Disposition', `attachment; filename="${post.slug}.md"`);
+      res.send(frontmatter);
+    } catch (error) {
+      console.error('Error exporting markdown:', error);
+      res.status(500).json({ error: 'Failed to export markdown file' });
     }
   });
 

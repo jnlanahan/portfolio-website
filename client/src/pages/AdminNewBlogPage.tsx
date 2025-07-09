@@ -13,7 +13,7 @@ import RichTextEditor from "@/components/RichTextEditor";
 import { Switch } from "@/components/ui/switch";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Upload, X } from "lucide-react";
+import { ArrowLeft, Upload, X, FileText, Download } from "lucide-react";
 
 const blogSchema = z.object({
   title: z.string().optional(),
@@ -48,6 +48,7 @@ export default function AdminNewBlogPage() {
   const [content, setContent] = useState("");
   const [coverImage, setCoverImage] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+  const [isImporting, setIsImporting] = useState(false);
   
   // Check if we're in edit mode
   const [match, params] = useRoute("/admin/blog/edit/:id");
@@ -124,6 +125,84 @@ export default function AdminNewBlogPage() {
       });
     },
   });
+
+  const importMarkdownMutation = useMutation({
+    mutationFn: async (file: File) => {
+      const formData = new FormData();
+      formData.append('markdown', file);
+      
+      const response = await fetch('/api/admin/blog/import', {
+        method: 'POST',
+        body: formData,
+        credentials: 'include',
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to import markdown');
+      }
+      
+      return response.json();
+    },
+    onSuccess: (response) => {
+      const { data } = response;
+      
+      // Populate form with imported data
+      reset({
+        title: data.title,
+        slug: data.slug,
+        excerpt: data.excerpt,
+        coverImage: data.coverImage,
+        tags: Array.isArray(data.tags) ? data.tags.join(', ') : data.tags,
+        category: data.category,
+        featured: data.featured,
+        published: data.published,
+        date: data.date ? new Date(data.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+      });
+      
+      setContent(data.content);
+      setCoverImage(data.coverImage);
+      
+      toast({
+        title: "Success",
+        description: "Markdown file imported successfully",
+      });
+    },
+    onError: (error) => {
+      console.error('Error importing markdown:', error);
+      toast({
+        title: "Error",
+        description: "Failed to import markdown file",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleMarkdownImport = async (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+
+    setIsImporting(true);
+    try {
+      const file = files[0];
+      if (!file.name.endsWith('.md')) {
+        toast({
+          title: "Invalid file",
+          description: "Please select a .md file",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      importMarkdownMutation.mutate(file);
+    } catch (error) {
+      toast({
+        title: "Import failed",
+        description: "Failed to import markdown file",
+        variant: "destructive",
+      });
+    } finally {
+      setIsImporting(false);
+    }
+  };
 
   const handleFileUpload = async (files: FileList | null) => {
     if (!files || files.length === 0) return;
@@ -247,6 +326,41 @@ export default function AdminNewBlogPage() {
                   {isEditMode ? "Edit and update your blog post" : "Add a new blog post to your website"}
                 </p>
               </div>
+            </div>
+            
+            {/* Markdown Import/Export Actions */}
+            <div className="flex items-center gap-2">
+              {!isEditMode && (
+                <div>
+                  <input
+                    type="file"
+                    accept=".md"
+                    onChange={(e) => handleMarkdownImport(e.target.files)}
+                    className="hidden"
+                    id="markdown-import"
+                  />
+                  <Button
+                    variant="outline"
+                    onClick={() => document.getElementById('markdown-import')?.click()}
+                    disabled={isImporting}
+                    className="flex items-center gap-2"
+                  >
+                    <FileText size={16} />
+                    {isImporting ? "Importing..." : "Import Markdown"}
+                  </Button>
+                </div>
+              )}
+              
+              {isEditMode && blogId && (
+                <Button
+                  variant="outline"
+                  onClick={() => window.open(`/api/admin/blog/${blogId}/export`, '_blank')}
+                  className="flex items-center gap-2"
+                >
+                  <Download size={16} />
+                  Export Markdown
+                </Button>
+              )}
             </div>
           </div>
         </div>

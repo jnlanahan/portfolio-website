@@ -67,6 +67,15 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
     - Added resume upload page with drag-and-drop functionality
     - Created resume file management with PDF-only support
     - Added public resume download endpoint
+  - **Added markdown import/export functionality**:
+    - Created markdown upload endpoint with frontmatter parsing
+    - Added basic markdown-to-HTML conversion for imported content
+    - Implemented markdown export with HTML-to-markdown conversion
+    - Added import button on new blog post page for .md file uploads
+    - Added export buttons on blog management and edit pages
+    - Support for YAML frontmatter with metadata extraction
+    - Automatic slug generation from imported titles
+    - Fixed blog post update validation with proper date handling
 
 - **January 2025**: Removed "My Experience" section completely
   - Removed navigation items and routes

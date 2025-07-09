@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Plus, Edit, Trash2, Search, Calendar, Eye } from "lucide-react";
+import { ArrowLeft, Plus, Edit, Trash2, Search, Calendar, Eye, Download } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 
 export default function AdminBlogPage() {
@@ -191,6 +191,15 @@ export default function AdminBlogPage() {
                   >
                     <Edit size={14} />
                     Edit
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => window.open(`/api/admin/blog/${post.id}/export`, '_blank')}
+                    className="flex items-center gap-1"
+                  >
+                    <Download size={14} />
+                    Export
                   </Button>
                 </div>
               </CardContent>
