@@ -20,6 +20,14 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
 - Dark mode support
 
 ## Recent Changes
+- **January 2025**: Created comprehensive test suite for quality assurance
+  - Built automated API test suite covering all major functionality
+  - Tests include admin authentication, project CRUD, blog management, contact forms, and public endpoints
+  - Added test cleanup functionality to maintain clean test environment
+  - Created simple test runner script (run-tests.js) for easy execution
+  - Test coverage includes draft/publish workflow, file upload validation, and error handling
+  - All tests pass with proper cleanup and session management
+
 - **January 2025**: Enhanced admin system with improved navigation and content management
   - Added separate "Add New" and "Manage" buttons for better UX in admin dashboard
   - Created dedicated pages for adding new projects (AdminNewProjectPage) and blog posts (AdminNewBlogPage)
@@ -81,3 +89,17 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
 - Environment variables stored in Replit secrets
 - PostHog analytics configured for production tracking only
 - All components follow TypeScript best practices
+
+## Testing
+- Comprehensive test suite available in `/tests/` directory
+- Run all tests with: `node run-tests.js`
+- Individual API tests: `node tests/api-tests.js`
+- Test coverage includes:
+  - Admin authentication and session management
+  - Project CRUD operations with image uploads
+  - Blog management with draft/publish workflow
+  - Contact form functionality
+  - Public API endpoints
+  - Resume management system
+- Tests automatically clean up after execution
+- Server must be running (npm run dev) before running tests

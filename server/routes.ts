@@ -365,6 +365,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.put("/api/admin/projects/:id", requireAdmin, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      
+      // Handle date conversion from string to Date object
+      if (req.body.date && typeof req.body.date === 'string') {
+        req.body.date = new Date(req.body.date);
+      }
+      
       const validatedData = insertProjectSchema.partial().parse(req.body);
       const project = await storage.updateProject(id, validatedData);
       res.json(project);
