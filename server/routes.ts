@@ -589,6 +589,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // AI Content Polisher endpoints
+  app.post("/api/admin/polish-content", requireAdmin, async (req, res) => {
+    try {
+      const { content, contentType } = req.body;
+      
+      if (!content || typeof content !== 'string') {
+        return res.status(400).json({ error: 'Content is required' });
+      }
+
+      const { polishContent } = await import('./aiPolisher');
+      const result = await polishContent(content, contentType || 'blog');
+      
+      res.json(result);
+    } catch (error) {
+      console.error('Error polishing content:', error);
+      res.status(500).json({ error: 'Failed to analyze content' });
+    }
+  });
+
+  app.post("/api/admin/quick-suggestions", requireAdmin, async (req, res) => {
+    try {
+      const { content } = req.body;
+      
+      if (!content || typeof content !== 'string') {
+        return res.status(400).json({ error: 'Content is required' });
+      }
+
+      const { getQuickSuggestions } = await import('./aiPolisher');
+      const suggestions = await getQuickSuggestions(content);
+      
+      res.json({ suggestions });
+    } catch (error) {
+      console.error('Error getting quick suggestions:', error);
+      res.status(500).json({ error: 'Failed to get suggestions' });
+    }
+  });
+
+  app.post("/api/admin/improve-selection", requireAdmin, async (req, res) => {
+    try {
+      const { selectedText, context } = req.body;
+      
+      if (!selectedText || typeof selectedText !== 'string') {
+        return res.status(400).json({ error: 'Selected text is required' });
+      }
+
+      const { improveSelection } = await import('./aiPolisher');
+      const improved = await improveSelection(selectedText, context || '');
+      
+      res.json({ improved });
+    } catch (error) {
+      console.error('Error improving selection:', error);
+      res.status(500).json({ error: 'Failed to improve text' });
+    }
+  });
+
   // Admin resume management routes
   app.get("/api/admin/resume", requireAdmin, async (req, res) => {
     try {

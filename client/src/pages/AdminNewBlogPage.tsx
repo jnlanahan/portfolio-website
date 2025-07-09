@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import RichTextEditor from "@/components/RichTextEditor";
+import AIContentPolisher from "@/components/AIContentPolisher";
 import { Switch } from "@/components/ui/switch";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -413,6 +414,15 @@ export default function AdminNewBlogPage() {
                 {errors.excerpt && (
                   <p className="text-sm text-red-500">{errors.excerpt.message}</p>
                 )}
+                
+                {/* AI Content Polisher for Excerpt */}
+                <div className="mt-2">
+                  <AIContentPolisher 
+                    content={watch("excerpt") || ""}
+                    onContentChange={(newContent) => setValue("excerpt", newContent)}
+                    contentType="excerpt"
+                  />
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -425,6 +435,15 @@ export default function AdminNewBlogPage() {
                 {errors.content && (
                   <p className="text-sm text-red-500">{errors.content.message}</p>
                 )}
+                
+                {/* AI Content Polisher */}
+                <div className="mt-4">
+                  <AIContentPolisher 
+                    content={content}
+                    onContentChange={setContent}
+                    contentType="blog"
+                  />
+                </div>
               </div>
 
               <div className="space-y-2">
