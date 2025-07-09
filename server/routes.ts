@@ -417,6 +417,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.put("/api/admin/blog/:id", requireAdmin, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      
+      // Handle date conversion from string to Date object
+      if (req.body.date && typeof req.body.date === 'string') {
+        req.body.date = new Date(req.body.date);
+      }
+      
+      // Calculate read time if not provided (estimate 200 words per minute)
+      if (!req.body.readTime && req.body.content) {
+        const wordCount = req.body.content.replace(/<[^>]*>/g, '').split(/\s+/).length;
+        req.body.readTime = Math.max(1, Math.ceil(wordCount / 200));
+      }
+      
       const validatedData = insertBlogPostSchema.partial().parse(req.body);
       const post = await storage.updateBlogPost(id, validatedData);
       res.json(post);
