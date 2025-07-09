@@ -25,8 +25,12 @@ const projectSchema = z.object({
   mediaFiles: z.array(z.string()).default([]),
   thumbnailIndex: z.number().default(0),
   technologies: z.string().min(1, "Technologies are required"),
-  demoUrl: z.string().url("Must be a valid URL"),
-  codeUrl: z.string().url("Must be a valid URL"),
+  demoUrl: z.string().optional().refine((val) => !val || z.string().url().safeParse(val).success, {
+    message: "Must be a valid URL if provided",
+  }),
+  codeUrl: z.string().optional().refine((val) => !val || z.string().url().safeParse(val).success, {
+    message: "Must be a valid URL if provided",
+  }),
   featured: z.boolean().default(false),
   date: z.string().min(1, "Date is required"),
   client: z.string().optional(),
