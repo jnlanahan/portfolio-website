@@ -29,6 +29,13 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Built complete admin system for content management with hidden authentication
   - Default admin credentials: username: admin, password: admin123
   - **Fixed project creation issues**: Made only title and description mandatory fields, added proper date handling for form submissions, and corrected image upload path issues
+  - **Enhanced blog creation system**: 
+    - Integrated Tiptap rich text editor with full WYSIWYG capabilities
+    - Added cover image upload functionality with preview
+    - Implemented draft mode system - all fields optional until published
+    - Added separate "Save as Draft" and "Publish" buttons
+    - Dynamic validation based on publish status
+    - Fixed Tiptap extension conflicts
 
 - **January 2025**: Removed "My Experience" section completely
   - Removed navigation items and routes

@@ -16,16 +16,27 @@ import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Upload, X } from "lucide-react";
 
 const blogSchema = z.object({
-  title: z.string().min(1, "Title is required"),
-  slug: z.string().min(1, "Slug is required"),
-  excerpt: z.string().min(1, "Excerpt is required"),
-  content: z.string().min(1, "Content is required"),
-  coverImage: z.string().min(1, "Cover image is required"),
-  tags: z.string().min(1, "Tags are required"),
-  category: z.string().min(1, "Category is required"),
+  title: z.string().optional(),
+  slug: z.string().optional(),
+  excerpt: z.string().optional(),
+  content: z.string().optional(),
+  coverImage: z.string().optional(),
+  tags: z.string().optional(),
+  category: z.string().optional(),
   featured: z.boolean().default(false),
-  published: z.boolean().default(true),
-  date: z.string().min(1, "Date is required"),
+  published: z.boolean().default(false), // Default to draft mode
+  date: z.string().optional(),
+});
+
+const publishedBlogSchema = blogSchema.extend({
+  title: z.string().min(1, "Title is required for published posts"),
+  slug: z.string().min(1, "Slug is required for published posts"),
+  excerpt: z.string().min(1, "Excerpt is required for published posts"),
+  content: z.string().min(1, "Content is required for published posts"),
+  coverImage: z.string().min(1, "Cover image is required for published posts"),
+  tags: z.string().min(1, "Tags are required for published posts"),
+  category: z.string().min(1, "Category is required for published posts"),
+  date: z.string().min(1, "Date is required for published posts"),
 });
 
 type BlogFormData = z.infer<typeof blogSchema>;
@@ -44,22 +55,18 @@ export default function AdminNewBlogPage() {
     formState: { errors },
     setValue,
     watch,
+    clearErrors,
   } = useForm<BlogFormData>({
     resolver: zodResolver(blogSchema),
     defaultValues: {
       featured: false,
-      published: true,
+      published: false, // Default to draft mode
       date: new Date().toISOString().split('T')[0],
     },
   });
 
   const createBlogMutation = useMutation({
-    mutationFn: async (data: BlogFormData) => {
-      const payload = {
-        ...data,
-        tags: data.tags.split(',').map(tag => tag.trim()),
-        date: new Date(data.date).toISOString(),
-      };
+    mutationFn: async (payload: any) => {
       return await apiRequest("/api/admin/blog", "POST", payload);
     },
     onSuccess: () => {
@@ -119,16 +126,52 @@ export default function AdminNewBlogPage() {
     }
   };
 
-  const onSubmit = (data: BlogFormData) => {
-    createBlogMutation.mutate({
+  const onSaveDraft = (data: BlogFormData) => {
+    const payload = {
+      ...data,
+      content: content,
+      coverImage: coverImage || data.coverImage,
+      published: false,
+      tags: data.tags ? data.tags.split(',').map(tag => tag.trim()) : [],
+      date: data.date ? new Date(data.date).toISOString() : new Date().toISOString(),
+    };
+    
+    createBlogMutation.mutate(payload);
+  };
+
+  const onPublish = (data: BlogFormData) => {
+    // Validate required fields for published posts
+    const validationResult = publishedBlogSchema.safeParse({
       ...data,
       content: content,
       coverImage: coverImage || data.coverImage,
     });
+
+    if (!validationResult.success) {
+      // Show validation errors
+      validationResult.error.errors.forEach((error) => {
+        toast({
+          title: "Validation Error",
+          description: `${error.path.join('.')}: ${error.message}`,
+          variant: "destructive",
+        });
+      });
+      return;
+    }
+
+    const payload = {
+      ...data,
+      content: content,
+      coverImage: coverImage || data.coverImage,
+      published: true,
+      tags: data.tags ? data.tags.split(',').map(tag => tag.trim()) : [],
+      date: data.date ? new Date(data.date).toISOString() : new Date().toISOString(),
+    };
+    
+    createBlogMutation.mutate(payload);
   };
 
   const featuredValue = watch("featured");
-  const publishedValue = watch("published");
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -165,25 +208,27 @@ export default function AdminNewBlogPage() {
             <CardTitle>Blog Post Details</CardTitle>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <form className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="title">Title</Label>
+                  <Label htmlFor="title">Title <span className="text-gray-500 text-sm">(optional)</span></Label>
                   <Input
                     id="title"
                     {...register("title")}
                     className={errors.title ? "border-red-500" : ""}
+                    placeholder="Enter blog post title"
                   />
                   {errors.title && (
                     <p className="text-sm text-red-500">{errors.title.message}</p>
                   )}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="slug">Slug</Label>
+                  <Label htmlFor="slug">Slug <span className="text-gray-500 text-sm">(optional)</span></Label>
                   <Input
                     id="slug"
                     {...register("slug")}
                     className={errors.slug ? "border-red-500" : ""}
+                    placeholder="url-friendly-slug"
                   />
                   {errors.slug && (
                     <p className="text-sm text-red-500">{errors.slug.message}</p>
@@ -192,12 +237,13 @@ export default function AdminNewBlogPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="excerpt">Excerpt</Label>
+                <Label htmlFor="excerpt">Excerpt <span className="text-gray-500 text-sm">(optional)</span></Label>
                 <Textarea
                   id="excerpt"
                   {...register("excerpt")}
                   className={errors.excerpt ? "border-red-500" : ""}
                   rows={3}
+                  placeholder="Brief description of the blog post"
                 />
                 {errors.excerpt && (
                   <p className="text-sm text-red-500">{errors.excerpt.message}</p>
@@ -217,7 +263,7 @@ export default function AdminNewBlogPage() {
               </div>
 
               <div className="space-y-2">
-                <Label>Cover Image</Label>
+                <Label>Cover Image <span className="text-gray-500 text-sm">(optional)</span></Label>
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
                     <Button
@@ -290,7 +336,7 @@ export default function AdminNewBlogPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="tags">Tags (comma separated)</Label>
+                  <Label htmlFor="tags">Tags <span className="text-gray-500 text-sm">(optional)</span></Label>
                   <Input
                     id="tags"
                     {...register("tags")}
@@ -302,11 +348,12 @@ export default function AdminNewBlogPage() {
                   )}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="category">Category</Label>
+                  <Label htmlFor="category">Category <span className="text-gray-500 text-sm">(optional)</span></Label>
                   <Input
                     id="category"
                     {...register("category")}
                     className={errors.category ? "border-red-500" : ""}
+                    placeholder="Technology, Tutorial, etc."
                   />
                   {errors.category && (
                     <p className="text-sm text-red-500">{errors.category.message}</p>
@@ -315,7 +362,7 @@ export default function AdminNewBlogPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="date">Publication Date</Label>
+                <Label htmlFor="date">Publication Date <span className="text-gray-500 text-sm">(optional)</span></Label>
                 <Input
                   id="date"
                   type="date"
@@ -336,14 +383,6 @@ export default function AdminNewBlogPage() {
                   />
                   <Label htmlFor="featured">Featured Post</Label>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <Switch
-                    id="published"
-                    checked={publishedValue}
-                    onCheckedChange={(checked) => setValue("published", checked)}
-                  />
-                  <Label htmlFor="published">Published</Label>
-                </div>
               </div>
 
               <div className="flex justify-end gap-2">
@@ -355,10 +394,19 @@ export default function AdminNewBlogPage() {
                   Cancel
                 </Button>
                 <Button
-                  type="submit"
+                  type="button"
+                  variant="outline"
+                  onClick={handleSubmit(onSaveDraft)}
                   disabled={createBlogMutation.isPending}
                 >
-                  {createBlogMutation.isPending ? "Creating..." : "Create Blog Post"}
+                  {createBlogMutation.isPending ? "Saving..." : "Save as Draft"}
+                </Button>
+                <Button
+                  type="button"
+                  onClick={handleSubmit(onPublish)}
+                  disabled={createBlogMutation.isPending}
+                >
+                  {createBlogMutation.isPending ? "Publishing..." : "Publish"}
                 </Button>
               </div>
             </form>
