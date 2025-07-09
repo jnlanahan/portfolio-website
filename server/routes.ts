@@ -9,7 +9,7 @@ import {
 import { z } from "zod";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
-import { generateResumePDF } from "./pdf-generator";
+
 import { sendContactEmail, verifyConnection } from "./mailer";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -43,27 +43,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get resume data
-  app.get("/api/resume", async (req, res) => {
-    try {
-      const resume = await storage.getResume();
-      res.json(resume);
-    } catch (error) {
-      console.error("Error fetching resume:", error);
-      res.status(500).json({ message: "Failed to fetch resume" });
-    }
-  });
-  
-  // Download CV as PDF
-  app.get("/api/resume/download", async (req, res) => {
-    try {
-      const resume = await storage.getResume();
-      await generateResumePDF(res, resume);
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-      res.status(500).json({ message: "Failed to generate CV PDF" });
-    }
-  });
+
 
   // Get all blog posts
   app.get("/api/blog", async (req, res) => {

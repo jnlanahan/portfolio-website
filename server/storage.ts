@@ -10,7 +10,7 @@ import {
 } from "@shared/schema";
 import { getBlogPosts, getBlogPostById } from "../client/src/data/blog";
 import { getPortfolio } from "../client/src/data/portfolio";
-import { getResume } from "../client/src/data/resume";
+
 import { getLists } from "../client/src/data/lists";
 
 // Modify the interface with all CRUD methods needed
@@ -30,8 +30,7 @@ export interface IStorage {
   getBlogPostById(id: number): Promise<BlogPost | undefined>;
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
   
-  // Resume methods
-  getResume(): Promise<any[]>;
+
   
   // Lists methods
   getLists(): Promise<any[]>;
@@ -170,10 +169,7 @@ export class MemStorage implements IStorage {
     return post;
   }
   
-  // Resume methods
-  async getResume(): Promise<any[]> {
-    return getResume();
-  }
+
   
   // Lists methods
   async getLists(): Promise<any[]> {

@@ -195,21 +195,13 @@ const AboutPage = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-            <HomeTile 
-              title="My Experience" 
-              description="Explore my professional journey through tech, design, and problem-solving."
-              icon="ri-file-list-line"
-              linkTo="/my-experience"
-              delay={0.1}
-            />
-            
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             <HomeTile 
               title="Portfolio" 
               description="Browse through my recent projects, experiments, and collaborations."
               icon="ri-folder-line"
               linkTo="/portfolio"
-              delay={0.2}
+              delay={0.1}
             />
             
             <HomeTile 
@@ -217,7 +209,7 @@ const AboutPage = () => {
               description="Read my thoughts, tutorials, and insights from my journey in tech."
               icon="ri-article-line"
               linkTo="/blog"
-              delay={0.3}
+              delay={0.2}
             />
             
             <HomeTile 
@@ -225,7 +217,7 @@ const AboutPage = () => {
               description="Discover my favorite tools, resources, and inspirations organized in curated lists."
               icon="ri-list-check"
               linkTo="/top5"
-              delay={0.4}
+              delay={0.3}
             />
             
             

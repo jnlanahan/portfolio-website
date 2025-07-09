@@ -46,16 +46,10 @@ const Navbar = () => {
       isActiveCheck: (path: string) => isActive(path) && location === path 
     },
     { 
-      path: "/my-experience", 
-      label: "My Experience", 
-      icon: "ri-file-list-line",
-      highlight: true,
-      isActiveCheck: (path: string) => isActive(path) 
-    },
-    { 
       path: "/portfolio", 
       label: "Portfolio", 
       icon: "ri-folder-line",
+      highlight: true,
       isActiveCheck: (path: string) => isActive(path) 
     },
     { 
