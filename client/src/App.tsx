@@ -40,6 +40,7 @@ function Router() {
       <Route path="/admin/projects/new" component={AdminNewProjectPage} />
       <Route path="/admin/blog" component={AdminBlogPage} />
       <Route path="/admin/blog/new" component={AdminNewBlogPage} />
+      <Route path="/admin/blog/edit/:id" component={AdminNewBlogPage} />
       <Route path="/admin/resume" component={AdminResumePage} />
       
       {/* Fallback to 404 */}

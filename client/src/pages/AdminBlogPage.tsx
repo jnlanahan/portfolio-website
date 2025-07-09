@@ -139,7 +139,7 @@ export default function AdminBlogPage() {
                     <Button
                       size="sm"
                       variant="ghost"
-                      onClick={() => setLocation(`/admin/blog/${post.id}/edit`)}
+                      onClick={() => setLocation(`/admin/blog/edit/${post.id}`)}
                     >
                       <Edit size={16} />
                     </Button>
@@ -186,7 +186,7 @@ export default function AdminBlogPage() {
                   <Button
                     size="sm"
                     variant="outline"
-                    onClick={() => setLocation(`/admin/blog/${post.id}/edit`)}
+                    onClick={() => setLocation(`/admin/blog/edit/${post.id}`)}
                     className="flex items-center gap-1"
                   >
                     <Edit size={14} />

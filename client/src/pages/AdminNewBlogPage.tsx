@@ -1,9 +1,9 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useLocation } from "wouter";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+import { useLocation, useRoute } from "wouter";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,6 +48,17 @@ export default function AdminNewBlogPage() {
   const [content, setContent] = useState("");
   const [coverImage, setCoverImage] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+  
+  // Check if we're in edit mode
+  const [match, params] = useRoute("/admin/blog/edit/:id");
+  const isEditMode = !!match;
+  const blogId = params?.id ? parseInt(params.id) : null;
+  
+  // Fetch existing blog post data if editing
+  const { data: existingPost, isLoading: isLoadingPost } = useQuery({
+    queryKey: [`/api/blog/${blogId}`],
+    enabled: isEditMode && !!blogId,
+  });
 
   const {
     register,
@@ -56,6 +67,7 @@ export default function AdminNewBlogPage() {
     setValue,
     watch,
     clearErrors,
+    reset,
   } = useForm<BlogFormData>({
     resolver: zodResolver(blogSchema),
     defaultValues: {
@@ -64,23 +76,50 @@ export default function AdminNewBlogPage() {
       date: new Date().toISOString().split('T')[0],
     },
   });
+  
+  // Update form when existing post data is loaded
+  useEffect(() => {
+    if (existingPost && isEditMode) {
+      const postData = existingPost;
+      reset({
+        title: postData.title || "",
+        slug: postData.slug || "",
+        excerpt: postData.excerpt || "",
+        coverImage: postData.coverImage || "",
+        tags: Array.isArray(postData.tags) ? postData.tags.join(", ") : "",
+        category: postData.category || "",
+        featured: postData.featured || false,
+        published: postData.published || false,
+        date: postData.date ? new Date(postData.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+      });
+      setContent(postData.content || "");
+      setCoverImage(postData.coverImage || "");
+    }
+  }, [existingPost, isEditMode, reset]);
 
   const createBlogMutation = useMutation({
     mutationFn: async (payload: any) => {
-      return await apiRequest("/api/admin/blog", "POST", payload);
+      if (isEditMode && blogId) {
+        return await apiRequest(`/api/admin/blog/${blogId}`, "PUT", payload);
+      } else {
+        return await apiRequest("/api/admin/blog", "POST", payload);
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/blog"] });
+      if (isEditMode) {
+        queryClient.invalidateQueries({ queryKey: [`/api/blog/${blogId}`] });
+      }
       toast({
-        title: "Blog post created",
-        description: "The blog post has been created successfully",
+        title: isEditMode ? "Blog post updated" : "Blog post created",
+        description: isEditMode ? "The blog post has been updated successfully" : "The blog post has been created successfully",
       });
       setLocation("/admin/blog");
     },
     onError: (error: any) => {
       toast({
-        title: "Creation failed",
-        description: error.message || "Failed to create blog post",
+        title: isEditMode ? "Update failed" : "Creation failed",
+        description: error.message || (isEditMode ? "Failed to update blog post" : "Failed to create blog post"),
         variant: "destructive",
       });
     },
@@ -173,6 +212,18 @@ export default function AdminNewBlogPage() {
 
   const featuredValue = watch("featured");
 
+  // Show loading state when fetching existing post
+  if (isEditMode && isLoadingPost) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p>Loading blog post...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
@@ -190,10 +241,10 @@ export default function AdminNewBlogPage() {
               </Button>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  Create New Blog Post
+                  {isEditMode ? "Edit Blog Post" : "Create New Blog Post"}
                 </h1>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Add a new blog post to your website
+                  {isEditMode ? "Edit and update your blog post" : "Add a new blog post to your website"}
                 </p>
               </div>
             </div>
@@ -399,14 +450,18 @@ export default function AdminNewBlogPage() {
                   onClick={handleSubmit(onSaveDraft)}
                   disabled={createBlogMutation.isPending}
                 >
-                  {createBlogMutation.isPending ? "Saving..." : "Save as Draft"}
+                  {createBlogMutation.isPending 
+                    ? (isEditMode ? "Updating..." : "Saving...") 
+                    : (isEditMode ? "Update as Draft" : "Save as Draft")}
                 </Button>
                 <Button
                   type="button"
                   onClick={handleSubmit(onPublish)}
                   disabled={createBlogMutation.isPending}
                 >
-                  {createBlogMutation.isPending ? "Publishing..." : "Publish"}
+                  {createBlogMutation.isPending 
+                    ? (isEditMode ? "Updating..." : "Publishing...") 
+                    : (isEditMode ? "Update & Publish" : "Publish")}
                 </Button>
               </div>
             </form>
