@@ -86,11 +86,27 @@ export async function getQuickSuggestions(content: string): Promise<string[]> {
       messages: [
         {
           role: "system",
-          content: "You are a writing assistant. Provide 3-5 quick, actionable writing tips for the given text. Respond with a JSON array of strings."
+          content: `You are a writing assistant. Provide 3-5 quick, actionable writing tips for the given text. 
+
+IMPORTANT: Your tips must encourage natural, human-like writing. Avoid suggesting:
+- Overused phrases like "Dive into," "It's important to note," "Certainly," "Navigating the complexities of"
+- Excessive hedging language
+- Generic blogging clichés
+- Repetitive sentence structures
+- Overly cautious language
+
+Instead, encourage:
+- Natural sentence variation
+- Specific details and examples
+- Authentic voice with personality
+- Direct, confident statements
+- Personal touches and relatable language
+
+Respond with a JSON object containing a "tips" array of strings.`
         },
         {
           role: "user",
-          content: `Analyze this text and provide quick improvement tips: "${plainText.substring(0, 500)}"`
+          content: `Analyze this text and provide quick improvement tips that will make it sound more natural and human: "${plainText.substring(0, 500)}"`
         }
       ],
       response_format: { type: "json_object" },
@@ -117,11 +133,29 @@ export async function improveSelection(selectedText: string, context: string = '
       messages: [
         {
           role: "system",
-          content: "You are an expert editor. Improve the selected text while maintaining its meaning and tone. Make it more clear, engaging, and well-written. Return only the improved text without explanations."
+          content: `You are an expert editor. Improve the selected text while maintaining its meaning and tone. Make it more clear, engaging, and well-written.
+
+CRITICAL: Your improved text must sound natural and human. Avoid:
+- Overused phrases like "Dive into," "It's important to note," "Certainly," "Navigating the complexities of"
+- Excessive hedging with "Typically," "More often than not," "Might be"
+- Repetitive parallelism like "It's not about X, it's about Y"
+- Generic, obvious content without specificity
+- Overly cautious language that avoids definitive statements
+- Blogging clichés and predictable structures
+
+Instead, create text that:
+- Varies sentence length naturally
+- Includes specific details when possible
+- Sounds authentic with personality
+- Makes confident statements when appropriate
+- Uses relatable, conversational language
+- Flows naturally like human speech
+
+Return only the improved text without explanations.`
         },
         {
           role: "user",
-          content: `Improve this text: "${selectedText}"${context ? `\n\nContext: ${context.substring(0, 200)}` : ''}`
+          content: `Improve this text to sound more natural and human: "${selectedText}"${context ? `\n\nContext: ${context.substring(0, 200)}` : ''}`
         }
       ],
       temperature: 0.3,
@@ -138,6 +172,27 @@ export async function improveSelection(selectedText: string, context: string = '
 
 function getSystemPrompt(contentType: string): string {
   const basePrompt = `You are an expert writing coach and editor. Analyze the given text and provide specific, actionable suggestions to improve clarity, engagement, grammar, and style.
+
+CRITICAL: Your suggestions must sound natural and human. Avoid these AI writing patterns:
+- Overused phrases like "Dive into," "It's important to note," "Certainly," "Navigating the complexities of," "Delving into the intricacies of"
+- Excessive hedging with "Typically," "More often than not," "Might be," "Don't always"
+- Repetitive parallelism like "It's not about X, it's about Y"
+- Overly long sentences of similar length
+- Generic, obvious content without specificity
+- Immediate lists without context
+- Overly cautious language that avoids definitive statements
+- Blogging clichés and predictable structures
+- Consistent voice without natural variation
+
+Instead, encourage:
+- Natural sentence length variation
+- Specific details and examples
+- Authentic voice with personality
+- Occasional imperfections that feel human
+- Direct, confident statements when appropriate
+- Personal touches and relatable language
+- Creative transitions between ideas
+- Natural flow that mirrors human speech patterns
 
 Focus on:
 1. Grammar and syntax errors
@@ -163,9 +218,9 @@ Respond with JSON in this exact format:
 }`;
 
   const contentSpecific = {
-    blog: "This is blog post content. Focus on engaging storytelling, clear structure, and reader engagement.",
-    excerpt: "This is a blog post excerpt. Focus on compelling hooks and clear value proposition.",
-    title: "This is a blog post title. Focus on clarity, SEO, and engagement."
+    blog: "This is blog post content. Focus on engaging storytelling, clear structure, and reader engagement. Encourage personal voice and authentic human connection.",
+    excerpt: "This is a blog post excerpt. Focus on compelling hooks and clear value proposition. Make it sound conversational and authentic.",
+    title: "This is a blog post title. Focus on clarity, SEO, and engagement. Avoid generic patterns and colons unless truly necessary."
   };
 
   return `${basePrompt}\n\n${contentSpecific[contentType] || contentSpecific.blog}`;
@@ -176,7 +231,15 @@ function getUserPrompt(content: string, contentType: string): string {
 
 "${content}"
 
-Focus on making it more engaging, clear, and professional while maintaining the original voice and meaning.`;
+Focus on making it more engaging, clear, and naturally human while maintaining the original voice and meaning. Identify and flag any AI-like patterns such as:
+- Overused phrases like "Dive into," "It's important to note," "Certainly," "Navigating the complexities of"
+- Excessive hedging language
+- Repetitive sentence structures
+- Generic, obvious content
+- Overly cautious language
+- Blogging clichés
+
+Suggest improvements that create natural sentence variation, authentic voice, specific details, and conversational flow.`;
 }
 
 function formatSuggestion(suggestion: any): PolishSuggestion {

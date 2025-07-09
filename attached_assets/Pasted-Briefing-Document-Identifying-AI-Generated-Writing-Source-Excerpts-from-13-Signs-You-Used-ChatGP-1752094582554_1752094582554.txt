@@ -1,0 +1,64 @@
+Briefing Document: Identifying AI-Generated Writing
+Source: Excerpts from "13 Signs You Used ChatGPT To Write That" by Sean Kernan (Thrive by Sean Kernan, April 21, 2025)
+
+Prepared By: [Your Name/Organization]
+
+Date: October 27, 2023
+
+I. Executive Summary
+
+This briefing document summarizes the key themes and identifiers presented in Sean Kernan's article "13 Signs You Used ChatGPT To Write That." As a full-time writer and editor, Kernan outlines observable patterns and characteristics that distinguish AI-generated writing, particularly from Large Language Models (LLMs) like ChatGPT, from human writing. The core argument is that while AI can produce coherent text, it lacks the natural variations, depth, personal voice, and occasional "wonkiness" that define human expression. Recognizing these tells is crucial for maintaining credibility and connecting with readers who value authenticity. The article strongly emphasizes that readers can increasingly spot AI writing and prefer human connection.
+
+II. Main Themes
+
+AI Writing Lacks Human Nuance and Authenticity: The central theme is that despite technological advancements, AI writing often feels sterile, predictable, and lacking the natural fluctuations, personal voice, and occasional imperfections inherent in human communication.
+Repetitive and Predictable Structures: AI models tend to rely on recurring phrases, sentence structures, and organizational patterns, making their output easily identifiable to a discerning reader.
+Lack of Depth and Specificity: AI writing often remains on the surface, avoiding specific details, statistics, or sensory descriptions that would add depth and engagement.
+Overly Cautious and Hedging Language: AI models are designed to be risk-averse and tend to use hedging language, avoiding definitive statements.
+AI-Generated Content Undermines Credibility: Using AI to generate content without disclosure can damage the writer's credibility with readers, employers, and even personal connections.
+Readers Prefer Authentic Human Connection: Readers are becoming more adept at recognizing AI writing and overwhelmingly prefer content that feels authentic and personal.
+III. Most Important Ideas and Facts
+
+Identifiable Patterns: Kernan argues that AI writing "falls into patterns" which can be easily spotted by experienced readers and editors. This repetition is a key differentiator.
+Common AI Phrases: Specific examples of overly standardized phrases frequently used by ChatGPT are provided, including: "Dive into," "It’s important to note," "Certainly," "Navigating the (landscape/complexities of)," and "Delving into the intricacies of."
+Generic and Obvious Content: AI writing often produces "vanilla, hollowed-out vibe" content that is "fluffy and boring" and offers "Land of The Obvious analysis." This is a result of drawing from vast, often uninspired, data sets.
+Limited Voice Variation: AI writers tend to stick to a single voice (2nd or 3rd person) throughout a piece, lacking the natural "voice switching" that humans employ for engagement.
+Immediate Lists: A strong indicator is when an article or response immediately "dives right into a list" (bullet points or numbers) without introductory context.
+Absence of Typos: The lack of typos is a "crowning achievement" of LLMs but also a "badge of honor" for human writers, whose occasional errors signify their authenticity.
+Consistent Parallelism: The repetitive use of structures like "It’s not about X, it’s about Y." is a "huge tell" that LLM was used.
+Long and Repetitive Sentence Structure: AI writing often features sentences of similar and often "obnoxiously long" length, lacking the varied sentence structure of human writing.
+Inconsistent Character/Tone: AI writing lacks the consistent "mannerisms and 'things'" that define a human writer's style and tone across different pieces.
+Excessive Hedging: The frequent use of words like "Typically," "More often than not," "Might be," and "Don’t always" indicates AI's "risk-averse" nature.
+Colon in Titles: Kernan notes the increased prevalence of colons in titles as a "subtle sign" often associated with "LLM-generated fluffy content."
+Blogging Clichés: AI models are trained on common online content, leading to an abundance of "ridiculously easy to spot" blogging clichés.
+Holistic Evaluation: Kernan advises taking these signs "in as a whole, and not use one sign as a smoking gun." However, he notes that some signs are "particularly indicative."
+Reader Preference for Authenticity: Surveys and experience indicate that "readers despise being exposed to AI writing without being notified" and "value an authentic voice, fresh with any chaos, typos, and the occasionally flawed opinion that person may have."
+IV. Supporting Quotes
+
+"There are always little tells and it’s important to catch these things — because it can hurt your credibility with readers, hiring managers, and even loved ones."
+"AI writing is very repetitive and falls into patterns."
+"ChatGPT relies on predictive text, which, as the name suggests, looks for predictable sequences of words. It pulls from massive swathes of data. Here’s the problem: most writing is fluffy and boring."
+"Do you sense that vanilla, hollowed-out vibe?"
+"AI writers tend to avoid first-person voice unless you enter a bunch of first person prompts. But even then — it struggles."
+"When I click on an article and see lists like this, I immediately suspect they used ChatGPT to write it."
+"The problem is that these programs steer clear of sharing too many stats because they are often wrong, sometimes laughably so."
+"One of my prior tells of ChatGPT was the use of too many commas. But, with ChatGPT 4.0, engineers tweaked this to include more em dashes..."
+"If you see constant parallelism, it’s a huge tell that LLM was used."
+"A typo has become a badge of honor that I occasionally and proudly wear. Because it’s a sign you are human."
+"Paragraphs should be like chimps: surprisingly human, but slightly unpredictable."
+"An easy sign is someone’s sentences are all roughly the same length. They will also be relatively long."
+"AI writing has no character. It changes voice from one post to the next. It’s inconsistent. It speaks at the reader, rather than to them."
+"If you see this unwillingness to commit to anything, it’s a sure sign of ChatGPT writing."
+"Titles with colons are often a gateway to fake human writing."
+"A language model is, by design, being trained on clichés. So expect lots of them."
+"My experience has continually shown that readers want to connect with other people. They value an authentic voice..."
+V. Implications
+
+The insights from this article have significant implications for content creation, editing, education, and hiring. Recognizing these tells is essential for:
+
+Writers: To ensure their work is perceived as authentic and engaging, avoiding patterns that signal AI generation.
+Editors: To identify and potentially reject or request revisions for AI-generated submissions that lack human voice or depth.
+Educators: To detect academic dishonesty involving AI writing and educate students on the importance of developing their own authentic voice.
+Hiring Managers: To spot AI-generated application materials that lack personal touch and may indicate a candidate's reliance on technology over genuine communication skills.
+Readers: To critically evaluate the content they consume and understand the potential for automated generation.
+Ultimately, the article serves as a valuable guide for navigating the evolving landscape of digital content creation and maintaining the value of authentic human expression.
