@@ -6,7 +6,11 @@ import {
   type BlogPost,
   type InsertBlogPost,
   type ContactSubmission,
-  type InsertContact
+  type InsertContact,
+  type Admin,
+  type InsertAdmin,
+  type Resume,
+  type InsertResume
 } from "@shared/schema";
 import { getBlogPosts, getBlogPostById } from "../client/src/data/blog";
 import { getPortfolio } from "../client/src/data/portfolio";
@@ -20,43 +24,61 @@ export interface IStorage {
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   
+  // Admin methods
+  getAdminByUsername(username: string): Promise<Admin | undefined>;
+  createAdmin(admin: InsertAdmin): Promise<Admin>;
+  
   // Project methods
   getAllProjects(): Promise<Project[]>;
   getProjectById(id: number): Promise<Project | undefined>;
   createProject(project: InsertProject): Promise<Project>;
+  updateProject(id: number, project: Partial<InsertProject>): Promise<Project>;
+  deleteProject(id: number): Promise<void>;
   
   // Blog post methods
   getAllBlogPosts(): Promise<BlogPost[]>;
   getBlogPostById(id: number): Promise<BlogPost | undefined>;
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
+  updateBlogPost(id: number, post: Partial<InsertBlogPost>): Promise<BlogPost>;
+  deleteBlogPost(id: number): Promise<void>;
   
-
+  // Resume methods
+  getResume(): Promise<Resume | undefined>;
+  saveResume(resume: InsertResume): Promise<Resume>;
   
   // Lists methods
   getLists(): Promise<any[]>;
   
   // Contact methods
+  getAllContactSubmissions(): Promise<ContactSubmission[]>;
   saveContactSubmission(submission: InsertContact): Promise<ContactSubmission>;
+  deleteContactSubmission(id: number): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
   private users: Map<number, User>;
+  private admins: Map<number, Admin>;
   private projects: Map<number, Project>;
   private blogPosts: Map<number, BlogPost>;
   private contactSubmissions: Map<number, ContactSubmission>;
+  private resumeContent: Resume | undefined;
   
   private userId: number;
+  private adminId: number;
   private projectId: number;
   private blogPostId: number;
   private contactId: number;
 
   constructor() {
     this.users = new Map();
+    this.admins = new Map();
     this.projects = new Map();
     this.blogPosts = new Map();
     this.contactSubmissions = new Map();
+    this.resumeContent = undefined;
     
     this.userId = 1;
+    this.adminId = 1;
     this.projectId = 1;
     this.blogPostId = 1;
     this.contactId = 1;
@@ -67,6 +89,16 @@ export class MemStorage implements IStorage {
   
   private initializeData() {
     try {
+      // Initialize default admin
+      const defaultAdmin: Admin = {
+        id: 1,
+        username: "admin",
+        password: "admin123", // In production, this would be hashed
+        createdAt: new Date()
+      };
+      this.admins.set(1, defaultAdmin);
+      this.adminId = 2;
+      
       // Initialize projects
       console.log("Initializing project data...");
       const portfolioData = getPortfolio();
@@ -92,6 +124,13 @@ export class MemStorage implements IStorage {
         this.blogPostId = Math.max(this.blogPostId, post.id + 1);
       });
       console.log(`Loaded ${blogData.length} blog posts successfully.`);
+      
+      // Initialize default resume content
+      this.resumeContent = {
+        id: 1,
+        content: "Default resume content - edit this in the admin panel",
+        updatedAt: new Date()
+      };
     } catch (error) {
       console.error("Error initializing data:", error);
       throw error;
@@ -115,6 +154,24 @@ export class MemStorage implements IStorage {
     this.users.set(id, user);
     return user;
   }
+
+  // Admin methods
+  async getAdminByUsername(username: string): Promise<Admin | undefined> {
+    return Array.from(this.admins.values()).find(
+      (admin) => admin.username === username,
+    );
+  }
+
+  async createAdmin(insertAdmin: InsertAdmin): Promise<Admin> {
+    const id = this.adminId++;
+    const admin: Admin = { 
+      ...insertAdmin, 
+      id,
+      createdAt: new Date()
+    };
+    this.admins.set(id, admin);
+    return admin;
+  }
   
   // Project methods
   async getAllProjects(): Promise<Project[]> {
@@ -134,6 +191,28 @@ export class MemStorage implements IStorage {
     };
     this.projects.set(id, project);
     return project;
+  }
+
+  async updateProject(id: number, updateData: Partial<InsertProject>): Promise<Project> {
+    const existingProject = this.projects.get(id);
+    if (!existingProject) {
+      throw new Error(`Project with ID ${id} not found`);
+    }
+    
+    const updatedProject: Project = {
+      ...existingProject,
+      ...updateData,
+    };
+    
+    this.projects.set(id, updatedProject);
+    return updatedProject;
+  }
+
+  async deleteProject(id: number): Promise<void> {
+    const deleted = this.projects.delete(id);
+    if (!deleted) {
+      throw new Error(`Project with ID ${id} not found`);
+    }
   }
   
   // Blog post methods
@@ -168,15 +247,61 @@ export class MemStorage implements IStorage {
     console.log(`Created new blog post: ID=${id}, Title="${post.title}"`);
     return post;
   }
+
+  async updateBlogPost(id: number, updateData: Partial<InsertBlogPost>): Promise<BlogPost> {
+    const existingPost = this.blogPosts.get(id);
+    if (!existingPost) {
+      throw new Error(`Blog post with ID ${id} not found`);
+    }
+    
+    const updatedPost: BlogPost = {
+      ...existingPost,
+      ...updateData,
+    };
+    
+    this.blogPosts.set(id, updatedPost);
+    console.log(`Updated blog post: ID=${id}, Title="${updatedPost.title}"`);
+    return updatedPost;
+  }
+
+  async deleteBlogPost(id: number): Promise<void> {
+    const deleted = this.blogPosts.delete(id);
+    if (!deleted) {
+      throw new Error(`Blog post with ID ${id} not found`);
+    }
+    console.log(`Deleted blog post: ID=${id}`);
+  }
   
 
   
+  // Resume methods
+  async getResume(): Promise<Resume | undefined> {
+    return this.resumeContent;
+  }
+
+  async saveResume(insertResume: InsertResume): Promise<Resume> {
+    const resume: Resume = {
+      id: 1,
+      ...insertResume,
+      updatedAt: new Date()
+    };
+    this.resumeContent = resume;
+    console.log(`Updated resume content`);
+    return resume;
+  }
+
   // Lists methods
   async getLists(): Promise<any[]> {
     return getLists();
   }
   
   // Contact methods
+  async getAllContactSubmissions(): Promise<ContactSubmission[]> {
+    return Array.from(this.contactSubmissions.values()).sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+  }
+
   async saveContactSubmission(insertSubmission: InsertContact): Promise<ContactSubmission> {
     const id = this.contactId++;
     const submission: ContactSubmission = {
@@ -186,6 +311,13 @@ export class MemStorage implements IStorage {
     };
     this.contactSubmissions.set(id, submission);
     return submission;
+  }
+
+  async deleteContactSubmission(id: number): Promise<void> {
+    const deleted = this.contactSubmissions.delete(id);
+    if (!deleted) {
+      throw new Error(`Contact submission with ID ${id} not found`);
+    }
   }
 }
 

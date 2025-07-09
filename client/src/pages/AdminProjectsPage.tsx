@@ -1,0 +1,467 @@
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useLocation } from "wouter";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
+import { ArrowLeft, Plus, Edit, Trash2, ExternalLink } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+
+const projectSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  slug: z.string().min(1, "Slug is required"),
+  shortDescription: z.string().min(1, "Short description is required"),
+  description: z.string().min(1, "Description is required"),
+  image: z.string().url("Must be a valid URL"),
+  technologies: z.string().min(1, "Technologies are required"),
+  demoUrl: z.string().url("Must be a valid URL"),
+  codeUrl: z.string().url("Must be a valid URL"),
+  featured: z.boolean().default(false),
+  date: z.string().min(1, "Date is required"),
+  client: z.string().optional(),
+});
+
+type ProjectFormData = z.infer<typeof projectSchema>;
+
+export default function AdminProjectsPage() {
+  const [, setLocation] = useLocation();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editingProject, setEditingProject] = useState<any>(null);
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  const { data: projects, isLoading } = useQuery({
+    queryKey: ["/api/portfolio"],
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    setValue,
+    watch,
+  } = useForm<ProjectFormData>({
+    resolver: zodResolver(projectSchema),
+    defaultValues: {
+      featured: false,
+      date: new Date().toISOString().split('T')[0],
+    },
+  });
+
+  const createProjectMutation = useMutation({
+    mutationFn: async (data: ProjectFormData) => {
+      const payload = {
+        ...data,
+        technologies: data.technologies.split(',').map(tech => tech.trim()),
+        date: new Date(data.date).toISOString(),
+      };
+      return await apiRequest("/api/admin/projects", "POST", payload);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/portfolio"] });
+      setIsDialogOpen(false);
+      reset();
+      setEditingProject(null);
+      toast({
+        title: "Project created",
+        description: "The project has been created successfully",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Creation failed",
+        description: error.message || "Failed to create project",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const updateProjectMutation = useMutation({
+    mutationFn: async (data: ProjectFormData) => {
+      const payload = {
+        ...data,
+        technologies: data.technologies.split(',').map(tech => tech.trim()),
+        date: new Date(data.date).toISOString(),
+      };
+      return await apiRequest(`/api/admin/projects/${editingProject.id}`, "PUT", payload);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/portfolio"] });
+      setIsDialogOpen(false);
+      reset();
+      setEditingProject(null);
+      toast({
+        title: "Project updated",
+        description: "The project has been updated successfully",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Update failed",
+        description: error.message || "Failed to update project",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const deleteProjectMutation = useMutation({
+    mutationFn: async (id: number) => {
+      return await apiRequest(`/api/admin/projects/${id}`, "DELETE");
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/portfolio"] });
+      toast({
+        title: "Project deleted",
+        description: "The project has been deleted successfully",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Delete failed",
+        description: error.message || "Failed to delete project",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleEdit = (project: any) => {
+    setEditingProject(project);
+    reset({
+      title: project.title,
+      slug: project.slug,
+      shortDescription: project.shortDescription,
+      description: project.description,
+      image: project.image,
+      technologies: Array.isArray(project.technologies) ? project.technologies.join(', ') : project.technologies,
+      demoUrl: project.demoUrl,
+      codeUrl: project.codeUrl,
+      featured: project.featured || false,
+      date: new Date(project.date).toISOString().split('T')[0],
+      client: project.client || '',
+    });
+    setIsDialogOpen(true);
+  };
+
+  const handleCreate = () => {
+    setEditingProject(null);
+    reset({
+      featured: false,
+      date: new Date().toISOString().split('T')[0],
+    });
+    setIsDialogOpen(true);
+  };
+
+  const onSubmit = (data: ProjectFormData) => {
+    if (editingProject) {
+      updateProjectMutation.mutate(data);
+    } else {
+      createProjectMutation.mutate(data);
+    }
+  };
+
+  const featuredValue = watch("featured");
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p>Loading projects...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Header */}
+      <div className="bg-white dark:bg-gray-800 shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center gap-4">
+              <Button
+                variant="ghost"
+                onClick={() => setLocation("/admin/dashboard")}
+                className="flex items-center gap-2"
+              >
+                <ArrowLeft size={16} />
+                Back to Dashboard
+              </Button>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  Project Management
+                </h1>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Manage your portfolio projects
+                </p>
+              </div>
+            </div>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button onClick={handleCreate} className="flex items-center gap-2">
+                  <Plus size={16} />
+                  Add Project
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>
+                    {editingProject ? "Edit Project" : "Create New Project"}
+                  </DialogTitle>
+                </DialogHeader>
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="title">Title</Label>
+                      <Input
+                        id="title"
+                        {...register("title")}
+                        className={errors.title ? "border-red-500" : ""}
+                      />
+                      {errors.title && (
+                        <p className="text-sm text-red-500">{errors.title.message}</p>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="slug">Slug</Label>
+                      <Input
+                        id="slug"
+                        {...register("slug")}
+                        className={errors.slug ? "border-red-500" : ""}
+                      />
+                      {errors.slug && (
+                        <p className="text-sm text-red-500">{errors.slug.message}</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="shortDescription">Short Description</Label>
+                    <Textarea
+                      id="shortDescription"
+                      {...register("shortDescription")}
+                      className={errors.shortDescription ? "border-red-500" : ""}
+                      rows={2}
+                    />
+                    {errors.shortDescription && (
+                      <p className="text-sm text-red-500">{errors.shortDescription.message}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="description">Description</Label>
+                    <Textarea
+                      id="description"
+                      {...register("description")}
+                      className={errors.description ? "border-red-500" : ""}
+                      rows={4}
+                    />
+                    {errors.description && (
+                      <p className="text-sm text-red-500">{errors.description.message}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="image">Image URL</Label>
+                    <Input
+                      id="image"
+                      {...register("image")}
+                      className={errors.image ? "border-red-500" : ""}
+                    />
+                    {errors.image && (
+                      <p className="text-sm text-red-500">{errors.image.message}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="technologies">Technologies (comma separated)</Label>
+                    <Input
+                      id="technologies"
+                      {...register("technologies")}
+                      className={errors.technologies ? "border-red-500" : ""}
+                      placeholder="React, TypeScript, Node.js"
+                    />
+                    {errors.technologies && (
+                      <p className="text-sm text-red-500">{errors.technologies.message}</p>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="demoUrl">Demo URL</Label>
+                      <Input
+                        id="demoUrl"
+                        {...register("demoUrl")}
+                        className={errors.demoUrl ? "border-red-500" : ""}
+                      />
+                      {errors.demoUrl && (
+                        <p className="text-sm text-red-500">{errors.demoUrl.message}</p>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="codeUrl">Code URL</Label>
+                      <Input
+                        id="codeUrl"
+                        {...register("codeUrl")}
+                        className={errors.codeUrl ? "border-red-500" : ""}
+                      />
+                      {errors.codeUrl && (
+                        <p className="text-sm text-red-500">{errors.codeUrl.message}</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="date">Date</Label>
+                      <Input
+                        id="date"
+                        type="date"
+                        {...register("date")}
+                        className={errors.date ? "border-red-500" : ""}
+                      />
+                      {errors.date && (
+                        <p className="text-sm text-red-500">{errors.date.message}</p>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="client">Client (optional)</Label>
+                      <Input
+                        id="client"
+                        {...register("client")}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Switch
+                      id="featured"
+                      checked={featuredValue}
+                      onCheckedChange={(checked) => setValue("featured", checked)}
+                    />
+                    <Label htmlFor="featured">Featured Project</Label>
+                  </div>
+
+                  <div className="flex justify-end gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => setIsDialogOpen(false)}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="submit"
+                      disabled={createProjectMutation.isPending || updateProjectMutation.isPending}
+                    >
+                      {editingProject ? "Update" : "Create"}
+                    </Button>
+                  </div>
+                </form>
+              </DialogContent>
+            </Dialog>
+          </div>
+        </div>
+      </div>
+
+      {/* Projects List */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects?.map((project: any) => (
+            <Card key={project.id} className="overflow-hidden">
+              <div className="aspect-video bg-gray-200 dark:bg-gray-700 relative">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
+                {project.featured && (
+                  <Badge className="absolute top-2 left-2 bg-yellow-500 text-white">
+                    Featured
+                  </Badge>
+                )}
+              </div>
+              <CardContent className="p-4">
+                <div className="flex items-start justify-between mb-2">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white line-clamp-1">
+                    {project.title}
+                  </h3>
+                  <div className="flex items-center gap-1">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => handleEdit(project)}
+                    >
+                      <Edit size={16} />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => deleteProjectMutation.mutate(project.id)}
+                      disabled={deleteProjectMutation.isPending}
+                    >
+                      <Trash2 size={16} />
+                    </Button>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
+                  {project.shortDescription}
+                </p>
+                <div className="flex flex-wrap gap-1 mb-3">
+                  {(Array.isArray(project.technologies) ? project.technologies : []).slice(0, 3).map((tech: string) => (
+                    <Badge key={tech} variant="secondary" className="text-xs">
+                      {tech}
+                    </Badge>
+                  ))}
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => window.open(project.demoUrl, '_blank')}
+                      className="flex items-center gap-1"
+                    >
+                      <ExternalLink size={14} />
+                      Demo
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => window.open(project.codeUrl, '_blank')}
+                      className="flex items-center gap-1"
+                    >
+                      <ExternalLink size={14} />
+                      Code
+                    </Button>
+                  </div>
+                  <span className="text-xs text-gray-500">
+                    {new Date(project.date).toLocaleDateString()}
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+        {projects?.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-500 dark:text-gray-400">No projects found</p>
+            <Button onClick={handleCreate} className="mt-4">
+              Create your first project
+            </Button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

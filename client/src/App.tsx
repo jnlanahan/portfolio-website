@@ -11,6 +11,10 @@ import PortfolioPage from "@/pages/PortfolioPage";
 import BlogPage from "@/pages/BlogPage";
 import TopFiveListsPage from "@/pages/TopFiveListsPage";
 import ContactPage from "@/pages/ContactPage";
+import AdminLoginPage from "@/pages/AdminLoginPage";
+import AdminDashboardPage from "@/pages/AdminDashboardPage";
+import AdminProjectsPage from "@/pages/AdminProjectsPage";
+import AdminResumePage from "@/pages/AdminResumePage";
 import Layout from "./components/Layout";
 import { BlogDetail } from "./sections/BlogDetail";
 
@@ -25,6 +29,13 @@ function Router() {
       <Route path="/blog/category/:category" component={BlogPage} />
       <Route path="/top5" component={TopFiveListsPage} />
       <Route path="/contact" component={ContactPage} />
+      
+      {/* Admin Routes */}
+      <Route path="/admin/login" component={AdminLoginPage} />
+      <Route path="/admin/dashboard" component={AdminDashboardPage} />
+      <Route path="/admin/projects" component={AdminProjectsPage} />
+      <Route path="/admin/resume" component={AdminResumePage} />
+      
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>

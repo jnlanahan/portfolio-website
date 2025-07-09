@@ -73,3 +73,34 @@ export const insertContactSchema = createInsertSchema(contactSubmissions).omit({
 
 export type InsertContact = z.infer<typeof insertContactSchema>;
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
+
+// Admin model for authentication
+export const admins = pgTable("admins", {
+  id: serial("id").primaryKey(),
+  username: text("username").notNull().unique(),
+  password: text("password").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertAdminSchema = createInsertSchema(admins).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertAdmin = z.infer<typeof insertAdminSchema>;
+export type Admin = typeof admins.$inferSelect;
+
+// Resume content model
+export const resumeContent = pgTable("resume_content", {
+  id: serial("id").primaryKey(),
+  content: text("content").notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const insertResumeSchema = createInsertSchema(resumeContent).omit({
+  id: true,
+  updatedAt: true,
+});
+
+export type InsertResume = z.infer<typeof insertResumeSchema>;
+export type Resume = typeof resumeContent.$inferSelect;

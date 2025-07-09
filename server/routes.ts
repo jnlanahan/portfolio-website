@@ -4,7 +4,9 @@ import { storage } from "./storage";
 import { 
   insertContactSchema,
   insertBlogPostSchema,
-  insertProjectSchema
+  insertProjectSchema,
+  insertAdminSchema,
+  insertResumeSchema
 } from "@shared/schema";
 import { z } from "zod";
 import { ZodError } from "zod";
@@ -119,6 +121,171 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       console.error("Error processing contact submission:", error);
       res.status(500).json({ message: "Failed to submit contact form" });
+    }
+  });
+
+  // Admin authentication routes
+  app.post("/api/admin/login", async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      
+      if (!username || !password) {
+        return res.status(400).json({ error: "Username and password are required" });
+      }
+
+      const admin = await storage.getAdminByUsername(username);
+      
+      if (!admin || admin.password !== password) {
+        return res.status(401).json({ error: "Invalid credentials" });
+      }
+
+      // Set session
+      req.session.adminId = admin.id;
+      req.session.isAdmin = true;
+      
+      res.json({ message: "Login successful", admin: { id: admin.id, username: admin.username } });
+    } catch (error) {
+      console.error("Error during admin login:", error);
+      res.status(500).json({ error: "Login failed" });
+    }
+  });
+
+  app.post("/api/admin/logout", (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ error: "Could not log out" });
+      }
+      res.json({ message: "Logged out successfully" });
+    });
+  });
+
+  app.get("/api/admin/status", (req, res) => {
+    if (req.session.isAdmin) {
+      res.json({ isAdmin: true, adminId: req.session.adminId });
+    } else {
+      res.json({ isAdmin: false });
+    }
+  });
+
+  // Middleware to check admin authentication
+  const requireAdmin = (req: any, res: any, next: any) => {
+    if (!req.session.isAdmin) {
+      return res.status(401).json({ error: "Admin authentication required" });
+    }
+    next();
+  };
+
+  // Admin project management routes
+  app.post("/api/admin/projects", requireAdmin, async (req, res) => {
+    try {
+      const validatedData = insertProjectSchema.parse(req.body);
+      const project = await storage.createProject(validatedData);
+      res.json(project);
+    } catch (error) {
+      console.error("Error creating project:", error);
+      res.status(500).json({ error: "Failed to create project" });
+    }
+  });
+
+  app.put("/api/admin/projects/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const validatedData = insertProjectSchema.partial().parse(req.body);
+      const project = await storage.updateProject(id, validatedData);
+      res.json(project);
+    } catch (error) {
+      console.error("Error updating project:", error);
+      res.status(500).json({ error: "Failed to update project" });
+    }
+  });
+
+  app.delete("/api/admin/projects/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteProject(id);
+      res.json({ message: "Project deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting project:", error);
+      res.status(500).json({ error: "Failed to delete project" });
+    }
+  });
+
+  // Admin blog management routes
+  app.post("/api/admin/blog", requireAdmin, async (req, res) => {
+    try {
+      const validatedData = insertBlogPostSchema.parse(req.body);
+      const post = await storage.createBlogPost(validatedData);
+      res.json(post);
+    } catch (error) {
+      console.error("Error creating blog post:", error);
+      res.status(500).json({ error: "Failed to create blog post" });
+    }
+  });
+
+  app.put("/api/admin/blog/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const validatedData = insertBlogPostSchema.partial().parse(req.body);
+      const post = await storage.updateBlogPost(id, validatedData);
+      res.json(post);
+    } catch (error) {
+      console.error("Error updating blog post:", error);
+      res.status(500).json({ error: "Failed to update blog post" });
+    }
+  });
+
+  app.delete("/api/admin/blog/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteBlogPost(id);
+      res.json({ message: "Blog post deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting blog post:", error);
+      res.status(500).json({ error: "Failed to delete blog post" });
+    }
+  });
+
+  // Admin resume management routes
+  app.get("/api/admin/resume", requireAdmin, async (req, res) => {
+    try {
+      const resume = await storage.getResume();
+      res.json(resume || { content: "" });
+    } catch (error) {
+      console.error("Error fetching resume:", error);
+      res.status(500).json({ error: "Failed to fetch resume" });
+    }
+  });
+
+  app.post("/api/admin/resume", requireAdmin, async (req, res) => {
+    try {
+      const validatedData = insertResumeSchema.parse(req.body);
+      const resume = await storage.saveResume(validatedData);
+      res.json(resume);
+    } catch (error) {
+      console.error("Error saving resume:", error);
+      res.status(500).json({ error: "Failed to save resume" });
+    }
+  });
+
+  // Admin contact submissions management
+  app.get("/api/admin/contact", requireAdmin, async (req, res) => {
+    try {
+      const submissions = await storage.getAllContactSubmissions();
+      res.json(submissions);
+    } catch (error) {
+      console.error("Error fetching contact submissions:", error);
+      res.status(500).json({ error: "Failed to fetch contact submissions" });
+    }
+  });
+
+  app.delete("/api/admin/contact/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteContactSubmission(id);
+      res.json({ message: "Contact submission deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting contact submission:", error);
+      res.status(500).json({ error: "Failed to delete contact submission" });
     }
   });
 
