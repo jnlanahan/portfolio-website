@@ -119,6 +119,59 @@ const HomeTile = ({
   );
 };
 
+const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string; delay: number }) => {
+  const isExternal = linkTo.startsWith('http') || linkTo.startsWith('mailto:');
+  
+  const handleClick = () => {
+    trackEvent('homepage_action_click', { 
+      action: title, 
+      destination: linkTo 
+    });
+  };
+
+  const buttonContent = (
+    <div 
+      className="bg-white border border-gray-200 hover:border-gray-300 transition-all duration-300 cursor-pointer group flex items-center justify-center hover:shadow-lg"
+      style={{ 
+        borderRadius: '32px', /* Apple-style pill shape */
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)', /* Apple-style subtle shadow */
+        height: '48px', /* 8-point grid height */
+        padding: '0 24px' /* 8-point grid padding */
+      }}
+    >
+      <span className="font-space font-medium text-gray-900 group-hover:text-primary transition-colors" style={{ fontSize: '16px' }}>
+        {title}
+      </span>
+    </div>
+  );
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay }}
+    >
+      {isExternal ? (
+        <a 
+          href={linkTo}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={handleClick}
+        >
+          {buttonContent}
+        </a>
+      ) : (
+        <Link 
+          href={linkTo}
+          onClick={handleClick}
+        >
+          {buttonContent}
+        </Link>
+      )}
+    </motion.div>
+  );
+};
+
 const HomePage = () => {
   return (
     <div className="min-h-screen" style={{ padding: '24px 16px' }}> {/* 8-point grid: 24px vertical, 16px horizontal */}
@@ -150,98 +203,75 @@ const HomePage = () => {
             </motion.div>
           </div>
           
-          {/* Utility Tiles */}
-          <div style={{ marginBottom: '16px' }}> {/* 8-point grid spacing */}
-            <HomeTile
-              title="Contact"
-              description=""
-              icon=""
-              linkTo="/contact"
-              delay={0.2}
-              compact={true}
-            />
-          </div>
-          
-          <div style={{ marginBottom: '16px' }}> {/* 8-point grid spacing */}
-            <HomeTile
-              title="Resume"
-              description=""
-              icon=""
-              linkTo="/resume.pdf"
-              delay={0.3}
-              compact={true}
-            />
-          </div>
-          
-          <div> {/* Last item doesn't need margin */}
-            <HomeTile
-              title="LinkedIn"
-              description=""
-              icon=""
-              linkTo="https://linkedin.com/in/nicklanahan"
-              delay={0.4}
-              compact={true}
-            />
+          {/* Action Buttons */}
+          <div style={{ marginBottom: '32px' }}> {/* 8-point grid spacing */}
+            <div style={{ marginBottom: '12px' }}>
+              <ActionButton
+                title="Contact Me"
+                linkTo="/contact"
+                delay={0.2}
+              />
+            </div>
+            <div style={{ marginBottom: '12px' }}>
+              <ActionButton
+                title="Download my Resume"
+                linkTo="/resume.pdf"
+                delay={0.3}
+              />
+            </div>
+            <div>
+              <ActionButton
+                title="Connect with me on LinkedIn"
+                linkTo="https://linkedin.com/in/nicklanahan"
+                delay={0.4}
+              />
+            </div>
           </div>
         </div>
 
-        {/* Desktop: Two Row Layout */}
+        {/* Desktop: Brand Tile and Action Buttons */}
         <div className="hidden md:block">
-          {/* Top Row */}
-          <div className="grid grid-cols-12 h-16" style={{ gap: '16px', marginBottom: '24px' }}> {/* 8-point grid spacing */}
-            {/* Brand Tile - 1/3 wider again (6 columns instead of 4) */}
-            <div className="col-span-6 h-full">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="h-full"
+          {/* Brand Tile - Full Width */}
+          <div style={{ marginBottom: '24px' }}> {/* 8-point grid spacing */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              style={{ height: '80px' }} /* 8-point grid: 80px height */
+            >
+              <GlowingCard 
+                className="bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-full flex items-center justify-center hover:-translate-y-1"
+                style={{ 
+                  borderRadius: '16px', /* 8-point grid radius */
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)' /* Apple-style subtle shadow */
+                }}
+                glowColor="rgba(0, 122, 255, 0.1)"
+                strength={0.3}
               >
-                <GlowingCard 
-                  className="bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-full flex items-center justify-center hover:-translate-y-1"
-                  style={{ 
-                    borderRadius: '16px', /* 8-point grid radius */
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)' /* Apple-style subtle shadow */
-                  }}
-                  glowColor="rgba(0, 122, 255, 0.1)"
-                  strength={0.3}
-                >
-                  <h1 className="font-space font-bold text-gray-900" style={{ fontSize: '48px' }}> {/* Apple HIG: Page title 32-48px */}
-                    Nick<span className="text-primary"> </span>Lanahan
-                  </h1>
-                </GlowingCard>
-              </motion.div>
-            </div>
-            
-            {/* Three Compact Tiles - 2 columns each in remaining 6 columns */}
-            <div className="col-span-6 grid grid-cols-3 h-full" style={{ gap: '16px' }}> {/* 8-point grid spacing */}
-              <HomeTile
-                title="Contact"
-                description=""
-                icon=""
-                linkTo="/contact"
-                delay={0.2}
-                compact={true}
-              />
-              
-              <HomeTile
-                title="Resume"
-                description=""
-                icon=""
-                linkTo="/resume.pdf"
-                delay={0.3}
-                compact={true}
-              />
-              
-              <HomeTile
-                title="LinkedIn"
-                description=""
-                icon=""
-                linkTo="https://linkedin.com/in/nicklanahan"
-                delay={0.4}
-                compact={true}
-              />
-            </div>
+                <h1 className="font-space font-bold text-gray-900" style={{ fontSize: '48px' }}> {/* Apple HIG: Page title 32-48px */}
+                  Nick<span className="text-primary"> </span>Lanahan
+                </h1>
+              </GlowingCard>
+            </motion.div>
+          </div>
+          
+          {/* Action Buttons Row */}
+          <div className="flex justify-center space-x-4" style={{ marginBottom: '32px' }}> {/* 8-point grid spacing */}
+            <ActionButton
+              title="Contact Me"
+              linkTo="/contact"
+              delay={0.2}
+            />
+            <ActionButton
+              title="Download my Resume"
+              linkTo="/resume.pdf"
+              delay={0.3}
+            />
+            <ActionButton
+              title="Connect with me on LinkedIn"
+              linkTo="https://linkedin.com/in/nicklanahan"
+              delay={0.4}
+            />
           </div>
         </div>
         

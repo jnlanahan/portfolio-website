@@ -57,6 +57,14 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Added support for external links (LinkedIn, Resume download)
   - Maintained all existing animations, glow effects, and color scheme
   - Mobile optimization: All tiles stack vertically on mobile devices to prevent overlap
+- **January 2025**: Created distinctive ActionButton component for Contact, Resume, and LinkedIn
+  - Redesigned three key action buttons with Apple-style pill shape (32px border radius)
+  - Renamed buttons: "Contact Me", "Download my Resume", "Connect with me on LinkedIn"
+  - Positioned action buttons between name tile and main navigation tiles
+  - Desktop: Buttons spread horizontally across screen for prominent display
+  - Mobile: Buttons stack vertically with proper spacing
+  - Maintained Apple's design principles: subtle shadows, clean typography, smooth hover effects
+  - Differentiated from regular navigation tiles with distinctive pill styling
 - **January 2025**: Implemented AI Content Polisher with anti-AI-detection measures
   - Created comprehensive OpenAI-powered content analysis system
   - Added real-time writing suggestions and style improvements
