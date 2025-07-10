@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "./Navbar";
+import MinimalNav from "./MinimalNav";
 import Footer from "./Footer";
 import ScrollProgress from "./ScrollProgress";
 import BackgroundImage from "./BackgroundImage";
@@ -19,7 +19,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <BackgroundImage />
       
       <ScrollProgress />
-      <Navbar />
+      <MinimalNav />
       <main className="flex-grow">{children}</main>
       <Footer />
     </div>
