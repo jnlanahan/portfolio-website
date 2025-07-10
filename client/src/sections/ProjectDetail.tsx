@@ -166,12 +166,12 @@ export const ProjectDetail: React.FC = () => {
             )}
           </div>
 
-          {/* Client info */}
-          {project.client && (
+          {/* Lessons Learned */}
+          {project.lessonsLearned && (
             <Card className="mb-8">
               <CardContent className="p-6">
-                <h3 className="font-semibold mb-2">Client</h3>
-                <p className="text-muted-foreground">{project.client}</p>
+                <h3 className="font-semibold mb-2">Lessons Learned</h3>
+                <p className="text-muted-foreground">{project.lessonsLearned}</p>
               </CardContent>
             </Card>
           )}

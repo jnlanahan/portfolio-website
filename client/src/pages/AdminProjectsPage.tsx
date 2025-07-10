@@ -33,7 +33,7 @@ const projectSchema = z.object({
   }),
   featured: z.boolean().default(false),
   date: z.string().optional(),
-  client: z.string().optional(),
+  lessonsLearned: z.string().optional(),
 });
 
 type ProjectFormData = z.infer<typeof projectSchema>;
@@ -531,10 +531,11 @@ export default function AdminProjectsPage() {
                       )}
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="client">Client (optional)</Label>
+                      <Label htmlFor="lessonsLearned">Lessons Learned (optional)</Label>
                       <Input
-                        id="client"
-                        {...register("client")}
+                        id="lessonsLearned"
+                        {...register("lessonsLearned")}
+                        placeholder="Key lessons learned from this project"
                       />
                     </div>
                   </div>

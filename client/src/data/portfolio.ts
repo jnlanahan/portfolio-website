@@ -163,7 +163,7 @@ export function getPortfolio(): ProjectType[] {
       featured: true,
       category: getCategoryById('ai-ml'),
       date: "2023-11-15",
-      client: "AI Research Lab",
+      lessonsLearned: "Working with TensorFlow.js taught me the importance of optimizing ML models for browser performance and managing memory efficiently in client-side applications.",
       challenge: "Create an accessible platform for data scientists and ML engineers to visualize complex neural networks and experiment with different model architectures without requiring specialized hardware.",
       solution: "Developed a browser-based platform that leverages TensorFlow.js to run machine learning models directly in the browser. Created interactive 3D visualizations of neural networks with Three.js and implemented a no-code interface for model experimentation.",
       results: "The platform is now used by over 3,000 data scientists and has been featured in several AI conferences. It has significantly reduced the barrier to entry for machine learning experimentation."
