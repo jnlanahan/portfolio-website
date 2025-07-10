@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { trackEvent } from "@/lib/analytics";
 import { GlowingCard } from "@/components/ui/glowing-card";
+import { Mail, Download, Linkedin } from "lucide-react";
 
 const HomeTile = ({ 
   title, 
@@ -129,12 +130,12 @@ const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string;
     });
   };
 
-  // Get icon based on title
-  const getIcon = () => {
-    if (title.includes('Contact')) return 'ri-mail-line';
-    if (title.includes('Resume')) return 'ri-download-line';
-    if (title.includes('LinkedIn')) return 'ri-linkedin-line';
-    return 'ri-arrow-right-line';
+  // Get icon component based on title
+  const getIconComponent = () => {
+    if (title.includes('Contact')) return <Mail size={24} className="text-gray-900 group-hover:text-primary transition-colors" />;
+    if (title.includes('Resume')) return <Download size={24} className="text-gray-900 group-hover:text-primary transition-colors" />;
+    if (title.includes('LinkedIn')) return <Linkedin size={24} className="text-gray-900 group-hover:text-primary transition-colors" />;
+    return <Mail size={24} className="text-gray-900 group-hover:text-primary transition-colors" />;
   };
 
   const buttonContent = (
@@ -149,7 +150,7 @@ const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string;
           height: '56px' /* 8-point grid: 56px */
         }}
       >
-        <i className={`${getIcon()} text-gray-900 group-hover:text-primary transition-colors`} style={{ fontSize: '24px' }}></i>
+        {getIconComponent()}
       </div>
       
       {/* Text Label */}
