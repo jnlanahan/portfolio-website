@@ -214,7 +214,15 @@ const HomePage = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             style={{ marginBottom: '32px' }}
           >
-            <h1 className="font-futura font-bold text-gray-900" style={{ fontSize: 'clamp(48px, 8vw, 72px)', lineHeight: '1.1', letterSpacing: '-0.02em' }}>
+            <h1 
+              className="font-futura font-bold text-gray-900" 
+              style={{ 
+                fontSize: 'clamp(48px, 8vw, 72px)', 
+                lineHeight: '1.1', 
+                letterSpacing: '-0.02em',
+                textShadow: '0 0 30px rgba(0, 122, 255, 0.3), 0 0 60px rgba(0, 122, 255, 0.2), 0 0 90px rgba(0, 122, 255, 0.1)'
+              }}
+            >
               NICK<br/>LANAHAN
             </h1>
           </motion.div>
