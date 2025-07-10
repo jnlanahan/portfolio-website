@@ -112,67 +112,126 @@ const HomePage = () => {
     <div className="min-h-screen p-6 md:p-8">
       {/* Navigation Tiles Grid */}
       <div className="max-w-7xl mx-auto">
-        {/* Top Row */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-4 h-16">
-          {/* Brand Tile - 1/3 wider again (6 columns instead of 4) */}
-          <div className="md:col-span-6 h-full">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="h-full"
+        {/* Mobile: Single Column Stack */}
+        <div className="block md:hidden space-y-4 mb-4">
+          {/* Brand Tile */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="h-16"
+          >
+            <GlowingCard 
+              className="bg-background/90 backdrop-blur-md rounded-2xl border border-secondary/10 hover:border-secondary/30 transition-all duration-300 h-full flex items-center justify-center"
+              glowColor="rgba(67, 186, 147, 0.6)"
             >
-              <GlowingCard 
-                className="bg-background/90 backdrop-blur-md rounded-2xl border border-secondary/10 hover:border-secondary/30 transition-all duration-300 h-full flex items-center justify-center"
-                glowColor="rgba(67, 186, 147, 0.6)"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-secondary/20 rounded-xl flex items-center justify-center">
-                    <i className="ri-code-s-slash-line text-secondary text-xl"></i>
-                  </div>
-                  <div>
-                    <h2 className="text-lg font-space font-bold">
-                      Nick<span className="text-secondary">.</span>Lanahan
-                    </h2>
-                    <p className="text-xs text-muted-foreground">Full Stack Developer</p>
-                  </div>
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 bg-secondary/20 rounded-xl flex items-center justify-center">
+                  <i className="ri-code-s-slash-line text-secondary text-xl"></i>
                 </div>
-              </GlowingCard>
-            </motion.div>
-          </div>
+                <div>
+                  <h2 className="text-lg font-space font-bold">
+                    Nick<span className="text-secondary">.</span>Lanahan
+                  </h2>
+                  <p className="text-xs text-muted-foreground">Full Stack Developer</p>
+                </div>
+              </div>
+            </GlowingCard>
+          </motion.div>
           
-          {/* Three Compact Tiles - 2 columns each in remaining 6 columns */}
-          <div className="md:col-span-6 grid grid-cols-1 md:grid-cols-3 gap-4 h-full">
-            <HomeTile
-              title="Contact"
-              description=""
-              icon=""
-              linkTo="/contact"
-              delay={0.2}
-              compact={true}
-            />
+          {/* Utility Tiles */}
+          <HomeTile
+            title="Contact"
+            description=""
+            icon=""
+            linkTo="/contact"
+            delay={0.2}
+            compact={true}
+          />
+          
+          <HomeTile
+            title="Resume"
+            description=""
+            icon=""
+            linkTo="/resume.pdf"
+            delay={0.3}
+            compact={true}
+          />
+          
+          <HomeTile
+            title="LinkedIn"
+            description=""
+            icon=""
+            linkTo="https://linkedin.com/in/nicklanahan"
+            delay={0.4}
+            compact={true}
+          />
+        </div>
+
+        {/* Desktop: Two Row Layout */}
+        <div className="hidden md:block">
+          {/* Top Row */}
+          <div className="grid grid-cols-12 gap-4 mb-4 h-16">
+            {/* Brand Tile - 1/3 wider again (6 columns instead of 4) */}
+            <div className="col-span-6 h-full">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="h-full"
+              >
+                <GlowingCard 
+                  className="bg-background/90 backdrop-blur-md rounded-2xl border border-secondary/10 hover:border-secondary/30 transition-all duration-300 h-full flex items-center justify-center"
+                  glowColor="rgba(67, 186, 147, 0.6)"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 bg-secondary/20 rounded-xl flex items-center justify-center">
+                      <i className="ri-code-s-slash-line text-secondary text-xl"></i>
+                    </div>
+                    <div>
+                      <h2 className="text-lg font-space font-bold">
+                        Nick<span className="text-secondary">.</span>Lanahan
+                      </h2>
+                      <p className="text-xs text-muted-foreground">Full Stack Developer</p>
+                    </div>
+                  </div>
+                </GlowingCard>
+              </motion.div>
+            </div>
             
-            <HomeTile
-              title="Resume"
-              description=""
-              icon=""
-              linkTo="/resume.pdf"
-              delay={0.3}
-              compact={true}
-            />
-            
-            <HomeTile
-              title="LinkedIn"
-              description=""
-              icon=""
-              linkTo="https://linkedin.com/in/nicklanahan"
-              delay={0.4}
-              compact={true}
-            />
+            {/* Three Compact Tiles - 2 columns each in remaining 6 columns */}
+            <div className="col-span-6 grid grid-cols-3 gap-4 h-full">
+              <HomeTile
+                title="Contact"
+                description=""
+                icon=""
+                linkTo="/contact"
+                delay={0.2}
+                compact={true}
+              />
+              
+              <HomeTile
+                title="Resume"
+                description=""
+                icon=""
+                linkTo="/resume.pdf"
+                delay={0.3}
+                compact={true}
+              />
+              
+              <HomeTile
+                title="LinkedIn"
+                description=""
+                icon=""
+                linkTo="https://linkedin.com/in/nicklanahan"
+                delay={0.4}
+                compact={true}
+              />
+            </div>
           </div>
         </div>
         
-        {/* Bottom Row - Four tiles */}
+        {/* Main Navigation Tiles */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <HomeTile
             title="About"

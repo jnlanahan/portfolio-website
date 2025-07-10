@@ -37,6 +37,7 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Implemented minimal navigation solution for non-home pages
   - Added support for external links (LinkedIn, Resume download)
   - Maintained all existing animations, glow effects, and color scheme
+  - Mobile optimization: All tiles stack vertically on mobile devices to prevent overlap
 - **January 2025**: Implemented AI Content Polisher with anti-AI-detection measures
   - Created comprehensive OpenAI-powered content analysis system
   - Added real-time writing suggestions and style improvements
