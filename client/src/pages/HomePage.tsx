@@ -127,7 +127,7 @@ const HomePage = () => {
       {/* Navigation Tiles Grid */}
       <div className="max-w-7xl mx-auto">
         {/* Top Row */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4 h-64">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4 h-40">
           {/* Large Brand Tile */}
           <div className="md:col-span-1 h-full">
             <motion.div
