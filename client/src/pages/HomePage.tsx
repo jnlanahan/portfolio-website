@@ -199,7 +199,7 @@ const HomePage = () => {
           <div 
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: 'radial-gradient(circle at center top, rgba(0, 122, 255, 0.4) 0%, rgba(0, 122, 255, 0.3) 20%, rgba(0, 122, 255, 0.2) 40%, rgba(0, 122, 255, 0.1) 60%, transparent 80%)',
+              background: 'radial-gradient(circle at center top, rgba(144, 238, 144, 0.4) 0%, rgba(144, 238, 144, 0.3) 20%, rgba(144, 238, 144, 0.2) 40%, rgba(144, 238, 144, 0.1) 60%, transparent 80%)',
               width: '200%',
               height: '300%',
               left: '-50%',
@@ -231,12 +231,12 @@ const HomePage = () => {
             className="relative z-10"
           >
             <h1 
-              className="font-futura font-normal text-gray-900" 
+              className="font-futura font-light text-gray-900" 
               style={{ 
                 fontSize: 'clamp(48px, 8vw, 72px)', 
                 lineHeight: '1.1', 
                 letterSpacing: '-0.02em',
-                textShadow: '0 0 30px rgba(0, 122, 255, 0.3), 0 0 60px rgba(0, 122, 255, 0.2), 0 0 90px rgba(0, 122, 255, 0.1)'
+                textShadow: '0 0 30px rgba(144, 238, 144, 0.4), 0 0 60px rgba(144, 238, 144, 0.3), 0 0 90px rgba(144, 238, 144, 0.2)'
               }}
             >
               NICK<br/>LANAHAN
