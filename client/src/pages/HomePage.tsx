@@ -177,7 +177,7 @@ const HomePage = () => {
                   glowColor="rgba(67, 186, 147, 0.6)"
                 >
                   <h2 className="text-lg font-space font-bold">
-                    Nick<span className="text-secondary">.</span>Lanahan
+                    Nick<span className="text-secondary"> </span>Lanahan
                   </h2>
                 </GlowingCard>
               </motion.div>
