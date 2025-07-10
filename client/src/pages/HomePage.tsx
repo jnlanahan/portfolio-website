@@ -10,7 +10,8 @@ const HomeTile = ({
   linkTo, 
   delay = 0,
   size = "normal",
-  image
+  image,
+  compact = false
 }: { 
   title: string; 
   description: string; 
@@ -19,6 +20,7 @@ const HomeTile = ({
   delay?: number;
   size?: "normal" | "large" | "wide";
   image?: string;
+  compact?: boolean;
 }) => {
   const isExternal = linkTo.startsWith('http') || linkTo.startsWith('mailto:');
   
@@ -29,7 +31,16 @@ const HomeTile = ({
     });
   };
 
-  const tileContent = (
+  const tileContent = compact ? (
+    <GlowingCard 
+      className="bg-background/90 backdrop-blur-md rounded-2xl border border-secondary/10 hover:border-secondary/30 hover:bg-background/95 transition-all duration-300 h-full cursor-pointer group overflow-hidden flex items-center justify-center"
+      glowColor="rgba(67, 186, 147, 0.6)"
+    >
+      <h3 className="text-sm font-space font-medium text-foreground group-hover:text-secondary transition-colors">
+        {title}
+      </h3>
+    </GlowingCard>
+  ) : (
     <GlowingCard 
       className="bg-background/90 backdrop-blur-md rounded-2xl border border-secondary/10 hover:border-secondary/30 hover:bg-background/95 transition-all duration-300 h-full cursor-pointer group overflow-hidden"
       glowColor="rgba(67, 186, 147, 0.6)"
@@ -154,29 +165,32 @@ const HomePage = () => {
           </div>
           
           {/* Three Small Tiles */}
-          <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-4 h-full">
+          <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-4 h-1/3">
             <HomeTile
               title="Contact"
-              description="Get in touch with me"
-              icon="ri-mail-line"
+              description=""
+              icon=""
               linkTo="/contact"
               delay={0.2}
+              compact={true}
             />
             
             <HomeTile
               title="Resume"
-              description="Download my resume"
-              icon="ri-file-download-line"
+              description=""
+              icon=""
               linkTo="/resume.pdf"
               delay={0.3}
+              compact={true}
             />
             
             <HomeTile
               title="LinkedIn"
-              description="Connect with me"
-              icon="ri-linkedin-line"
+              description=""
+              icon=""
               linkTo="https://linkedin.com/in/nicklanahan"
               delay={0.4}
+              compact={true}
             />
           </div>
         </div>
