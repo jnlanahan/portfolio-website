@@ -80,10 +80,11 @@ body {
   }
 
   body {
-    @apply bg-background text-foreground font-futura antialiased min-h-screen;
+    @apply bg-background text-foreground antialiased min-h-screen;
     background-color: #f5f5f7; /* Apple's signature light grey */
     font-size: 17px; /* Apple's recommended body text size */
     line-height: 1.5; /* 1.5x line height for readability */
+    font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
   .page-container {
@@ -156,5 +157,5 @@ body {
 }
 
 .font-futura {
-  font-family: 'Futura', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }

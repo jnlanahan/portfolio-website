@@ -217,7 +217,7 @@ const HomePage = () => {
             style={{ marginBottom: '16px' }}
             className="relative z-10"
           >
-            <p className="font-futura font-medium text-gray-600 tracking-wide uppercase" style={{ fontSize: '14px', letterSpacing: '0.1em' }}>
+            <p className="font-medium text-gray-600 tracking-wide uppercase" style={{ fontSize: '14px', letterSpacing: '0.1em' }}>
               PORTFOLIO
             </p>
           </motion.div>
@@ -234,7 +234,7 @@ const HomePage = () => {
               className="text-gray-900" 
               style={{ 
                 fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
-                fontWeight: '200',
+                fontWeight: '600',
                 fontSize: 'clamp(48px, 8vw, 72px)', 
                 lineHeight: '1.1', 
                 letterSpacing: '-0.02em',
