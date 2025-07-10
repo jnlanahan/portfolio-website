@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { trackEvent } from "@/lib/analytics";
 import { GlowingCard } from "@/components/ui/glowing-card";
 import { Mail, Download, Linkedin } from "lucide-react";
+import { SiGmail } from "react-icons/si";
 
 const HomeTile = ({ 
   title, 
@@ -132,14 +133,14 @@ const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string;
 
   // Get icon component based on title
   const getIconComponent = () => {
-    if (title.includes('Contact')) return <Mail size={24} className="text-gray-900 group-hover:text-primary transition-colors" />;
+    if (title.includes('Contact')) return <SiGmail size={24} className="text-red-500 group-hover:text-red-600 transition-colors" />;
     if (title.includes('Resume')) return <Download size={24} className="text-gray-900 group-hover:text-primary transition-colors" />;
-    if (title.includes('LinkedIn')) return <Linkedin size={24} className="text-gray-900 group-hover:text-primary transition-colors" />;
-    return <Mail size={24} className="text-gray-900 group-hover:text-primary transition-colors" />;
+    if (title.includes('LinkedIn')) return <Linkedin size={24} className="text-blue-600 group-hover:text-blue-700 transition-colors" />;
+    return <SiGmail size={24} className="text-red-500 group-hover:text-red-600 transition-colors" />;
   };
 
   const buttonContent = (
-    <div className="flex flex-col items-center text-center cursor-pointer group transition-all duration-300">
+    <div className="flex flex-col items-center text-center cursor-pointer group transition-all duration-300 max-w-20">
       {/* Icon Circle */}
       <div 
         className="bg-white border border-gray-200 hover:border-gray-300 transition-all duration-300 flex items-center justify-center hover:shadow-lg group-hover:-translate-y-1"
@@ -154,7 +155,7 @@ const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string;
       </div>
       
       {/* Text Label */}
-      <span className="font-space font-medium text-gray-900 group-hover:text-primary transition-colors mt-2" style={{ fontSize: '14px' }}>
+      <span className="font-space font-medium text-gray-900 group-hover:text-primary transition-colors mt-2 text-center leading-tight" style={{ fontSize: '14px' }}>
         {title}
       </span>
     </div>
