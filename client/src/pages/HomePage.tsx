@@ -194,13 +194,28 @@ const HomePage = () => {
       {/* Navigation Tiles Grid */}
       <div className="max-w-6xl mx-auto">
         {/* Hero Section - Like the screenshot */}
-        <div className="text-center" style={{ marginBottom: '48px' }}>
+        <div className="text-center relative" style={{ marginBottom: '48px' }}>
+          {/* Circular glow background */}
+          <div 
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'radial-gradient(circle at center top, rgba(0, 122, 255, 0.15) 0%, rgba(0, 122, 255, 0.1) 30%, rgba(0, 122, 255, 0.05) 50%, transparent 70%)',
+              width: '120%',
+              height: '200%',
+              left: '-10%',
+              top: '-80%',
+              borderRadius: '50%',
+              filter: 'blur(1px)'
+            }}
+          />
+          
           {/* Small subtitle */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
             style={{ marginBottom: '16px' }}
+            className="relative z-10"
           >
             <p className="font-futura font-medium text-gray-600 tracking-wide uppercase" style={{ fontSize: '14px', letterSpacing: '0.1em' }}>
               PORTFOLIO
@@ -213,6 +228,7 @@ const HomePage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             style={{ marginBottom: '32px' }}
+            className="relative z-10"
           >
             <h1 
               className="font-futura font-bold text-gray-900" 
