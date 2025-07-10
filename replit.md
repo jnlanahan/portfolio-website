@@ -28,6 +28,14 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Home page now focuses on site navigation rather than personal content
   - About page contains personal introduction, skills (Front-End/Back-End), and social links
   - Updated routing structure to reflect new page organization
+- **January 2025**: Redesigned homepage with sleek tile-based interface
+  - Completely removed top navigation bar for cleaner aesthetic
+  - Created mixed asymmetrical layout with different sized tiles
+  - Added first row with 6 uniform tiles: About, Portfolio, Blog, Contact, Resume, LinkedIn
+  - Added second row with 3 large image tiles for main sections
+  - Implemented minimal navigation solution for non-home pages
+  - Added support for external links (LinkedIn, Resume download)
+  - Maintained all existing animations, glow effects, and color scheme
 - **January 2025**: Implemented AI Content Polisher with anti-AI-detection measures
   - Created comprehensive OpenAI-powered content analysis system
   - Added real-time writing suggestions and style improvements
