@@ -125,17 +125,9 @@ const HomePage = () => {
               className="bg-background/90 backdrop-blur-md rounded-2xl border border-secondary/10 hover:border-secondary/30 transition-all duration-300 h-full flex items-center justify-center"
               glowColor="rgba(67, 186, 147, 0.6)"
             >
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 bg-secondary/20 rounded-xl flex items-center justify-center">
-                  <i className="ri-code-s-slash-line text-secondary text-xl"></i>
-                </div>
-                <div>
-                  <h2 className="text-lg font-space font-bold">
-                    Nick<span className="text-secondary">.</span>Lanahan
-                  </h2>
-                  <p className="text-xs text-muted-foreground">Full Stack Developer</p>
-                </div>
-              </div>
+              <h2 className="text-lg font-space font-bold">
+                Nick<span className="text-secondary">.</span>Lanahan
+              </h2>
             </GlowingCard>
           </motion.div>
           
@@ -184,17 +176,9 @@ const HomePage = () => {
                   className="bg-background/90 backdrop-blur-md rounded-2xl border border-secondary/10 hover:border-secondary/30 transition-all duration-300 h-full flex items-center justify-center"
                   glowColor="rgba(67, 186, 147, 0.6)"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-secondary/20 rounded-xl flex items-center justify-center">
-                      <i className="ri-code-s-slash-line text-secondary text-xl"></i>
-                    </div>
-                    <div>
-                      <h2 className="text-lg font-space font-bold">
-                        Nick<span className="text-secondary">.</span>Lanahan
-                      </h2>
-                      <p className="text-xs text-muted-foreground">Full Stack Developer</p>
-                    </div>
-                  </div>
+                  <h2 className="text-lg font-space font-bold">
+                    Nick<span className="text-secondary">.</span>Lanahan
+                  </h2>
                 </GlowingCard>
               </motion.div>
             </div>
