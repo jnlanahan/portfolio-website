@@ -126,65 +126,78 @@ const HomePage = () => {
 
       {/* Navigation Tiles Grid */}
       <div className="max-w-7xl mx-auto">
-        {/* First Row - Icon tiles */}
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-4 h-40">
+        {/* Top Row */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4 h-64">
+          {/* Large Brand Tile */}
+          <div className="md:col-span-1 h-full">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="h-full"
+            >
+              <GlowingCard 
+                className="bg-background/90 backdrop-blur-md rounded-2xl border border-secondary/10 hover:border-secondary/30 transition-all duration-300 h-full flex items-center justify-center"
+                glowColor="rgba(67, 186, 147, 0.6)"
+              >
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-secondary/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i className="ri-code-s-slash-line text-secondary text-3xl"></i>
+                  </div>
+                  <h2 className="text-xl font-space font-bold">
+                    Nick<span className="text-secondary">.</span>Lanahan
+                  </h2>
+                  <p className="text-sm text-muted-foreground mt-2">Full Stack Developer</p>
+                </div>
+              </GlowingCard>
+            </motion.div>
+          </div>
+          
+          {/* Three Small Tiles */}
+          <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-4 h-full">
+            <HomeTile
+              title="Contact"
+              description="Get in touch with me"
+              icon="ri-mail-line"
+              linkTo="/contact"
+              delay={0.2}
+            />
+            
+            <HomeTile
+              title="Resume"
+              description="Download my resume"
+              icon="ri-file-download-line"
+              linkTo="/resume.pdf"
+              delay={0.3}
+            />
+            
+            <HomeTile
+              title="LinkedIn"
+              description="Connect with me"
+              icon="ri-linkedin-line"
+              linkTo="https://linkedin.com/in/nicklanahan"
+              delay={0.4}
+            />
+          </div>
+        </div>
+        
+        {/* Bottom Row - Four tiles */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <HomeTile
             title="About"
             description="Learn more about my background, skills, and journey"
             icon="ri-user-line"
             linkTo="/about"
-            delay={0.1}
-          />
-          
-          <HomeTile
-            title="Portfolio"
-            description="Browse my latest projects"
-            icon="ri-briefcase-line"
-            linkTo="/portfolio"
-            delay={0.2}
-          />
-          
-          <HomeTile
-            title="Blog"
-            description="Read my thoughts on tech"
-            icon="ri-article-line"
-            linkTo="/blog"
-            delay={0.3}
-          />
-          
-          <HomeTile
-            title="Contact"
-            description="Get in touch with me"
-            icon="ri-mail-line"
-            linkTo="/contact"
-            delay={0.4}
-          />
-          
-          <HomeTile
-            title="Resume"
-            description="Download my resume"
-            icon="ri-file-download-line"
-            linkTo="/resume.pdf"
             delay={0.5}
+            size="large"
           />
           
-          <HomeTile
-            title="LinkedIn"
-            description="Connect with me"
-            icon="ri-linkedin-line"
-            linkTo="https://linkedin.com/in/nicklanahan"
-            delay={0.6}
-          />
-        </div>
-        
-        {/* Second Row - Three large tiles with images */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <HomeTile
             title="Portfolio"
             description="Browse my latest projects and technical work"
             icon="ri-briefcase-line"
             linkTo="/portfolio"
-            delay={0.7}
+            delay={0.6}
             size="large"
             image="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop"
           />
@@ -194,7 +207,7 @@ const HomePage = () => {
             description="Read my thoughts on technology, development, and more"
             icon="ri-article-line"
             linkTo="/blog"
-            delay={0.8}
+            delay={0.7}
             size="large"
             image="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=1000&auto=format&fit=crop"
           />
@@ -204,7 +217,7 @@ const HomePage = () => {
             description="Curated lists of my favorite tools, resources, and recommendations"
             icon="ri-list-check-line"
             linkTo="/top5"
-            delay={0.9}
+            delay={0.8}
             size="large"
             image="https://images.unsplash.com/photo-1611224923853-80b023f02d71?q=80&w=1000&auto=format&fit=crop"
           />
