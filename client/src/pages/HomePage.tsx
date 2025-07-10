@@ -113,28 +113,6 @@ const HomeTile = ({
 const HomePage = () => {
   return (
     <div className="min-h-screen p-6 md:p-8">
-      {/* Brand Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="mb-12"
-      >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-secondary/20 rounded-xl flex items-center justify-center">
-              <i className="ri-code-s-slash-line text-secondary text-xl"></i>
-            </div>
-            <div>
-              <h1 className="text-xl font-space font-bold">
-                Nick<span className="text-secondary">.</span>Lanahan
-              </h1>
-              <p className="text-sm text-muted-foreground">Portfolio & Development</p>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
       {/* Navigation Tiles Grid */}
       <div className="max-w-7xl mx-auto">
         {/* Top Row */}
