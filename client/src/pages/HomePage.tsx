@@ -45,14 +45,11 @@ const HomeTile = ({
       className="bg-background/90 backdrop-blur-md rounded-2xl border border-secondary/10 hover:border-secondary/30 hover:bg-background/95 transition-all duration-300 h-full cursor-pointer group overflow-hidden"
       glowColor="rgba(67, 186, 147, 0.6)"
     >
-      {/* Header with title and arrow */}
-      <div className="flex items-center justify-between p-6 pb-4">
+      {/* Header with title */}
+      <div className="p-6 pb-4">
         <h3 className="text-lg font-space font-medium text-foreground group-hover:text-secondary transition-colors">
           {title}
         </h3>
-        <div className="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center group-hover:bg-secondary/20 transition-colors">
-          <i className="ri-arrow-right-line text-secondary text-sm group-hover:translate-x-0.5 transition-transform"></i>
-        </div>
       </div>
 
       {/* Content area */}
