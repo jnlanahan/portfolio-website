@@ -138,9 +138,9 @@ const HomePage = () => {
       {/* Navigation Tiles Grid */}
       <div className="max-w-7xl mx-auto">
         {/* Top Row */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4 h-40">
-          {/* Large Brand Tile */}
-          <div className="md:col-span-1 h-full">
+        <div className="grid grid-cols-1 md:grid-cols-10 gap-4 mb-4 h-16">
+          {/* Brand Tile - 1/3 wider (4 columns instead of 3) */}
+          <div className="md:col-span-4 h-full">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -151,21 +151,23 @@ const HomePage = () => {
                 className="bg-background/90 backdrop-blur-md rounded-2xl border border-secondary/10 hover:border-secondary/30 transition-all duration-300 h-full flex items-center justify-center"
                 glowColor="rgba(67, 186, 147, 0.6)"
               >
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-secondary/20 rounded-xl flex items-center justify-center mx-auto mb-4">
-                    <i className="ri-code-s-slash-line text-secondary text-3xl"></i>
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 bg-secondary/20 rounded-xl flex items-center justify-center">
+                    <i className="ri-code-s-slash-line text-secondary text-xl"></i>
                   </div>
-                  <h2 className="text-xl font-space font-bold">
-                    Nick<span className="text-secondary">.</span>Lanahan
-                  </h2>
-                  <p className="text-sm text-muted-foreground mt-2">Full Stack Developer</p>
+                  <div>
+                    <h2 className="text-lg font-space font-bold">
+                      Nick<span className="text-secondary">.</span>Lanahan
+                    </h2>
+                    <p className="text-xs text-muted-foreground">Full Stack Developer</p>
+                  </div>
                 </div>
               </GlowingCard>
             </motion.div>
           </div>
           
-          {/* Three Small Tiles */}
-          <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-4 h-1/3">
+          {/* Three Compact Tiles - 2 columns each */}
+          <div className="md:col-span-6 grid grid-cols-1 md:grid-cols-3 gap-4 h-full">
             <HomeTile
               title="Contact"
               description=""
