@@ -21,16 +21,16 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
 - Dark mode support
 
 ## Recent Changes
-- **January 2025**: Complete modern redesign with professional dark theme
-  - Implemented sophisticated dark navy color scheme with blue and amber accents
-  - Created animated gradient background with subtle color shifts for dynamic feel
-  - Enhanced tile styling with glass-morphism effects and dramatic shadows
-  - Added blue primary color (#3B82F6) and vibrant amber secondary (#FBBF24)
-  - Implemented enhanced hover effects with lift and scale transformations
-  - Added stronger glow effects with increased intensity for better visual impact
-  - Created professional gradient backgrounds with subtle blue and amber overlays
-  - Updated all styling to appeal to recruiters with modern, clean aesthetic
-  - Removed green color scheme entirely in favor of professional blue/amber palette
+- **January 2025**: Apple-inspired redesign with clean, minimalist aesthetic
+  - Implemented Apple.com-style light grey background (#f5f5f7) for clean, professional look
+  - Created pure white tiles with subtle shadows and clean borders
+  - Updated color scheme to Apple's signature blue (#007AFF) and neutral greys
+  - Added subtle hover effects with gentle lift animations (-translate-y-1)
+  - Removed all dark themes and complex gradients in favor of clean minimalism
+  - Implemented Apple-style larger border radius (1rem) for modern feel
+  - Updated typography to use dark grey (#1a1a1a) for excellent readability
+  - Simplified glow effects to be very subtle and professional
+  - Designed for maximum recruiter appeal with clean, accessible interface
 - **January 2025**: Restructured site navigation and home page
   - Moved personal introduction and skills section to dedicated About page (/about)
   - Created new Home page (/) with navigation tiles to all sections

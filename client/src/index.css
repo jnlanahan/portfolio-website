@@ -22,27 +22,27 @@ body {
 }
 
 :root {
-  --background: 240 10% 3.9%; /* Rich dark navy background */
-  --foreground: 0 0% 98%; /* Crisp white text */
-  --muted: 240 3.7% 15.9%; /* Muted dark gray */
-  --muted-foreground: 240 5% 64.9%; /* Medium gray text */
-  --popover: 240 10% 3.9%; /* Dark navy for popovers */
-  --popover-foreground: 0 0% 98%; /* White text on popovers */
-  --card: 240 10% 3.9%; /* Dark navy for cards */
-  --card-foreground: 0 0% 98%; /* White text on cards */
-  --border: 240 3.7% 15.9%; /* Dark border */
-  --input: 240 3.7% 15.9%; /* Dark input backgrounds */
-  --primary: 217 91% 60%; /* Modern bright blue */
+  --background: 0 0% 97%; /* Light grey background like Apple */
+  --foreground: 0 0% 9%; /* Very dark text */
+  --muted: 0 0% 92%; /* Light grey muted */
+  --muted-foreground: 0 0% 45%; /* Medium grey text */
+  --popover: 0 0% 100%; /* Pure white for popovers */
+  --popover-foreground: 0 0% 9%; /* Dark text on popovers */
+  --card: 0 0% 100%; /* Pure white for cards */
+  --card-foreground: 0 0% 9%; /* Dark text on cards */
+  --border: 0 0% 89%; /* Light grey borders */
+  --input: 0 0% 96%; /* Very light grey input backgrounds */
+  --primary: 212 100% 48%; /* Apple-style blue */
   --primary-foreground: 0 0% 98%; /* White text on primary */
-  --secondary: 47 96% 53%; /* Vibrant amber accent */
-  --secondary-foreground: 240 10% 3.9%; /* Dark text on secondary */
-  --accent: 240 3.7% 15.9%; /* Dark accent */
-  --accent-foreground: 0 0% 98%; /* White text on accent */
+  --secondary: 0 0% 96%; /* Very light grey secondary */
+  --secondary-foreground: 0 0% 9%; /* Dark text on secondary */
+  --accent: 0 0% 96%; /* Light grey accent */
+  --accent-foreground: 0 0% 9%; /* Dark text on accent */
   --destructive: 0 84.2% 60.2%; /* Keep destructive red */
   --destructive-foreground: 0 0% 98%; /* White text on destructive */
-  --ring: 217 91% 60%; /* Blue ring matching primary */
-  --radius: 0.75rem; /* Slightly larger radius for modern look */
-  --surface: 240 10% 3.9%; /* Dark navy surface */
+  --ring: 212 100% 48%; /* Blue ring matching primary */
+  --radius: 1rem; /* Apple-style larger radius */
+  --surface: 0 0% 100%; /* Pure white surface */
 }
 
 .dark {
@@ -78,24 +78,8 @@ body {
   }
 
   body {
-    @apply bg-background text-foreground font-inter antialiased min-h-screen relative;
-    background: linear-gradient(135deg, #0f1629 0%, #1e293b 25%, #334155 50%, #1e293b 75%, #0f1629 100%);
-    background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
-  }
-
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  body::before {
-    content: "";
-    @apply absolute inset-0 opacity-20 -z-10;
-    background-image: 
-      radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(251, 191, 36, 0.2) 0%, transparent 50%);
+    @apply bg-background text-foreground font-inter antialiased min-h-screen;
+    background-color: #f5f5f7; /* Apple's signature light grey */
   }
 
   .page-container {

@@ -33,23 +33,23 @@ const HomeTile = ({
 
   const tileContent = compact ? (
     <GlowingCard 
-      className="relative backdrop-blur-md rounded-2xl border border-primary/20 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 h-32 md:h-16 cursor-pointer group overflow-hidden flex items-center justify-center bg-gradient-to-br from-primary/90 to-secondary/30 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 hover:scale-105"
-      glowColor="rgba(59, 130, 246, 0.6)"
-      strength={0.9}
+      className="relative rounded-2xl border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-32 md:h-16 cursor-pointer group overflow-hidden flex items-center justify-center bg-white shadow-sm hover:-translate-y-1"
+      glowColor="rgba(0, 122, 255, 0.1)"
+      strength={0.3}
     >
-      <h3 className="text-sm font-space font-semibold text-white group-hover:text-white transition-colors drop-shadow-sm">
+      <h3 className="text-sm font-space font-medium text-gray-900 group-hover:text-primary transition-colors">
         {title}
       </h3>
     </GlowingCard>
   ) : (
     <GlowingCard 
-      className="bg-slate-800/80 backdrop-blur-xl rounded-2xl border border-slate-700/50 hover:border-primary/50 hover:bg-slate-800/90 transition-all duration-300 h-full cursor-pointer group overflow-hidden shadow-xl hover:shadow-2xl transform hover:-translate-y-2 hover:scale-[1.02]"
-      glowColor="rgba(59, 130, 246, 0.4)"
-      strength={0.7}
+      className="bg-white rounded-2xl border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-full cursor-pointer group overflow-hidden shadow-sm hover:-translate-y-1"
+      glowColor="rgba(0, 122, 255, 0.1)"
+      strength={0.3}
     >
       {/* Header with title */}
       <div className="p-6 pb-4">
-        <h3 className="text-lg font-space font-medium text-foreground group-hover:text-secondary transition-colors">
+        <h3 className="text-lg font-space font-medium text-gray-900 group-hover:text-primary transition-colors">
           {title}
         </h3>
       </div>
@@ -57,7 +57,7 @@ const HomeTile = ({
       {/* Content area */}
       <div className="px-6 pb-6 flex-1">
         {image ? (
-          <div className="mb-4 rounded-xl overflow-hidden bg-gradient-to-br from-secondary/5 to-primary/5">
+          <div className="mb-4 rounded-xl overflow-hidden bg-gray-50">
             <img 
               src={image} 
               alt={title}
@@ -68,12 +68,12 @@ const HomeTile = ({
           </div>
         ) : (
           <div className="mb-4 flex items-center justify-center h-16">
-            <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center">
-              <i className={`${icon} text-secondary text-2xl`}></i>
+            <div className="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center">
+              <i className={`${icon} text-primary text-2xl`}></i>
             </div>
           </div>
         )}
-        <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
+        <p className="text-gray-600 text-sm leading-relaxed">{description}</p>
       </div>
     </GlowingCard>
   );
@@ -124,12 +124,12 @@ const HomePage = () => {
             className="h-16"
           >
             <GlowingCard 
-              className="bg-slate-800/80 backdrop-blur-xl rounded-2xl border border-slate-700/50 hover:border-primary/50 hover:bg-slate-800/90 transition-all duration-300 h-full flex items-center justify-center shadow-xl hover:shadow-2xl transform hover:-translate-y-2"
-              glowColor="rgba(59, 130, 246, 0.5)"
-              strength={0.8}
+              className="bg-white rounded-2xl border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-full flex items-center justify-center shadow-sm hover:-translate-y-1"
+              glowColor="rgba(0, 122, 255, 0.1)"
+              strength={0.3}
             >
-              <h2 className="text-lg font-space font-bold text-white">
-                Nick<span className="text-secondary">.</span>Lanahan
+              <h2 className="text-lg font-space font-bold text-gray-900">
+                Nick<span className="text-primary">.</span>Lanahan
               </h2>
             </GlowingCard>
           </motion.div>
@@ -176,12 +176,12 @@ const HomePage = () => {
                 className="h-full"
               >
                 <GlowingCard 
-                  className="bg-slate-800/80 backdrop-blur-xl rounded-2xl border border-slate-700/50 hover:border-primary/50 hover:bg-slate-800/90 transition-all duration-300 h-full flex items-center justify-center shadow-xl hover:shadow-2xl transform hover:-translate-y-2"
-                  glowColor="rgba(59, 130, 246, 0.5)"
-                  strength={0.8}
+                  className="bg-white rounded-2xl border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-full flex items-center justify-center shadow-sm hover:-translate-y-1"
+                  glowColor="rgba(0, 122, 255, 0.1)"
+                  strength={0.3}
                 >
-                  <h2 className="font-space font-bold text-[48px] text-white drop-shadow-sm">
-                    Nick<span className="text-secondary"> </span>Lanahan
+                  <h2 className="font-space font-bold text-[48px] text-gray-900">
+                    Nick<span className="text-primary"> </span>Lanahan
                   </h2>
                 </GlowingCard>
               </motion.div>
