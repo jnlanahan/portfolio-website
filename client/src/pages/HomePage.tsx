@@ -194,7 +194,7 @@ const HomePage = () => {
       {/* Navigation Tiles Grid */}
       <div className="max-w-6xl mx-auto">
         {/* Hero Section - Like the screenshot */}
-        <div className="text-center relative" style={{ marginBottom: '80px' }}>
+        <div className="text-center relative" style={{ marginBottom: '120px' }}>
           {/* Circular glow background */}
           <div 
             className="absolute inset-0 pointer-events-none"
