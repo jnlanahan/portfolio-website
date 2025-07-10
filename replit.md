@@ -77,6 +77,11 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Switched from generic mail icon to Gmail icon for better brand recognition
   - **Changed site font to Futura throughout the entire interface**
   - **Repositioned action buttons below main navigation tiles for better visual hierarchy**
+  - **Redesigned hero section with large typography layout inspired by professional design**
+    - Added "PORTFOLIO" subtitle at top
+    - Created large, bold "NICK LANAHAN" main title with responsive sizing
+    - Centered layout with clean typography and proper spacing
+    - Removed previous tile-based brand section in favor of impactful text-based header
 - **January 2025**: Implemented AI Content Polisher with anti-AI-detection measures
   - Created comprehensive OpenAI-powered content analysis system
   - Added real-time writing suggestions and style improvements

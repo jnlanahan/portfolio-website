@@ -193,56 +193,31 @@ const HomePage = () => {
     <div className="min-h-screen" style={{ padding: '24px 16px' }}> {/* 8-point grid: 24px vertical, 16px horizontal */}
       {/* Navigation Tiles Grid */}
       <div className="max-w-6xl mx-auto">
-        {/* Mobile: Brand Tile Only */}
-        <div className="block md:hidden" style={{ marginBottom: '32px' }}> {/* 8-point grid spacing */}
-          {/* Brand Tile */}
+        {/* Hero Section - Like the screenshot */}
+        <div className="text-center" style={{ marginBottom: '48px' }}>
+          {/* Small subtitle */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            style={{ height: '64px' }} /* 8-point grid: 64px height */
+            style={{ marginBottom: '16px' }}
           >
-            <GlowingCard 
-              className="bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-full flex items-center justify-center hover:-translate-y-1"
-              style={{ 
-                borderRadius: '16px', /* 8-point grid radius */
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)' /* Apple-style subtle shadow */
-              }}
-              glowColor="rgba(0, 122, 255, 0.1)"
-              strength={0.3}
-            >
-              <h1 className="font-futura font-bold text-gray-900" style={{ fontSize: '32px' }}> {/* Apple HIG: Page title 32-36px */}
-                Nick<span className="text-primary">.</span>Lanahan
-              </h1>
-            </GlowingCard>
+            <p className="font-futura font-medium text-gray-600 tracking-wide uppercase" style={{ fontSize: '14px', letterSpacing: '0.1em' }}>
+              PORTFOLIO
+            </p>
           </motion.div>
-        </div>
-
-        {/* Desktop: Brand Tile Only */}
-        <div className="hidden md:block">
-          {/* Brand Tile - Full Width */}
-          <div style={{ marginBottom: '32px' }}> {/* 8-point grid spacing */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              style={{ height: '80px' }} /* 8-point grid: 80px height */
-            >
-              <GlowingCard 
-                className="bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-full flex items-center justify-center hover:-translate-y-1"
-                style={{ 
-                  borderRadius: '16px', /* 8-point grid radius */
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)' /* Apple-style subtle shadow */
-                }}
-                glowColor="rgba(0, 122, 255, 0.1)"
-                strength={0.3}
-              >
-                <h1 className="font-futura font-bold text-gray-900" style={{ fontSize: '48px' }}> {/* Apple HIG: Page title 32-48px */}
-                  Nick<span className="text-primary"> </span>Lanahan
-                </h1>
-              </GlowingCard>
-            </motion.div>
-          </div>
+          
+          {/* Main title */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            style={{ marginBottom: '32px' }}
+          >
+            <h1 className="font-futura font-bold text-gray-900" style={{ fontSize: 'clamp(48px, 8vw, 72px)', lineHeight: '1.1', letterSpacing: '-0.02em' }}>
+              NICK<br/>LANAHAN
+            </h1>
+          </motion.div>
         </div>
         
         {/* Main Navigation Tiles */}
