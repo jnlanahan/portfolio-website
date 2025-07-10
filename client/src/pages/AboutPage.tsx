@@ -1,55 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "wouter";
 import RotatingWords from "@/components/RotatingWords";
-import { trackEvent } from "@/lib/analytics";
-
-import { GlowingCard } from "@/components/ui/glowing-card";
-
-const HomeTile = ({ 
-  title, 
-  description, 
-  icon, 
-  linkTo, 
-  delay = 0 
-}: { 
-  title: string; 
-  description: string; 
-  icon: string; 
-  linkTo: string; 
-  delay?: number;
-}) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
-    >
-      <Link 
-        href={linkTo}
-        onClick={() => trackEvent('homepage_tile_click', { 
-          tile: title, 
-          destination: linkTo 
-        })}
-      >
-        <GlowingCard 
-          className="bg-background/50 backdrop-blur-md rounded-xl border-2 border-secondary/20 hover:border-secondary hover:bg-background/80 hover:shadow-lg hover:shadow-secondary/20 p-6 transition-all duration-300 h-full cursor-pointer group"
-          glowColor="rgba(67, 186, 147, 0.6)"
-        >
-          <div className="flex items-center mb-4">
-            <div className="bg-secondary/20 p-3 rounded-full mr-3">
-              <i className={`${icon} text-secondary text-xl`}></i>
-            </div>
-            <h3 className="text-xl font-space font-semibold">{title}</h3>
-          </div>
-          <p className="text-muted-foreground mb-6">{description}</p>
-          <div className="inline-flex items-center text-secondary group-hover:underline">
-            <i className="ri-arrow-right-line group-hover:translate-x-1 transition-transform"></i>
-          </div>
-        </GlowingCard>
-      </Link>
-    </motion.div>
-  );
-};
 
 const AboutPage = () => {
   return (
@@ -166,64 +116,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* About Me Section */}
-      <section>
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-            </motion.div>
-          </div>
-        </div>
-      </section>
 
-      {/* Navigation Tiles */}
-      <section className="py-8">
-        <div className="container mx-auto px-4 md:px-6">
-          <motion.div
-            className="text-center mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Explore My Work</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Navigate through different sections of my portfolio to learn more about me, my work, and my thoughts.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            <HomeTile 
-              title="Portfolio" 
-              description="Browse through my recent projects, experiments, and collaborations."
-              icon="ri-folder-line"
-              linkTo="/portfolio"
-              delay={0.1}
-            />
-            
-            <HomeTile 
-              title="Blog" 
-              description="Read my thoughts, tutorials, and insights from my journey in tech."
-              icon="ri-article-line"
-              linkTo="/blog"
-              delay={0.2}
-            />
-            
-            <HomeTile 
-              title="Top 5 Lists" 
-              description="Discover my favorite tools, resources, and inspirations organized in curated lists."
-              icon="ri-list-check"
-              linkTo="/top5"
-              delay={0.3}
-            />
-            
-            
-          </div>
-        </div>
-      </section>
     </div>
   );
 };

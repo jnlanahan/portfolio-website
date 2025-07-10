@@ -21,6 +21,13 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
 - Dark mode support
 
 ## Recent Changes
+- **January 2025**: Restructured site navigation and home page
+  - Moved personal introduction and skills section to dedicated About page (/about)
+  - Created new Home page (/) with navigation tiles to all sections
+  - Updated navigation bar to include separate Home and About links
+  - Home page now focuses on site navigation rather than personal content
+  - About page contains personal introduction, skills (Front-End/Back-End), and social links
+  - Updated routing structure to reflect new page organization
 - **January 2025**: Implemented AI Content Polisher with anti-AI-detection measures
   - Created comprehensive OpenAI-powered content analysis system
   - Added real-time writing suggestions and style improvements
@@ -101,7 +108,8 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Configured with environment variables for API key and host
 
 ## Navigation Structure
-- **About** (/) - Homepage with overview and navigation tiles
+- **Home** (/) - Homepage with navigation tiles to all sections
+- **About** (/about) - Personal introduction, skills, and background
 - **Portfolio** (/portfolio) - Project showcase and filtering
 - **Blog** (/blog) - Blog posts with categories and tags
 - **Top 5** (/top5) - Curated lists and recommendations

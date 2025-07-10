@@ -18,7 +18,7 @@ export interface ProjectType {
   featured?: boolean;
   category?: ProjectCategory;
   date: string;
-  client?: string;
+  lessonsLearned?: string;
   testimonial?: {
     quote: string;
     author: string;
@@ -78,7 +78,7 @@ export function getPortfolio(): ProjectType[] {
       featured: true,
       category: getCategoryById('web-development'),
       date: "2023-12-10",
-      client: "TechCorp Inc.",
+      lessonsLearned: "Building this dashboard taught me the importance of modular architecture and real-time data synchronization at scale.",
       testimonial: {
         quote: "This dashboard revolutionized how we analyze our data. The real-time insights have been invaluable to our business decisions.",
         author: "Sarah Johnson",
@@ -105,7 +105,7 @@ export function getPortfolio(): ProjectType[] {
       codeUrl: "https://github.com/example/demo2",
       category: getCategoryById('mobile'),
       date: "2023-08-15",
-      client: "FitLife Health Co.",
+      lessonsLearned: "This project reinforced the value of user-centered design and the importance of gamification in health apps.",
       challenge: "Create a fitness app that stands out in a crowded market by adding social connectivity and data-driven insights.",
       solution: "Built a cross-platform mobile app that combines workout tracking with social networking features. Implemented machine learning for personalized workout recommendations and a gamification system to increase engagement.",
       results: "The app reached 50,000 downloads in the first month with a 4.8/5 rating on app stores. User retention rate is 25% higher than industry average."
@@ -123,7 +123,7 @@ export function getPortfolio(): ProjectType[] {
       featured: true,
       category: getCategoryById('web-development'),
       date: "2023-06-20",
-      client: "EdTech Solutions",
+      lessonsLearned: "Implementing real-time collaboration taught me about WebSocket optimization and the complexities of conflict resolution in collaborative editing.",
       challenge: "Create an educational platform that allows students to collaborate on coding projects in real-time while giving instructors the ability to monitor and provide feedback.",
       solution: "Developed a web-based collaborative code editor with real-time syncing using WebSockets, syntax highlighting for multiple languages, and an integrated terminal for running code. Added features for version control, commenting, and code reviews.",
       results: "The platform is now used by 15 universities and coding bootcamps, serving over 5,000 students. Average assignment completion rates increased by 30%."
@@ -140,7 +140,7 @@ export function getPortfolio(): ProjectType[] {
       codeUrl: "https://github.com/example/demo4",
       category: getCategoryById('web-development'),
       date: "2023-09-05",
-      client: "Boutique Brands Inc.",
+      lessonsLearned: "This project taught me the critical importance of performance optimization in e-commerce and how to balance functionality with speed.",
       testimonial: {
         quote: "Our online sales increased by 200% within the first quarter of launching the new platform. The user experience is excellent, and the backend is incredibly easy to manage.",
         author: "Michael Thompson",
@@ -180,7 +180,7 @@ export function getPortfolio(): ProjectType[] {
       codeUrl: "https://github.com/example/demo6",
       category: getCategoryById('mobile'),
       date: "2023-10-01",
-      client: "Wellness Partners LLC",
+      lessonsLearned: "Developing a mental wellness app taught me the importance of empathetic design and how technology can positively impact mental health.",
       testimonial: {
         quote: "The MindSpace app has transformed how we deliver mental wellness resources to our customers. The personalized recommendations and beautiful interface have set us apart from competitors.",
         author: "Jennifer Lee",

@@ -41,9 +41,15 @@ const Navbar = () => {
   const navItems: NavItem[] = [
     { 
       path: "/", 
-      label: "About", 
+      label: "Home", 
       icon: "ri-home-line",
-      isActiveCheck: (path: string) => isActive(path) && location === path 
+      isActiveCheck: (path: string) => location === path 
+    },
+    { 
+      path: "/about", 
+      label: "About", 
+      icon: "ri-user-line",
+      isActiveCheck: (path: string) => isActive(path) 
     },
     { 
       path: "/portfolio", 

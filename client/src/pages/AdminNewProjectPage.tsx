@@ -63,7 +63,7 @@ export default function AdminNewProjectPage() {
       codeUrl: "",
       featured: false,
       date: new Date().toISOString().split('T')[0],
-      client: "",
+      lessonsLearned: "",
       mediaFiles: [],
       thumbnailIndex: 0,
     },

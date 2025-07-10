@@ -248,7 +248,7 @@ export default function AdminProjectsPage() {
       setValue('codeUrl', project.codeUrl);
       setValue('featured', project.featured || false);
       setValue('date', project.date ? project.date.split('T')[0] : new Date().toISOString().split('T')[0]);
-      setValue('client', project.client || '');
+      setValue('lessonsLearned', project.lessonsLearned || '');
     } else {
       reset();
       setMediaFiles([]);
