@@ -33,7 +33,7 @@ const HomeTile = ({
 
   const tileContent = compact ? (
     <GlowingCard 
-      className="bg-background/90 backdrop-blur-md rounded-2xl border border-secondary/10 hover:border-secondary/30 hover:bg-background/95 transition-all duration-300 h-full cursor-pointer group overflow-hidden flex items-center justify-center"
+      className="bg-background/90 backdrop-blur-md rounded-2xl border border-secondary/10 hover:border-secondary/30 hover:bg-background/95 transition-all duration-300 h-32 md:h-16 cursor-pointer group overflow-hidden flex items-center justify-center"
       glowColor="rgba(67, 186, 147, 0.6)"
     >
       <h3 className="text-sm font-space font-medium text-foreground group-hover:text-secondary transition-colors">
@@ -140,38 +140,32 @@ const HomePage = () => {
           </motion.div>
           
           {/* Utility Tiles */}
-          <div className="h-32">
-            <HomeTile
-              title="Contact"
-              description=""
-              icon=""
-              linkTo="/contact"
-              delay={0.2}
-              compact={true}
-            />
-          </div>
+          <HomeTile
+            title="Contact"
+            description=""
+            icon=""
+            linkTo="/contact"
+            delay={0.2}
+            compact={true}
+          />
           
-          <div className="h-32">
-            <HomeTile
-              title="Resume"
-              description=""
-              icon=""
-              linkTo="/resume.pdf"
-              delay={0.3}
-              compact={true}
-            />
-          </div>
+          <HomeTile
+            title="Resume"
+            description=""
+            icon=""
+            linkTo="/resume.pdf"
+            delay={0.3}
+            compact={true}
+          />
           
-          <div className="h-32">
-            <HomeTile
-              title="LinkedIn"
-              description=""
-              icon=""
-              linkTo="https://linkedin.com/in/nicklanahan"
-              delay={0.4}
-              compact={true}
-            />
-          </div>
+          <HomeTile
+            title="LinkedIn"
+            description=""
+            icon=""
+            linkTo="https://linkedin.com/in/nicklanahan"
+            delay={0.4}
+            compact={true}
+          />
         </div>
 
         {/* Desktop: Two Row Layout */}
