@@ -199,7 +199,7 @@ const HomePage = () => {
           <div 
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: 'radial-gradient(circle at center top, rgba(144, 238, 144, 0.5) 0%, rgba(144, 238, 144, 0.4) 10%, rgba(144, 238, 144, 0.3) 25%, rgba(144, 238, 144, 0.2) 45%, rgba(144, 238, 144, 0.1) 65%, rgba(144, 238, 144, 0.05) 80%, transparent 95%)',
+              background: 'radial-gradient(circle at center top, rgba(144, 238, 144, 0.7) 0%, rgba(144, 238, 144, 0.6) 10%, rgba(144, 238, 144, 0.5) 25%, rgba(144, 238, 144, 0.3) 45%, rgba(144, 238, 144, 0.2) 65%, rgba(144, 238, 144, 0.1) 80%, transparent 95%)',
               width: '200%',
               height: '300%',
               left: '-50%',
@@ -231,12 +231,14 @@ const HomePage = () => {
             className="relative z-10"
           >
             <h1 
-              className="font-futura font-light text-gray-900" 
+              className="text-gray-900" 
               style={{ 
+                fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+                fontWeight: '200',
                 fontSize: 'clamp(48px, 8vw, 72px)', 
                 lineHeight: '1.1', 
                 letterSpacing: '-0.02em',
-                textShadow: '0 0 30px rgba(144, 238, 144, 0.4), 0 0 60px rgba(144, 238, 144, 0.3), 0 0 90px rgba(144, 238, 144, 0.2)'
+                textShadow: '0 0 30px rgba(144, 238, 144, 0.6), 0 0 60px rgba(144, 238, 144, 0.5), 0 0 90px rgba(144, 238, 144, 0.4)'
               }}
             >
               NICK<br/>LANAHAN
