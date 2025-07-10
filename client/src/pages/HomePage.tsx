@@ -199,13 +199,13 @@ const HomePage = () => {
           <div 
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: 'radial-gradient(circle at center top, rgba(0, 122, 255, 0.15) 0%, rgba(0, 122, 255, 0.1) 30%, rgba(0, 122, 255, 0.05) 50%, transparent 70%)',
-              width: '120%',
-              height: '200%',
-              left: '-10%',
-              top: '-80%',
+              background: 'radial-gradient(circle at center top, rgba(0, 122, 255, 0.4) 0%, rgba(0, 122, 255, 0.3) 20%, rgba(0, 122, 255, 0.2) 40%, rgba(0, 122, 255, 0.1) 60%, transparent 80%)',
+              width: '200%',
+              height: '300%',
+              left: '-50%',
+              top: '-150%',
               borderRadius: '50%',
-              filter: 'blur(1px)'
+              filter: 'blur(2px)'
             }}
           />
           
@@ -231,7 +231,7 @@ const HomePage = () => {
             className="relative z-10"
           >
             <h1 
-              className="font-futura font-bold text-gray-900" 
+              className="font-futura font-normal text-gray-900" 
               style={{ 
                 fontSize: 'clamp(48px, 8vw, 72px)', 
                 lineHeight: '1.1', 
