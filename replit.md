@@ -21,6 +21,14 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
 - Dark mode support
 
 ## Recent Changes
+- **January 2025**: Updated color scheme to lighter theme with enhanced tile effects
+  - Changed from dark background to light blue-gray theme for better visibility
+  - Enhanced tile styling with white backgrounds, stronger shadows, and hover effects
+  - Updated compact tiles with vibrant gradient backgrounds and improved contrast
+  - Added transform effects (lift on hover) to make tiles more interactive
+  - Increased glow effect strength for better visual pop
+  - Updated background overlay from dark green to light white for cleaner look
+  - Modified grid patterns to use subtle green tints that complement the lighter theme
 - **January 2025**: Restructured site navigation and home page
   - Moved personal introduction and skills section to dedicated About page (/about)
   - Created new Home page (/) with navigation tiles to all sections
