@@ -32,8 +32,7 @@ export const projects = pgTable("projects", {
   codeUrl: text("code_url"),
   featured: boolean("featured").default(false).notNull(),
   date: timestamp("date").defaultNow().notNull(),
-  goal: text("goal"),
-  lessonsLearned: text("lessons_learned"),
+  client: text("client"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

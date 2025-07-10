@@ -136,16 +136,6 @@ export const ProjectDetail: React.FC = () => {
             <p className="text-lg leading-relaxed">{project.description}</p>
           </div>
 
-          {/* Goal */}
-          {project.goal && (
-            <div className="mb-8">
-              <h3 className="text-lg font-semibold mb-4">Project Goal</h3>
-              <div className="prose prose-gray dark:prose-invert max-w-none">
-                <p className="text-muted-foreground leading-relaxed">{project.goal}</p>
-              </div>
-            </div>
-          )}
-
           {/* Technologies */}
           <div className="mb-8">
             <h3 className="text-lg font-semibold mb-4">Technologies Used</h3>
@@ -155,16 +145,6 @@ export const ProjectDetail: React.FC = () => {
               ))}
             </div>
           </div>
-
-          {/* Lessons Learned */}
-          {project.lessonsLearned && (
-            <div className="mb-8">
-              <h3 className="text-lg font-semibold mb-4">Lessons Learned</h3>
-              <div className="prose prose-gray dark:prose-invert max-w-none">
-                <p className="text-muted-foreground leading-relaxed">{project.lessonsLearned}</p>
-              </div>
-            </div>
-          )}
 
           {/* Action Buttons */}
           <div className="flex gap-4 mb-8">
@@ -186,7 +166,15 @@ export const ProjectDetail: React.FC = () => {
             )}
           </div>
 
-
+          {/* Client info */}
+          {project.client && (
+            <Card className="mb-8">
+              <CardContent className="p-6">
+                <h3 className="font-semibold mb-2">Client</h3>
+                <p className="text-muted-foreground">{project.client}</p>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Project sections */}
           {project.challenge && (

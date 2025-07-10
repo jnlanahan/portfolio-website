@@ -33,8 +33,7 @@ const projectSchema = z.object({
   }),
   featured: z.boolean().default(false),
   date: z.string().optional(),
-  goal: z.string().optional(),
-  lessonsLearned: z.string().optional(),
+  client: z.string().optional(),
 });
 
 type ProjectFormData = z.infer<typeof projectSchema>;
@@ -249,8 +248,7 @@ export default function AdminProjectsPage() {
       setValue('codeUrl', project.codeUrl);
       setValue('featured', project.featured || false);
       setValue('date', project.date ? project.date.split('T')[0] : new Date().toISOString().split('T')[0]);
-      setValue('goal', project.goal || '');
-      setValue('lessonsLearned', project.lessonsLearned || '');
+      setValue('client', project.client || '');
     } else {
       reset();
       setMediaFiles([]);
@@ -519,45 +517,26 @@ export default function AdminProjectsPage() {
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="date">Date (optional)</Label>
-                    <Input
-                      id="date"
-                      type="date"
-                      {...register("date")}
-                      className={errors.date ? "border-red-500" : ""}
-                    />
-                    {errors.date && (
-                      <p className="text-sm text-red-500">{errors.date.message}</p>
-                    )}
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="goal">Project Goal (optional)</Label>
-                    <Textarea
-                      id="goal"
-                      {...register("goal")}
-                      className={errors.goal ? "border-red-500" : ""}
-                      rows={3}
-                      placeholder="What was the main goal or objective of this project?"
-                    />
-                    {errors.goal && (
-                      <p className="text-sm text-red-500">{errors.goal.message}</p>
-                    )}
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="lessonsLearned">Lessons Learned (optional)</Label>
-                    <Textarea
-                      id="lessonsLearned"
-                      {...register("lessonsLearned")}
-                      className={errors.lessonsLearned ? "border-red-500" : ""}
-                      rows={3}
-                      placeholder="What did you learn from this project? Key insights, challenges overcome, etc."
-                    />
-                    {errors.lessonsLearned && (
-                      <p className="text-sm text-red-500">{errors.lessonsLearned.message}</p>
-                    )}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="date">Date (optional)</Label>
+                      <Input
+                        id="date"
+                        type="date"
+                        {...register("date")}
+                        className={errors.date ? "border-red-500" : ""}
+                      />
+                      {errors.date && (
+                        <p className="text-sm text-red-500">{errors.date.message}</p>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="client">Client (optional)</Label>
+                      <Input
+                        id="client"
+                        {...register("client")}
+                      />
+                    </div>
                   </div>
 
                   <div className="flex items-center space-x-2">
