@@ -195,16 +195,17 @@ const HomePage = () => {
       <div className="max-w-6xl mx-auto">
         {/* Hero Section - Like the screenshot */}
         <div className="text-center relative" style={{ marginBottom: '48px' }}>
-          {/* Elliptical glow background */}
+          {/* Circular glow background */}
           <div 
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: 'radial-gradient(ellipse 800px 400px at center center, rgba(144, 238, 144, 0.8) 0%, rgba(144, 238, 144, 0.7) 15%, rgba(144, 238, 144, 0.5) 35%, rgba(144, 238, 144, 0.3) 55%, rgba(144, 238, 144, 0.1) 75%, transparent 90%)',
-              width: '100%',
-              height: '100%',
-              left: '0%',
-              top: '0%',
-              filter: 'blur(1px)'
+              background: 'radial-gradient(circle at center top, rgba(144, 238, 144, 0.7) 0%, rgba(144, 238, 144, 0.6) 10%, rgba(144, 238, 144, 0.5) 25%, rgba(144, 238, 144, 0.3) 45%, rgba(144, 238, 144, 0.2) 65%, rgba(144, 238, 144, 0.1) 80%, transparent 95%)',
+              width: '200%',
+              height: '300%',
+              left: '-50%',
+              top: '-150%',
+              borderRadius: '50%',
+              filter: 'blur(3px)'
             }}
           />
           
