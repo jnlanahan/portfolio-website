@@ -129,17 +129,31 @@ const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string;
     });
   };
 
+  // Get icon based on title
+  const getIcon = () => {
+    if (title.includes('Contact')) return 'ri-mail-line';
+    if (title.includes('Resume')) return 'ri-download-line';
+    if (title.includes('LinkedIn')) return 'ri-linkedin-line';
+    return 'ri-arrow-right-line';
+  };
+
   const buttonContent = (
-    <div 
-      className="bg-white border border-gray-200 hover:border-gray-300 transition-all duration-300 cursor-pointer group flex items-center justify-center hover:shadow-lg"
-      style={{ 
-        borderRadius: '32px', /* Apple-style pill shape */
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)', /* Apple-style subtle shadow */
-        height: '48px', /* 8-point grid height */
-        padding: '0 24px' /* 8-point grid padding */
-      }}
-    >
-      <span className="font-space font-medium text-gray-900 group-hover:text-primary transition-colors" style={{ fontSize: '16px' }}>
+    <div className="flex flex-col items-center text-center cursor-pointer group transition-all duration-300">
+      {/* Icon Circle */}
+      <div 
+        className="bg-white border border-gray-200 hover:border-gray-300 transition-all duration-300 flex items-center justify-center hover:shadow-lg group-hover:-translate-y-1"
+        style={{ 
+          borderRadius: '50%', /* Perfect circle */
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)', /* Apple-style subtle shadow */
+          width: '56px', /* 8-point grid: 56px */
+          height: '56px' /* 8-point grid: 56px */
+        }}
+      >
+        <i className={`${getIcon()} text-gray-900 group-hover:text-primary transition-colors`} style={{ fontSize: '24px' }}></i>
+      </div>
+      
+      {/* Text Label */}
+      <span className="font-space font-medium text-gray-900 group-hover:text-primary transition-colors mt-2" style={{ fontSize: '14px' }}>
         {title}
       </span>
     </div>
@@ -256,7 +270,7 @@ const HomePage = () => {
           </div>
           
           {/* Action Buttons Row */}
-          <div className="flex justify-center space-x-4" style={{ marginBottom: '32px' }}> {/* 8-point grid spacing */}
+          <div className="flex justify-center space-x-12" style={{ marginBottom: '32px' }}> {/* 8-point grid spacing */}
             <ActionButton
               title="Contact Me"
               linkTo="/contact"

@@ -65,6 +65,13 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Mobile: Buttons stack vertically with proper spacing
   - Maintained Apple's design principles: subtle shadows, clean typography, smooth hover effects
   - Differentiated from regular navigation tiles with distinctive pill styling
+- **January 2025**: Enhanced action buttons with visual icon-driven design
+  - Transformed action buttons from pill-shaped buttons to circular icon buttons
+  - Added relevant icons: mail for Contact, download for Resume, LinkedIn for social connection
+  - Created vertical layout with circular icon (56px diameter) and text label below
+  - Maintained clean white background with subtle shadows and hover effects
+  - Improved visual hierarchy with icons making actions more immediately recognizable
+  - Increased spacing between desktop action buttons for better visual balance
 - **January 2025**: Implemented AI Content Polisher with anti-AI-detection measures
   - Created comprehensive OpenAI-powered content analysis system
   - Added real-time writing suggestions and style improvements
