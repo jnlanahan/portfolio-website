@@ -31,6 +31,15 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Updated typography to use dark grey (#1a1a1a) for excellent readability
   - Simplified glow effects to be very subtle and professional
   - Designed for maximum recruiter appeal with clean, accessible interface
+- **January 2025**: Enhanced with Apple Human Interface Guidelines design principles
+  - Implemented Apple's 8-point grid system throughout the layout (8px, 16px, 24px, 32px spacing)
+  - Applied Apple's typography hierarchy: 48px page titles, 20px section headings, 16-17px body text
+  - Added Apple-style subtle shadows (0 2px 4px rgba(0,0,0,0.1)) to all tiles
+  - Improved spacing consistency with 8-point grid padding and margins
+  - Enhanced visual hierarchy with proper font sizing and weights
+  - Reduced white space for better balance while maintaining clean aesthetic
+  - Applied 16px border radius consistently across all components
+  - Set body text to 17px with 1.5x line height for optimal readability
 - **January 2025**: Restructured site navigation and home page
   - Moved personal introduction and skills section to dedicated About page (/about)
   - Created new Home page (/) with navigation tiles to all sections

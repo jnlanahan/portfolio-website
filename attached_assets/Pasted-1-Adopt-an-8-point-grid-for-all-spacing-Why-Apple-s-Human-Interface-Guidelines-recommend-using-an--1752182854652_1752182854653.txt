@@ -1,0 +1,60 @@
+1. Adopt an 8-point grid for all spacing
+Why: Apple’s Human Interface Guidelines recommend using an 8-point increment system to keep margins and padding consistent across all screen sizes. It instantly makes layouts feel intentional and balanced. 
+Uxcel
+
+How:
+
+Set your base unit to 8px.
+
+All margin/padding, gutter between cards, font-line heights, etc. should be multiples of 8px (e.g. 8, 16, 24, 32…).
+
+2. Establish clear visual hierarchy with typography
+Why: Proper font sizing and weight helps users scan, as headings “pop” and body text reads easily. Apple suggests ~17pt for body, ~20pt+ for titles, and a minimum 44pt touch target on buttons. 
+DesignCode
+
+How:
+
+Page title (“Nick Lanahan”): 32–36px, Heavy or Semibold
+
+Section headings (“About”, “Portfolio”, etc.): 20–24px, Medium
+
+Body copy: 16–17px, Regular, 1.5× line-height
+
+Ensure consistent font-stack (e.g. system-UI for a native feel).
+
+3. Refine card layout and interactions
+Equalize card heights so each section (“About”, “Portfolio”, etc.) sits in a uniform grid—no one card towers over another.
+
+Add subtle shadows (e.g. box-shadow: 0 2px 4px rgba(0,0,0,0.1)) and hover-state lift to signal interactivity.
+
+Ensure 16–24px gutter between cards and container edges (8-point grid again).
+
+4. Tame the bottom whitespace
+If it’s unintentional: check your container’s min-height or bottom padding/margin and dial it back to a multiple of 8px that still feels comfortable (e.g. 32px).
+
+If you need space: turn it into a sticky footer with your contact links, copyright, or a simple site map. This grounds the page and makes that whitespace purposeful.
+
+5. Simplify and elevate the header/nav
+Use a transparent sticky header that on scroll switches to a subtle backdrop (e.g. white with a 1px bottom border).
+
+Space nav items by 24–32px so they don’t crowd.
+
+Consider a “Call-to-Action” button style (e.g. “Contact”) that uses your primary brand color, larger padding (16px vertical), and rounded corners.
+
+6. Use sectional backgrounds or dividers
+Instead of one big white expanse, alternate very light gray (#F7F7F7) bands between sections—this visually groups content blocks without extra empty space.
+
+Alternatively, add a 1px horizontal divider (height:1px; background:#EEE; margin: 32px 0).
+
+7. Lean on micro-interactions
+Button hovers: change opacity or raise shadow.
+
+Link underlines only on hover (keeps things clean).
+
+Card image zoom or slight pan on hover.
+
+8. Reference the authorities
+Whitespace & balance: Nielsen Norman Group—“What is Whitespace?” 
+Nielsen Norman Group
+
+Apple spacing conventions: Apple HIG—“Layout”

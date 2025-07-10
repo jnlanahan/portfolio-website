@@ -33,47 +33,57 @@ const HomeTile = ({
 
   const tileContent = compact ? (
     <GlowingCard 
-      className="relative rounded-2xl border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-20 md:h-16 cursor-pointer group overflow-hidden flex items-center justify-center bg-white shadow-sm hover:-translate-y-1"
+      className="relative border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 cursor-pointer group overflow-hidden flex items-center justify-center bg-white hover:-translate-y-1"
+      style={{ 
+        borderRadius: '16px', /* 8-point grid radius */
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)', /* Apple-style subtle shadow */
+        height: '64px' /* 8-point grid height */
+      }}
       glowColor="rgba(0, 122, 255, 0.1)"
       strength={0.3}
     >
-      <h3 className="text-sm font-space font-medium text-gray-900 group-hover:text-primary transition-colors">
+      <h3 className="font-space font-medium text-gray-900 group-hover:text-primary transition-colors" style={{ fontSize: '14px' }}> {/* Consistent sizing */}
         {title}
       </h3>
     </GlowingCard>
   ) : (
     <GlowingCard 
-      className="bg-white rounded-2xl border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-full cursor-pointer group overflow-hidden shadow-sm hover:-translate-y-1"
+      className="bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-full cursor-pointer group overflow-hidden hover:-translate-y-1"
+      style={{ 
+        borderRadius: '16px', /* 8-point grid radius */
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)' /* Apple-style subtle shadow */
+      }}
       glowColor="rgba(0, 122, 255, 0.1)"
       strength={0.3}
     >
       {/* Header with title */}
-      <div className="p-4 pb-2">
-        <h3 className="text-lg font-space font-medium text-gray-900 group-hover:text-primary transition-colors">
+      <div style={{ padding: '16px 16px 8px' }}> {/* 8-point grid padding */}
+        <h3 className="font-space font-medium text-gray-900 group-hover:text-primary transition-colors" style={{ fontSize: '20px' }}> {/* Apple HIG: Section headings 20-24px */}
           {title}
         </h3>
       </div>
 
       {/* Content area */}
-      <div className="px-4 pb-4 flex-1">
+      <div style={{ padding: '0 16px 16px' }} className="flex-1"> {/* 8-point grid padding */}
         {image ? (
-          <div className="mb-3 rounded-xl overflow-hidden bg-gray-50">
+          <div style={{ marginBottom: '12px', borderRadius: '12px' }} className="overflow-hidden bg-gray-50"> {/* 8-point grid margin and radius */}
             <img 
               src={image} 
               alt={title}
-              className={`w-full object-cover group-hover:scale-105 transition-transform duration-500 ${
-                size === "large" ? "h-32" : "h-24"
-              }`}
+              className={`w-full object-cover group-hover:scale-105 transition-transform duration-500`}
+              style={{ height: size === "large" ? '128px' : '96px' }} /* 8-point grid heights */
             />
           </div>
         ) : (
-          <div className="mb-3 flex items-center justify-center h-12">
-            <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center">
+          <div style={{ marginBottom: '12px', height: '48px' }} className="flex items-center justify-center"> {/* 8-point grid dimensions */}
+            <div style={{ width: '40px', height: '40px', borderRadius: '12px' }} className="bg-gray-100 flex items-center justify-center"> {/* 8-point grid dimensions */}
               <i className={`${icon} text-primary text-xl`}></i>
             </div>
           </div>
         )}
-        <p className="text-gray-600 text-sm leading-relaxed">{description}</p>
+        <p className="text-gray-600 leading-relaxed" style={{ fontSize: '16px' }}> {/* Apple HIG: Body copy 16-17px */}
+          {description}
+        </p>
       </div>
     </GlowingCard>
   );
@@ -111,62 +121,74 @@ const HomeTile = ({
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen p-4 md:p-6">
+    <div className="min-h-screen" style={{ padding: '24px 16px' }}> {/* 8-point grid: 24px vertical, 16px horizontal */}
       {/* Navigation Tiles Grid */}
       <div className="max-w-6xl mx-auto">
         {/* Mobile: Single Column Stack */}
-        <div className="block md:hidden space-y-3 mb-3">
-          {/* Brand Tile */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="h-16"
-          >
-            <GlowingCard 
-              className="bg-white rounded-2xl border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-full flex items-center justify-center shadow-sm hover:-translate-y-1"
-              glowColor="rgba(0, 122, 255, 0.1)"
-              strength={0.3}
+        <div className="block md:hidden" style={{ marginBottom: '24px' }}> {/* 8-point grid spacing */}
+          <div style={{ marginBottom: '16px' }}> {/* 8-point grid spacing between elements */}
+            {/* Brand Tile */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              style={{ height: '64px' }} /* 8-point grid: 64px height */
             >
-              <h2 className="text-lg font-space font-bold text-gray-900">
-                Nick<span className="text-primary">.</span>Lanahan
-              </h2>
-            </GlowingCard>
-          </motion.div>
+              <GlowingCard 
+                className="bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-full flex items-center justify-center hover:-translate-y-1"
+                style={{ 
+                  borderRadius: '16px', /* 8-point grid radius */
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)' /* Apple-style subtle shadow */
+                }}
+                glowColor="rgba(0, 122, 255, 0.1)"
+                strength={0.3}
+              >
+                <h1 className="font-space font-bold text-gray-900" style={{ fontSize: '32px' }}> {/* Apple HIG: Page title 32-36px */}
+                  Nick<span className="text-primary">.</span>Lanahan
+                </h1>
+              </GlowingCard>
+            </motion.div>
+          </div>
           
           {/* Utility Tiles */}
-          <HomeTile
-            title="Contact"
-            description=""
-            icon=""
-            linkTo="/contact"
-            delay={0.2}
-            compact={true}
-          />
+          <div style={{ marginBottom: '16px' }}> {/* 8-point grid spacing */}
+            <HomeTile
+              title="Contact"
+              description=""
+              icon=""
+              linkTo="/contact"
+              delay={0.2}
+              compact={true}
+            />
+          </div>
           
-          <HomeTile
-            title="Resume"
-            description=""
-            icon=""
-            linkTo="/resume.pdf"
-            delay={0.3}
-            compact={true}
-          />
+          <div style={{ marginBottom: '16px' }}> {/* 8-point grid spacing */}
+            <HomeTile
+              title="Resume"
+              description=""
+              icon=""
+              linkTo="/resume.pdf"
+              delay={0.3}
+              compact={true}
+            />
+          </div>
           
-          <HomeTile
-            title="LinkedIn"
-            description=""
-            icon=""
-            linkTo="https://linkedin.com/in/nicklanahan"
-            delay={0.4}
-            compact={true}
-          />
+          <div> {/* Last item doesn't need margin */}
+            <HomeTile
+              title="LinkedIn"
+              description=""
+              icon=""
+              linkTo="https://linkedin.com/in/nicklanahan"
+              delay={0.4}
+              compact={true}
+            />
+          </div>
         </div>
 
         {/* Desktop: Two Row Layout */}
         <div className="hidden md:block">
           {/* Top Row */}
-          <div className="grid grid-cols-12 gap-4 mb-4 h-16">
+          <div className="grid grid-cols-12 h-16" style={{ gap: '16px', marginBottom: '24px' }}> {/* 8-point grid spacing */}
             {/* Brand Tile - 1/3 wider again (6 columns instead of 4) */}
             <div className="col-span-6 h-full">
               <motion.div
@@ -176,19 +198,23 @@ const HomePage = () => {
                 className="h-full"
               >
                 <GlowingCard 
-                  className="bg-white rounded-2xl border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-full flex items-center justify-center shadow-sm hover:-translate-y-1"
+                  className="bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-full flex items-center justify-center hover:-translate-y-1"
+                  style={{ 
+                    borderRadius: '16px', /* 8-point grid radius */
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)' /* Apple-style subtle shadow */
+                  }}
                   glowColor="rgba(0, 122, 255, 0.1)"
                   strength={0.3}
                 >
-                  <h2 className="font-space font-bold text-[48px] text-gray-900">
+                  <h1 className="font-space font-bold text-gray-900" style={{ fontSize: '48px' }}> {/* Apple HIG: Page title 32-48px */}
                     Nick<span className="text-primary"> </span>Lanahan
-                  </h2>
+                  </h1>
                 </GlowingCard>
               </motion.div>
             </div>
             
             {/* Three Compact Tiles - 2 columns each in remaining 6 columns */}
-            <div className="col-span-6 grid grid-cols-3 gap-4 h-full">
+            <div className="col-span-6 grid grid-cols-3 h-full" style={{ gap: '16px' }}> {/* 8-point grid spacing */}
               <HomeTile
                 title="Contact"
                 description=""
@@ -220,7 +246,7 @@ const HomePage = () => {
         </div>
         
         {/* Main Navigation Tiles */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4" style={{ gap: '16px' }}> {/* 8-point grid spacing */}
           <HomeTile
             title="About"
             description="Learn more about my background, skills, and journey"
