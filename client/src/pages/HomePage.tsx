@@ -140,32 +140,38 @@ const HomePage = () => {
           </motion.div>
           
           {/* Utility Tiles */}
-          <HomeTile
-            title="Contact"
-            description=""
-            icon=""
-            linkTo="/contact"
-            delay={0.2}
-            compact={true}
-          />
+          <div className="h-32">
+            <HomeTile
+              title="Contact"
+              description=""
+              icon=""
+              linkTo="/contact"
+              delay={0.2}
+              compact={true}
+            />
+          </div>
           
-          <HomeTile
-            title="Resume"
-            description=""
-            icon=""
-            linkTo="/resume.pdf"
-            delay={0.3}
-            compact={true}
-          />
+          <div className="h-32">
+            <HomeTile
+              title="Resume"
+              description=""
+              icon=""
+              linkTo="/resume.pdf"
+              delay={0.3}
+              compact={true}
+            />
+          </div>
           
-          <HomeTile
-            title="LinkedIn"
-            description=""
-            icon=""
-            linkTo="https://linkedin.com/in/nicklanahan"
-            delay={0.4}
-            compact={true}
-          />
+          <div className="h-32">
+            <HomeTile
+              title="LinkedIn"
+              description=""
+              icon=""
+              linkTo="https://linkedin.com/in/nicklanahan"
+              delay={0.4}
+              compact={true}
+            />
+          </div>
         </div>
 
         {/* Desktop: Two Row Layout */}
