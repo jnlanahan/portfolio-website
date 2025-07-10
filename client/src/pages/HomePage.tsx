@@ -164,24 +164,7 @@ const HomePage = () => {
         <div className="hidden md:block">
           {/* Top Row */}
           <div className="grid grid-cols-12 gap-4 mb-4 h-16">
-            {/* Brand Tile - 1/3 wider again (6 columns instead of 4) */}
-            <div className="col-span-6 h-full">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="h-full"
-              >
-                <GlowingCard 
-                  className="bg-background/90 backdrop-blur-md rounded-2xl border border-secondary/10 hover:border-secondary/30 transition-all duration-300 h-full flex items-center justify-center"
-                  glowColor="rgba(67, 186, 147, 0.6)"
-                >
-                  <h2 className="font-space font-bold text-[48px] text-[#05ce93]">
-                    Nick<span className="text-secondary"> </span>Lanahan
-                  </h2>
-                </GlowingCard>
-              </motion.div>
-            </div>
+            
             
             {/* Three Compact Tiles - 2 columns each in remaining 6 columns */}
             <div className="col-span-6 grid grid-cols-3 gap-4 h-full">
