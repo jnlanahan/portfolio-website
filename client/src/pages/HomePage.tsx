@@ -199,13 +199,13 @@ const HomePage = () => {
           <div 
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: 'radial-gradient(circle at center top, rgba(144, 238, 144, 0.4) 0%, rgba(144, 238, 144, 0.3) 20%, rgba(144, 238, 144, 0.2) 40%, rgba(144, 238, 144, 0.1) 60%, transparent 80%)',
+              background: 'radial-gradient(circle at center top, rgba(144, 238, 144, 0.5) 0%, rgba(144, 238, 144, 0.4) 10%, rgba(144, 238, 144, 0.3) 25%, rgba(144, 238, 144, 0.2) 45%, rgba(144, 238, 144, 0.1) 65%, rgba(144, 238, 144, 0.05) 80%, transparent 95%)',
               width: '200%',
               height: '300%',
               left: '-50%',
               top: '-150%',
               borderRadius: '50%',
-              filter: 'blur(2px)'
+              filter: 'blur(3px)'
             }}
           />
           
