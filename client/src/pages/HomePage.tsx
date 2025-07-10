@@ -33,7 +33,7 @@ const HomeTile = ({
 
   const tileContent = compact ? (
     <GlowingCard 
-      className="relative rounded-2xl border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-32 md:h-16 cursor-pointer group overflow-hidden flex items-center justify-center bg-white shadow-sm hover:-translate-y-1"
+      className="relative rounded-2xl border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-20 md:h-16 cursor-pointer group overflow-hidden flex items-center justify-center bg-white shadow-sm hover:-translate-y-1"
       glowColor="rgba(0, 122, 255, 0.1)"
       strength={0.3}
     >
@@ -48,28 +48,28 @@ const HomeTile = ({
       strength={0.3}
     >
       {/* Header with title */}
-      <div className="p-6 pb-4">
+      <div className="p-4 pb-2">
         <h3 className="text-lg font-space font-medium text-gray-900 group-hover:text-primary transition-colors">
           {title}
         </h3>
       </div>
 
       {/* Content area */}
-      <div className="px-6 pb-6 flex-1">
+      <div className="px-4 pb-4 flex-1">
         {image ? (
-          <div className="mb-4 rounded-xl overflow-hidden bg-gray-50">
+          <div className="mb-3 rounded-xl overflow-hidden bg-gray-50">
             <img 
               src={image} 
               alt={title}
               className={`w-full object-cover group-hover:scale-105 transition-transform duration-500 ${
-                size === "large" ? "h-48" : "h-32"
+                size === "large" ? "h-32" : "h-24"
               }`}
             />
           </div>
         ) : (
-          <div className="mb-4 flex items-center justify-center h-16">
-            <div className="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center">
-              <i className={`${icon} text-primary text-2xl`}></i>
+          <div className="mb-3 flex items-center justify-center h-12">
+            <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center">
+              <i className={`${icon} text-primary text-xl`}></i>
             </div>
           </div>
         )}
@@ -111,11 +111,11 @@ const HomeTile = ({
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen p-6 md:p-8">
+    <div className="min-h-screen p-4 md:p-6">
       {/* Navigation Tiles Grid */}
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Mobile: Single Column Stack */}
-        <div className="block md:hidden space-y-4 mb-4">
+        <div className="block md:hidden space-y-3 mb-3">
           {/* Brand Tile */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
