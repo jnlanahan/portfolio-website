@@ -44,7 +44,7 @@ const HomeTile = ({
       glowColor="rgba(0, 122, 255, 0.1)"
       strength={0.3}
     >
-      <h3 className="font-space font-medium text-gray-900 group-hover:text-primary transition-colors" style={{ fontSize: '14px' }}> {/* Consistent sizing */}
+      <h3 className="font-futura font-medium text-gray-900 group-hover:text-primary transition-colors" style={{ fontSize: '14px' }}> {/* Consistent sizing */}
         {title}
       </h3>
     </GlowingCard>
@@ -60,7 +60,7 @@ const HomeTile = ({
     >
       {/* Header with title */}
       <div style={{ padding: '16px 16px 8px' }}> {/* 8-point grid padding */}
-        <h3 className="font-space font-medium text-gray-900 group-hover:text-primary transition-colors" style={{ fontSize: '20px' }}> {/* Apple HIG: Section headings 20-24px */}
+        <h3 className="font-futura font-medium text-gray-900 group-hover:text-primary transition-colors" style={{ fontSize: '20px' }}> {/* Apple HIG: Section headings 20-24px */}
           {title}
         </h3>
       </div>
@@ -155,7 +155,7 @@ const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string;
       </div>
       
       {/* Text Label */}
-      <span className="font-space font-medium text-gray-900 group-hover:text-primary transition-colors mt-2 text-center leading-tight" style={{ fontSize: '14px' }}>
+      <span className="font-futura font-medium text-gray-900 group-hover:text-primary transition-colors mt-2 text-center leading-tight" style={{ fontSize: '14px' }}>
         {title}
       </span>
     </div>
@@ -193,62 +193,35 @@ const HomePage = () => {
     <div className="min-h-screen" style={{ padding: '24px 16px' }}> {/* 8-point grid: 24px vertical, 16px horizontal */}
       {/* Navigation Tiles Grid */}
       <div className="max-w-6xl mx-auto">
-        {/* Mobile: Single Column Stack */}
-        <div className="block md:hidden" style={{ marginBottom: '24px' }}> {/* 8-point grid spacing */}
-          <div style={{ marginBottom: '16px' }}> {/* 8-point grid spacing between elements */}
-            {/* Brand Tile */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              style={{ height: '64px' }} /* 8-point grid: 64px height */
+        {/* Mobile: Brand Tile Only */}
+        <div className="block md:hidden" style={{ marginBottom: '32px' }}> {/* 8-point grid spacing */}
+          {/* Brand Tile */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            style={{ height: '64px' }} /* 8-point grid: 64px height */
+          >
+            <GlowingCard 
+              className="bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-full flex items-center justify-center hover:-translate-y-1"
+              style={{ 
+                borderRadius: '16px', /* 8-point grid radius */
+                boxShadow: '0 2px 4px rgba(0,0,0,0.1)' /* Apple-style subtle shadow */
+              }}
+              glowColor="rgba(0, 122, 255, 0.1)"
+              strength={0.3}
             >
-              <GlowingCard 
-                className="bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-full flex items-center justify-center hover:-translate-y-1"
-                style={{ 
-                  borderRadius: '16px', /* 8-point grid radius */
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)' /* Apple-style subtle shadow */
-                }}
-                glowColor="rgba(0, 122, 255, 0.1)"
-                strength={0.3}
-              >
-                <h1 className="font-space font-bold text-gray-900" style={{ fontSize: '32px' }}> {/* Apple HIG: Page title 32-36px */}
-                  Nick<span className="text-primary">.</span>Lanahan
-                </h1>
-              </GlowingCard>
-            </motion.div>
-          </div>
-          
-          {/* Action Buttons */}
-          <div style={{ marginBottom: '32px' }}> {/* 8-point grid spacing */}
-            <div style={{ marginBottom: '12px' }}>
-              <ActionButton
-                title="Contact Me"
-                linkTo="/contact"
-                delay={0.2}
-              />
-            </div>
-            <div style={{ marginBottom: '12px' }}>
-              <ActionButton
-                title="Download my Resume"
-                linkTo="/resume.pdf"
-                delay={0.3}
-              />
-            </div>
-            <div>
-              <ActionButton
-                title="Connect with me on LinkedIn"
-                linkTo="https://linkedin.com/in/nicklanahan"
-                delay={0.4}
-              />
-            </div>
-          </div>
+              <h1 className="font-futura font-bold text-gray-900" style={{ fontSize: '32px' }}> {/* Apple HIG: Page title 32-36px */}
+                Nick<span className="text-primary">.</span>Lanahan
+              </h1>
+            </GlowingCard>
+          </motion.div>
         </div>
 
-        {/* Desktop: Brand Tile and Action Buttons */}
+        {/* Desktop: Brand Tile Only */}
         <div className="hidden md:block">
           {/* Brand Tile - Full Width */}
-          <div style={{ marginBottom: '24px' }}> {/* 8-point grid spacing */}
+          <div style={{ marginBottom: '32px' }}> {/* 8-point grid spacing */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -264,35 +237,16 @@ const HomePage = () => {
                 glowColor="rgba(0, 122, 255, 0.1)"
                 strength={0.3}
               >
-                <h1 className="font-space font-bold text-gray-900" style={{ fontSize: '48px' }}> {/* Apple HIG: Page title 32-48px */}
+                <h1 className="font-futura font-bold text-gray-900" style={{ fontSize: '48px' }}> {/* Apple HIG: Page title 32-48px */}
                   Nick<span className="text-primary"> </span>Lanahan
                 </h1>
               </GlowingCard>
             </motion.div>
           </div>
-          
-          {/* Action Buttons Row */}
-          <div className="flex justify-center space-x-12" style={{ marginBottom: '32px' }}> {/* 8-point grid spacing */}
-            <ActionButton
-              title="Contact Me"
-              linkTo="/contact"
-              delay={0.2}
-            />
-            <ActionButton
-              title="Download my Resume"
-              linkTo="/resume.pdf"
-              delay={0.3}
-            />
-            <ActionButton
-              title="Connect with me on LinkedIn"
-              linkTo="https://linkedin.com/in/nicklanahan"
-              delay={0.4}
-            />
-          </div>
         </div>
         
         {/* Main Navigation Tiles */}
-        <div className="grid grid-cols-1 md:grid-cols-4" style={{ gap: '16px' }}> {/* 8-point grid spacing */}
+        <div className="grid grid-cols-1 md:grid-cols-4" style={{ gap: '16px', marginBottom: '32px' }}> {/* 8-point grid spacing */}
           <HomeTile
             title="About"
             description="Learn more about my background, skills, and journey"
@@ -331,6 +285,25 @@ const HomePage = () => {
             delay={0.8}
             size="large"
             image="https://images.unsplash.com/photo-1611224923853-80b023f02d71?q=80&w=1000&auto=format&fit=crop"
+          />
+        </div>
+        
+        {/* Action Buttons - Desktop and Mobile */}
+        <div className="flex justify-center space-x-12 md:space-x-12" style={{ marginBottom: '24px' }}> {/* 8-point grid spacing */}
+          <ActionButton
+            title="Contact Me"
+            linkTo="/contact"
+            delay={0.9}
+          />
+          <ActionButton
+            title="Download my Resume"
+            linkTo="/resume.pdf"
+            delay={1.0}
+          />
+          <ActionButton
+            title="Connect with me on LinkedIn"
+            linkTo="https://linkedin.com/in/nicklanahan"
+            delay={1.1}
           />
         </div>
       </div>

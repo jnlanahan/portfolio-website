@@ -75,6 +75,8 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Updated icons to brand colors: Gmail red for Contact, LinkedIn blue for connection
   - Added proper text wrapping and centering for better symmetry
   - Switched from generic mail icon to Gmail icon for better brand recognition
+  - **Changed site font to Futura throughout the entire interface**
+  - **Repositioned action buttons below main navigation tiles for better visual hierarchy**
 - **January 2025**: Implemented AI Content Polisher with anti-AI-detection measures
   - Created comprehensive OpenAI-powered content analysis system
   - Added real-time writing suggestions and style improvements
