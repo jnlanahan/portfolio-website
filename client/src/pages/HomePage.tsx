@@ -199,7 +199,7 @@ const HomePage = () => {
           <div 
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: 'radial-gradient(circle at center top, rgba(144, 238, 144, 0.7) 0%, rgba(144, 238, 144, 0.6) 10%, rgba(144, 238, 144, 0.5) 25%, rgba(144, 238, 144, 0.3) 45%, rgba(144, 238, 144, 0.2) 65%, rgba(144, 238, 144, 0.1) 80%, transparent 95%)',
+              background: 'radial-gradient(circle at center top, rgba(144, 238, 144, 0.9) 0%, rgba(144, 238, 144, 0.8) 8%, rgba(144, 238, 144, 0.7) 15%, rgba(144, 238, 144, 0.5) 25%, rgba(144, 238, 144, 0.3) 35%, rgba(144, 238, 144, 0.15) 50%, rgba(144, 238, 144, 0.08) 65%, rgba(144, 238, 144, 0.03) 80%, transparent 90%)',
               width: '200%',
               height: '300%',
               left: '-50%',
