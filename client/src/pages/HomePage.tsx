@@ -138,9 +138,9 @@ const HomePage = () => {
       {/* Navigation Tiles Grid */}
       <div className="max-w-7xl mx-auto">
         {/* Top Row */}
-        <div className="grid grid-cols-1 md:grid-cols-10 gap-4 mb-4 h-16">
-          {/* Brand Tile - 1/3 wider (4 columns instead of 3) */}
-          <div className="md:col-span-4 h-full">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-4 h-16">
+          {/* Brand Tile - 1/3 wider again (6 columns instead of 4) */}
+          <div className="md:col-span-6 h-full">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -166,7 +166,7 @@ const HomePage = () => {
             </motion.div>
           </div>
           
-          {/* Three Compact Tiles - 2 columns each */}
+          {/* Three Compact Tiles - 2 columns each in remaining 6 columns */}
           <div className="md:col-span-6 grid grid-cols-1 md:grid-cols-3 gap-4 h-full">
             <HomeTile
               title="Contact"
