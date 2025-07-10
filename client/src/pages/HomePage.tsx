@@ -33,7 +33,7 @@ const HomeTile = ({
 
   const tileContent = compact ? (
     <GlowingCard 
-      className="bg-background/90 backdrop-blur-md rounded-2xl border border-secondary/10 hover:border-secondary/30 hover:bg-background/95 transition-all duration-300 h-32 md:h-16 cursor-pointer group overflow-hidden flex items-center justify-center"
+      className="relative backdrop-blur-md rounded-2xl border border-secondary/10 hover:border-secondary/30 hover:bg-background/95 transition-all duration-300 h-32 md:h-16 cursor-pointer group overflow-hidden flex items-center justify-center bg-[#05c289]"
       glowColor="rgba(67, 186, 147, 0.6)"
     >
       <h3 className="text-sm font-space font-medium text-foreground group-hover:text-secondary transition-colors">
