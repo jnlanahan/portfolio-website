@@ -176,7 +176,7 @@ const HomePage = () => {
                   className="bg-background/90 backdrop-blur-md rounded-2xl border border-secondary/10 hover:border-secondary/30 transition-all duration-300 h-full flex items-center justify-center"
                   glowColor="rgba(67, 186, 147, 0.6)"
                 >
-                  <h2 className="font-space font-bold text-[48px]">
+                  <h2 className="font-space font-bold text-[48px] text-[#05ce93]">
                     Nick<span className="text-secondary"> </span>Lanahan
                   </h2>
                 </GlowingCard>
