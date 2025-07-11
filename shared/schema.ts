@@ -148,7 +148,7 @@ export const topFiveListItems = pgTable("top_five_list_items", {
   id: serial("id").primaryKey(),
   listId: integer("list_id").references(() => topFiveLists.id).notNull(),
   title: text("title").notNull(),
-  description: text("description").notNull(),
+  description: text("description"),
   link: text("link"),
   linkText: text("link_text"),
   image: text("image"),

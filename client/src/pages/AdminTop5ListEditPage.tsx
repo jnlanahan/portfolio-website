@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { 
@@ -26,14 +27,13 @@ const listSchema = z.object({
   title: z.string().min(1, "Title is required"),
   icon: z.string().min(1, "Icon is required"),
   color: z.string().optional(),
-  description: z.string().optional(),
   mainImage: z.string().optional(),
   position: z.number().min(0).optional(),
 });
 
 const itemSchema = z.object({
   title: z.string().min(1, "Title is required"),
-  description: z.string().min(1, "Description is required"),
+  description: z.string().optional(),
   link: z.string().optional(),
   linkText: z.string().optional(),
   image: z.string().optional(),
@@ -47,6 +47,8 @@ export default function AdminTop5ListEditPage() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [showAddItem, setShowAddItem] = useState(false);
+  const [uploadingMainImage, setUploadingMainImage] = useState(false);
+  const [uploadingItemImage, setUploadingItemImage] = useState(false);
 
   const isEditing = id !== "new";
 
@@ -74,7 +76,6 @@ export default function AdminTop5ListEditPage() {
       title: "",
       icon: "ri-list-line",
       color: "#22c55e",
-      description: "",
       mainImage: "",
       position: 0,
     },
@@ -106,7 +107,6 @@ export default function AdminTop5ListEditPage() {
         title: list.title,
         icon: list.icon,
         color: list.color || "#22c55e",
-        description: list.description || "",
         mainImage: list.mainImage || "",
         position: list.position || 0,
       });
@@ -144,6 +144,9 @@ export default function AdminTop5ListEditPage() {
   // Add item mutation
   const addItemMutation = useMutation({
     mutationFn: async (data: any) => {
+      if (!id || id === "new") {
+        throw new Error("Must save list first before adding items");
+      }
       return await apiRequest(`/api/admin/top5-lists/${id}/items`, "POST", data);
     },
     onSuccess: () => {
@@ -191,6 +194,65 @@ export default function AdminTop5ListEditPage() {
 
   const onSubmitItem = (data: any) => {
     addItemMutation.mutate(data);
+  };
+
+  // Upload functions
+  const handleMainImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setUploadingMainImage(true);
+    const formData = new FormData();
+    formData.append('files', file);
+
+    try {
+      const response = await apiRequest('/api/admin/upload', 'POST', formData);
+      const uploadedFile = response.files[0];
+      if (uploadedFile) {
+        registerList('mainImage', { value: uploadedFile.url });
+        toast({
+          title: "Image uploaded successfully",
+          description: "Main image has been updated",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Upload failed",
+        description: "An error occurred while uploading the image",
+        variant: "destructive",
+      });
+    } finally {
+      setUploadingMainImage(false);
+    }
+  };
+
+  const handleItemImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setUploadingItemImage(true);
+    const formData = new FormData();
+    formData.append('files', file);
+
+    try {
+      const response = await apiRequest('/api/admin/upload', 'POST', formData);
+      const uploadedFile = response.files[0];
+      if (uploadedFile) {
+        registerItem('image', { value: uploadedFile.url });
+        toast({
+          title: "Image uploaded successfully",
+          description: "Item image has been updated",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Upload failed",
+        description: "An error occurred while uploading the image",
+        variant: "destructive",
+      });
+    } finally {
+      setUploadingItemImage(false);
+    }
   };
 
   if (isLoading) {
@@ -278,21 +340,28 @@ export default function AdminTop5ListEditPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
-                  <Textarea
-                    id="description"
-                    {...registerList("description")}
-                    placeholder="Brief description of this list..."
-                    className="min-h-[100px]"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="mainImage">Main Image URL</Label>
-                  <Input
-                    id="mainImage"
-                    {...registerList("mainImage")}
-                    placeholder="https://example.com/image.jpg"
+                  <Label htmlFor="mainImage">Main Image</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="mainImage"
+                      {...registerList("mainImage")}
+                      placeholder="https://example.com/image.jpg"
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      disabled={uploadingMainImage}
+                      onClick={() => document.getElementById('mainImageUpload')?.click()}
+                    >
+                      {uploadingMainImage ? "Uploading..." : "Upload"}
+                    </Button>
+                  </div>
+                  <input
+                    id="mainImageUpload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleMainImageUpload}
+                    style={{ display: 'none' }}
                   />
                 </div>
 
@@ -329,7 +398,7 @@ export default function AdminTop5ListEditPage() {
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle>List Items</CardTitle>
+                  <CardTitle>Top 5 Items</CardTitle>
                   <Button
                     size="sm"
                     onClick={() => setShowAddItem(!showAddItem)}
@@ -346,33 +415,44 @@ export default function AdminTop5ListEditPage() {
                   <Card className="mb-4">
                     <CardHeader>
                       <CardTitle className="text-lg">Add New Item</CardTitle>
+                      <p className="text-sm text-gray-600">Add items to your Top 5 list. Only title is required.</p>
                     </CardHeader>
                     <CardContent>
                       <form onSubmit={handleSubmitItem(onSubmitItem)} className="space-y-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="itemTitle">Title *</Label>
-                          <Input
-                            id="itemTitle"
-                            {...registerItem("title")}
-                            placeholder="Item title"
-                            className={itemErrors.title ? "border-red-500" : ""}
-                          />
-                          {itemErrors.title && (
-                            <p className="text-sm text-red-500">{itemErrors.title.message}</p>
-                          )}
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="itemTitle">Title *</Label>
+                            <Input
+                              id="itemTitle"
+                              {...registerItem("title")}
+                              placeholder="Item title"
+                              className={itemErrors.title ? "border-red-500" : ""}
+                            />
+                            {itemErrors.title && (
+                              <p className="text-sm text-red-500">{itemErrors.title.message}</p>
+                            )}
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="itemPosition">Position (1-5)</Label>
+                            <Input
+                              id="itemPosition"
+                              {...registerItem("position", { valueAsNumber: true })}
+                              type="number"
+                              min="1"
+                              max="5"
+                              placeholder="1"
+                            />
+                          </div>
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="itemDescription">Description *</Label>
+                          <Label htmlFor="itemDescription">Description (Optional)</Label>
                           <Textarea
                             id="itemDescription"
                             {...registerItem("description")}
-                            placeholder="Item description"
-                            className={itemErrors.description ? "border-red-500" : ""}
+                            placeholder="Brief description (optional)"
+                            className="min-h-[60px]"
                           />
-                          {itemErrors.description && (
-                            <p className="text-sm text-red-500">{itemErrors.description.message}</p>
-                          )}
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
@@ -395,11 +475,28 @@ export default function AdminTop5ListEditPage() {
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="itemImage">Image URL</Label>
-                          <Input
-                            id="itemImage"
-                            {...registerItem("image")}
-                            placeholder="https://example.com/image.jpg"
+                          <Label htmlFor="itemImage">Image</Label>
+                          <div className="flex gap-2">
+                            <Input
+                              id="itemImage"
+                              {...registerItem("image")}
+                              placeholder="https://example.com/image.jpg"
+                            />
+                            <Button
+                              type="button"
+                              variant="outline"
+                              disabled={uploadingItemImage}
+                              onClick={() => document.getElementById('itemImageUpload')?.click()}
+                            >
+                              {uploadingItemImage ? "Uploading..." : "Upload"}
+                            </Button>
+                          </div>
+                          <input
+                            id="itemImageUpload"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleItemImageUpload}
+                            style={{ display: 'none' }}
                           />
                         </div>
 
@@ -427,23 +524,46 @@ export default function AdminTop5ListEditPage() {
 
                 {/* Existing Items */}
                 <div className="space-y-3">
-                  {items?.map((item: any) => (
-                    <Card key={item.id} className="p-3">
-                      <div className="flex items-center justify-between">
+                  {items?.sort((a: any, b: any) => a.position - b.position).map((item: any) => (
+                    <Card key={item.id} className="p-4">
+                      <div className="flex items-start gap-4">
+                        {/* Position Number */}
+                        <div className="flex-shrink-0 w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                          <span className="text-sm font-bold text-blue-700 dark:text-blue-300">
+                            {item.position}
+                          </span>
+                        </div>
+                        
+                        {/* Item Image */}
+                        {item.image && (
+                          <div className="flex-shrink-0">
+                            <img
+                              src={item.image}
+                              alt={item.title}
+                              className="w-16 h-16 object-cover rounded-lg"
+                            />
+                          </div>
+                        )}
+                        
+                        {/* Item Content */}
                         <div className="flex-1">
-                          <h4 className="font-medium">{item.title}</h4>
-                          <p className="text-sm text-gray-600">{item.description}</p>
+                          <h4 className="font-medium text-lg">{item.title}</h4>
+                          {item.description && (
+                            <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                          )}
                           {item.link && (
                             <a
                               href={item.link}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-xs text-blue-600 hover:underline"
+                              className="text-sm text-blue-600 hover:underline mt-2 inline-block"
                             >
-                              {item.linkText || "Visit Link"}
+                              {item.linkText || "Visit Link"} →
                             </a>
                           )}
                         </div>
+                        
+                        {/* Actions */}
                         <div className="flex items-center gap-2">
                           {item.highlight && (
                             <Badge variant="secondary">Highlight</Badge>
