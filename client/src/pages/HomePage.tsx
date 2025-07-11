@@ -212,7 +212,7 @@ const HomePage = () => {
         {/* Hero Section - Like the screenshot */}
         <div className="text-center relative" style={{ marginBottom: '160px', marginTop: '120px', zIndex: 10 }}>
           {/* Glowing circle with logos following circular path */}
-          <div className="absolute inset-0 pointer-events-none overflow-visible glowing-circle-container" style={{ zIndex: 1 }}>
+          <div className="absolute inset-0 pointer-events-none overflow-visible glowing-circle-container" style={{ zIndex: 0 }}>
             {/* Glowing Circle Background */}
             <div className="glowing-circle"></div>
             
@@ -341,7 +341,7 @@ const HomePage = () => {
         </div>
         
         {/* Main Navigation Tiles */}
-        <div className="grid grid-cols-1 md:grid-cols-4" style={{ gap: '16px', marginBottom: '32px' }}> {/* 8-point grid spacing */}
+        <div className="grid grid-cols-1 md:grid-cols-4 relative" style={{ gap: '16px', marginBottom: '32px', zIndex: 20 }}> {/* 8-point grid spacing */}
           <HomeTile
             title="About"
             description="Learn more about my background, skills, and journey"
