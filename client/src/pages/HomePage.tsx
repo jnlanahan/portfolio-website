@@ -275,7 +275,7 @@ const HomePage = () => {
                 fontSize: 'clamp(48px, 8vw, 72px)', 
                 lineHeight: '1.1', 
                 letterSpacing: '-0.02em',
-                textShadow: '0 0 20px rgba(144, 238, 144, 0.8), 0 0 40px rgba(144, 238, 144, 0.6), 0 0 80px rgba(144, 238, 144, 0.4), 0 0 120px rgba(144, 238, 144, 0.2)'
+                textShadow: 'none'
               }}
             >
               NICK<br/>LANAHAN
