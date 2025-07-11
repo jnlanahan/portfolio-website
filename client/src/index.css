@@ -170,218 +170,135 @@ body {
     animation: aurora 20s ease-in-out infinite;
   }
 
-  /* Magnetic field animation - logos gently drift around the name */
-  .magnetic-container {
+  /* Glowing circle with logos following circular path */
+  .glowing-circle-container {
     position: relative;
     z-index: 1;
   }
   
-  .magnetic-field-1 {
-    animation: magnetic-drift-1 25s ease-in-out infinite;
+  .glowing-circle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 400px;
+    border: 2px solid rgba(0, 122, 255, 0.3);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 122, 255, 0.1) 0%, transparent 70%);
+    box-shadow: 
+      0 0 20px rgba(0, 122, 255, 0.2),
+      inset 0 0 20px rgba(0, 122, 255, 0.1);
+    animation: glow-pulse 4s ease-in-out infinite;
   }
   
-  .magnetic-field-2 {
-    animation: magnetic-drift-2 30s ease-in-out infinite;
-  }
-  
-  .magnetic-field-3 {
-    animation: magnetic-drift-3 20s ease-in-out infinite;
-  }
-  
-  .magnetic-field-4 {
-    animation: magnetic-drift-4 28s ease-in-out infinite;
-  }
-  
-  .magnetic-field-5 {
-    animation: magnetic-drift-5 22s ease-in-out infinite;
-  }
-  
-  .magnetic-field-6 {
-    animation: magnetic-drift-6 26s ease-in-out infinite;
-  }
-  
-  @keyframes magnetic-drift-1 {
+  @keyframes glow-pulse {
     0%, 100% { 
-      transform: translateX(-180px) translateY(-120px) scale(1) rotate(0deg);
-    }
-    25% { 
-      transform: translateX(-150px) translateY(-100px) scale(1.1) rotate(5deg);
+      box-shadow: 
+        0 0 20px rgba(0, 122, 255, 0.2),
+        inset 0 0 20px rgba(0, 122, 255, 0.1);
     }
     50% { 
-      transform: translateX(-200px) translateY(-140px) scale(0.9) rotate(-3deg);
-    }
-    75% { 
-      transform: translateX(-160px) translateY(-110px) scale(1.05) rotate(2deg);
-    }
-  }
-  
-  @keyframes magnetic-drift-2 {
-    0%, 100% { 
-      transform: translateX(220px) translateY(-100px) scale(1) rotate(0deg);
-    }
-    25% { 
-      transform: translateX(200px) translateY(-80px) scale(1.1) rotate(-5deg);
-    }
-    50% { 
-      transform: translateX(240px) translateY(-120px) scale(0.9) rotate(3deg);
-    }
-    75% { 
-      transform: translateX(210px) translateY(-90px) scale(1.05) rotate(-2deg);
+      box-shadow: 
+        0 0 30px rgba(0, 122, 255, 0.4),
+        inset 0 0 30px rgba(0, 122, 255, 0.2);
     }
   }
   
-  @keyframes magnetic-drift-3 {
-    0%, 100% { 
-      transform: translateX(-240px) translateY(80px) scale(1) rotate(0deg);
-    }
-    25% { 
-      transform: translateX(-220px) translateY(60px) scale(1.1) rotate(4deg);
-    }
-    50% { 
-      transform: translateX(-260px) translateY(100px) scale(0.9) rotate(-4deg);
-    }
-    75% { 
-      transform: translateX(-230px) translateY(70px) scale(1.05) rotate(1deg);
-    }
+  .circular-orbit-1 {
+    animation: circular-path-1 20s linear infinite;
   }
   
-  @keyframes magnetic-drift-4 {
-    0%, 100% { 
-      transform: translateX(200px) translateY(90px) scale(1) rotate(0deg);
-    }
-    25% { 
-      transform: translateX(180px) translateY(70px) scale(1.1) rotate(-3deg);
-    }
-    50% { 
-      transform: translateX(220px) translateY(110px) scale(0.9) rotate(4deg);
-    }
-    75% { 
-      transform: translateX(190px) translateY(80px) scale(1.05) rotate(-1deg);
-    }
+  .circular-orbit-2 {
+    animation: circular-path-2 25s linear infinite;
   }
   
-  @keyframes magnetic-drift-5 {
-    0%, 100% { 
-      transform: translateX(-160px) translateY(180px) scale(1) rotate(0deg);
-    }
-    25% { 
-      transform: translateX(-140px) translateY(160px) scale(1.1) rotate(3deg);
-    }
-    50% { 
-      transform: translateX(-180px) translateY(200px) scale(0.9) rotate(-3deg);
-    }
-    75% { 
-      transform: translateX(-150px) translateY(170px) scale(1.05) rotate(2deg);
-    }
+  .circular-orbit-3 {
+    animation: circular-path-3 18s linear infinite;
   }
   
-  @keyframes magnetic-drift-6 {
-    0%, 100% { 
-      transform: translateX(180px) translateY(170px) scale(1) rotate(0deg);
-    }
-    25% { 
-      transform: translateX(160px) translateY(150px) scale(1.1) rotate(-2deg);
-    }
-    50% { 
-      transform: translateX(200px) translateY(190px) scale(0.9) rotate(3deg);
-    }
-    75% { 
-      transform: translateX(170px) translateY(160px) scale(1.05) rotate(-1deg);
-    }
+  .circular-orbit-4 {
+    animation: circular-path-4 22s linear infinite;
   }
   
-  /* Mobile optimized magnetic field */
+  .circular-orbit-5 {
+    animation: circular-path-5 24s linear infinite;
+  }
+  
+  .circular-orbit-6 {
+    animation: circular-path-6 19s linear infinite;
+  }
+  
+  /* Circular path animations - logos move around the circle */
+  @keyframes circular-path-1 {
+    0% { transform: rotate(0deg) translateX(200px) rotate(0deg); }
+    100% { transform: rotate(360deg) translateX(200px) rotate(-360deg); }
+  }
+  
+  @keyframes circular-path-2 {
+    0% { transform: rotate(60deg) translateX(200px) rotate(-60deg); }
+    100% { transform: rotate(420deg) translateX(200px) rotate(-420deg); }
+  }
+  
+  @keyframes circular-path-3 {
+    0% { transform: rotate(120deg) translateX(200px) rotate(-120deg); }
+    100% { transform: rotate(480deg) translateX(200px) rotate(-480deg); }
+  }
+  
+  @keyframes circular-path-4 {
+    0% { transform: rotate(180deg) translateX(200px) rotate(-180deg); }
+    100% { transform: rotate(540deg) translateX(200px) rotate(-540deg); }
+  }
+  
+  @keyframes circular-path-5 {
+    0% { transform: rotate(240deg) translateX(200px) rotate(-240deg); }
+    100% { transform: rotate(600deg) translateX(200px) rotate(-600deg); }
+  }
+  
+  @keyframes circular-path-6 {
+    0% { transform: rotate(300deg) translateX(200px) rotate(-300deg); }
+    100% { transform: rotate(660deg) translateX(200px) rotate(-660deg); }
+  }
+  
+  /* Mobile responsive circular paths */
   @media (max-width: 768px) {
-    @keyframes magnetic-drift-1 {
-      0%, 100% { 
-        transform: translateX(-120px) translateY(-80px) scale(1) rotate(0deg);
-      }
-      25% { 
-        transform: translateX(-100px) translateY(-60px) scale(1.1) rotate(5deg);
-      }
-      50% { 
-        transform: translateX(-140px) translateY(-100px) scale(0.9) rotate(-3deg);
-      }
-      75% { 
-        transform: translateX(-110px) translateY(-70px) scale(1.05) rotate(2deg);
-      }
+    .glowing-circle {
+      width: 300px;
+      height: 300px;
     }
     
-    @keyframes magnetic-drift-2 {
-      0%, 100% { 
-        transform: translateX(130px) translateY(-70px) scale(1) rotate(0deg);
-      }
-      25% { 
-        transform: translateX(110px) translateY(-50px) scale(1.1) rotate(-5deg);
-      }
-      50% { 
-        transform: translateX(150px) translateY(-90px) scale(0.9) rotate(3deg);
-      }
-      75% { 
-        transform: translateX(120px) translateY(-60px) scale(1.05) rotate(-2deg);
-      }
+    @keyframes circular-path-1 {
+      0% { transform: rotate(0deg) translateX(150px) rotate(0deg); }
+      100% { transform: rotate(360deg) translateX(150px) rotate(-360deg); }
     }
     
-    @keyframes magnetic-drift-3 {
-      0%, 100% { 
-        transform: translateX(-140px) translateY(60px) scale(1) rotate(0deg);
-      }
-      25% { 
-        transform: translateX(-120px) translateY(40px) scale(1.1) rotate(4deg);
-      }
-      50% { 
-        transform: translateX(-160px) translateY(80px) scale(0.9) rotate(-4deg);
-      }
-      75% { 
-        transform: translateX(-130px) translateY(50px) scale(1.05) rotate(1deg);
-      }
+    @keyframes circular-path-2 {
+      0% { transform: rotate(60deg) translateX(150px) rotate(-60deg); }
+      100% { transform: rotate(420deg) translateX(150px) rotate(-420deg); }
     }
     
-    @keyframes magnetic-drift-4 {
-      0%, 100% { 
-        transform: translateX(120px) translateY(70px) scale(1) rotate(0deg);
-      }
-      25% { 
-        transform: translateX(100px) translateY(50px) scale(1.1) rotate(-3deg);
-      }
-      50% { 
-        transform: translateX(140px) translateY(90px) scale(0.9) rotate(4deg);
-      }
-      75% { 
-        transform: translateX(110px) translateY(60px) scale(1.05) rotate(-1deg);
-      }
+    @keyframes circular-path-3 {
+      0% { transform: rotate(120deg) translateX(150px) rotate(-120deg); }
+      100% { transform: rotate(480deg) translateX(150px) rotate(-480deg); }
     }
     
-    @keyframes magnetic-drift-5 {
-      0%, 100% { 
-        transform: translateX(-100px) translateY(140px) scale(1) rotate(0deg);
-      }
-      25% { 
-        transform: translateX(-80px) translateY(120px) scale(1.1) rotate(3deg);
-      }
-      50% { 
-        transform: translateX(-120px) translateY(160px) scale(0.9) rotate(-3deg);
-      }
-      75% { 
-        transform: translateX(-90px) translateY(130px) scale(1.05) rotate(2deg);
-      }
+    @keyframes circular-path-4 {
+      0% { transform: rotate(180deg) translateX(150px) rotate(-180deg); }
+      100% { transform: rotate(540deg) translateX(150px) rotate(-540deg); }
     }
     
-    @keyframes magnetic-drift-6 {
-      0%, 100% { 
-        transform: translateX(110px) translateY(130px) scale(1) rotate(0deg);
-      }
-      25% { 
-        transform: translateX(90px) translateY(110px) scale(1.1) rotate(-2deg);
-      }
-      50% { 
-        transform: translateX(130px) translateY(150px) scale(0.9) rotate(3deg);
-      }
-      75% { 
-        transform: translateX(100px) translateY(120px) scale(1.05) rotate(-1deg);
-      }
+    @keyframes circular-path-5 {
+      0% { transform: rotate(240deg) translateX(150px) rotate(-240deg); }
+      100% { transform: rotate(600deg) translateX(150px) rotate(-600deg); }
+    }
+    
+    @keyframes circular-path-6 {
+      0% { transform: rotate(300deg) translateX(150px) rotate(-300deg); }
+      100% { transform: rotate(660deg) translateX(150px) rotate(-660deg); }
     }
   }
+  
+
 }
 
 /* Font families */
