@@ -225,6 +225,18 @@ const HomePage = () => {
             {/* EY Logo - Position 1 (Top - 0°) */}
             <div 
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+              style={{ transform: 'translate(-50%, -50%) rotate(0deg) translateX(120px) rotate(0deg)' }}
+            >
+              <div className="static-logo-1 sm:hidden">
+                <img 
+                  src={eyLogo} 
+                  alt="EY" 
+                  className="w-10 h-10 object-contain"
+                />
+              </div>
+            </div>
+            <div 
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden sm:block"
               style={{ transform: 'translate(-50%, -50%) rotate(0deg) translateX(200px) rotate(0deg)' }}
             >
               <div className="static-logo-1">
@@ -239,6 +251,18 @@ const HomePage = () => {
             {/* US Army Logo - Position 2 (Top Right - 60°) */}
             <div 
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+              style={{ transform: 'translate(-50%, -50%) rotate(60deg) translateX(120px) rotate(-60deg)' }}
+            >
+              <div className="static-logo-2 sm:hidden">
+                <img 
+                  src={armyLogo} 
+                  alt="U.S. Army" 
+                  className="w-10 h-10 object-contain"
+                />
+              </div>
+            </div>
+            <div 
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden sm:block"
               style={{ transform: 'translate(-50%, -50%) rotate(60deg) translateX(200px) rotate(-60deg)' }}
             >
               <div className="static-logo-2">
@@ -253,6 +277,18 @@ const HomePage = () => {
             {/* Ohio State Fisher College of Business Logo - Position 3 (Bottom Right - 120°) */}
             <div 
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+              style={{ transform: 'translate(-50%, -50%) rotate(120deg) translateX(120px) rotate(-120deg)' }}
+            >
+              <div className="static-logo-3 sm:hidden">
+                <img 
+                  src={osuLogo} 
+                  alt="Ohio State Fisher College of Business" 
+                  className="w-20 h-20 object-contain"
+                />
+              </div>
+            </div>
+            <div 
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden sm:block"
               style={{ transform: 'translate(-50%, -50%) rotate(120deg) translateX(200px) rotate(-120deg)' }}
             >
               <div className="static-logo-3">
@@ -267,6 +303,18 @@ const HomePage = () => {
             {/* NC State College of Engineering Logo - Position 4 (Bottom - 180°) */}
             <div 
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+              style={{ transform: 'translate(-50%, -50%) rotate(180deg) translateX(120px) rotate(-180deg)' }}
+            >
+              <div className="static-logo-4 sm:hidden">
+                <img 
+                  src={ncStateLogo} 
+                  alt="NC State" 
+                  className="w-10 h-10 object-contain"
+                />
+              </div>
+            </div>
+            <div 
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden sm:block"
               style={{ transform: 'translate(-50%, -50%) rotate(180deg) translateX(200px) rotate(-180deg)' }}
             >
               <div className="static-logo-4">
@@ -281,6 +329,18 @@ const HomePage = () => {
             {/* Missouri S&T Logo - Position 5 (Bottom Left - 240°) */}
             <div 
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+              style={{ transform: 'translate(-50%, -50%) rotate(240deg) translateX(120px) rotate(-240deg)' }}
+            >
+              <div className="static-logo-5 sm:hidden">
+                <img 
+                  src={missouriLogo} 
+                  alt="Missouri S&T" 
+                  className="w-18 h-18 object-contain"
+                />
+              </div>
+            </div>
+            <div 
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden sm:block"
               style={{ transform: 'translate(-50%, -50%) rotate(240deg) translateX(200px) rotate(-240deg)' }}
             >
               <div className="static-logo-5">
@@ -295,6 +355,18 @@ const HomePage = () => {
             {/* US Army Corps of Engineers Logo - Position 6 (Top Left - 300°) */}
             <div 
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+              style={{ transform: 'translate(-50%, -50%) rotate(300deg) translateX(120px) rotate(-300deg)' }}
+            >
+              <div className="static-logo-6 sm:hidden">
+                <img 
+                  src={usaceLogo} 
+                  alt="US Army Corps of Engineers" 
+                  className="w-10 h-10 object-contain"
+                />
+              </div>
+            </div>
+            <div 
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden sm:block"
               style={{ transform: 'translate(-50%, -50%) rotate(300deg) translateX(200px) rotate(-300deg)' }}
             >
               <div className="static-logo-6">
