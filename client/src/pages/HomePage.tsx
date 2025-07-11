@@ -15,6 +15,7 @@ import usaceLogo from '@assets/US-ArmyCorpsOfEngineers-Logo.svg_1752203527903.pn
 import armyLogo from '@assets/army-logo-2844_1752203136369.png';
 import eyLogo from '@assets/EY_1752203527904.png';
 import nickHeadshot from '@assets/PXL_20250628_182520391_1752206764378.jpg';
+import gmailLogo from '@assets/gmail-new_1752207266229.png';
 
 const HomeTile = ({ 
   title, 
@@ -142,10 +143,14 @@ const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string;
 
   // Get icon component based on title
   const getIconComponent = () => {
-    if (title.includes('Contact')) return <SiGmail size={24} className="text-red-500 group-hover:text-red-600 transition-colors" />;
+    if (title.includes('Contact')) return <img src={gmailLogo} alt="Gmail" className="w-6 h-6" />;
     if (title.includes('Resume')) return <Download size={24} className="text-gray-900 group-hover:text-primary transition-colors" />;
-    if (title.includes('LinkedIn')) return <Linkedin size={24} className="text-blue-600 group-hover:text-blue-700 transition-colors" />;
-    return <SiGmail size={24} className="text-red-500 group-hover:text-red-600 transition-colors" />;
+    if (title.includes('LinkedIn')) return (
+      <div className="w-6 h-6 bg-blue-600 rounded-sm flex items-center justify-center group-hover:bg-blue-700 transition-colors">
+        <span className="text-white font-bold text-sm">in</span>
+      </div>
+    );
+    return <img src={gmailLogo} alt="Gmail" className="w-6 h-6" />;
   };
 
   const buttonContent = (
