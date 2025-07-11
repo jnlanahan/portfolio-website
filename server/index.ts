@@ -95,7 +95,7 @@ app.use((req, res, next) => {
   
   // Verify email connection
   try {
-    const { verifyConnection } = require('./mailer');
+    const { verifyConnection } = await import('./mailer.js');
     await verifyConnection();
   } catch (error) {
     console.warn("Email service connection failed:", error);

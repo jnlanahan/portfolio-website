@@ -26,7 +26,7 @@ export async function sendContactEmail(data: EmailData) {
   
   const mailOptions = {
     from: `"Portfolio Contact Form" <${process.env.GMAIL_USER}>`,
-    to: process.env.GMAIL_USER, // Send to your own email
+    to: 'jnlanahan@gmail.com', // Send to your email
     replyTo: email, // Allow direct reply to the sender
     subject: `Portfolio Contact: ${subject}`,
     text: `

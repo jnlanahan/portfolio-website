@@ -37,7 +37,7 @@ const ContactPage = () => {
         has_subject: !!data.subject.trim()
       });
       
-      const response = await apiRequest("POST", "/api/contact", data);
+      const response = await apiRequest("/api/contact", "POST", data);
       
       // Show feedback based on whether the email was sent successfully
       if (response && typeof response === 'object' && 'message' in response) {
