@@ -1,12 +1,16 @@
 import nodemailer from 'nodemailer';
 
-// Gmail transporter setup
+// Gmail transporter setup with enhanced configuration
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
+    pass: process.env.GMAIL_APP_PASSWORD?.replace(/\s/g, ''), // Remove any spaces
   },
+  secure: true, // Use TLS
+  tls: {
+    rejectUnauthorized: false
+  }
 });
 
 interface EmailData {
