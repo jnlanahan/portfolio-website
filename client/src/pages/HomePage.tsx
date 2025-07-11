@@ -431,7 +431,7 @@ const HomePage = () => {
           />
           
           <HomeTile
-            title="Portfolio"
+            title="Projects"
             description="See my side projects"
             icon="ri-briefcase-line"
             linkTo="/portfolio"
