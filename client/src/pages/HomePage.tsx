@@ -211,102 +211,60 @@ const HomePage = () => {
       <div className="max-w-6xl mx-auto">
         {/* Hero Section - Like the screenshot */}
         <div className="text-center relative" style={{ marginBottom: '120px', zIndex: 10 }}>
-          {/* Magnetic field logo system - positioned around the name */}
-          <div className="absolute inset-0 pointer-events-none overflow-visible magnetic-container" style={{ zIndex: 1 }}>
+          {/* Structured logo system - clean, organized positioning */}
+          <div className="absolute inset-0 pointer-events-none overflow-visible structured-container" style={{ zIndex: 1 }}>
             {/* EY Logo - Top Left */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ 
-                animationDelay: '0s'
-              }}
-            >
-              <div className="magnetic-field-1">
-                <img 
-                  src={eyLogo} 
-                  alt="EY" 
-                  className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain opacity-40 hover:opacity-60 transition-opacity"
-                />
-              </div>
+            <div className="structured-logo-1">
+              <img 
+                src={eyLogo} 
+                alt="EY" 
+                className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain hover:opacity-80 transition-opacity"
+              />
             </div>
 
             {/* US Army Logo - Top Right */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ 
-                animationDelay: '5s'
-              }}
-            >
-              <div className="magnetic-field-2">
-                <img 
-                  src={armyLogo} 
-                  alt="U.S. Army" 
-                  className="w-14 h-12 sm:w-18 sm:h-16 md:w-24 md:h-20 object-contain opacity-40 hover:opacity-60 transition-opacity"
-                />
-              </div>
+            <div className="structured-logo-2">
+              <img 
+                src={armyLogo} 
+                alt="U.S. Army" 
+                className="w-14 h-12 sm:w-18 sm:h-16 md:w-24 md:h-20 object-contain hover:opacity-80 transition-opacity"
+              />
             </div>
 
             {/* Ohio State Fisher College of Business Logo - Left */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ 
-                animationDelay: '10s'
-              }}
-            >
-              <div className="magnetic-field-3">
-                <img 
-                  src={osuLogo} 
-                  alt="Ohio State Fisher College of Business" 
-                  className="w-20 h-12 sm:w-24 sm:h-16 md:w-32 md:h-20 object-contain opacity-40 hover:opacity-60 transition-opacity"
-                />
-              </div>
+            <div className="structured-logo-3">
+              <img 
+                src={osuLogo} 
+                alt="Ohio State Fisher College of Business" 
+                className="w-20 h-12 sm:w-24 sm:h-16 md:w-32 md:h-20 object-contain hover:opacity-80 transition-opacity"
+              />
             </div>
 
             {/* NC State College of Engineering Logo - Right */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ 
-                animationDelay: '15s'
-              }}
-            >
-              <div className="magnetic-field-4">
-                <img 
-                  src={ncStateLogo} 
-                  alt="NC State" 
-                  className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain opacity-40 hover:opacity-60 transition-opacity"
-                />
-              </div>
+            <div className="structured-logo-4">
+              <img 
+                src={ncStateLogo} 
+                alt="NC State" 
+                className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain hover:opacity-80 transition-opacity"
+              />
             </div>
 
             {/* Missouri S&T Logo - Bottom Left */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ 
-                animationDelay: '20s'
-              }}
-            >
-              <div className="magnetic-field-5">
-                <img 
-                  src={missouriLogo} 
-                  alt="Missouri S&T" 
-                  className="w-24 h-10 sm:w-28 sm:h-12 md:w-36 md:h-16 object-contain opacity-40 hover:opacity-60 transition-opacity"
-                />
-              </div>
+            <div className="structured-logo-5">
+              <img 
+                src={missouriLogo} 
+                alt="Missouri S&T" 
+                className="w-24 h-10 sm:w-28 sm:h-12 md:w-36 md:h-16 object-contain hover:opacity-80 transition-opacity"
+              />
             </div>
 
             {/* US Army Corps of Engineers Logo - Bottom Right */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ 
-                animationDelay: '25s'
-              }}
-            >
-              <div className="magnetic-field-6">
-                <img 
-                  src={usaceLogo} 
-                  alt="US Army Corps of Engineers" 
-                  className="w-20 h-14 sm:w-24 sm:h-16 md:w-28 md:h-20 object-contain opacity-40 hover:opacity-60 transition-opacity"
-                />
-              </div>
+            <div className="structured-logo-6">
+              <img 
+                src={usaceLogo} 
+                alt="US Army Corps of Engineers" 
+                className="w-20 h-14 sm:w-24 sm:h-16 md:w-28 md:h-20 object-contain hover:opacity-80 transition-opacity"
+              />
             </div>
           </div>
           
