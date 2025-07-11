@@ -218,35 +218,43 @@ export const BlogDetail: React.FC = () => {
               href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(window.location.href)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 bg-background/40 backdrop-blur-sm rounded-full text-muted-foreground hover:text-[#1DA1F2] hover:bg-[#1DA1F2]/10 transition-colors"
-              aria-label="Share on Twitter"
+              className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+              aria-label="Share on X (Twitter)"
+              style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
             >
               <i className="ri-twitter-x-fill text-lg"></i>
+              <span className="text-sm font-medium">X</span>
             </a>
             <a
               href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 bg-background/40 backdrop-blur-sm rounded-full text-muted-foreground hover:text-[#0A66C2] hover:bg-[#0A66C2]/10 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-[#0A66C2] text-white rounded-lg hover:bg-[#004182] transition-colors"
               aria-label="Share on LinkedIn"
+              style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
             >
               <i className="ri-linkedin-fill text-lg"></i>
+              <span className="text-sm font-medium">LinkedIn</span>
             </a>
             <a
               href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 bg-background/40 backdrop-blur-sm rounded-full text-muted-foreground hover:text-[#1877F2] hover:bg-[#1877F2]/10 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-[#1877F2] text-white rounded-lg hover:bg-[#166FE5] transition-colors"
               aria-label="Share on Facebook"
+              style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
             >
               <i className="ri-facebook-fill text-lg"></i>
+              <span className="text-sm font-medium">Facebook</span>
             </a>
             <button
               onClick={copyLinkToClipboard}
-              className="p-3 bg-background/40 backdrop-blur-sm rounded-full text-muted-foreground hover:text-secondary hover:bg-secondary/10 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
               aria-label="Copy link"
+              style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
             >
               <i className="ri-link text-lg"></i>
+              <span className="text-sm font-medium">Copy Link</span>
             </button>
           </div>
         </div>
