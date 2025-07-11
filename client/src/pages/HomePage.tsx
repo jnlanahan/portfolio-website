@@ -9,11 +9,11 @@ import { useState, useEffect } from "react";
 
 // Import logos
 import missouriLogo from '@assets/MissouriS&T Logo_1752203136367.png';
-import ncStateLogo from '@assets/NC State_1752203136368.png';
+import ncStateLogo from '@assets/NCSU_1752203527903.png';
 import osuLogo from '@assets/OSU Logo_1752203136368.png';
-import usaceLogo from '@assets/USACE logo_1752203136368.png';
+import usaceLogo from '@assets/US-ArmyCorpsOfEngineers-Logo.svg_1752203527903.png';
 import armyLogo from '@assets/army-logo-2844_1752203136369.png';
-import eyLogo from '@assets/EY_1752203187810.png';
+import eyLogo from '@assets/EY_1752203527904.png';
 
 const HomeTile = ({ 
   title, 
