@@ -4,6 +4,7 @@ import { BlogTag, formatBlogDate } from "@/data/blog";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { FaXTwitter, FaLinkedin, FaFacebook, FaLink } from 'react-icons/fa6';
 
 // BlogTag component for consistent styling (same as in BlogPage)
 const BlogTagBadge = ({ tag }: { tag: BlogTag }) => {
@@ -218,43 +219,35 @@ export const BlogDetail: React.FC = () => {
               href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(window.location.href)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+              className="flex items-center justify-center w-12 h-12 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
               aria-label="Share on X (Twitter)"
-              style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
             >
-              <i className="ri-twitter-x-fill text-lg"></i>
-              <span className="text-sm font-medium">X</span>
+              <FaXTwitter className="w-5 h-5" />
             </a>
             <a
               href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-[#0A66C2] text-white rounded-lg hover:bg-[#004182] transition-colors"
+              className="flex items-center justify-center w-12 h-12 bg-[#0A66C2] text-white rounded-lg hover:bg-[#004182] transition-colors"
               aria-label="Share on LinkedIn"
-              style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
             >
-              <i className="ri-linkedin-fill text-lg"></i>
-              <span className="text-sm font-medium">LinkedIn</span>
+              <FaLinkedin className="w-5 h-5" />
             </a>
             <a
               href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-[#1877F2] text-white rounded-lg hover:bg-[#166FE5] transition-colors"
+              className="flex items-center justify-center w-12 h-12 bg-[#1877F2] text-white rounded-lg hover:bg-[#166FE5] transition-colors"
               aria-label="Share on Facebook"
-              style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
             >
-              <i className="ri-facebook-fill text-lg"></i>
-              <span className="text-sm font-medium">Facebook</span>
+              <FaFacebook className="w-5 h-5" />
             </a>
             <button
               onClick={copyLinkToClipboard}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+              className="flex items-center justify-center w-12 h-12 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
               aria-label="Copy link"
-              style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
             >
-              <i className="ri-link text-lg"></i>
-              <span className="text-sm font-medium">Copy Link</span>
+              <FaLink className="w-5 h-5" />
             </button>
           </div>
         </div>
