@@ -170,24 +170,253 @@ body {
     animation: aurora 20s ease-in-out infinite;
   }
 
-  /* Floating logos animation */
-  @keyframes float-logo {
-    0%, 100% {
-      transform: translateY(0px) translateX(0px) rotate(0deg);
+  /* Orbital animation system */
+  .orbit-container {
+    position: relative;
+    transform-style: preserve-3d;
+  }
+  
+  .orbit-path-1 {
+    animation: orbit-ellipse-1 20s linear infinite;
+  }
+  
+  .orbit-path-2 {
+    animation: orbit-ellipse-2 25s linear infinite;
+  }
+  
+  .orbit-path-3 {
+    animation: orbit-ellipse-3 18s linear infinite;
+  }
+  
+  .orbit-path-4 {
+    animation: orbit-ellipse-4 22s linear infinite;
+  }
+  
+  .orbit-path-5 {
+    animation: orbit-ellipse-5 16s linear infinite;
+  }
+  
+  .orbit-path-6 {
+    animation: orbit-ellipse-6 28s linear infinite;
+  }
+  
+  @keyframes orbit-ellipse-1 {
+    0% { 
+      transform: translateX(0px) translateY(0px) rotateZ(0deg);
     }
-    25% {
-      transform: translateY(-15px) translateX(10px) rotate(5deg);
+    25% { 
+      transform: translateX(120px) translateY(-80px) rotateZ(90deg);
     }
-    50% {
-      transform: translateY(10px) translateX(-15px) rotate(-3deg);
+    50% { 
+      transform: translateX(0px) translateY(-160px) rotateZ(180deg);
     }
-    75% {
-      transform: translateY(-10px) translateX(-10px) rotate(2deg);
+    75% { 
+      transform: translateX(-120px) translateY(-80px) rotateZ(270deg);
+    }
+    100% { 
+      transform: translateX(0px) translateY(0px) rotateZ(360deg);
     }
   }
-
-  .animate-float-logo {
-    animation: float-logo 15s ease-in-out infinite;
+  
+  @keyframes orbit-ellipse-2 {
+    0% { 
+      transform: translateX(0px) translateY(0px) rotateZ(0deg);
+    }
+    25% { 
+      transform: translateX(200px) translateY(-60px) rotateZ(90deg);
+    }
+    50% { 
+      transform: translateX(0px) translateY(-120px) rotateZ(180deg);
+    }
+    75% { 
+      transform: translateX(-200px) translateY(-60px) rotateZ(270deg);
+    }
+    100% { 
+      transform: translateX(0px) translateY(0px) rotateZ(360deg);
+    }
+  }
+  
+  @keyframes orbit-ellipse-3 {
+    0% { 
+      transform: translateX(0px) translateY(0px) rotateZ(0deg);
+    }
+    25% { 
+      transform: translateX(-150px) translateY(-100px) rotateZ(90deg);
+    }
+    50% { 
+      transform: translateX(0px) translateY(-200px) rotateZ(180deg);
+    }
+    75% { 
+      transform: translateX(150px) translateY(-100px) rotateZ(270deg);
+    }
+    100% { 
+      transform: translateX(0px) translateY(0px) rotateZ(360deg);
+    }
+  }
+  
+  @keyframes orbit-ellipse-4 {
+    0% { 
+      transform: translateX(0px) translateY(0px) rotateZ(0deg);
+    }
+    25% { 
+      transform: translateX(180px) translateY(40px) rotateZ(90deg);
+    }
+    50% { 
+      transform: translateX(0px) translateY(80px) rotateZ(180deg);
+    }
+    75% { 
+      transform: translateX(-180px) translateY(40px) rotateZ(270deg);
+    }
+    100% { 
+      transform: translateX(0px) translateY(0px) rotateZ(360deg);
+    }
+  }
+  
+  @keyframes orbit-ellipse-5 {
+    0% { 
+      transform: translateX(0px) translateY(0px) rotateZ(0deg);
+    }
+    25% { 
+      transform: translateX(-100px) translateY(120px) rotateZ(90deg);
+    }
+    50% { 
+      transform: translateX(0px) translateY(240px) rotateZ(180deg);
+    }
+    75% { 
+      transform: translateX(100px) translateY(120px) rotateZ(270deg);
+    }
+    100% { 
+      transform: translateX(0px) translateY(0px) rotateZ(360deg);
+    }
+  }
+  
+  @keyframes orbit-ellipse-6 {
+    0% { 
+      transform: translateX(0px) translateY(0px) rotateZ(0deg);
+    }
+    25% { 
+      transform: translateX(160px) translateY(140px) rotateZ(90deg);
+    }
+    50% { 
+      transform: translateX(0px) translateY(280px) rotateZ(180deg);
+    }
+    75% { 
+      transform: translateX(-160px) translateY(140px) rotateZ(270deg);
+    }
+    100% { 
+      transform: translateX(0px) translateY(0px) rotateZ(360deg);
+    }
+  }
+  
+  /* Mobile optimized orbits */
+  @media (max-width: 768px) {
+    @keyframes orbit-ellipse-1 {
+      0% { 
+        transform: translateX(0px) translateY(0px) rotateZ(0deg);
+      }
+      25% { 
+        transform: translateX(60px) translateY(-40px) rotateZ(90deg);
+      }
+      50% { 
+        transform: translateX(0px) translateY(-80px) rotateZ(180deg);
+      }
+      75% { 
+        transform: translateX(-60px) translateY(-40px) rotateZ(270deg);
+      }
+      100% { 
+        transform: translateX(0px) translateY(0px) rotateZ(360deg);
+      }
+    }
+    
+    @keyframes orbit-ellipse-2 {
+      0% { 
+        transform: translateX(0px) translateY(0px) rotateZ(0deg);
+      }
+      25% { 
+        transform: translateX(100px) translateY(-30px) rotateZ(90deg);
+      }
+      50% { 
+        transform: translateX(0px) translateY(-60px) rotateZ(180deg);
+      }
+      75% { 
+        transform: translateX(-100px) translateY(-30px) rotateZ(270deg);
+      }
+      100% { 
+        transform: translateX(0px) translateY(0px) rotateZ(360deg);
+      }
+    }
+    
+    @keyframes orbit-ellipse-3 {
+      0% { 
+        transform: translateX(0px) translateY(0px) rotateZ(0deg);
+      }
+      25% { 
+        transform: translateX(-75px) translateY(-50px) rotateZ(90deg);
+      }
+      50% { 
+        transform: translateX(0px) translateY(-100px) rotateZ(180deg);
+      }
+      75% { 
+        transform: translateX(75px) translateY(-50px) rotateZ(270deg);
+      }
+      100% { 
+        transform: translateX(0px) translateY(0px) rotateZ(360deg);
+      }
+    }
+    
+    @keyframes orbit-ellipse-4 {
+      0% { 
+        transform: translateX(0px) translateY(0px) rotateZ(0deg);
+      }
+      25% { 
+        transform: translateX(90px) translateY(20px) rotateZ(90deg);
+      }
+      50% { 
+        transform: translateX(0px) translateY(40px) rotateZ(180deg);
+      }
+      75% { 
+        transform: translateX(-90px) translateY(20px) rotateZ(270deg);
+      }
+      100% { 
+        transform: translateX(0px) translateY(0px) rotateZ(360deg);
+      }
+    }
+    
+    @keyframes orbit-ellipse-5 {
+      0% { 
+        transform: translateX(0px) translateY(0px) rotateZ(0deg);
+      }
+      25% { 
+        transform: translateX(-50px) translateY(60px) rotateZ(90deg);
+      }
+      50% { 
+        transform: translateX(0px) translateY(120px) rotateZ(180deg);
+      }
+      75% { 
+        transform: translateX(50px) translateY(60px) rotateZ(270deg);
+      }
+      100% { 
+        transform: translateX(0px) translateY(0px) rotateZ(360deg);
+      }
+    }
+    
+    @keyframes orbit-ellipse-6 {
+      0% { 
+        transform: translateX(0px) translateY(0px) rotateZ(0deg);
+      }
+      25% { 
+        transform: translateX(80px) translateY(70px) rotateZ(90deg);
+      }
+      50% { 
+        transform: translateX(0px) translateY(140px) rotateZ(180deg);
+      }
+      75% { 
+        transform: translateX(-80px) translateY(70px) rotateZ(270deg);
+      }
+      100% { 
+        transform: translateX(0px) translateY(0px) rotateZ(360deg);
+      }
+    }
   }
 }
 

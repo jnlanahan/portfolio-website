@@ -211,108 +211,102 @@ const HomePage = () => {
       <div className="max-w-6xl mx-auto">
         {/* Hero Section - Like the screenshot */}
         <div className="text-center relative" style={{ marginBottom: '120px' }}>
-          {/* Floating company and university logos */}
-          <div className="absolute inset-0 pointer-events-none overflow-visible">
-            {/* EY Logo - top left */}
+          {/* Orbital logo system centered around the name */}
+          <div className="absolute inset-0 pointer-events-none overflow-visible orbit-container">
+            {/* EY Logo - Orbit 1 */}
             <div 
-              className="absolute animate-float-logo
-                         left-[5%] top-[-10%] md:left-[5%] md:top-[-10%]
-                         sm:left-[2%] sm:top-[-25%]" 
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
               style={{ 
-                animationDelay: '0s',
-                animationDuration: '15s'
+                animationDelay: '0s'
               }}
             >
-              <img 
-                src={eyLogo} 
-                alt="EY" 
-                className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
-              />
+              <div className="orbit-path-1">
+                <img 
+                  src={eyLogo} 
+                  alt="EY" 
+                  className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
+                />
+              </div>
             </div>
 
-            {/* US Army Logo - top right */}
+            {/* US Army Logo - Orbit 2 */}
             <div 
-              className="absolute animate-float-logo
-                         left-[85%] top-[-10%] md:left-[85%] md:top-[-10%]
-                         sm:left-[82%] sm:top-[-25%]" 
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
               style={{ 
-                animationDelay: '2s',
-                animationDuration: '18s'
+                animationDelay: '5s'
               }}
             >
-              <img 
-                src={armyLogo} 
-                alt="U.S. Army" 
-                className="w-14 h-12 sm:w-18 sm:h-16 md:w-24 md:h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
-              />
+              <div className="orbit-path-2">
+                <img 
+                  src={armyLogo} 
+                  alt="U.S. Army" 
+                  className="w-14 h-12 sm:w-18 sm:h-16 md:w-24 md:h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
+                />
+              </div>
             </div>
 
-            {/* Ohio State Fisher College of Business Logo - left side */}
+            {/* Ohio State Fisher College of Business Logo - Orbit 3 */}
             <div 
-              className="absolute animate-float-logo
-                         left-[-8%] top-[35%] md:left-[-8%] md:top-[35%]
-                         sm:left-[-15%] sm:top-[20%]" 
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
               style={{ 
-                animationDelay: '4s',
-                animationDuration: '20s'
+                animationDelay: '10s'
               }}
             >
-              <img 
-                src={osuLogo} 
-                alt="Ohio State Fisher College of Business" 
-                className="w-20 h-12 sm:w-24 sm:h-16 md:w-32 md:h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
-              />
+              <div className="orbit-path-3">
+                <img 
+                  src={osuLogo} 
+                  alt="Ohio State Fisher College of Business" 
+                  className="w-20 h-12 sm:w-24 sm:h-16 md:w-32 md:h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
+                />
+              </div>
             </div>
 
-            {/* NC State College of Engineering Logo - right side */}
+            {/* NC State College of Engineering Logo - Orbit 4 */}
             <div 
-              className="absolute animate-float-logo
-                         left-[88%] top-[40%] md:left-[88%] md:top-[40%]
-                         sm:left-[85%] sm:top-[20%]" 
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
               style={{ 
-                animationDelay: '6s',
-                animationDuration: '17s'
+                animationDelay: '15s'
               }}
             >
-              <img 
-                src={ncStateLogo} 
-                alt="NC State" 
-                className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
-              />
+              <div className="orbit-path-4">
+                <img 
+                  src={ncStateLogo} 
+                  alt="NC State" 
+                  className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
+                />
+              </div>
             </div>
 
-            {/* Missouri S&T Logo - bottom left */}
+            {/* Missouri S&T Logo - Orbit 5 */}
             <div 
-              className="absolute animate-float-logo
-                         left-[10%] top-[85%] md:left-[10%] md:top-[85%]
-                         sm:left-[5%] sm:top-[95%]" 
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
               style={{ 
-                animationDelay: '8s',
-                animationDuration: '19s'
+                animationDelay: '20s'
               }}
             >
-              <img 
-                src={missouriLogo} 
-                alt="Missouri S&T" 
-                className="w-24 h-10 sm:w-28 sm:h-12 md:w-36 md:h-16 object-contain opacity-50 hover:opacity-70 transition-opacity"
-              />
+              <div className="orbit-path-5">
+                <img 
+                  src={missouriLogo} 
+                  alt="Missouri S&T" 
+                  className="w-24 h-10 sm:w-28 sm:h-12 md:w-36 md:h-16 object-contain opacity-50 hover:opacity-70 transition-opacity"
+                />
+              </div>
             </div>
 
-            {/* US Army Corps of Engineers Logo - bottom right */}
+            {/* US Army Corps of Engineers Logo - Orbit 6 */}
             <div 
-              className="absolute animate-float-logo
-                         left-[65%] top-[85%] md:left-[65%] md:top-[85%]
-                         sm:left-[60%] sm:top-[95%]" 
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
               style={{ 
-                animationDelay: '10s',
-                animationDuration: '16s'
+                animationDelay: '25s'
               }}
             >
-              <img 
-                src={usaceLogo} 
-                alt="US Army Corps of Engineers" 
-                className="w-20 h-14 sm:w-24 sm:h-16 md:w-28 md:h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
-              />
+              <div className="orbit-path-6">
+                <img 
+                  src={usaceLogo} 
+                  alt="US Army Corps of Engineers" 
+                  className="w-20 h-14 sm:w-24 sm:h-16 md:w-28 md:h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
+                />
+              </div>
             </div>
           </div>
           
