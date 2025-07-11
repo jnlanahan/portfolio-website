@@ -132,8 +132,8 @@ export const BlogDetail: React.FC = () => {
                   className="w-10 h-10 rounded-full mr-3 border-2 border-secondary/20"
                 />
               ) : (
-                <div className="w-10 h-10 rounded-full bg-secondary/20 text-secondary flex items-center justify-center mr-3">
-                  {post.author.name.charAt(0)}
+                <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-3 font-semibold" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                  {post.author.name.charAt(0).toUpperCase()}
                 </div>
               )}
               <div>
