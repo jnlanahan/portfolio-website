@@ -206,30 +206,30 @@ body {
   }
   
   .circular-orbit-1 {
-    animation: circular-path-1 20s linear infinite;
+    animation: circular-path-1 40s linear infinite;
   }
   
   .circular-orbit-2 {
-    animation: circular-path-2 25s linear infinite;
+    animation: circular-path-2 40s linear infinite;
   }
   
   .circular-orbit-3 {
-    animation: circular-path-3 18s linear infinite;
+    animation: circular-path-3 40s linear infinite;
   }
   
   .circular-orbit-4 {
-    animation: circular-path-4 22s linear infinite;
+    animation: circular-path-4 40s linear infinite;
   }
   
   .circular-orbit-5 {
-    animation: circular-path-5 24s linear infinite;
+    animation: circular-path-5 40s linear infinite;
   }
   
   .circular-orbit-6 {
-    animation: circular-path-6 19s linear infinite;
+    animation: circular-path-6 40s linear infinite;
   }
   
-  /* Circular path animations - logos move around the circle */
+  /* Circular path animations - logos move around the circle (evenly spaced at 60 degree intervals) */
   @keyframes circular-path-1 {
     0% { transform: rotate(0deg) translateX(200px) rotate(0deg); }
     100% { transform: rotate(360deg) translateX(200px) rotate(-360deg); }
@@ -263,38 +263,38 @@ body {
   /* Mobile responsive circular paths */
   @media (max-width: 768px) {
     .glowing-circle {
-      width: 300px;
-      height: 300px;
+      width: 280px;
+      height: 280px;
     }
     
     @keyframes circular-path-1 {
-      0% { transform: rotate(0deg) translateX(150px) rotate(0deg); }
-      100% { transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+      0% { transform: rotate(0deg) translateX(140px) rotate(0deg); }
+      100% { transform: rotate(360deg) translateX(140px) rotate(-360deg); }
     }
     
     @keyframes circular-path-2 {
-      0% { transform: rotate(60deg) translateX(150px) rotate(-60deg); }
-      100% { transform: rotate(420deg) translateX(150px) rotate(-420deg); }
+      0% { transform: rotate(60deg) translateX(140px) rotate(-60deg); }
+      100% { transform: rotate(420deg) translateX(140px) rotate(-420deg); }
     }
     
     @keyframes circular-path-3 {
-      0% { transform: rotate(120deg) translateX(150px) rotate(-120deg); }
-      100% { transform: rotate(480deg) translateX(150px) rotate(-480deg); }
+      0% { transform: rotate(120deg) translateX(140px) rotate(-120deg); }
+      100% { transform: rotate(480deg) translateX(140px) rotate(-480deg); }
     }
     
     @keyframes circular-path-4 {
-      0% { transform: rotate(180deg) translateX(150px) rotate(-180deg); }
-      100% { transform: rotate(540deg) translateX(150px) rotate(-540deg); }
+      0% { transform: rotate(180deg) translateX(140px) rotate(-180deg); }
+      100% { transform: rotate(540deg) translateX(140px) rotate(-540deg); }
     }
     
     @keyframes circular-path-5 {
-      0% { transform: rotate(240deg) translateX(150px) rotate(-240deg); }
-      100% { transform: rotate(600deg) translateX(150px) rotate(-600deg); }
+      0% { transform: rotate(240deg) translateX(140px) rotate(-240deg); }
+      100% { transform: rotate(600deg) translateX(140px) rotate(-600deg); }
     }
     
     @keyframes circular-path-6 {
-      0% { transform: rotate(300deg) translateX(150px) rotate(-300deg); }
-      100% { transform: rotate(660deg) translateX(150px) rotate(-660deg); }
+      0% { transform: rotate(300deg) translateX(140px) rotate(-300deg); }
+      100% { transform: rotate(660deg) translateX(140px) rotate(-660deg); }
     }
   }
   

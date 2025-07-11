@@ -219,15 +219,12 @@ const HomePage = () => {
             {/* EY Logo - Circular Path 1 */}
             <div 
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ 
-                animationDelay: '0s'
-              }}
             >
               <div className="circular-orbit-1">
                 <img 
                   src={eyLogo} 
                   alt="EY" 
-                  className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain opacity-60 hover:opacity-80 transition-opacity"
+                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain opacity-60 hover:opacity-80 transition-opacity"
                 />
               </div>
             </div>
@@ -235,15 +232,12 @@ const HomePage = () => {
             {/* US Army Logo - Circular Path 2 */}
             <div 
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ 
-                animationDelay: '3s'
-              }}
             >
               <div className="circular-orbit-2">
                 <img 
                   src={armyLogo} 
                   alt="U.S. Army" 
-                  className="w-12 h-10 sm:w-14 sm:h-12 md:w-16 md:h-14 object-contain opacity-60 hover:opacity-80 transition-opacity"
+                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain opacity-60 hover:opacity-80 transition-opacity"
                 />
               </div>
             </div>
@@ -251,15 +245,12 @@ const HomePage = () => {
             {/* Ohio State Fisher College of Business Logo - Circular Path 3 */}
             <div 
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ 
-                animationDelay: '6s'
-              }}
             >
               <div className="circular-orbit-3">
                 <img 
                   src={osuLogo} 
                   alt="Ohio State Fisher College of Business" 
-                  className="w-16 h-10 sm:w-18 sm:h-12 md:w-20 md:h-14 object-contain opacity-60 hover:opacity-80 transition-opacity"
+                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain opacity-60 hover:opacity-80 transition-opacity"
                 />
               </div>
             </div>
@@ -267,15 +258,12 @@ const HomePage = () => {
             {/* NC State College of Engineering Logo - Circular Path 4 */}
             <div 
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ 
-                animationDelay: '9s'
-              }}
             >
               <div className="circular-orbit-4">
                 <img 
                   src={ncStateLogo} 
                   alt="NC State" 
-                  className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain opacity-60 hover:opacity-80 transition-opacity"
+                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain opacity-60 hover:opacity-80 transition-opacity"
                 />
               </div>
             </div>
@@ -283,15 +271,12 @@ const HomePage = () => {
             {/* Missouri S&T Logo - Circular Path 5 */}
             <div 
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ 
-                animationDelay: '12s'
-              }}
             >
               <div className="circular-orbit-5">
                 <img 
                   src={missouriLogo} 
                   alt="Missouri S&T" 
-                  className="w-18 h-8 sm:w-20 sm:h-10 md:w-22 md:h-12 object-contain opacity-60 hover:opacity-80 transition-opacity"
+                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain opacity-60 hover:opacity-80 transition-opacity"
                 />
               </div>
             </div>
@@ -299,15 +284,12 @@ const HomePage = () => {
             {/* US Army Corps of Engineers Logo - Circular Path 6 */}
             <div 
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ 
-                animationDelay: '15s'
-              }}
             >
               <div className="circular-orbit-6">
                 <img 
                   src={usaceLogo} 
                   alt="US Army Corps of Engineers" 
-                  className="w-14 h-12 sm:w-16 sm:h-14 md:w-18 md:h-16 object-contain opacity-60 hover:opacity-80 transition-opacity"
+                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain opacity-60 hover:opacity-80 transition-opacity"
                 />
               </div>
             </div>
