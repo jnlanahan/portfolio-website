@@ -204,101 +204,105 @@ const HomePage = () => {
         {/* Hero Section - Like the screenshot */}
         <div className="text-center relative" style={{ marginBottom: '120px' }}>
           {/* Floating company and university logos */}
-          <div className="absolute inset-0 pointer-events-none">
-            {/* EY Logo */}
+          <div className="absolute inset-0 pointer-events-none overflow-visible">
+            {/* EY Logo - top left */}
             <div 
               className="absolute animate-float-logo" 
               style={{ 
-                left: '15%', 
-                top: '20%',
+                left: '5%', 
+                top: '-5%',
                 animationDelay: '0s',
                 animationDuration: '15s'
               }}
             >
-              <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/3/34/EY_logo_2019.svg" 
-                alt="EY" 
-                className="w-16 h-16 opacity-30 hover:opacity-50 transition-opacity"
-              />
+              <div className="bg-black rounded p-3 opacity-40 hover:opacity-60 transition-opacity">
+                <div className="text-2xl font-bold text-yellow-400">EY</div>
+              </div>
             </div>
 
-            {/* US Army Logo */}
+            {/* US Army Logo - top right */}
             <div 
               className="absolute animate-float-logo" 
               style={{ 
-                left: '75%', 
-                top: '25%',
+                left: '85%', 
+                top: '-5%',
                 animationDelay: '2s',
                 animationDuration: '18s'
               }}
             >
-              <div className="bg-black rounded p-2 opacity-30 hover:opacity-50 transition-opacity">
-                <div className="text-xs font-bold text-yellow-500">U.S.</div>
-                <div className="text-xs font-bold text-yellow-500">ARMY</div>
+              <div className="bg-black rounded p-2 opacity-40 hover:opacity-60 transition-opacity border-2 border-yellow-500">
+                <div className="text-yellow-500 text-2xl">★</div>
+                <div className="text-xs font-bold text-white">U.S. ARMY</div>
               </div>
             </div>
 
-            {/* Ohio State Fisher College of Business Logo */}
+            {/* Ohio State Fisher College of Business Logo - left side */}
             <div 
               className="absolute animate-float-logo" 
               style={{ 
-                left: '10%', 
-                top: '60%',
+                left: '-5%', 
+                top: '35%',
                 animationDelay: '4s',
                 animationDuration: '20s'
               }}
             >
-              <div className="bg-gray-200 rounded p-2 opacity-30 hover:opacity-50 transition-opacity">
-                <div className="text-xs font-bold text-gray-700">FISHER</div>
-                <div className="text-xs text-gray-600">COLLEGE OF BUSINESS</div>
+              <div className="bg-white rounded p-2 opacity-40 hover:opacity-60 transition-opacity border-2 border-gray-300">
+                <div className="text-2xl font-bold text-red-600">O</div>
+                <div className="text-[8px] font-bold text-gray-700">FISHER COLLEGE</div>
+                <div className="text-[8px] text-gray-600">OF BUSINESS</div>
               </div>
             </div>
 
-            {/* NC State College of Engineering Logo */}
+            {/* NC State College of Engineering Logo - right side */}
             <div 
               className="absolute animate-float-logo" 
               style={{ 
-                left: '80%', 
-                top: '65%',
+                left: '90%', 
+                top: '40%',
                 animationDelay: '6s',
                 animationDuration: '17s'
               }}
             >
-              <div className="bg-red-600 rounded p-2 opacity-30 hover:opacity-50 transition-opacity">
-                <div className="text-xs font-bold text-white">NC STATE</div>
-                <div className="text-xs text-white">ENGINEERING</div>
+              <div className="bg-red-600 rounded p-2 opacity-40 hover:opacity-60 transition-opacity border-4 border-black">
+                <div className="text-xl font-bold text-white">NC</div>
+                <div className="text-xl font-bold text-white">S</div>
               </div>
             </div>
 
-            {/* Missouri S&T Logo */}
+            {/* Missouri S&T Logo - bottom left */}
             <div 
               className="absolute animate-float-logo" 
               style={{ 
-                left: '50%', 
-                top: '15%',
+                left: '15%', 
+                top: '80%',
                 animationDelay: '8s',
                 animationDuration: '19s'
               }}
             >
-              <div className="bg-green-700 rounded p-2 opacity-30 hover:opacity-50 transition-opacity">
+              <div className="bg-green-700 rounded p-2 opacity-40 hover:opacity-60 transition-opacity">
                 <div className="text-xs font-bold text-white">MISSOURI</div>
-                <div className="text-xs font-bold text-white">S&T</div>
+                <div className="text-xl font-bold text-white">S&T</div>
+                <div className="text-[8px] text-white">University of</div>
+                <div className="text-[8px] text-white">Science & Technology</div>
               </div>
             </div>
 
-            {/* US Army Corps of Engineers Logo */}
+            {/* US Army Corps of Engineers Logo - bottom right */}
             <div 
               className="absolute animate-float-logo" 
               style={{ 
-                left: '45%', 
-                top: '70%',
+                left: '70%', 
+                top: '80%',
                 animationDelay: '10s',
                 animationDuration: '16s'
               }}
             >
-              <div className="bg-red-800 rounded p-2 opacity-30 hover:opacity-50 transition-opacity">
-                <div className="text-xs font-bold text-white">USACE</div>
-                <div className="text-xs text-white">ENGINEERS</div>
+              <div className="bg-white rounded p-2 opacity-40 hover:opacity-60 transition-opacity border-2 border-red-700">
+                <div className="bg-red-700 text-white p-1 rounded">
+                  <div className="text-xs font-bold">⚔️</div>
+                </div>
+                <div className="text-xs font-bold text-black mt-1">US Army Corps</div>
+                <div className="text-xs text-black">of Engineers</div>
               </div>
             </div>
           </div>
