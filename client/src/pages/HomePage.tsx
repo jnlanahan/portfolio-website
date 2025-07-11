@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { trackEvent } from "@/lib/analytics";
 import { GlowingCard } from "@/components/ui/glowing-card";
+import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { Mail, Download, Linkedin } from "lucide-react";
 import { SiGmail } from "react-icons/si";
 import { useState, useEffect } from "react";
@@ -35,29 +36,27 @@ const HomeTile = ({
   };
 
   const tileContent = compact ? (
-    <GlowingCard 
+    <SpotlightCard 
       className="relative border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 cursor-pointer group overflow-hidden flex items-center justify-center bg-white hover:-translate-y-1"
       style={{ 
         borderRadius: '16px', /* 8-point grid radius */
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)', /* Apple-style subtle shadow */
         height: '64px' /* 8-point grid height */
       }}
-      glowColor="rgba(0, 122, 255, 0.1)"
-      strength={0.3}
+      spotlightColor="rgba(144, 238, 144, 0.15)"
     >
       <h3 className="font-futura font-medium text-gray-900 group-hover:text-primary transition-colors" style={{ fontSize: '14px' }}> {/* Consistent sizing */}
         {title}
       </h3>
-    </GlowingCard>
+    </SpotlightCard>
   ) : (
-    <GlowingCard 
+    <SpotlightCard 
       className="bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-full cursor-pointer group overflow-hidden hover:-translate-y-1"
       style={{ 
         borderRadius: '16px', /* 8-point grid radius */
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)' /* Apple-style subtle shadow */
       }}
-      glowColor="rgba(0, 122, 255, 0.1)"
-      strength={0.3}
+      spotlightColor="rgba(144, 238, 144, 0.15)"
     >
       {/* Header with title */}
       <div style={{ padding: '16px 16px 8px' }}> {/* 8-point grid padding */}
@@ -88,7 +87,7 @@ const HomeTile = ({
           {description}
         </p>
       </div>
-    </GlowingCard>
+    </SpotlightCard>
   );
 
   return (
