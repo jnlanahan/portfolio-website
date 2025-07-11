@@ -5,7 +5,6 @@ import { GlowingCard } from "@/components/ui/glowing-card";
 import { Mail, Download, Linkedin } from "lucide-react";
 import { SiGmail } from "react-icons/si";
 import { useState, useEffect } from "react";
-import { LampContainer } from "@/components/ui/lamp";
 
 const HomeTile = ({ 
   title, 
@@ -40,90 +39,52 @@ const HomeTile = ({
       className="relative border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 cursor-pointer group overflow-hidden flex items-center justify-center bg-white hover:-translate-y-1"
       style={{ 
         borderRadius: '16px', /* 8-point grid radius */
-        height: '120px',
-        padding: '16px' /* 8-point grid padding */
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)', /* Apple-style subtle shadow */
+        height: '64px' /* 8-point grid height */
       }}
-      onClick={handleClick}
+      glowColor="rgba(0, 122, 255, 0.1)"
+      strength={0.3}
     >
-      <div className="text-center">
-        <div 
-          className="text-2xl mb-2 text-gray-600 group-hover:text-blue-600 transition-colors duration-300"
-          style={{ 
-            fontFamily: 'remixicon',
-            fontSize: '32px',
-            lineHeight: '1',
-            marginBottom: '8px'
-          }}
-        >
-          {icon}
-        </div>
-        <h3 
-          className="text-gray-900 font-medium" 
-          style={{ 
-            fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
-            fontSize: '16px',
-            lineHeight: '1.3'
-          }}
-        >
-          {title}
-        </h3>
-      </div>
+      <h3 className="font-futura font-medium text-gray-900 group-hover:text-primary transition-colors" style={{ fontSize: '14px' }}> {/* Consistent sizing */}
+        {title}
+      </h3>
     </GlowingCard>
   ) : (
     <GlowingCard 
-      className="relative border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 cursor-pointer group overflow-hidden bg-white hover:-translate-y-1"
+      className="bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-full cursor-pointer group overflow-hidden hover:-translate-y-1"
       style={{ 
         borderRadius: '16px', /* 8-point grid radius */
-        height: size === "wide" ? "120px" : "180px",
-        padding: '24px' /* 8-point grid padding */
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)' /* Apple-style subtle shadow */
       }}
-      onClick={handleClick}
+      glowColor="rgba(0, 122, 255, 0.1)"
+      strength={0.3}
     >
-      {image && (
-        <div 
-          className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-300"
-          style={{
-            background: `linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(0, 122, 255, 0.05) 100%), url(${image})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            borderRadius: '16px'
-          }}
-        />
-      )}
-      
-      <div className="relative z-10 flex flex-col h-full">
-        <div 
-          className="text-3xl mb-4 text-gray-600 group-hover:text-blue-600 transition-colors duration-300"
-          style={{ 
-            fontFamily: 'remixicon',
-            fontSize: size === "wide" ? '32px' : '40px',
-            lineHeight: '1',
-            marginBottom: '16px'
-          }}
-        >
-          {icon}
-        </div>
-        
-        <h3 
-          className="text-gray-900 font-semibold mb-2" 
-          style={{ 
-            fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
-            fontSize: size === "wide" ? '18px' : '20px',
-            lineHeight: '1.3',
-            marginBottom: '8px'
-          }}
-        >
+      {/* Header with title */}
+      <div style={{ padding: '16px 16px 8px' }}> {/* 8-point grid padding */}
+        <h3 className="font-futura font-medium text-gray-900 group-hover:text-primary transition-colors" style={{ fontSize: '20px' }}> {/* Apple HIG: Section headings 20-24px */}
           {title}
         </h3>
-        
-        <p 
-          className="text-gray-600 text-sm leading-relaxed mt-auto"
-          style={{ 
-            fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
-            fontSize: '14px',
-            lineHeight: '1.4'
-          }}
-        >
+      </div>
+
+      {/* Content area */}
+      <div style={{ padding: '0 16px 16px' }} className="flex-1"> {/* 8-point grid padding */}
+        {image ? (
+          <div style={{ marginBottom: '12px', borderRadius: '12px' }} className="overflow-hidden bg-gray-50"> {/* 8-point grid margin and radius */}
+            <img 
+              src={image} 
+              alt={title}
+              className={`w-full object-cover group-hover:scale-105 transition-transform duration-500`}
+              style={{ height: size === "large" ? '128px' : '96px' }} /* 8-point grid heights */
+            />
+          </div>
+        ) : (
+          <div style={{ marginBottom: '12px', height: '48px' }} className="flex items-center justify-center"> {/* 8-point grid dimensions */}
+            <div style={{ width: '40px', height: '40px', borderRadius: '12px' }} className="bg-gray-100 flex items-center justify-center"> {/* 8-point grid dimensions */}
+              <i className={`${icon} text-primary text-xl`}></i>
+            </div>
+          </div>
+        )}
+        <p className="text-gray-600 leading-relaxed" style={{ fontSize: '16px' }}> {/* Apple HIG: Body copy 16-17px */}
           {description}
         </p>
       </div>
@@ -135,19 +96,25 @@ const HomeTile = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
-      className="w-full"
+      className={`${
+        size === "large" ? "row-span-2" : 
+        size === "wide" ? "col-span-2" : ""
+      }`}
     >
       {isExternal ? (
         <a 
-          href={linkTo} 
-          target="_blank" 
+          href={linkTo}
+          target="_blank"
           rel="noopener noreferrer"
-          className="block w-full"
+          onClick={handleClick}
         >
           {tileContent}
         </a>
       ) : (
-        <Link href={linkTo} className="block w-full">
+        <Link 
+          href={linkTo}
+          onClick={handleClick}
+        >
           {tileContent}
         </Link>
       )}
@@ -155,15 +122,7 @@ const HomeTile = ({
   );
 };
 
-const ActionButton = ({ 
-  title, 
-  linkTo, 
-  delay = 0 
-}: { 
-  title: string; 
-  linkTo: string; 
-  delay?: number;
-}) => {
+const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string; delay: number }) => {
   const isExternal = linkTo.startsWith('http') || linkTo.startsWith('mailto:');
   
   const handleClick = () => {
@@ -173,31 +132,31 @@ const ActionButton = ({
     });
   };
 
-  const getIcon = () => {
-    if (title.includes('Contact')) return <SiGmail className="w-6 h-6" style={{ color: '#EA4335' }} />;
-    if (title.includes('Resume')) return <Download className="w-6 h-6" style={{ color: '#666' }} />;
-    if (title.includes('LinkedIn')) return <Linkedin className="w-6 h-6" style={{ color: '#0077B5' }} />;
-    return <Mail className="w-6 h-6" style={{ color: '#666' }} />;
+  // Get icon component based on title
+  const getIconComponent = () => {
+    if (title.includes('Contact')) return <SiGmail size={24} className="text-red-500 group-hover:text-red-600 transition-colors" />;
+    if (title.includes('Resume')) return <Download size={24} className="text-gray-900 group-hover:text-primary transition-colors" />;
+    if (title.includes('LinkedIn')) return <Linkedin size={24} className="text-blue-600 group-hover:text-blue-700 transition-colors" />;
+    return <SiGmail size={24} className="text-red-500 group-hover:text-red-600 transition-colors" />;
   };
 
   const buttonContent = (
-    <div className="flex flex-col items-center">
-      <motion.div
-        className="w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center mb-3 border border-gray-200 hover:shadow-xl transition-all duration-300 group-hover:border-gray-300"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        {getIcon()}
-      </motion.div>
-      <span 
-        className="text-gray-900 font-medium text-center leading-snug"
+    <div className="flex flex-col items-center text-center cursor-pointer group transition-all duration-300 max-w-20">
+      {/* Icon Circle */}
+      <div 
+        className="bg-white border border-gray-200 hover:border-gray-300 transition-all duration-300 flex items-center justify-center hover:shadow-lg group-hover:-translate-y-1"
         style={{ 
-          fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
-          fontSize: '14px',
-          lineHeight: '1.2',
-          maxWidth: '100px'
+          borderRadius: '50%', /* Perfect circle */
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)', /* Apple-style subtle shadow */
+          width: '56px', /* 8-point grid: 56px */
+          height: '56px' /* 8-point grid: 56px */
         }}
       >
+        {getIconComponent()}
+      </div>
+      
+      {/* Text Label */}
+      <span className="font-futura font-medium text-gray-900 group-hover:text-primary transition-colors mt-2 text-center leading-tight" style={{ fontSize: '14px' }}>
         {title}
       </span>
     </div>
@@ -208,20 +167,21 @@ const ActionButton = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
-      className="group cursor-pointer"
-      onClick={handleClick}
     >
       {isExternal ? (
         <a 
-          href={linkTo} 
-          target="_blank" 
+          href={linkTo}
+          target="_blank"
           rel="noopener noreferrer"
-          className="block"
+          onClick={handleClick}
         >
           {buttonContent}
         </a>
       ) : (
-        <Link href={linkTo} className="block">
+        <Link 
+          href={linkTo}
+          onClick={handleClick}
+        >
           {buttonContent}
         </Link>
       )}
@@ -239,9 +199,10 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen" style={{ padding: '24px 16px' }}>
+    <div className="min-h-screen" style={{ padding: '24px 16px' }}> {/* 8-point grid: 24px vertical, 16px horizontal */}
+      {/* Navigation Tiles Grid */}
       <div className="max-w-6xl mx-auto">
-        {/* Hero Section */}
+        {/* Hero Section - Like the screenshot */}
         <div className="text-center relative" style={{ marginBottom: '120px' }}>
           {/* Circular glow background with parallax and animation */}
           <div 
@@ -293,20 +254,10 @@ const HomePage = () => {
               NICK<br/>LANAHAN
             </h1>
           </motion.div>
-
-          {/* Lamp Component - positioned below the name */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="relative z-10"
-          >
-            <LampContainer />
-          </motion.div>
         </div>
         
         {/* Main Navigation Tiles */}
-        <div className="grid grid-cols-1 md:grid-cols-4" style={{ gap: '16px', marginBottom: '32px' }}>
+        <div className="grid grid-cols-1 md:grid-cols-4" style={{ gap: '16px', marginBottom: '32px' }}> {/* 8-point grid spacing */}
           <HomeTile
             title="About"
             description="Learn more about my background, skills, and journey"
@@ -348,8 +299,8 @@ const HomePage = () => {
           />
         </div>
         
-        {/* Action Buttons */}
-        <div className="flex justify-center space-x-12 md:space-x-12" style={{ marginBottom: '24px' }}>
+        {/* Action Buttons - Desktop and Mobile */}
+        <div className="flex justify-center space-x-12 md:space-x-12" style={{ marginBottom: '24px' }}> {/* 8-point grid spacing */}
           <ActionButton
             title="Contact Me"
             linkTo="/contact"

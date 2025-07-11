@@ -90,9 +90,6 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         "spin-slow": "spin-slow 15s linear infinite",
       },
-      backgroundImage: {
-        "gradient-conic": "conic-gradient(var(--tw-gradient-stops))",
-      },
     },
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
