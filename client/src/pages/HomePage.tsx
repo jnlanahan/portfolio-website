@@ -349,7 +349,7 @@ const HomePage = () => {
             linkTo="/about"
             delay={0.5}
             size="large"
-            image="/attached_assets/nick-headshot.jpg"
+            image="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop"
           />
           
           <HomeTile
