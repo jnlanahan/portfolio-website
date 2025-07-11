@@ -215,10 +215,10 @@ const HomePage = () => {
           <div className="absolute inset-0 pointer-events-none overflow-visible">
             {/* EY Logo - top left */}
             <div 
-              className="absolute animate-float-logo" 
+              className="absolute animate-float-logo
+                         left-[5%] top-[-10%] md:left-[5%] md:top-[-10%]
+                         sm:left-[2%] sm:top-[-25%]" 
               style={{ 
-                left: '5%', 
-                top: '-10%',
                 animationDelay: '0s',
                 animationDuration: '15s'
               }}
@@ -226,16 +226,16 @@ const HomePage = () => {
               <img 
                 src={eyLogo} 
                 alt="EY" 
-                className="w-20 h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
+                className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
               />
             </div>
 
             {/* US Army Logo - top right */}
             <div 
-              className="absolute animate-float-logo" 
+              className="absolute animate-float-logo
+                         left-[85%] top-[-10%] md:left-[85%] md:top-[-10%]
+                         sm:left-[82%] sm:top-[-25%]" 
               style={{ 
-                left: '85%', 
-                top: '-10%',
                 animationDelay: '2s',
                 animationDuration: '18s'
               }}
@@ -243,16 +243,16 @@ const HomePage = () => {
               <img 
                 src={armyLogo} 
                 alt="U.S. Army" 
-                className="w-24 h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
+                className="w-14 h-12 sm:w-18 sm:h-16 md:w-24 md:h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
               />
             </div>
 
             {/* Ohio State Fisher College of Business Logo - left side */}
             <div 
-              className="absolute animate-float-logo" 
+              className="absolute animate-float-logo
+                         left-[-8%] top-[35%] md:left-[-8%] md:top-[35%]
+                         sm:left-[-15%] sm:top-[20%]" 
               style={{ 
-                left: '-8%', 
-                top: '35%',
                 animationDelay: '4s',
                 animationDuration: '20s'
               }}
@@ -260,16 +260,16 @@ const HomePage = () => {
               <img 
                 src={osuLogo} 
                 alt="Ohio State Fisher College of Business" 
-                className="w-32 h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
+                className="w-20 h-12 sm:w-24 sm:h-16 md:w-32 md:h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
               />
             </div>
 
             {/* NC State College of Engineering Logo - right side */}
             <div 
-              className="absolute animate-float-logo" 
+              className="absolute animate-float-logo
+                         left-[88%] top-[40%] md:left-[88%] md:top-[40%]
+                         sm:left-[85%] sm:top-[20%]" 
               style={{ 
-                left: '88%', 
-                top: '40%',
                 animationDelay: '6s',
                 animationDuration: '17s'
               }}
@@ -277,16 +277,16 @@ const HomePage = () => {
               <img 
                 src={ncStateLogo} 
                 alt="NC State" 
-                className="w-20 h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
+                className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
               />
             </div>
 
             {/* Missouri S&T Logo - bottom left */}
             <div 
-              className="absolute animate-float-logo" 
+              className="absolute animate-float-logo
+                         left-[10%] top-[85%] md:left-[10%] md:top-[85%]
+                         sm:left-[5%] sm:top-[95%]" 
               style={{ 
-                left: '10%', 
-                top: '85%',
                 animationDelay: '8s',
                 animationDuration: '19s'
               }}
@@ -294,16 +294,16 @@ const HomePage = () => {
               <img 
                 src={missouriLogo} 
                 alt="Missouri S&T" 
-                className="w-36 h-16 object-contain opacity-50 hover:opacity-70 transition-opacity"
+                className="w-24 h-10 sm:w-28 sm:h-12 md:w-36 md:h-16 object-contain opacity-50 hover:opacity-70 transition-opacity"
               />
             </div>
 
             {/* US Army Corps of Engineers Logo - bottom right */}
             <div 
-              className="absolute animate-float-logo" 
+              className="absolute animate-float-logo
+                         left-[65%] top-[85%] md:left-[65%] md:top-[85%]
+                         sm:left-[60%] sm:top-[95%]" 
               style={{ 
-                left: '65%', 
-                top: '85%',
                 animationDelay: '10s',
                 animationDuration: '16s'
               }}
@@ -311,7 +311,7 @@ const HomePage = () => {
               <img 
                 src={usaceLogo} 
                 alt="US Army Corps of Engineers" 
-                className="w-28 h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
+                className="w-20 h-14 sm:w-24 sm:h-16 md:w-28 md:h-20 object-contain opacity-50 hover:opacity-70 transition-opacity"
               />
             </div>
           </div>
