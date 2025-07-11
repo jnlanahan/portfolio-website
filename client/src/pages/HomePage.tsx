@@ -4,6 +4,7 @@ import { trackEvent } from "@/lib/analytics";
 import { GlowingCard } from "@/components/ui/glowing-card";
 import { Mail, Download, Linkedin } from "lucide-react";
 import { SiGmail } from "react-icons/si";
+import { useState, useEffect } from "react";
 
 const HomeTile = ({ 
   title, 
@@ -189,23 +190,32 @@ const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string;
 };
 
 const HomePage = () => {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="min-h-screen" style={{ padding: '24px 16px' }}> {/* 8-point grid: 24px vertical, 16px horizontal */}
       {/* Navigation Tiles Grid */}
       <div className="max-w-6xl mx-auto">
         {/* Hero Section - Like the screenshot */}
         <div className="text-center relative" style={{ marginBottom: '120px' }}>
-          {/* Circular glow background */}
+          {/* Circular glow background with parallax and animation */}
           <div 
-            className="absolute inset-0 pointer-events-none"
+            className="absolute inset-0 pointer-events-none animate-gradient-shift"
             style={{
               background: 'radial-gradient(circle at center top, rgba(144, 238, 144, 0.9) 0%, rgba(144, 238, 144, 0.8) 8%, rgba(144, 238, 144, 0.7) 15%, rgba(144, 238, 144, 0.5) 25%, rgba(144, 238, 144, 0.3) 35%, rgba(144, 238, 144, 0.15) 50%, rgba(144, 238, 144, 0.08) 65%, rgba(144, 238, 144, 0.03) 80%, transparent 90%)',
               width: '200%',
               height: '300%',
               left: '-50%',
-              top: '-150%',
+              top: `${-150 + scrollY * 0.15}%`,
               borderRadius: '50%',
-              filter: 'blur(3px)'
+              filter: 'blur(3px)',
+              transform: `translateY(${scrollY * 0.1}px)`
             }}
           />
           

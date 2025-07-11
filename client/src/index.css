@@ -141,6 +141,29 @@ body {
   .blog-content h2 {
     @apply mt-8 mb-4 font-space font-semibold;
   }
+
+  /* Subtle gradient animation for hero section */
+  @keyframes gradient-shift {
+    0% {
+      filter: blur(3px) hue-rotate(0deg);
+    }
+    25% {
+      filter: blur(3px) hue-rotate(10deg);
+    }
+    50% {
+      filter: blur(3px) hue-rotate(-5deg);
+    }
+    75% {
+      filter: blur(3px) hue-rotate(15deg);
+    }
+    100% {
+      filter: blur(3px) hue-rotate(0deg);
+    }
+  }
+
+  .animate-gradient-shift {
+    animation: gradient-shift 30s ease-in-out infinite;
+  }
 }
 
 /* Font families */
