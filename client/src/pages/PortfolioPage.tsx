@@ -155,8 +155,8 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => (
       </div>
       
       {/* Project title */}
-      <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-600 transition-colors" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
-        <Link href={`/portfolio/${project.slug}`} className="block">
+      <h3 className="text-xl font-semibold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+        <Link href={`/portfolio/${project.slug}`} className="block text-gray-900 hover:text-blue-600">
           {project.title}
         </Link>
       </h3>
@@ -182,7 +182,7 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => (
       <div className="flex justify-between items-center mt-4 pt-4 border-t border-border">
         <Link 
           href={`/portfolio/${project.slug}`} 
-          className="text-sm font-medium hover:text-secondary transition-colors flex items-center"
+          className="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors flex items-center"
         >
           View Details <i className="ri-arrow-right-line ml-1"></i>
         </Link>
@@ -316,13 +316,13 @@ const PortfolioPage = () => {
       {/* Projects grid */}
       <div className="mb-8">
         {selectedCategory && (
-          <h2 className="text-2xl font-bold mb-6">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
             {projectCategories.find(c => c.id === selectedCategory)?.name || 'Projects'}
           </h2>
         )}
         
         {!selectedCategory && featuredProjects.length > 0 && (
-          <h2 className="text-2xl font-bold mb-6">All Projects</h2>
+          <h2 className="text-2xl font-bold mb-6 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>All Projects</h2>
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -338,10 +338,11 @@ const PortfolioPage = () => {
           <div className="text-5xl mb-4 opacity-30">
             <i className="ri-folder-unknow-line"></i>
           </div>
-          <p className="text-muted-foreground text-lg mb-4">No projects found in this category.</p>
+          <p className="text-gray-600 text-lg mb-4" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>No projects found in this category.</p>
           <button
             onClick={() => setSelectedCategory(null)}
-            className="mt-4 px-6 py-2 bg-secondary text-secondary-foreground rounded-md"
+            className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
           >
             View all projects
           </button>
@@ -349,14 +350,15 @@ const PortfolioPage = () => {
       )}
 
       {/* Call to action */}
-      <div className="bg-secondary/5 border border-secondary/20 rounded-xl p-8 mt-16 text-center">
-        <h2 className="text-2xl font-bold mb-4">Let's work together</h2>
-        <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+      <div className="bg-blue-50 border border-blue-200 rounded-xl p-8 mt-16 text-center">
+        <h2 className="text-2xl font-bold mb-4 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>Let's work together</h2>
+        <p className="text-gray-600 mb-6 max-w-2xl mx-auto" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
           I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
         </p>
         <Link 
           href="/contact" 
-          className="inline-block px-6 py-3 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/90 transition-colors"
+          className="inline-block px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
         >
           Get in Touch
         </Link>
