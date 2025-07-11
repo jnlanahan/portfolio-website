@@ -63,6 +63,19 @@ const TopFiveListsPage = () => {
               <div className={`bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden 
                           ${isExpanded ? 'border-blue-200' : 'border-gray-200'} 
                           hover:border-blue-200 transition-all duration-300 h-full`}>
+                
+                {/* Main Image */}
+                {list.mainImage && (
+                  <div className="relative h-48 w-full overflow-hidden">
+                    <img 
+                      src={list.mainImage} 
+                      alt={list.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+                  </div>
+                )}
+                
                 <div className={`p-8 ${isExpanded ? 'pb-6' : 'pb-8'}`}>
                   <div 
                     className={`flex items-center justify-between cursor-pointer mb-4`}
@@ -141,7 +154,7 @@ const TopFiveListsPage = () => {
                             <img 
                               src={item.image} 
                               alt={item.title} 
-                              className="mt-3 rounded-lg w-full h-auto max-h-40 object-cover"
+                              className="mt-3 rounded-lg w-32 h-20 object-cover border border-gray-200"
                             />
                           )}
                         </div>
