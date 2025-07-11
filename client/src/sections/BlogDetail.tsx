@@ -4,7 +4,7 @@ import { BlogTag, formatBlogDate } from "@/data/blog";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { FaXTwitter, FaLinkedin, FaFacebook, FaLink } from 'react-icons/fa6';
+import { FaXTwitter, FaLinkedin, FaFacebook, FaLink, FaThumbsUp } from 'react-icons/fa6';
 
 // BlogTag component for consistent styling (same as in BlogPage)
 const BlogTagBadge = ({ tag }: { tag: BlogTag }) => {
@@ -196,11 +196,12 @@ export const BlogDetail: React.FC = () => {
               onClick={handleLike}
               className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${
                 hasLiked 
-                  ? "bg-red-500/10 text-red-500" 
+                  ? "bg-blue-500/10 text-blue-500" 
                   : "bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground"
               }`}
+              style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
             >
-              <i className={`${hasLiked ? "ri-heart-fill" : "ri-heart-line"} text-lg`}></i>
+              <FaThumbsUp className={`text-lg ${hasLiked ? "text-blue-500" : ""}`} />
               <span>{hasLiked ? (post.likes || 0) + 1 : post.likes || 0} likes</span>
             </button>
 
