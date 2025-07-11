@@ -70,7 +70,7 @@ const HomeTile = ({
     >
       {/* Header with title */}
       <div style={{ padding: '16px 16px 8px' }}> {/* 8-point grid padding */}
-        <h3 className="font-futura font-medium text-gray-900 group-hover:text-primary transition-colors" style={{ fontSize: '20px' }}> {/* Apple HIG: Section headings 20-24px */}
+        <h3 className="font-futura font-medium text-gray-900 group-hover:text-blue-600 transition-colors" style={{ fontSize: '20px' }}> {/* Apple HIG: Section headings 20-24px */}
           {title}
         </h3>
       </div>
@@ -144,7 +144,7 @@ const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string;
   // Get icon component based on title
   const getIconComponent = () => {
     if (title.includes('Contact')) return <img src={gmailLogo} alt="Gmail" className="w-6 h-6" />;
-    if (title.includes('Resume')) return <Download size={24} className="text-gray-900 group-hover:text-primary transition-colors" />;
+    if (title.includes('Resume')) return <Download size={24} className="text-gray-900 group-hover:text-blue-600 transition-colors" />;
     if (title.includes('LinkedIn')) return (
       <div className="w-6 h-6 bg-blue-600 rounded-sm flex items-center justify-center group-hover:bg-blue-700 transition-colors">
         <span className="text-white font-bold text-sm">in</span>
@@ -169,7 +169,7 @@ const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string;
       </div>
       
       {/* Text Label */}
-      <span className="font-futura font-medium text-gray-900 group-hover:text-primary transition-colors mt-2 text-center leading-tight" style={{ fontSize: '14px' }}>
+      <span className="font-futura font-medium text-gray-900 group-hover:text-blue-600 transition-colors mt-2 text-center leading-tight" style={{ fontSize: '14px' }}>
         {title}
       </span>
     </div>
