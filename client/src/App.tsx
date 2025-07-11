@@ -19,6 +19,8 @@ import AdminBlogPage from "@/pages/AdminBlogPage";
 import AdminNewBlogPage from "@/pages/AdminNewBlogPage";
 import AdminResumePage from "@/pages/AdminResumePage";
 import AdminResumeUploadPage from "@/pages/AdminResumeUploadPage";
+import AdminTop5ListsPage from "@/pages/AdminTop5ListsPage";
+import AdminTop5ListEditPage from "@/pages/AdminTop5ListEditPage";
 import Layout from "./components/Layout";
 import { BlogDetail } from "./sections/BlogDetail";
 import { ProjectDetail } from "./sections/ProjectDetail";
@@ -47,6 +49,9 @@ function Router() {
       <Route path="/admin/blog/edit/:id" component={AdminNewBlogPage} />
       <Route path="/admin/resume" component={AdminResumePage} />
       <Route path="/admin/resume/upload" component={AdminResumeUploadPage} />
+      <Route path="/admin/top5-lists" component={AdminTop5ListsPage} />
+      <Route path="/admin/top5-lists/new" component={AdminTop5ListEditPage} />
+      <Route path="/admin/top5-lists/:id" component={AdminTop5ListEditPage} />
       
       {/* Fallback to 404 */}
       <Route component={NotFound} />

@@ -76,6 +76,11 @@ export default function AdminDashboardPage() {
     enabled: adminStatus?.isAdmin,
   });
 
+  const { data: topFiveLists } = useQuery({
+    queryKey: ["/api/admin/top5-lists"],
+    enabled: adminStatus?.isAdmin,
+  });
+
   // Delete contact submission
   const deleteContactMutation = useMutation({
     mutationFn: async (id: number) => {
@@ -233,10 +238,10 @@ export default function AdminDashboardPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                    Admin Users
+                    Top 5 Lists
                   </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    1
+                    {topFiveLists?.length || 0}
                   </p>
                 </div>
                 <Users className="h-8 w-8 text-orange-500" />
@@ -246,7 +251,7 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* Management Sections */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Project Management */}
           <Card>
             <CardHeader>
@@ -337,8 +342,53 @@ export default function AdminDashboardPage() {
             </CardContent>
           </Card>
 
+          {/* Top 5 Lists Management */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center justify-between">
+                <span>Top 5 Lists Management</span>
+                <div className="flex gap-2">
+                  <Button size="sm" onClick={() => setLocation("/admin/top5-lists/new")}>
+                    <Plus size={16} className="mr-2" />
+                    Add New
+                  </Button>
+                  <Button size="sm" variant="outline" onClick={() => setLocation("/admin/top5-lists")}>
+                    <Edit size={16} className="mr-2" />
+                    Manage
+                  </Button>
+                </div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {topFiveLists?.slice(0, 3).map((list: any) => (
+                  <div key={list.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div>
+                      <p className="font-medium text-gray-900 dark:text-white">
+                        {list.title}
+                      </p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        {list.description}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Badge variant="secondary">
+                        List {list.position}
+                      </Badge>
+                    </div>
+                  </div>
+                ))}
+                {topFiveLists?.length === 0 && (
+                  <p className="text-gray-500 dark:text-gray-400 text-center py-4">
+                    No top 5 lists found
+                  </p>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Contact Messages */}
-          <Card className="lg:col-span-2">
+          <Card className="lg:col-span-3">
             <CardHeader>
               <CardTitle>Recent Contact Messages</CardTitle>
             </CardHeader>

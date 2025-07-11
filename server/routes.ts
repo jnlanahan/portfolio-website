@@ -10,7 +10,9 @@ import {
   insertBlogPostSchema,
   insertProjectSchema,
   insertAdminSchema,
-  insertResumeSchema
+  insertResumeSchema,
+  insertTopFiveListSchema,
+  insertTopFiveListItemSchema
 } from "@shared/schema";
 import { z } from "zod";
 import { ZodError } from "zod";
@@ -152,8 +154,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         filename: file.filename,
         originalName: file.originalname,
         path: `/uploads/resumes/${file.filename}`,
-        size: file.size,
-        uploadedAt: new Date().toISOString()
+        size: file.size
       };
       
       await storage.saveResume(resumeData);
@@ -709,6 +710,131 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting contact submission:", error);
       res.status(500).json({ error: "Failed to delete contact submission" });
+    }
+  });
+
+  // Top 5 Lists API routes
+  app.get("/api/admin/top5-lists", requireAdmin, async (req, res) => {
+    try {
+      const lists = await storage.getAllTopFiveLists();
+      res.json(lists);
+    } catch (error) {
+      console.error("Error fetching top 5 lists:", error);
+      res.status(500).json({ error: "Failed to fetch top 5 lists" });
+    }
+  });
+
+  app.get("/api/admin/top5-lists/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const list = await storage.getTopFiveListById(id);
+      if (!list) {
+        return res.status(404).json({ error: "List not found" });
+      }
+      res.json(list);
+    } catch (error) {
+      console.error("Error fetching top 5 list:", error);
+      res.status(500).json({ error: "Failed to fetch top 5 list" });
+    }
+  });
+
+  app.post("/api/admin/top5-lists", requireAdmin, async (req, res) => {
+    try {
+      const validatedData = insertTopFiveListSchema.parse(req.body);
+      const list = await storage.createTopFiveList(validatedData);
+      res.json(list);
+    } catch (error) {
+      console.error("Error creating top 5 list:", error);
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ error: fromZodError(error).message });
+      } else {
+        res.status(500).json({ error: "Failed to create top 5 list" });
+      }
+    }
+  });
+
+  app.put("/api/admin/top5-lists/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const validatedData = insertTopFiveListSchema.partial().parse(req.body);
+      const list = await storage.updateTopFiveList(id, validatedData);
+      res.json(list);
+    } catch (error) {
+      console.error("Error updating top 5 list:", error);
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ error: fromZodError(error).message });
+      } else {
+        res.status(500).json({ error: "Failed to update top 5 list" });
+      }
+    }
+  });
+
+  app.delete("/api/admin/top5-lists/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteTopFiveList(id);
+      res.json({ message: "Top 5 list deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting top 5 list:", error);
+      res.status(500).json({ error: "Failed to delete top 5 list" });
+    }
+  });
+
+  // Top 5 List Items API routes
+  app.get("/api/admin/top5-lists/:listId/items", requireAdmin, async (req, res) => {
+    try {
+      const listId = parseInt(req.params.listId);
+      const items = await storage.getTopFiveListItems(listId);
+      res.json(items);
+    } catch (error) {
+      console.error("Error fetching top 5 list items:", error);
+      res.status(500).json({ error: "Failed to fetch top 5 list items" });
+    }
+  });
+
+  app.post("/api/admin/top5-lists/:listId/items", requireAdmin, async (req, res) => {
+    try {
+      const listId = parseInt(req.params.listId);
+      const validatedData = insertTopFiveListItemSchema.parse({
+        ...req.body,
+        listId
+      });
+      const item = await storage.createTopFiveListItem(validatedData);
+      res.json(item);
+    } catch (error) {
+      console.error("Error creating top 5 list item:", error);
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ error: fromZodError(error).message });
+      } else {
+        res.status(500).json({ error: "Failed to create top 5 list item" });
+      }
+    }
+  });
+
+  app.put("/api/admin/top5-list-items/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const validatedData = insertTopFiveListItemSchema.partial().parse(req.body);
+      const item = await storage.updateTopFiveListItem(id, validatedData);
+      res.json(item);
+    } catch (error) {
+      console.error("Error updating top 5 list item:", error);
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ error: fromZodError(error).message });
+      } else {
+        res.status(500).json({ error: "Failed to update top 5 list item" });
+      }
+    }
+  });
+
+  app.delete("/api/admin/top5-list-items/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteTopFiveListItem(id);
+      res.json({ message: "Top 5 list item deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting top 5 list item:", error);
+      res.status(500).json({ error: "Failed to delete top 5 list item" });
     }
   });
 

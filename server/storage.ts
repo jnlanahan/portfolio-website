@@ -10,7 +10,11 @@ import {
   type Admin,
   type InsertAdmin,
   type Resume,
-  type InsertResume
+  type InsertResume,
+  type TopFiveList,
+  type InsertTopFiveList,
+  type TopFiveListItem,
+  type InsertTopFiveListItem
 } from "@shared/schema";
 import { getBlogPosts, getBlogPostById } from "../client/src/data/blog";
 import { getPortfolio } from "../client/src/data/portfolio";
@@ -48,6 +52,19 @@ export interface IStorage {
   
   // Lists methods
   getLists(): Promise<any[]>;
+  
+  // Top 5 Lists methods
+  getAllTopFiveLists(): Promise<TopFiveList[]>;
+  getTopFiveListById(id: number): Promise<TopFiveList | undefined>;
+  createTopFiveList(list: InsertTopFiveList): Promise<TopFiveList>;
+  updateTopFiveList(id: number, list: Partial<InsertTopFiveList>): Promise<TopFiveList>;
+  deleteTopFiveList(id: number): Promise<void>;
+  
+  // Top 5 List Items methods
+  getTopFiveListItems(listId: number): Promise<TopFiveListItem[]>;
+  createTopFiveListItem(item: InsertTopFiveListItem): Promise<TopFiveListItem>;
+  updateTopFiveListItem(id: number, item: Partial<InsertTopFiveListItem>): Promise<TopFiveListItem>;
+  deleteTopFiveListItem(id: number): Promise<void>;
   
   // Contact methods
   getAllContactSubmissions(): Promise<ContactSubmission[]>;
@@ -340,6 +357,45 @@ export class MemStorage implements IStorage {
     return getLists();
   }
   
+  // Top 5 Lists methods (placeholder implementation for MemStorage)
+  async getAllTopFiveLists(): Promise<TopFiveList[]> {
+    // Since this is MemStorage, we'll return empty for now
+    // In a real implementation, this would store in memory
+    return [];
+  }
+
+  async getTopFiveListById(id: number): Promise<TopFiveList | undefined> {
+    return undefined;
+  }
+
+  async createTopFiveList(insertList: InsertTopFiveList): Promise<TopFiveList> {
+    throw new Error("Top 5 Lists not implemented for MemStorage");
+  }
+
+  async updateTopFiveList(id: number, updateData: Partial<InsertTopFiveList>): Promise<TopFiveList> {
+    throw new Error("Top 5 Lists not implemented for MemStorage");
+  }
+
+  async deleteTopFiveList(id: number): Promise<void> {
+    throw new Error("Top 5 Lists not implemented for MemStorage");
+  }
+
+  async getTopFiveListItems(listId: number): Promise<TopFiveListItem[]> {
+    return [];
+  }
+
+  async createTopFiveListItem(insertItem: InsertTopFiveListItem): Promise<TopFiveListItem> {
+    throw new Error("Top 5 Lists not implemented for MemStorage");
+  }
+
+  async updateTopFiveListItem(id: number, updateData: Partial<InsertTopFiveListItem>): Promise<TopFiveListItem> {
+    throw new Error("Top 5 Lists not implemented for MemStorage");
+  }
+
+  async deleteTopFiveListItem(id: number): Promise<void> {
+    throw new Error("Top 5 Lists not implemented for MemStorage");
+  }
+  
   // Contact methods
   async getAllContactSubmissions(): Promise<ContactSubmission[]> {
     return Array.from(this.contactSubmissions.values()).sort(
@@ -546,6 +602,104 @@ export class DatabaseStorage implements IStorage {
   async getLists(): Promise<any[]> {
     const { getLists } = await import('../client/src/data/lists');
     return getLists();
+  }
+
+  // Top 5 Lists methods
+  async getAllTopFiveLists(): Promise<TopFiveList[]> {
+    const { db } = await import('./db');
+    const { topFiveLists } = await import('@shared/schema');
+    const { asc } = await import('drizzle-orm');
+    
+    return await db.select().from(topFiveLists).orderBy(asc(topFiveLists.position));
+  }
+
+  async getTopFiveListById(id: number): Promise<TopFiveList | undefined> {
+    const { db } = await import('./db');
+    const { topFiveLists } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [list] = await db.select().from(topFiveLists).where(eq(topFiveLists.id, id));
+    return list || undefined;
+  }
+
+  async createTopFiveList(insertList: InsertTopFiveList): Promise<TopFiveList> {
+    const { db } = await import('./db');
+    const { topFiveLists } = await import('@shared/schema');
+    
+    const [list] = await db.insert(topFiveLists).values(insertList).returning();
+    return list;
+  }
+
+  async updateTopFiveList(id: number, updateData: Partial<InsertTopFiveList>): Promise<TopFiveList> {
+    const { db } = await import('./db');
+    const { topFiveLists } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [list] = await db.update(topFiveLists)
+      .set(updateData)
+      .where(eq(topFiveLists.id, id))
+      .returning();
+    
+    if (!list) {
+      throw new Error(`Top 5 list with ID ${id} not found`);
+    }
+    
+    return list;
+  }
+
+  async deleteTopFiveList(id: number): Promise<void> {
+    const { db } = await import('./db');
+    const { topFiveLists, topFiveListItems } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    // Delete all items first
+    await db.delete(topFiveListItems).where(eq(topFiveListItems.listId, id));
+    // Then delete the list
+    await db.delete(topFiveLists).where(eq(topFiveLists.id, id));
+  }
+
+  // Top 5 List Items methods
+  async getTopFiveListItems(listId: number): Promise<TopFiveListItem[]> {
+    const { db } = await import('./db');
+    const { topFiveListItems } = await import('@shared/schema');
+    const { eq, asc } = await import('drizzle-orm');
+    
+    return await db.select().from(topFiveListItems)
+      .where(eq(topFiveListItems.listId, listId))
+      .orderBy(asc(topFiveListItems.position));
+  }
+
+  async createTopFiveListItem(insertItem: InsertTopFiveListItem): Promise<TopFiveListItem> {
+    const { db } = await import('./db');
+    const { topFiveListItems } = await import('@shared/schema');
+    
+    const [item] = await db.insert(topFiveListItems).values(insertItem).returning();
+    return item;
+  }
+
+  async updateTopFiveListItem(id: number, updateData: Partial<InsertTopFiveListItem>): Promise<TopFiveListItem> {
+    const { db } = await import('./db');
+    const { topFiveListItems } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [item] = await db.update(topFiveListItems)
+      .set(updateData)
+      .where(eq(topFiveListItems.id, id))
+      .returning();
+    
+    if (!item) {
+      throw new Error(`Top 5 list item with ID ${id} not found`);
+    }
+    
+    return item;
+  }
+
+  async deleteTopFiveListItem(id: number): Promise<void> {
+    const { db } = await import('./db');
+    const { topFiveListItems } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    await db.delete(topFiveListItems).where(eq(topFiveListItems.id, id));
   }
 
   // Contact methods

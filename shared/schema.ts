@@ -122,3 +122,45 @@ export const insertResumeSchema = createInsertSchema(resumeContent).omit({
 
 export type InsertResume = z.infer<typeof insertResumeSchema>;
 export type Resume = typeof resumeContent.$inferSelect;
+
+// Top 5 Lists model
+export const topFiveLists = pgTable("top_five_lists", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  icon: text("icon").notNull(),
+  color: text("color"),
+  description: text("description"),
+  mainImage: text("main_image"),
+  position: integer("position").default(0).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertTopFiveListSchema = createInsertSchema(topFiveLists).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertTopFiveList = z.infer<typeof insertTopFiveListSchema>;
+export type TopFiveList = typeof topFiveLists.$inferSelect;
+
+// Top 5 List Items model
+export const topFiveListItems = pgTable("top_five_list_items", {
+  id: serial("id").primaryKey(),
+  listId: integer("list_id").references(() => topFiveLists.id).notNull(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  link: text("link"),
+  linkText: text("link_text"),
+  image: text("image"),
+  highlight: boolean("highlight").default(false).notNull(),
+  position: integer("position").default(0).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertTopFiveListItemSchema = createInsertSchema(topFiveListItems).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertTopFiveListItem = z.infer<typeof insertTopFiveListItemSchema>;
+export type TopFiveListItem = typeof topFiveListItems.$inferSelect;
