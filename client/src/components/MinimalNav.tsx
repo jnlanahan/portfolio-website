@@ -1,5 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
+import { FaArrowLeft } from 'react-icons/fa6';
 
 const MinimalNav = () => {
   const [location] = useLocation();
@@ -18,7 +19,7 @@ const MinimalNav = () => {
     >
       <Link href="/">
         <div className="flex items-center space-x-2 bg-white/90 backdrop-blur-md rounded-xl border border-gray-200 px-4 py-2 hover:border-blue-400 transition-colors cursor-pointer group shadow-sm">
-          <i className="ri-arrow-left-line text-blue-600 group-hover:translate-x-[-2px] transition-transform"></i>
+          <FaArrowLeft className="text-blue-600 group-hover:translate-x-[-2px] transition-transform text-sm" />
           <span className="text-sm font-medium text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>Home</span>
         </div>
       </Link>
