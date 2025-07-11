@@ -272,55 +272,101 @@ const HomePage = () => {
             className="relative z-10"
           >
             {/* Mobile: Two rows, Desktop: Single row */}
-            <div className="flex flex-col items-center space-y-1 md:space-y-0 md:flex-row md:justify-center md:space-x-8 lg:space-x-12 xl:space-x-16">
-              {/* First row on mobile / Left side on desktop */}
-              <div className="flex items-center justify-center space-x-6 md:space-x-0 md:contents">
+            <div className="flex flex-col items-center space-y-1 md:hidden">
+              {/* First row on mobile */}
+              <div className="flex items-center justify-center space-x-6">
                 <div className="static-logo-1">
                   <img 
                     src={eyLogo} 
                     alt="EY" 
-                    className="w-10 h-10 md:w-14 md:h-14 object-contain"
+                    className="w-10 h-10 object-contain"
                   />
                 </div>
                 <div className="static-logo-2">
                   <img 
                     src={armyLogo} 
                     alt="U.S. Army" 
-                    className="w-10 h-10 md:w-14 md:h-14 object-contain"
+                    className="w-10 h-10 object-contain"
                   />
                 </div>
                 <div className="static-logo-3">
                   <img 
                     src={osuLogo} 
                     alt="Ohio State Fisher College of Business" 
-                    className="w-28 h-28 md:w-36 md:h-36 object-contain"
+                    className="w-28 h-28 object-contain"
                   />
                 </div>
               </div>
               
-              {/* Second row on mobile / Right side on desktop */}
-              <div className="flex items-center justify-center space-x-6 md:space-x-0 md:contents">
+              {/* Second row on mobile */}
+              <div className="flex items-center justify-center space-x-6">
                 <div className="static-logo-4">
                   <img 
                     src={ncStateLogo} 
                     alt="NC State" 
-                    className="w-10 h-10 md:w-14 md:h-14 object-contain"
+                    className="w-10 h-10 object-contain"
                   />
                 </div>
                 <div className="static-logo-5">
                   <img 
                     src={missouriLogo} 
                     alt="Missouri S&T" 
-                    className="w-16 h-16 md:w-28 md:h-28 object-contain"
+                    className="w-16 h-16 object-contain"
                   />
                 </div>
                 <div className="static-logo-6">
                   <img 
                     src={usaceLogo} 
                     alt="US Army Corps of Engineers" 
-                    className="w-10 h-10 md:w-14 md:h-14 object-contain"
+                    className="w-10 h-10 object-contain"
                   />
                 </div>
+              </div>
+            </div>
+            
+            {/* Desktop: Single row */}
+            <div className="hidden md:flex items-center justify-center space-x-8 lg:space-x-12 xl:space-x-16">
+              <div className="static-logo-1">
+                <img 
+                  src={eyLogo} 
+                  alt="EY" 
+                  className="w-14 h-14 object-contain"
+                />
+              </div>
+              <div className="static-logo-2">
+                <img 
+                  src={armyLogo} 
+                  alt="U.S. Army" 
+                  className="w-14 h-14 object-contain"
+                />
+              </div>
+              <div className="static-logo-3">
+                <img 
+                  src={osuLogo} 
+                  alt="Ohio State Fisher College of Business" 
+                  className="w-36 h-36 object-contain"
+                />
+              </div>
+              <div className="static-logo-4">
+                <img 
+                  src={ncStateLogo} 
+                  alt="NC State" 
+                  className="w-14 h-14 object-contain"
+                />
+              </div>
+              <div className="static-logo-5">
+                <img 
+                  src={missouriLogo} 
+                  alt="Missouri S&T" 
+                  className="w-28 h-28 object-contain"
+                />
+              </div>
+              <div className="static-logo-6">
+                <img 
+                  src={usaceLogo} 
+                  alt="US Army Corps of Engineers" 
+                  className="w-14 h-14 object-contain"
+                />
               </div>
             </div>
           </motion.div>
