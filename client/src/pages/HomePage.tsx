@@ -210,7 +210,7 @@ const HomePage = () => {
       {/* Navigation Tiles Grid */}
       <div className="max-w-6xl mx-auto">
         {/* Hero Section - Like the screenshot */}
-        <div className="text-center relative" style={{ marginBottom: '120px', zIndex: 10 }}>
+        <div className="text-center relative" style={{ marginBottom: '160px', marginTop: '80px', zIndex: 10 }}>
           {/* Glowing circle with logos following circular path */}
           <div className="absolute inset-0 pointer-events-none overflow-visible glowing-circle-container" style={{ zIndex: 1 }}>
             {/* Glowing Circle Background */}
@@ -300,7 +300,7 @@ const HomePage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            style={{ marginBottom: '16px' }}
+            style={{ marginBottom: '16px', marginTop: '40px' }}
             className="relative z-10"
           >
             <p className="font-medium text-gray-600 tracking-wide uppercase" style={{ fontSize: '14px', letterSpacing: '0.1em' }}>
