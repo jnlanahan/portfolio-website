@@ -216,80 +216,68 @@ const HomePage = () => {
             {/* Glowing Circle Background */}
             <div className="glowing-circle"></div>
             
-            {/* EY Logo - Circular Path 1 */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-            >
-              <div className="circular-orbit-1">
+            {/* EY Logo - Static Position 1 (Top) */}
+            <div className="absolute top-8 left-1/2 -translate-x-1/2">
+              <div className="static-logo-1">
                 <img 
                   src={eyLogo} 
                   alt="EY" 
-                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain opacity-60 hover:opacity-80 transition-opacity"
+                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain"
                 />
               </div>
             </div>
 
-            {/* US Army Logo - Circular Path 2 */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-            >
-              <div className="circular-orbit-2">
+            {/* US Army Logo - Static Position 2 (Top Right) */}
+            <div className="absolute top-16 right-16">
+              <div className="static-logo-2">
                 <img 
                   src={armyLogo} 
                   alt="U.S. Army" 
-                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain opacity-60 hover:opacity-80 transition-opacity"
+                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain"
                 />
               </div>
             </div>
 
-            {/* Ohio State Fisher College of Business Logo - Circular Path 3 */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-            >
-              <div className="circular-orbit-3">
+            {/* Ohio State Fisher College of Business Logo - Static Position 3 (Right) */}
+            <div className="absolute top-1/2 right-8 -translate-y-1/2">
+              <div className="static-logo-3">
                 <img 
                   src={osuLogo} 
                   alt="Ohio State Fisher College of Business" 
-                  className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 object-contain opacity-60 hover:opacity-80 transition-opacity"
+                  className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 object-contain"
                 />
               </div>
             </div>
 
-            {/* NC State College of Engineering Logo - Circular Path 4 */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-            >
-              <div className="circular-orbit-4">
+            {/* NC State College of Engineering Logo - Static Position 4 (Bottom Right) */}
+            <div className="absolute bottom-16 right-16">
+              <div className="static-logo-4">
                 <img 
                   src={ncStateLogo} 
                   alt="NC State" 
-                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain opacity-60 hover:opacity-80 transition-opacity"
+                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain"
                 />
               </div>
             </div>
 
-            {/* Missouri S&T Logo - Circular Path 5 */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-            >
-              <div className="circular-orbit-5">
+            {/* Missouri S&T Logo - Static Position 5 (Bottom) */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+              <div className="static-logo-5">
                 <img 
                   src={missouriLogo} 
                   alt="Missouri S&T" 
-                  className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-contain opacity-60 hover:opacity-80 transition-opacity"
+                  className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-contain"
                 />
               </div>
             </div>
 
-            {/* US Army Corps of Engineers Logo - Circular Path 6 */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-            >
-              <div className="circular-orbit-6">
+            {/* US Army Corps of Engineers Logo - Static Position 6 (Left) */}
+            <div className="absolute top-1/2 left-8 -translate-y-1/2">
+              <div className="static-logo-6">
                 <img 
                   src={usaceLogo} 
                   alt="US Army Corps of Engineers" 
-                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain opacity-60 hover:opacity-80 transition-opacity"
+                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain"
                 />
               </div>
             </div>
