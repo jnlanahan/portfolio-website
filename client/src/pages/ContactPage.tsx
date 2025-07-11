@@ -125,8 +125,8 @@ const ContactPage = () => {
             fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
             fontSize: '16px'
           }}>
-            <a href="tel:+16145551234" className="hover:text-blue-600 transition-colors">
-              (614) 555-1234
+            <a href="tel:+18288440692" className="hover:text-blue-600 transition-colors">
+              (828) 844-0692
             </a>
           </p>
         </div>

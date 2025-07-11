@@ -21,6 +21,14 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
 - Dark mode support
 
 ## Recent Changes
+- **January 2025**: Contact page updated with actual phone number (828-844-0692) and fixed React key warnings
+- **January 2025**: Blog detail page completely redesigned with clean, modern aesthetic
+  - Added reading progress bar at the top
+  - Clean header with back button and large title
+  - Streamlined author section with "NL" avatar and reading time calculation
+  - Focused content display with proper typography
+  - Removed complex sharing buttons for cleaner look
+  - Contact page simplified to just email and phone number
 - **January 2025**: Apple-inspired redesign with clean, minimalist aesthetic
   - Implemented Apple.com-style light grey background (#f5f5f7) for clean, professional look
   - Created pure white tiles with subtle shadows and clean borders

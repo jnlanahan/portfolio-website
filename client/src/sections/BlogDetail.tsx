@@ -162,8 +162,8 @@ export const BlogDetail: React.FC = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex flex-wrap gap-2 pt-8 border-t border-gray-200"
           >
-            {post.tags.map((tag: BlogTag) => (
-              <BlogTagBadge key={tag.name} tag={tag} />
+            {post.tags.map((tag: BlogTag, index: number) => (
+              <BlogTagBadge key={`${tag.name}-${index}`} tag={tag} />
             ))}
           </motion.div>
         )}
