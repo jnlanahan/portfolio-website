@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,9 +22,23 @@ export default function AdminTop5ListsPage() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
+  // Check authentication first
+  const { data: authCheck, isLoading: authLoading, error: authError } = useQuery({
+    queryKey: ["/api/admin/check-auth"],
+    retry: false,
+  });
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (authError && !authLoading) {
+      setLocation("/admin/login");
+    }
+  }, [authError, authLoading, setLocation]);
+
   // Fetch Top 5 lists
   const { data: lists, isLoading } = useQuery({
     queryKey: ["/api/admin/top5-lists"],
+    enabled: authCheck,
   });
 
   // Delete list mutation

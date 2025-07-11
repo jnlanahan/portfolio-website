@@ -52,16 +52,29 @@ export default function AdminTop5ListEditPage() {
 
   const isEditing = id !== "new";
 
+  // Check authentication first
+  const { data: authCheck, isLoading: authLoading, error: authError } = useQuery({
+    queryKey: ["/api/admin/check-auth"],
+    retry: false,
+  });
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (authError && !authLoading) {
+      setLocation("/admin/login");
+    }
+  }, [authError, authLoading, setLocation]);
+
   // Fetch list data if editing
   const { data: list, isLoading } = useQuery({
     queryKey: ["/api/admin/top5-lists", id],
-    enabled: isEditing,
+    enabled: isEditing && authCheck,
   });
 
   // Fetch list items
   const { data: items } = useQuery({
     queryKey: ["/api/admin/top5-lists", id, "items"],
-    enabled: isEditing,
+    enabled: isEditing && authCheck,
   });
 
   // Form for list
@@ -116,7 +129,7 @@ export default function AdminTop5ListEditPage() {
   // Save/Update list mutation
   const saveListMutation = useMutation({
     mutationFn: async (data: any) => {
-      if (isEditing) {
+      if (isEditing && id && id !== "new") {
         return await apiRequest(`/api/admin/top5-lists/${id}`, "PUT", data);
       } else {
         return await apiRequest("/api/admin/top5-lists", "POST", data);
@@ -128,14 +141,14 @@ export default function AdminTop5ListEditPage() {
         title: isEditing ? "List updated successfully" : "List created successfully",
         description: isEditing ? "Your changes have been saved" : "New list has been created",
       });
-      if (!isEditing) {
+      if (!isEditing && response.id) {
         setLocation(`/admin/top5-lists/${response.id}`);
       }
     },
-    onError: () => {
+    onError: (error: any) => {
       toast({
         title: "Save failed",
-        description: "An error occurred while saving the list",
+        description: error.message || "An error occurred while saving the list",
         variant: "destructive",
       });
     },
@@ -145,6 +158,11 @@ export default function AdminTop5ListEditPage() {
   const addItemMutation = useMutation({
     mutationFn: async (data: any) => {
       if (!id || id === "new") {
+        toast({
+          title: "Save list first",
+          description: "Please save the list before adding items",
+          variant: "destructive",
+        });
         throw new Error("Must save list first before adding items");
       }
       return await apiRequest(`/api/admin/top5-lists/${id}/items`, "POST", data);

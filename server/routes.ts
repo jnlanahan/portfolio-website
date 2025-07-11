@@ -119,6 +119,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     next();
   };
 
+  // Check authentication endpoint
+  app.get('/api/admin/check-auth', (req, res) => {
+    if (req.session.isAdmin) {
+      res.json({ authenticated: true });
+    } else {
+      res.status(401).json({ error: "Admin authentication required" });
+    }
+  });
+
   // File upload endpoint
   app.post('/api/admin/upload', requireAdmin, upload.array('files', 8), async (req, res) => {
     try {
