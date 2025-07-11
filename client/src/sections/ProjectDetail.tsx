@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 // Tech badge component
 const TechBadge = ({ tech }: { tech: string }) => (
-  <span className="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full transition-all duration-300 hover:scale-105">
+  <span className="px-3 py-1 bg-blue-50 text-blue-600 text-sm rounded-full transition-all duration-300 hover:scale-105" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
     {tech}
   </span>
 );
@@ -44,12 +44,12 @@ export const ProjectDetail: React.FC = () => {
     return (
       <div className="page-container">
         <div className="text-center py-12">
-          <h1 className="text-3xl font-bold mb-4">Project not found</h1>
-          <p className="text-muted-foreground mb-6">
+          <h1 className="text-3xl font-bold mb-4 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>Project not found</h1>
+          <p className="text-gray-600 mb-6" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
             Sorry, the project you're looking for doesn't exist.
           </p>
           <Link href="/portfolio">
-            <Button>
+            <Button className="bg-blue-600 text-white hover:bg-blue-700" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
               <i className="ri-arrow-left-line mr-2"></i>
               Back to Portfolio
             </Button>
@@ -66,7 +66,7 @@ export const ProjectDetail: React.FC = () => {
   return (
     <div className="page-container">
       {/* Back navigation */}
-      <Link href="/portfolio" className="inline-flex items-center text-muted-foreground hover:text-secondary mb-8 transition-colors">
+      <Link href="/portfolio" className="inline-flex items-center text-gray-600 hover:text-blue-600 mb-8 transition-colors" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
         <i className="ri-arrow-left-line mr-2"></i>
         Back to Portfolio
       </Link>
@@ -110,21 +110,21 @@ export const ProjectDetail: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 mb-4">
             {project.featured && (
-              <Badge className="bg-yellow-500 text-white">
+              <Badge className="bg-yellow-500 text-white" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 <i className="ri-star-fill mr-1"></i>
                 Featured
               </Badge>
             )}
             {project.category && (
-              <Badge variant="secondary">
+              <Badge className="bg-blue-100 text-blue-800" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 {project.category.name}
               </Badge>
             )}
           </div>
 
-          <h1 className="text-4xl font-bold mb-4">{project.title}</h1>
+          <h1 className="text-4xl font-bold mb-4 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>{project.title}</h1>
           
-          <div className="text-muted-foreground mb-6">
+          <div className="text-gray-500 mb-6" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
             <i className="ri-calendar-line mr-2"></i>
             {new Date(project.date).toLocaleDateString('en-US', { 
               year: 'numeric', 
@@ -132,13 +132,13 @@ export const ProjectDetail: React.FC = () => {
             })}
           </div>
 
-          <div className="prose prose-gray dark:prose-invert max-w-none mb-8">
-            <p className="text-lg leading-relaxed">{project.description}</p>
+          <div className="mb-8">
+            <p className="text-lg leading-relaxed text-gray-700" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>{project.description}</p>
           </div>
 
           {/* Technologies */}
           <div className="mb-8">
-            <h3 className="text-lg font-semibold mb-4">Technologies Used</h3>
+            <h3 className="text-lg font-semibold mb-4 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>Technologies Used</h3>
             <div className="flex flex-wrap gap-2">
               {project.technologies.map((tech: string, index: number) => (
                 <TechBadge key={index} tech={tech} />
@@ -149,7 +149,7 @@ export const ProjectDetail: React.FC = () => {
           {/* Action Buttons */}
           <div className="flex gap-4 mb-8">
             {project.demoUrl && (
-              <Button asChild className="flex-1">
+              <Button asChild className="flex-1 bg-blue-600 hover:bg-blue-700 text-white" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
                   <i className="ri-eye-line mr-2"></i>
                   Live Demo
@@ -157,7 +157,7 @@ export const ProjectDetail: React.FC = () => {
               </Button>
             )}
             {project.codeUrl && (
-              <Button variant="outline" asChild className="flex-1">
+              <Button variant="outline" asChild className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 <a href={project.codeUrl} target="_blank" rel="noopener noreferrer">
                   <i className="ri-github-line mr-2"></i>
                   View Code
@@ -168,54 +168,54 @@ export const ProjectDetail: React.FC = () => {
 
           {/* Lessons Learned */}
           {project.lessonsLearned && (
-            <Card className="mb-8">
+            <Card className="mb-8 bg-white border-gray-200">
               <CardContent className="p-6">
-                <h3 className="font-semibold mb-2">Lessons Learned</h3>
-                <p className="text-muted-foreground">{project.lessonsLearned}</p>
+                <h3 className="font-semibold mb-2 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>Lessons Learned</h3>
+                <p className="text-gray-600" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>{project.lessonsLearned}</p>
               </CardContent>
             </Card>
           )}
 
           {/* Project sections */}
           {project.challenge && (
-            <Card className="mb-6">
+            <Card className="mb-6 bg-white border-gray-200">
               <CardContent className="p-6">
-                <h3 className="font-semibold mb-3">Challenge</h3>
-                <p className="text-muted-foreground">{project.challenge}</p>
+                <h3 className="font-semibold mb-3 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>Challenge</h3>
+                <p className="text-gray-600" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>{project.challenge}</p>
               </CardContent>
             </Card>
           )}
 
           {project.solution && (
-            <Card className="mb-6">
+            <Card className="mb-6 bg-white border-gray-200">
               <CardContent className="p-6">
-                <h3 className="font-semibold mb-3">Solution</h3>
-                <p className="text-muted-foreground">{project.solution}</p>
+                <h3 className="font-semibold mb-3 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>Solution</h3>
+                <p className="text-gray-600" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>{project.solution}</p>
               </CardContent>
             </Card>
           )}
 
           {project.results && (
-            <Card className="mb-6">
+            <Card className="mb-6 bg-white border-gray-200">
               <CardContent className="p-6">
-                <h3 className="font-semibold mb-3">Results</h3>
-                <p className="text-muted-foreground">{project.results}</p>
+                <h3 className="font-semibold mb-3 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>Results</h3>
+                <p className="text-gray-600" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>{project.results}</p>
               </CardContent>
             </Card>
           )}
 
           {/* Testimonial */}
           {project.testimonial && (
-            <Card className="bg-secondary/5 border-secondary/20">
+            <Card className="bg-blue-50 border-blue-200">
               <CardContent className="p-6">
-                <blockquote className="text-lg italic mb-4">
+                <blockquote className="text-lg italic mb-4 text-gray-700" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                   "{project.testimonial.quote}"
                 </blockquote>
                 <div className="flex items-center">
                   <div>
-                    <p className="font-semibold">{project.testimonial.author}</p>
+                    <p className="font-semibold text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>{project.testimonial.author}</p>
                     {project.testimonial.role && (
-                      <p className="text-sm text-muted-foreground">{project.testimonial.role}</p>
+                      <p className="text-sm text-gray-600" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>{project.testimonial.role}</p>
                     )}
                   </div>
                 </div>
