@@ -6,7 +6,7 @@ import { Link } from "wouter";
 
 // Tech badge component
 const TechBadge = ({ tech }: { tech: string }) => (
-  <span className="px-3 py-1 bg-secondary/10 text-secondary text-xs rounded-full transition-all duration-300 hover:scale-105">
+  <span className="px-3 py-1 bg-blue-50 text-blue-600 text-xs rounded-full transition-all duration-300 hover:scale-105" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
     {tech}
   </span>
 );
@@ -137,7 +137,7 @@ const ScrollableImageContainer = ({ project }: { project: any }) => {
 const ProjectCard = ({ project, index }: { project: any; index: number }) => (
   <motion.div
     key={project.id}
-    className="group relative rounded-xl overflow-hidden border border-border hover:border-secondary transition-all duration-300 bg-background/30 backdrop-blur-sm"
+    className="group relative rounded-xl overflow-hidden border border-gray-200 hover:border-blue-600 transition-all duration-300 bg-white"
     initial={{ opacity: 0, y: 30 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -147,7 +147,7 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => (
 
     <div className="p-6">
       {/* Project date */}
-      <div className="text-xs text-muted-foreground mb-2">
+      <div className="text-xs text-gray-500 mb-2" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
         {new Date(project.date).toLocaleDateString('en-US', { 
           year: 'numeric', 
           month: 'long'
@@ -155,14 +155,14 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => (
       </div>
       
       {/* Project title */}
-      <h3 className="text-xl font-space font-semibold mb-2 group-hover:text-secondary transition-colors">
+      <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-600 transition-colors" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
         <Link href={`/portfolio/${project.slug}`} className="block">
           {project.title}
         </Link>
       </h3>
       
       {/* Description */}
-      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+      <p className="text-gray-600 text-sm mb-4 line-clamp-2" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
         {project.shortDescription}
       </p>
       
@@ -255,8 +255,17 @@ const PortfolioPage = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-4xl md:text-5xl font-bold mb-6">My Portfolio</h1>
-        <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
+        <h1 className="text-gray-900 mb-6" style={{ 
+          fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+          fontWeight: '700',
+          fontSize: 'clamp(32px, 5vw, 48px)',
+          lineHeight: '1.2'
+        }}>My Portfolio</h1>
+        <p className="text-gray-600 max-w-3xl mx-auto mb-8" style={{ 
+          fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+          fontSize: '17px',
+          lineHeight: '1.5'
+        }}>
           A showcase of my recent projects, experiments, and collaborations.
         </p>
 
@@ -266,9 +275,10 @@ const PortfolioPage = () => {
             onClick={() => setSelectedCategory(null)}
             className={`px-4 py-2 rounded-full text-sm transition-colors ${
               !selectedCategory
-                ? "bg-secondary text-secondary-foreground"
-                : "bg-muted hover:bg-muted/80 text-foreground"
+                ? "bg-blue-600 text-white"
+                : "bg-gray-100 hover:bg-gray-200 text-gray-700"
             }`}
+            style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
           >
             All Projects
           </button>
@@ -278,9 +288,10 @@ const PortfolioPage = () => {
               onClick={() => setSelectedCategory(category.id)}
               className={`px-4 py-2 rounded-full text-sm transition-colors ${
                 selectedCategory === category.id
-                  ? "bg-secondary text-secondary-foreground"
-                  : "bg-muted hover:bg-muted/80 text-foreground"
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-100 hover:bg-gray-200 text-gray-700"
               }`}
+              style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
             >
               {category.name}
             </button>
@@ -291,8 +302,8 @@ const PortfolioPage = () => {
       {/* Featured projects section */}
       {featuredProjects.length > 0 && !selectedCategory && (
         <div className="mb-16">
-          <h2 className="text-2xl font-bold mb-6 flex items-center">
-            <i className="ri-star-fill text-secondary mr-2"></i> Featured Projects
+          <h2 className="text-2xl font-bold mb-6 flex items-center" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif', color: '#1a1a1a' }}>
+            <i className="ri-star-fill text-blue-600 mr-2"></i> Featured Projects
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {featuredProjects.map((project, index) => (

@@ -35,8 +35,17 @@ const TopFiveListsPage = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-4xl md:text-5xl font-bold mb-6">Top Five Lists</h1>
-        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+        <h1 className="text-gray-900 mb-6" style={{ 
+          fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+          fontWeight: '700',
+          fontSize: 'clamp(32px, 5vw, 48px)',
+          lineHeight: '1.2'
+        }}>Top Five Lists</h1>
+        <p className="text-gray-600 max-w-3xl mx-auto" style={{ 
+          fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+          fontSize: '17px',
+          lineHeight: '1.5'
+        }}>
           A glimpse into my favorite tools, resources, and inspirations that have shaped my journey.
         </p>
       </motion.div>

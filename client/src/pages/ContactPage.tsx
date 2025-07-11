@@ -99,8 +99,17 @@ const ContactPage = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-4xl md:text-5xl font-bold mb-6">Get In Touch</h1>
-        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+        <h1 className="text-gray-900 mb-6" style={{ 
+          fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+          fontWeight: '700',
+          fontSize: 'clamp(32px, 5vw, 48px)',
+          lineHeight: '1.2'
+        }}>Get In Touch</h1>
+        <p className="text-gray-600 max-w-3xl mx-auto" style={{ 
+          fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+          fontSize: '17px',
+          lineHeight: '1.5'
+        }}>
           Have a project in mind or just want to connect? I'd love to hear from you.
         </p>
       </motion.div>

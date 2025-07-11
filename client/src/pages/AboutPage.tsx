@@ -14,10 +14,15 @@ const AboutPage = () => {
               transition={{ duration: 0.5 }}
               className="z-10"
             >
-              <p className="text-secondary font-sora mb-4">Hello, I'm</p>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-space mb-6">
+              <p className="text-gray-600 mb-4" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: '16px' }}>Hello, I'm</p>
+              <h1 className="text-gray-900 mb-6" style={{ 
+                fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+                fontWeight: '700',
+                fontSize: 'clamp(32px, 5vw, 48px)',
+                lineHeight: '1.2'
+              }}>
                 Nick Lanahan
-                <span className="block text-2xl md:text-3xl mt-2">
+                <span className="block text-gray-700 mt-2" style={{ fontSize: 'clamp(18px, 3vw, 24px)', fontWeight: '500' }}>
                   <RotatingWords 
                     words={["Leader", "Coach", "Product Manager", "Family Man", "Strategist", "Critical Thinker"]} 
                     interval={2500}
@@ -25,26 +30,26 @@ const AboutPage = () => {
                   />
                 </span>
               </h1>
-              <p className="text-lg text-muted-foreground mb-8 max-w-xl">
+              <p className="text-gray-600 mb-8 max-w-xl" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: '17px', lineHeight: '1.5' }}>
                 With 8+ years of experience crafting digital experiences since 2015, I specialize in building impactful web applications. My journey began with a Computer Science degree from UC Berkeley, followed by roles at startups and tech companies. I create intuitive, accessible interfaces backed by robust architecture, combining technical excellence with empathetic design thinking.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="p-6 rounded-lg">
-                  <h4 className="text-xl font-space font-medium mb-4 text-secondary">Front-End</h4>
-                  <ul className="space-y-2 text-muted-foreground">
-                    <li className="flex items-center"><i className="ri-check-line text-secondary mr-2"></i> React & Next.js</li>
-                    <li className="flex items-center"><i className="ri-check-line text-secondary mr-2"></i> TypeScript</li>
-                    <li className="flex items-center"><i className="ri-check-line text-secondary mr-2"></i> Tailwind CSS</li>
-                    <li className="flex items-center"><i className="ri-check-line text-secondary mr-2"></i> Framer Motion</li>
+                <div className="p-6 bg-white rounded-xl border border-gray-200 shadow-sm">
+                  <h4 className="text-xl font-medium mb-4 text-blue-600" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>Front-End</h4>
+                  <ul className="space-y-2 text-gray-600" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                    <li className="flex items-center"><i className="ri-check-line text-blue-600 mr-2"></i> React & Next.js</li>
+                    <li className="flex items-center"><i className="ri-check-line text-blue-600 mr-2"></i> TypeScript</li>
+                    <li className="flex items-center"><i className="ri-check-line text-blue-600 mr-2"></i> Tailwind CSS</li>
+                    <li className="flex items-center"><i className="ri-check-line text-blue-600 mr-2"></i> Framer Motion</li>
                   </ul>
                 </div>
-                <div className="p-6 rounded-lg">
-                  <h4 className="text-xl font-space font-medium mb-4 text-secondary">Back-End</h4>
-                  <ul className="space-y-2 text-muted-foreground">
-                    <li className="flex items-center"><i className="ri-check-line text-secondary mr-2"></i> Node.js & Express</li>
-                    <li className="flex items-center"><i className="ri-check-line text-secondary mr-2"></i> PostgreSQL & MongoDB</li>
-                    <li className="flex items-center"><i className="ri-check-line text-secondary mr-2"></i> GraphQL</li>
-                    <li className="flex items-center"><i className="ri-check-line text-secondary mr-2"></i> AWS & Firebase</li>
+                <div className="p-6 bg-white rounded-xl border border-gray-200 shadow-sm">
+                  <h4 className="text-xl font-medium mb-4 text-blue-600" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>Back-End</h4>
+                  <ul className="space-y-2 text-gray-600" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                    <li className="flex items-center"><i className="ri-check-line text-blue-600 mr-2"></i> Node.js & Express</li>
+                    <li className="flex items-center"><i className="ri-check-line text-blue-600 mr-2"></i> PostgreSQL & MongoDB</li>
+                    <li className="flex items-center"><i className="ri-check-line text-blue-600 mr-2"></i> GraphQL</li>
+                    <li className="flex items-center"><i className="ri-check-line text-blue-600 mr-2"></i> AWS & Firebase</li>
                   </ul>
                 </div>
               </div>
@@ -54,7 +59,7 @@ const AboutPage = () => {
                   href="https://github.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-2xl text-muted-foreground hover:text-secondary transition-colors"
+                  className="text-2xl text-gray-600 hover:text-blue-600 transition-colors"
                   aria-label="GitHub"
                 >
                   <i className="ri-github-fill"></i>
@@ -63,7 +68,7 @@ const AboutPage = () => {
                   href="https://linkedin.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-2xl text-muted-foreground hover:text-secondary transition-colors"
+                  className="text-2xl text-gray-600 hover:text-blue-600 transition-colors"
                   aria-label="LinkedIn"
                 >
                   <i className="ri-linkedin-box-fill"></i>
@@ -72,7 +77,7 @@ const AboutPage = () => {
                   href="https://twitter.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-2xl text-muted-foreground hover:text-secondary transition-colors"
+                  className="text-2xl text-gray-600 hover:text-blue-600 transition-colors"
                   aria-label="Twitter"
                 >
                   <i className="ri-twitter-fill"></i>
@@ -81,7 +86,7 @@ const AboutPage = () => {
                   href="https://codepen.io"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-2xl text-muted-foreground hover:text-secondary transition-colors"
+                  className="text-2xl text-gray-600 hover:text-blue-600 transition-colors"
                   aria-label="CodePen"
                 >
                   <i className="ri-codepen-line"></i>

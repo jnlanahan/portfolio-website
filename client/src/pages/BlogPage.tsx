@@ -27,7 +27,7 @@ const BlogCard = ({ post, index }: { post: any; index: number }) => {
   return (
     <motion.article
       key={post.id}
-      className="group bg-background/30 backdrop-blur-sm rounded-xl overflow-hidden border border-border hover:border-secondary hover:shadow-lg hover:shadow-secondary/5 transition-all duration-300"
+      className="group bg-white rounded-xl overflow-hidden border border-gray-200 hover:border-blue-600 hover:shadow-lg hover:shadow-blue-600/10 transition-all duration-300"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
@@ -68,8 +68,8 @@ const BlogCard = ({ post, index }: { post: any; index: number }) => {
         </div>
         
         {/* Title */}
-        <h3 className="text-xl font-space font-semibold mb-3 line-clamp-2">
-          <Link href={`/blog/${post.slug}`} className="hover:text-secondary transition-colors">
+        <h3 className="text-xl font-semibold mb-3 line-clamp-2" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+          <Link href={`/blog/${post.slug}`} className="hover:text-blue-600 transition-colors">
             {post.title}
           </Link>
         </h3>
@@ -160,8 +160,17 @@ const BlogPage = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-4xl md:text-5xl font-bold mb-6">My Blog</h1>
-        <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
+        <h1 className="text-gray-900 mb-6" style={{ 
+          fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+          fontWeight: '700',
+          fontSize: 'clamp(32px, 5vw, 48px)',
+          lineHeight: '1.2'
+        }}>My Blog</h1>
+        <p className="text-gray-600 max-w-3xl mx-auto mb-8" style={{ 
+          fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+          fontSize: '17px',
+          lineHeight: '1.5'
+        }}>
           Thoughts, tutorials, and insights from my journey in tech.
         </p>
         
@@ -171,9 +180,10 @@ const BlogPage = () => {
             onClick={() => setSelectedTag(null)}
             className={`px-4 py-2 rounded-full text-sm transition-colors ${
               !selectedTag
-                ? "bg-secondary text-secondary-foreground"
-                : "bg-muted hover:bg-muted/80"
+                ? "bg-blue-600 text-white"
+                : "bg-gray-100 hover:bg-gray-200 text-gray-700"
             }`}
+            style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
           >
             All
           </button>
@@ -200,8 +210,8 @@ const BlogPage = () => {
       {/* Featured posts section */}
       {featuredPosts.length > 0 && !selectedTag && (
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 flex items-center">
-            <span className="text-secondary mr-2"><i className="ri-star-fill"></i></span> Featured Posts
+          <h2 className="text-2xl font-bold mb-6 flex items-center" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif', color: '#1a1a1a' }}>
+            <span className="text-blue-600 mr-2"><i className="ri-star-fill"></i></span> Featured Posts
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {featuredPosts.map((post, index) => (
