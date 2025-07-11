@@ -250,7 +250,7 @@ const HomePage = () => {
                 <img 
                   src={osuLogo} 
                   alt="Ohio State Fisher College of Business" 
-                  className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-contain opacity-60 hover:opacity-80 transition-opacity"
+                  className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 object-contain opacity-60 hover:opacity-80 transition-opacity"
                 />
               </div>
             </div>
