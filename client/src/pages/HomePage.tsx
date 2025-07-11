@@ -203,47 +203,109 @@ const HomePage = () => {
       <div className="max-w-6xl mx-auto">
         {/* Hero Section - Like the screenshot */}
         <div className="text-center relative" style={{ marginBottom: '120px' }}>
-          {/* Organic multi-color aurora effect */}
-          <div 
-            className="absolute inset-0 pointer-events-none animate-aurora"
-            style={{
-              background: `
-                radial-gradient(ellipse 400px 200px at 45% 30%, rgba(144, 238, 144, 0.4) 0%, transparent 60%),
-                radial-gradient(ellipse 300px 150px at 55% 25%, rgba(100, 200, 255, 0.3) 0%, transparent 50%),
-                radial-gradient(ellipse 500px 250px at 50% 35%, rgba(255, 200, 100, 0.2) 0%, transparent 70%),
-                radial-gradient(circle at 50% 30%, rgba(144, 238, 144, 0.6) 0%, rgba(144, 238, 144, 0.3) 20%, transparent 40%)
-              `,
-              width: '200%',
-              height: '300%',
-              left: '-50%',
-              top: `${-150 + scrollY * 0.1}%`,
-              filter: 'blur(20px)',
-              transform: `translateY(${scrollY * 0.05}px)`,
-              mixBlendMode: 'screen'
-            }}
-          />
-          
-          {/* Floating particle system */}
+          {/* Floating company and university logos */}
           <div className="absolute inset-0 pointer-events-none">
-            {[...Array(12)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute animate-float"
-                style={{
-                  left: `${20 + (i * 7) % 60}%`,
-                  top: `${30 + (i * 3) % 40}%`,
-                  width: `${4 + (i % 3) * 2}px`,
-                  height: `${4 + (i % 3) * 2}px`,
-                  background: i % 3 === 0 ? 'rgba(144, 238, 144, 0.6)' : 
-                             i % 3 === 1 ? 'rgba(100, 200, 255, 0.5)' : 
-                             'rgba(255, 200, 100, 0.4)',
-                  borderRadius: '50%',
-                  filter: 'blur(1px)',
-                  animationDelay: `${i * 0.5}s`,
-                  animationDuration: `${8 + (i % 4) * 2}s`
-                }}
+            {/* EY Logo */}
+            <div 
+              className="absolute animate-float-logo" 
+              style={{ 
+                left: '15%', 
+                top: '20%',
+                animationDelay: '0s',
+                animationDuration: '15s'
+              }}
+            >
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/3/34/EY_logo_2019.svg" 
+                alt="EY" 
+                className="w-16 h-16 opacity-30 hover:opacity-50 transition-opacity"
               />
-            ))}
+            </div>
+
+            {/* US Army Logo */}
+            <div 
+              className="absolute animate-float-logo" 
+              style={{ 
+                left: '75%', 
+                top: '25%',
+                animationDelay: '2s',
+                animationDuration: '18s'
+              }}
+            >
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/1/19/US_Army_logo.svg" 
+                alt="US Army" 
+                className="w-16 h-16 opacity-30 hover:opacity-50 transition-opacity"
+              />
+            </div>
+
+            {/* Ohio State University Logo */}
+            <div 
+              className="absolute animate-float-logo" 
+              style={{ 
+                left: '10%', 
+                top: '60%',
+                animationDelay: '4s',
+                animationDuration: '20s'
+              }}
+            >
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Ohio_State_Buckeyes_logo.svg" 
+                alt="Ohio State" 
+                className="w-16 h-16 opacity-30 hover:opacity-50 transition-opacity"
+              />
+            </div>
+
+            {/* NC State Logo */}
+            <div 
+              className="absolute animate-float-logo" 
+              style={{ 
+                left: '80%', 
+                top: '65%',
+                animationDelay: '6s',
+                animationDuration: '17s'
+              }}
+            >
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/3/3b/NC_State_Wolfpack_logo.svg" 
+                alt="NC State" 
+                className="w-16 h-16 opacity-30 hover:opacity-50 transition-opacity"
+              />
+            </div>
+
+            {/* Missouri S&T Logo */}
+            <div 
+              className="absolute animate-float-logo" 
+              style={{ 
+                left: '50%', 
+                top: '15%',
+                animationDelay: '8s',
+                animationDuration: '19s'
+              }}
+            >
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Missouri_S%26T_Miners_logo.svg" 
+                alt="Missouri S&T" 
+                className="w-16 h-16 opacity-30 hover:opacity-50 transition-opacity"
+              />
+            </div>
+
+            {/* US Army Corps of Engineers Logo */}
+            <div 
+              className="absolute animate-float-logo" 
+              style={{ 
+                left: '45%', 
+                top: '70%',
+                animationDelay: '10s',
+                animationDuration: '16s'
+              }}
+            >
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/d/d7/US-ArmyCorpsOfEngineers-Logo.svg" 
+                alt="Army Corps of Engineers" 
+                className="w-16 h-16 opacity-30 hover:opacity-50 transition-opacity"
+              />
+            </div>
           </div>
           
           {/* Small subtitle */}
