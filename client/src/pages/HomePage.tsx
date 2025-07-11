@@ -216,167 +216,13 @@ const HomePage = () => {
       {/* Navigation Tiles Grid */}
       <div className="max-w-6xl mx-auto">
         {/* Hero Section - Like the screenshot */}
-        <div className="text-center relative" style={{ marginBottom: '160px', marginTop: '120px', zIndex: 10 }}>
+        <div className="text-center relative" style={{ marginBottom: '160px', marginTop: '0px', zIndex: 10 }}>
           {/* Glowing circle with logos following circular path */}
-          <div className="absolute inset-0 pointer-events-none overflow-visible glowing-circle-container" style={{ zIndex: 0 }}>
+          <div className="absolute inset-0 pointer-events-none overflow-visible glowing-circle-container" style={{ zIndex: 0, transform: 'translateY(-60px)' }}>
             {/* Glowing Circle Background */}
             <div className="glowing-circle"></div>
             
-            {/* EY Logo - Position 1 (Top - 0°) */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ transform: 'translate(-50%, -50%) rotate(0deg) translateX(120px) rotate(0deg)' }}
-            >
-              <div className="static-logo-1 sm:hidden">
-                <img 
-                  src={eyLogo} 
-                  alt="EY" 
-                  className="w-10 h-10 object-contain"
-                />
-              </div>
-            </div>
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden sm:block"
-              style={{ transform: 'translate(-50%, -50%) rotate(0deg) translateX(200px) rotate(0deg)' }}
-            >
-              <div className="static-logo-1">
-                <img 
-                  src={eyLogo} 
-                  alt="EY" 
-                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain"
-                />
-              </div>
-            </div>
 
-            {/* US Army Logo - Position 2 (Top Right - 60°) */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ transform: 'translate(-50%, -50%) rotate(60deg) translateX(120px) rotate(-60deg)' }}
-            >
-              <div className="static-logo-2 sm:hidden">
-                <img 
-                  src={armyLogo} 
-                  alt="U.S. Army" 
-                  className="w-10 h-10 object-contain"
-                />
-              </div>
-            </div>
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden sm:block"
-              style={{ transform: 'translate(-50%, -50%) rotate(60deg) translateX(200px) rotate(-60deg)' }}
-            >
-              <div className="static-logo-2">
-                <img 
-                  src={armyLogo} 
-                  alt="U.S. Army" 
-                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain"
-                />
-              </div>
-            </div>
-
-            {/* Ohio State Fisher College of Business Logo - Position 3 (Bottom Right - 120°) */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ transform: 'translate(-50%, -50%) rotate(120deg) translateX(120px) rotate(-120deg)' }}
-            >
-              <div className="static-logo-3 sm:hidden">
-                <img 
-                  src={osuLogo} 
-                  alt="Ohio State Fisher College of Business" 
-                  className="w-28 h-28 object-contain"
-                />
-              </div>
-            </div>
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden sm:block"
-              style={{ transform: 'translate(-50%, -50%) rotate(120deg) translateX(200px) rotate(-120deg)' }}
-            >
-              <div className="static-logo-3">
-                <img 
-                  src={osuLogo} 
-                  alt="Ohio State Fisher College of Business" 
-                  className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 object-contain"
-                />
-              </div>
-            </div>
-
-            {/* NC State College of Engineering Logo - Position 4 (Bottom - 180°) */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ transform: 'translate(-50%, -50%) rotate(180deg) translateX(120px) rotate(-180deg)' }}
-            >
-              <div className="static-logo-4 sm:hidden">
-                <img 
-                  src={ncStateLogo} 
-                  alt="NC State" 
-                  className="w-10 h-10 object-contain"
-                />
-              </div>
-            </div>
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden sm:block"
-              style={{ transform: 'translate(-50%, -50%) rotate(180deg) translateX(200px) rotate(-180deg)' }}
-            >
-              <div className="static-logo-4">
-                <img 
-                  src={ncStateLogo} 
-                  alt="NC State" 
-                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain"
-                />
-              </div>
-            </div>
-
-            {/* Missouri S&T Logo - Position 5 (Bottom Left - 240°) */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ transform: 'translate(-50%, -50%) rotate(240deg) translateX(120px) rotate(-240deg)' }}
-            >
-              <div className="static-logo-5 sm:hidden">
-                <img 
-                  src={missouriLogo} 
-                  alt="Missouri S&T" 
-                  className="w-16 h-16 object-contain"
-                />
-              </div>
-            </div>
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden sm:block"
-              style={{ transform: 'translate(-50%, -50%) rotate(240deg) translateX(200px) rotate(-240deg)' }}
-            >
-              <div className="static-logo-5">
-                <img 
-                  src={missouriLogo} 
-                  alt="Missouri S&T" 
-                  className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-contain"
-                />
-              </div>
-            </div>
-
-            {/* US Army Corps of Engineers Logo - Position 6 (Top Left - 300°) */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ transform: 'translate(-50%, -50%) rotate(300deg) translateX(120px) rotate(-300deg)' }}
-            >
-              <div className="static-logo-6 sm:hidden">
-                <img 
-                  src={usaceLogo} 
-                  alt="US Army Corps of Engineers" 
-                  className="w-10 h-10 object-contain"
-                />
-              </div>
-            </div>
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden sm:block"
-              style={{ transform: 'translate(-50%, -50%) rotate(300deg) translateX(200px) rotate(-300deg)' }}
-            >
-              <div className="static-logo-6">
-                <img 
-                  src={usaceLogo} 
-                  alt="US Army Corps of Engineers" 
-                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain"
-                />
-              </div>
-            </div>
           </div>
           
           {/* Small subtitle */}
@@ -384,7 +230,7 @@ const HomePage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            style={{ marginBottom: '16px', marginTop: '40px' }}
+            style={{ marginBottom: '16px', marginTop: '0px' }}
             className="relative z-10"
           >
             <p className="font-medium text-gray-600 tracking-wide uppercase" style={{ fontSize: '14px', letterSpacing: '0.1em' }}>
@@ -415,6 +261,67 @@ const HomePage = () => {
             >
               NICK<br/>LANAHAN
             </h1>
+          </motion.div>
+          
+          {/* Logo Grid - Two rows under Nick Lanahan */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            style={{ marginBottom: '32px' }}
+            className="relative z-10"
+          >
+            <div className="flex flex-col items-center space-y-4">
+              {/* Top row - 3 logos */}
+              <div className="flex items-center justify-center space-x-8 md:space-x-12">
+                <div className="static-logo-1">
+                  <img 
+                    src={eyLogo} 
+                    alt="EY" 
+                    className="w-10 h-10 md:w-14 md:h-14 object-contain"
+                  />
+                </div>
+                <div className="static-logo-2">
+                  <img 
+                    src={armyLogo} 
+                    alt="U.S. Army" 
+                    className="w-10 h-10 md:w-14 md:h-14 object-contain"
+                  />
+                </div>
+                <div className="static-logo-3">
+                  <img 
+                    src={osuLogo} 
+                    alt="Ohio State Fisher College of Business" 
+                    className="w-28 h-28 md:w-36 md:h-36 object-contain"
+                  />
+                </div>
+              </div>
+              
+              {/* Bottom row - 3 logos */}
+              <div className="flex items-center justify-center space-x-8 md:space-x-12">
+                <div className="static-logo-4">
+                  <img 
+                    src={ncStateLogo} 
+                    alt="NC State" 
+                    className="w-10 h-10 md:w-14 md:h-14 object-contain"
+                  />
+                </div>
+                <div className="static-logo-5">
+                  <img 
+                    src={missouriLogo} 
+                    alt="Missouri S&T" 
+                    className="w-16 h-16 md:w-28 md:h-28 object-contain"
+                  />
+                </div>
+                <div className="static-logo-6">
+                  <img 
+                    src={usaceLogo} 
+                    alt="US Army Corps of Engineers" 
+                    className="w-10 h-10 md:w-14 md:h-14 object-contain"
+                  />
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
         
