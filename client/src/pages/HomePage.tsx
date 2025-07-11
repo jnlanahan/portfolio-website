@@ -203,53 +203,48 @@ const HomePage = () => {
       <div className="max-w-6xl mx-auto">
         {/* Hero Section - Like the screenshot */}
         <div className="text-center relative" style={{ marginBottom: '120px' }}>
-          {/* Enhanced layered glow system */}
-          {/* Primary glow layer - sharp center */}
+          {/* Organic multi-color aurora effect */}
           <div 
-            className="absolute inset-0 pointer-events-none animate-gradient-shift"
+            className="absolute inset-0 pointer-events-none animate-aurora"
             style={{
-              background: 'radial-gradient(circle at center top, rgba(144, 238, 144, 0.95) 0%, rgba(144, 238, 144, 0.8) 5%, rgba(144, 238, 144, 0.6) 12%, rgba(144, 238, 144, 0.3) 20%, transparent 30%)',
-              width: '120%',
-              height: '180%',
-              left: '-10%',
-              top: `${-90 + scrollY * 0.15}%`,
-              borderRadius: '50%',
-              filter: 'blur(1px)',
-              transform: `translateY(${scrollY * 0.1}px)`
+              background: `
+                radial-gradient(ellipse 400px 200px at 45% 30%, rgba(144, 238, 144, 0.4) 0%, transparent 60%),
+                radial-gradient(ellipse 300px 150px at 55% 25%, rgba(100, 200, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse 500px 250px at 50% 35%, rgba(255, 200, 100, 0.2) 0%, transparent 70%),
+                radial-gradient(circle at 50% 30%, rgba(144, 238, 144, 0.6) 0%, rgba(144, 238, 144, 0.3) 20%, transparent 40%)
+              `,
+              width: '200%',
+              height: '300%',
+              left: '-50%',
+              top: `${-150 + scrollY * 0.1}%`,
+              filter: 'blur(20px)',
+              transform: `translateY(${scrollY * 0.05}px)`,
+              mixBlendMode: 'screen'
             }}
           />
           
-          {/* Secondary glow layer - medium spread */}
-          <div 
-            className="absolute inset-0 pointer-events-none animate-gradient-shift"
-            style={{
-              background: 'radial-gradient(circle at center top, rgba(144, 238, 144, 0.6) 0%, rgba(144, 238, 144, 0.4) 15%, rgba(144, 238, 144, 0.2) 35%, rgba(144, 238, 144, 0.1) 50%, transparent 65%)',
-              width: '160%',
-              height: '240%',
-              left: '-30%',
-              top: `${-120 + scrollY * 0.15}%`,
-              borderRadius: '50%',
-              filter: 'blur(4px)',
-              transform: `translateY(${scrollY * 0.08}px)`,
-              animationDelay: '5s'
-            }}
-          />
-          
-          {/* Outer atmospheric layer - soft diffusion */}
-          <div 
-            className="absolute inset-0 pointer-events-none animate-gradient-shift"
-            style={{
-              background: 'radial-gradient(circle at center top, rgba(144, 238, 144, 0.3) 0%, rgba(144, 238, 144, 0.15) 25%, rgba(144, 238, 144, 0.08) 45%, rgba(144, 238, 144, 0.03) 65%, transparent 85%)',
-              width: '220%',
-              height: '320%',
-              left: '-60%',
-              top: `${-160 + scrollY * 0.15}%`,
-              borderRadius: '50%',
-              filter: 'blur(8px)',
-              transform: `translateY(${scrollY * 0.06}px)`,
-              animationDelay: '10s'
-            }}
-          />
+          {/* Floating particle system */}
+          <div className="absolute inset-0 pointer-events-none">
+            {[...Array(12)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute animate-float"
+                style={{
+                  left: `${20 + (i * 7) % 60}%`,
+                  top: `${30 + (i * 3) % 40}%`,
+                  width: `${4 + (i % 3) * 2}px`,
+                  height: `${4 + (i % 3) * 2}px`,
+                  background: i % 3 === 0 ? 'rgba(144, 238, 144, 0.6)' : 
+                             i % 3 === 1 ? 'rgba(100, 200, 255, 0.5)' : 
+                             'rgba(255, 200, 100, 0.4)',
+                  borderRadius: '50%',
+                  filter: 'blur(1px)',
+                  animationDelay: `${i * 0.5}s`,
+                  animationDuration: `${8 + (i % 4) * 2}s`
+                }}
+              />
+            ))}
+          </div>
           
           {/* Small subtitle */}
           <motion.div
