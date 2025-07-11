@@ -68,13 +68,13 @@ export default function AdminTop5ListEditPage() {
   // Fetch list data if editing
   const { data: list, isLoading } = useQuery({
     queryKey: ["/api/admin/top5-lists", id],
-    enabled: isEditing && authCheck,
+    enabled: isEditing && !!authCheck,
   });
 
   // Fetch list items
   const { data: items } = useQuery({
     queryKey: ["/api/admin/top5-lists", id, "items"],
-    enabled: isEditing && authCheck,
+    enabled: isEditing && !!authCheck,
   });
 
   // Form for list
