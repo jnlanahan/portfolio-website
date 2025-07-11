@@ -14,6 +14,7 @@ import osuLogo from '@assets/OSU Logo_1752203136368.png';
 import usaceLogo from '@assets/US-ArmyCorpsOfEngineers-Logo.svg_1752203527903.png';
 import armyLogo from '@assets/army-logo-2844_1752203136369.png';
 import eyLogo from '@assets/EY_1752203527904.png';
+import nickHeadshot from '@assets/PXL_20250628_182520391_1752206764378.jpg';
 
 const HomeTile = ({ 
   title, 
@@ -349,7 +350,7 @@ const HomePage = () => {
             linkTo="/about"
             delay={0.5}
             size="large"
-            image="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop"
+            image={nickHeadshot}
           />
           
           <HomeTile
