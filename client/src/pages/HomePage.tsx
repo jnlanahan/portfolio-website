@@ -380,7 +380,7 @@ const HomePage = () => {
             linkTo="/top5"
             delay={0.8}
             size="large"
-            image="https://images.unsplash.com/photo-1611224923853-80b023f02d71?q=80&w=1000&auto=format&fit=crop"
+            image="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?q=80&w=1000&auto=format&fit=crop"
           />
         </div>
         
