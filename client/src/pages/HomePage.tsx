@@ -52,7 +52,7 @@ const HomeTile = ({
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)', /* Apple-style subtle shadow */
         height: '64px' /* 8-point grid height */
       }}
-      spotlightColor="rgba(144, 238, 144, 0.15)"
+      spotlightColor="rgba(0, 122, 255, 0.1)"
     >
       <h3 className="font-futura font-medium text-gray-900 group-hover:text-primary transition-colors" style={{ fontSize: '14px' }}> {/* Consistent sizing */}
         {title}
@@ -65,7 +65,7 @@ const HomeTile = ({
         borderRadius: '16px', /* 8-point grid radius */
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)' /* Apple-style subtle shadow */
       }}
-      spotlightColor="rgba(144, 238, 144, 0.15)"
+      spotlightColor="rgba(0, 122, 255, 0.1)"
     >
       {/* Header with title */}
       <div style={{ padding: '16px 16px 8px' }}> {/* 8-point grid padding */}
@@ -345,7 +345,7 @@ const HomePage = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 relative" style={{ gap: '16px', marginBottom: '32px', zIndex: 20 }}> {/* 8-point grid spacing */}
           <HomeTile
             title="About"
-            description="Learn more about my background, skills, and journey"
+            description="Learn more about me"
             icon="ri-user-line"
             linkTo="/about"
             delay={0.5}
@@ -355,7 +355,7 @@ const HomePage = () => {
           
           <HomeTile
             title="Portfolio"
-            description="Browse my latest projects and technical work"
+            description="See my side projects"
             icon="ri-briefcase-line"
             linkTo="/portfolio"
             delay={0.6}
@@ -365,7 +365,7 @@ const HomePage = () => {
           
           <HomeTile
             title="Blog"
-            description="Read my thoughts on technology, development, and more"
+            description="Read my thoughts"
             icon="ri-article-line"
             linkTo="/blog"
             delay={0.7}
@@ -375,7 +375,7 @@ const HomePage = () => {
           
           <HomeTile
             title="Top 5 Lists"
-            description="Curated lists of my favorite tools, resources, and recommendations"
+            description="Understand my preferences"
             icon="ri-list-check-line"
             linkTo="/top5"
             delay={0.8}
