@@ -232,14 +232,13 @@ const HomePage = () => {
                 animationDuration: '18s'
               }}
             >
-              <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/1/19/US_Army_logo.svg" 
-                alt="US Army" 
-                className="w-16 h-16 opacity-30 hover:opacity-50 transition-opacity"
-              />
+              <div className="bg-black rounded p-2 opacity-30 hover:opacity-50 transition-opacity">
+                <div className="text-xs font-bold text-yellow-500">U.S.</div>
+                <div className="text-xs font-bold text-yellow-500">ARMY</div>
+              </div>
             </div>
 
-            {/* Ohio State University Logo */}
+            {/* Ohio State Fisher College of Business Logo */}
             <div 
               className="absolute animate-float-logo" 
               style={{ 
@@ -249,14 +248,13 @@ const HomePage = () => {
                 animationDuration: '20s'
               }}
             >
-              <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Ohio_State_Buckeyes_logo.svg" 
-                alt="Ohio State" 
-                className="w-16 h-16 opacity-30 hover:opacity-50 transition-opacity"
-              />
+              <div className="bg-gray-200 rounded p-2 opacity-30 hover:opacity-50 transition-opacity">
+                <div className="text-xs font-bold text-gray-700">FISHER</div>
+                <div className="text-xs text-gray-600">COLLEGE OF BUSINESS</div>
+              </div>
             </div>
 
-            {/* NC State Logo */}
+            {/* NC State College of Engineering Logo */}
             <div 
               className="absolute animate-float-logo" 
               style={{ 
@@ -266,11 +264,10 @@ const HomePage = () => {
                 animationDuration: '17s'
               }}
             >
-              <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/3/3b/NC_State_Wolfpack_logo.svg" 
-                alt="NC State" 
-                className="w-16 h-16 opacity-30 hover:opacity-50 transition-opacity"
-              />
+              <div className="bg-red-600 rounded p-2 opacity-30 hover:opacity-50 transition-opacity">
+                <div className="text-xs font-bold text-white">NC STATE</div>
+                <div className="text-xs text-white">ENGINEERING</div>
+              </div>
             </div>
 
             {/* Missouri S&T Logo */}
@@ -283,11 +280,10 @@ const HomePage = () => {
                 animationDuration: '19s'
               }}
             >
-              <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Missouri_S%26T_Miners_logo.svg" 
-                alt="Missouri S&T" 
-                className="w-16 h-16 opacity-30 hover:opacity-50 transition-opacity"
-              />
+              <div className="bg-green-700 rounded p-2 opacity-30 hover:opacity-50 transition-opacity">
+                <div className="text-xs font-bold text-white">MISSOURI</div>
+                <div className="text-xs font-bold text-white">S&T</div>
+              </div>
             </div>
 
             {/* US Army Corps of Engineers Logo */}
@@ -300,11 +296,10 @@ const HomePage = () => {
                 animationDuration: '16s'
               }}
             >
-              <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/d/d7/US-ArmyCorpsOfEngineers-Logo.svg" 
-                alt="Army Corps of Engineers" 
-                className="w-16 h-16 opacity-30 hover:opacity-50 transition-opacity"
-              />
+              <div className="bg-red-800 rounded p-2 opacity-30 hover:opacity-50 transition-opacity">
+                <div className="text-xs font-bold text-white">USACE</div>
+                <div className="text-xs text-white">ENGINEERS</div>
+              </div>
             </div>
           </div>
           
