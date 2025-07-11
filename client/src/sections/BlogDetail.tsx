@@ -123,25 +123,15 @@ export const BlogDetail: React.FC = () => {
 
         {/* Author and meta information */}
         <div className="flex flex-wrap items-center text-gray-500 mb-8 gap-y-3" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
-          {post.author && (
-            <div className="flex items-center mr-4">
-              {post.author.avatar ? (
-                <img
-                  src={post.author.avatar}
-                  alt={post.author.name}
-                  className="w-10 h-10 rounded-full mr-3 border-2 border-secondary/20"
-                />
-              ) : (
-                <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-3 font-semibold" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
-                  {post.author.name.charAt(0).toUpperCase()}
-                </div>
-              )}
-              <div>
-                <div className="font-medium text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>{post.author.name}</div>
-                {post.author.role && <div className="text-xs text-gray-500" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>{post.author.role}</div>}
-              </div>
+          <div className="flex items-center mr-4">
+            <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-3 font-semibold" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+              NL
             </div>
-          )}
+            <div>
+              <div className="font-medium text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>Nick Lanahan</div>
+              <div className="text-xs text-gray-500" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>Product Manager & Developer</div>
+            </div>
+          </div>
 
           <div className="flex items-center flex-wrap gap-x-2 gap-y-1">
             <div className="flex items-center">
