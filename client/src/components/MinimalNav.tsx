@@ -14,7 +14,7 @@ const MinimalNav = () => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="fixed top-8 left-8 z-50"
+      className="fixed top-4 left-4 z-50"
     >
       <Link href="/">
         <div className="flex items-center space-x-2 bg-white/90 backdrop-blur-md rounded-xl border border-gray-200 px-4 py-2 hover:border-blue-400 transition-colors cursor-pointer group shadow-sm">

@@ -66,10 +66,12 @@ export const ProjectDetail: React.FC = () => {
   return (
     <div className="page-container">
       {/* Back navigation */}
-      <Link href="/portfolio" className="inline-flex items-center text-gray-600 hover:text-blue-600 mb-8 transition-colors" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
-        <i className="ri-arrow-left-line mr-2"></i>
-        Back to Projects
-      </Link>
+      <div className="mb-8">
+        <Link href="/portfolio" className="inline-flex items-center text-gray-600 hover:text-blue-600 transition-colors" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+          <i className="ri-arrow-left-line mr-2"></i>
+          Back to Projects
+        </Link>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Project Images */}

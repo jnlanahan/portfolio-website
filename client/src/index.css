@@ -94,7 +94,7 @@ body {
 
   .page-container {
     @apply max-w-7xl mx-auto min-h-[calc(100vh-160px)];
-    padding: 32px 16px; /* 8-point grid: 32px vertical, 16px horizontal */
+    padding: 72px 16px 32px 16px; /* Extra top padding to avoid overlap with fixed nav */
   }
 
   h1, h2, h3, h4, h5, h6 {
