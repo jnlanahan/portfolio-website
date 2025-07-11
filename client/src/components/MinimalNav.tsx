@@ -14,12 +14,12 @@ const MinimalNav = () => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="fixed top-6 left-6 z-50"
+      className="fixed top-8 left-8 z-50"
     >
       <Link href="/">
-        <div className="flex items-center space-x-2 bg-background/90 backdrop-blur-md rounded-xl border border-secondary/20 px-4 py-2 hover:border-secondary/40 transition-colors cursor-pointer group">
-          <i className="ri-arrow-left-line text-secondary group-hover:translate-x-[-2px] transition-transform"></i>
-          <span className="text-sm font-medium text-foreground">Home</span>
+        <div className="flex items-center space-x-2 bg-white/90 backdrop-blur-md rounded-xl border border-gray-200 px-4 py-2 hover:border-blue-400 transition-colors cursor-pointer group shadow-sm">
+          <i className="ri-arrow-left-line text-blue-600 group-hover:translate-x-[-2px] transition-transform"></i>
+          <span className="text-sm font-medium text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>Home</span>
         </div>
       </Link>
     </motion.div>

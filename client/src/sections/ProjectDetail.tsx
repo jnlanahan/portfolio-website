@@ -51,7 +51,7 @@ export const ProjectDetail: React.FC = () => {
           <Link href="/portfolio">
             <Button className="bg-blue-600 text-white hover:bg-blue-700" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
               <i className="ri-arrow-left-line mr-2"></i>
-              Back to Portfolio
+              Back to Projects
             </Button>
           </Link>
         </div>
@@ -68,7 +68,7 @@ export const ProjectDetail: React.FC = () => {
       {/* Back navigation */}
       <Link href="/portfolio" className="inline-flex items-center text-gray-600 hover:text-blue-600 mb-8 transition-colors" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
         <i className="ri-arrow-left-line mr-2"></i>
-        Back to Portfolio
+        Back to Projects
       </Link>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -157,8 +157,8 @@ export const ProjectDetail: React.FC = () => {
               </Button>
             )}
             {project.codeUrl && (
-              <Button variant="outline" asChild className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
-                <a href={project.codeUrl} target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" asChild className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50 hover:text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                <a href={project.codeUrl} target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-gray-900">
                   <i className="ri-github-line mr-2"></i>
                   View Code
                 </a>

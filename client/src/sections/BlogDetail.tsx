@@ -56,9 +56,9 @@ export const BlogDetail: React.FC = () => {
   if (!post && !isLoading) {
     return (
       <div className="page-container relative">
-        <h1 className="text-3xl font-bold mb-4">Post not found</h1>
-        <p className="mb-6">Sorry, the blog post you're looking for doesn't exist.</p>
-        <Link href="/blog" className="text-secondary hover:underline inline-flex items-center">
+        <h1 className="text-3xl font-bold mb-4 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>Post not found</h1>
+        <p className="mb-6 text-gray-600" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>Sorry, the blog post you're looking for doesn't exist.</p>
+        <Link href="/blog" className="text-blue-600 hover:text-blue-800 inline-flex items-center transition-colors" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
           <i className="ri-arrow-left-line mr-2"></i> Back to blog
         </Link>
       </div>
@@ -88,7 +88,7 @@ export const BlogDetail: React.FC = () => {
   return (
     <div className="page-container relative">
       {/* Back button */}
-      <Link href="/blog" className="inline-flex items-center text-muted-foreground hover:text-secondary mb-8 transition-colors">
+      <Link href="/blog" className="inline-flex items-center text-gray-600 hover:text-blue-600 mb-8 transition-colors" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
         <i className="ri-arrow-left-line mr-2"></i> Back to all posts
       </Link>
 
@@ -102,26 +102,26 @@ export const BlogDetail: React.FC = () => {
         {/* Category badge (if available) */}
         {post.category && (
           <Link href={`/blog/category/${post.category.slug}`} className="inline-block mb-4">
-            <span className="px-3 py-1 bg-secondary/10 text-secondary rounded-full text-xs font-medium">
+            <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
               {post.category.name}
             </span>
           </Link>
         )}
 
         {/* Title */}
-        <h1 className="text-3xl md:text-4xl font-bold font-space mb-4 leading-tight">
+        <h1 className="text-3xl md:text-4xl font-bold mb-4 leading-tight text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
           {post.title}
         </h1>
 
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-6">
-          {post.tags.map((tag: BlogTag) => (
-            <BlogTagBadge key={tag.id} tag={tag} />
+          {post.tags.map((tag: BlogTag, index: number) => (
+            <BlogTagBadge key={`${tag.id}-${index}`} tag={tag} />
           ))}
         </div>
 
         {/* Author and meta information */}
-        <div className="flex flex-wrap items-center text-muted-foreground mb-8 gap-y-3">
+        <div className="flex flex-wrap items-center text-gray-500 mb-8 gap-y-3" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
           {post.author && (
             <div className="flex items-center mr-4">
               {post.author.avatar ? (
@@ -136,8 +136,8 @@ export const BlogDetail: React.FC = () => {
                 </div>
               )}
               <div>
-                <div className="font-medium text-foreground">{post.author.name}</div>
-                {post.author.role && <div className="text-xs">{post.author.role}</div>}
+                <div className="font-medium text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>{post.author.name}</div>
+                {post.author.role && <div className="text-xs text-gray-500" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>{post.author.role}</div>}
               </div>
             </div>
           )}
@@ -182,7 +182,8 @@ export const BlogDetail: React.FC = () => {
 
         {/* Article content */}
         <div 
-          className="blog-content prose prose-lg dark:prose-invert max-w-none prose-headings:font-space prose-a:text-secondary prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl"
+          className="blog-content prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl"
+          style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
 
@@ -204,14 +205,14 @@ export const BlogDetail: React.FC = () => {
 
             {/* Last updated */}
             {post.lastUpdated && (
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-gray-500" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 Updated: {formatBlogDate(post.lastUpdated)}
               </div>
             )}
           </div>
 
           {/* Share section */}
-          <h3 className="text-xl font-space font-semibold mb-4">Share this post</h3>
+          <h3 className="text-xl font-semibold mb-4 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>Share this post</h3>
           <div className="flex flex-wrap gap-3">
             <a
               href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(window.location.href)}`}

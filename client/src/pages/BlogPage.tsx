@@ -49,7 +49,7 @@ const BlogCard = ({ post, index }: { post: any; index: number }) => {
       </Link>
       <div className="p-6">
         {/* Meta information */}
-        <div className="flex flex-wrap items-center text-muted-foreground text-sm mb-3">
+        <div className="flex flex-wrap items-center text-gray-500 text-sm mb-3" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
           <i className="ri-calendar-line mr-2"></i>
           <time dateTime={post.date}>
             {formatBlogDate(post.date)}
@@ -68,19 +68,19 @@ const BlogCard = ({ post, index }: { post: any; index: number }) => {
         </div>
         
         {/* Title */}
-        <h3 className="text-xl font-semibold mb-3 line-clamp-2" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
-          <Link href={`/blog/${post.slug}`} className="hover:text-blue-600 transition-colors">
+        <h3 className="text-xl font-semibold mb-3 line-clamp-2 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+          <Link href={`/blog/${post.slug}`} className="text-gray-900 hover:text-blue-600 transition-colors">
             {post.title}
           </Link>
         </h3>
         
         {/* Excerpt */}
-        <p className="text-muted-foreground mb-4 line-clamp-3">{post.excerpt}</p>
+        <p className="text-gray-600 mb-4 line-clamp-3" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>{post.excerpt}</p>
         
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-2">
-          {post.tags.map((tag: BlogTag) => (
-            <BlogTagBadge key={tag.id} tag={tag} />
+          {post.tags.map((tag: BlogTag, index: number) => (
+            <BlogTagBadge key={`${tag.id}-${index}`} tag={tag} />
           ))}
         </div>
         
@@ -98,7 +98,7 @@ const BlogCard = ({ post, index }: { post: any; index: number }) => {
                 {post.author.name.charAt(0)}
               </div>
             )}
-            <span className="text-sm">{post.author.name}</span>
+            <span className="text-sm text-gray-700" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>{post.author.name}</span>
           </div>
         )}
       </div>
@@ -191,15 +191,12 @@ const BlogPage = () => {
             <button
               key={tag.id}
               onClick={() => setSelectedTag(tag.id)}
-              className={`px-4 py-2 rounded-full text-sm transition-colors`}
-              style={{
-                backgroundColor: selectedTag === tag.id 
-                  ? tag.color || '#22c55e'
-                  : 'var(--muted)',
-                color: selectedTag === tag.id 
-                  ? 'white' 
-                  : 'var(--foreground)',
-              }}
+              className={`px-4 py-2 rounded-full text-sm transition-colors ${
+                selectedTag === tag.id
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+              }`}
+              style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
             >
               {tag.name}
             </button>
@@ -231,10 +228,11 @@ const BlogPage = () => {
       {/* Empty state */}
       {filteredPosts.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-muted-foreground text-lg">No posts found with this tag.</p>
+          <p className="text-gray-600 text-lg" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>No posts found with this tag.</p>
           <button
             onClick={() => setSelectedTag(null)}
-            className="mt-4 px-6 py-2 bg-secondary text-secondary-foreground rounded-md"
+            className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
           >
             View all posts
           </button>
