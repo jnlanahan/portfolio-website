@@ -216,7 +216,7 @@ const HomePage = () => {
       {/* Navigation Tiles Grid */}
       <div className="max-w-6xl mx-auto">
         {/* Hero Section - Like the screenshot */}
-        <div className="text-center relative" style={{ marginBottom: '160px', marginTop: '0px', zIndex: 10 }}>
+        <div className="text-center relative" style={{ marginBottom: '120px', marginTop: '0px', zIndex: 10 }}>
           {/* Glowing circle with logos following circular path */}
           <div className="absolute inset-0 pointer-events-none overflow-visible glowing-circle-container" style={{ zIndex: 0, transform: 'translateY(-60px)' }}>
             {/* Glowing Circle Background */}
@@ -268,12 +268,12 @@ const HomePage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            style={{ marginBottom: '32px' }}
+            style={{ marginBottom: '16px' }}
             className="relative z-10"
           >
-            <div className="flex flex-col items-center space-y-4">
+            <div className="flex flex-col items-center space-y-2">
               {/* Top row - 3 logos */}
-              <div className="flex items-center justify-center space-x-8 md:space-x-12">
+              <div className="flex items-center justify-center space-x-12 md:space-x-16 lg:space-x-20">
                 <div className="static-logo-1">
                   <img 
                     src={eyLogo} 
@@ -298,7 +298,7 @@ const HomePage = () => {
               </div>
               
               {/* Bottom row - 3 logos */}
-              <div className="flex items-center justify-center space-x-8 md:space-x-12">
+              <div className="flex items-center justify-center space-x-12 md:space-x-16 lg:space-x-20">
                 <div className="static-logo-4">
                   <img 
                     src={ncStateLogo} 
