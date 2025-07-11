@@ -119,47 +119,56 @@ const ContactPage = () => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
+          className="bg-white rounded-2xl p-8 shadow-sm border border-gray-200"
         >
           <div className="mb-8">
-            <h3 className="text-2xl font-space font-semibold mb-6">
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900" style={{ 
+              fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+              fontSize: '20px'
+            }}>
               Contact Information
             </h3>
             <ul className="space-y-4">
               <li className="flex items-center">
-                <div className="bg-background/40 backdrop-blur-sm p-3 rounded-full mr-4">
-                  <i className="ri-mail-line text-secondary text-xl"></i>
+                <div className="bg-blue-50 p-3 rounded-full mr-4">
+                  <i className="ri-mail-line text-blue-600 text-xl"></i>
                 </div>
                 <a
-                  href="mailto:alex@example.com"
-                  className="text-muted-foreground hover:text-secondary transition-colors"
+                  href="mailto:nick@example.com"
+                  className="text-gray-700 hover:text-blue-600 transition-colors"
+                  style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
                 >
-                  alex@example.com
+                  nick@example.com
                 </a>
               </li>
               <li className="flex items-center">
-                <div className="bg-background/40 backdrop-blur-sm p-3 rounded-full mr-4">
-                  <i className="ri-phone-line text-secondary text-xl"></i>
+                <div className="bg-blue-50 p-3 rounded-full mr-4">
+                  <i className="ri-phone-line text-blue-600 text-xl"></i>
                 </div>
                 <a
                   href="tel:+15551234567"
-                  className="text-muted-foreground hover:text-secondary transition-colors"
+                  className="text-gray-700 hover:text-blue-600 transition-colors"
+                  style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
                 >
                   +1 (555) 123-4567
                 </a>
               </li>
               <li className="flex items-center">
-                <div className="bg-background/40 backdrop-blur-sm p-3 rounded-full mr-4">
-                  <i className="ri-map-pin-line text-secondary text-xl"></i>
+                <div className="bg-blue-50 p-3 rounded-full mr-4">
+                  <i className="ri-map-pin-line text-blue-600 text-xl"></i>
                 </div>
-                <span className="text-muted-foreground">
-                  San Francisco, CA
+                <span className="text-gray-700" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                  Columbus, OH
                 </span>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-2xl font-space font-semibold mb-6">
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900" style={{ 
+              fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+              fontSize: '20px'
+            }}>
               Connect With Me
             </h3>
             <div className="flex space-x-4">
@@ -167,7 +176,7 @@ const ContactPage = () => {
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-background/40 backdrop-blur-sm hover:bg-background/50 p-4 rounded-full text-muted-foreground hover:text-secondary transition-colors"
+                className="bg-gray-100 hover:bg-gray-200 p-4 rounded-full text-gray-700 hover:text-blue-600 transition-colors"
                 aria-label="GitHub"
               >
                 <i className="ri-github-fill text-xl"></i>
@@ -176,7 +185,7 @@ const ContactPage = () => {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-background/40 backdrop-blur-sm hover:bg-background/50 p-4 rounded-full text-muted-foreground hover:text-secondary transition-colors"
+                className="bg-gray-100 hover:bg-gray-200 p-4 rounded-full text-gray-700 hover:text-blue-600 transition-colors"
                 aria-label="LinkedIn"
               >
                 <i className="ri-linkedin-box-fill text-xl"></i>
@@ -185,7 +194,7 @@ const ContactPage = () => {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-background/40 backdrop-blur-sm hover:bg-background/50 p-4 rounded-full text-muted-foreground hover:text-secondary transition-colors"
+                className="bg-gray-100 hover:bg-gray-200 p-4 rounded-full text-gray-700 hover:text-blue-600 transition-colors"
                 aria-label="Twitter"
               >
                 <i className="ri-twitter-fill text-xl"></i>
@@ -194,7 +203,7 @@ const ContactPage = () => {
                 href="https://codepen.io"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-background/40 backdrop-blur-sm hover:bg-background/50 p-4 rounded-full text-muted-foreground hover:text-secondary transition-colors"
+                className="bg-gray-100 hover:bg-gray-200 p-4 rounded-full text-gray-700 hover:text-blue-600 transition-colors"
                 aria-label="CodePen"
               >
                 <i className="ri-codepen-line text-xl"></i>
@@ -207,85 +216,90 @@ const ContactPage = () => {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-background/20 backdrop-blur-sm p-8 rounded-xl border border-border"
+          className="bg-white rounded-2xl p-8 shadow-sm border border-gray-200"
         >
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div>
-              <label htmlFor="name" className="block text-muted-foreground mb-2">
+              <label htmlFor="name" className="block text-gray-700 mb-2 font-medium" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 Name
               </label>
               <input
                 type="text"
                 id="name"
                 {...register("name")}
-                className={`w-full p-3 bg-background/40 backdrop-blur-sm border ${
-                  errors.name ? "border-destructive" : "border-border"
-                } rounded-md text-foreground focus:border-secondary focus:outline-none transition-colors`}
+                className={`w-full p-4 bg-gray-50 border ${
+                  errors.name ? "border-red-500" : "border-gray-200"
+                } rounded-lg text-gray-900 focus:border-blue-600 focus:outline-none transition-colors`}
                 placeholder="Your name"
+                style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
               />
               {errors.name && (
-                <p className="mt-1 text-xs text-destructive">{errors.name.message}</p>
+                <p className="mt-1 text-xs text-red-500">{errors.name.message}</p>
               )}
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-muted-foreground mb-2">
+              <label htmlFor="email" className="block text-gray-700 mb-2 font-medium" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 Email
               </label>
               <input
                 type="email"
                 id="email"
                 {...register("email")}
-                className={`w-full p-3 bg-background/40 backdrop-blur-sm border ${
-                  errors.email ? "border-destructive" : "border-border"
-                } rounded-md text-foreground focus:border-secondary focus:outline-none transition-colors`}
+                className={`w-full p-4 bg-gray-50 border ${
+                  errors.email ? "border-red-500" : "border-gray-200"
+                } rounded-lg text-gray-900 focus:border-blue-600 focus:outline-none transition-colors`}
                 placeholder="Your email"
+                style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
               />
               {errors.email && (
-                <p className="mt-1 text-xs text-destructive">{errors.email.message}</p>
+                <p className="mt-1 text-xs text-red-500">{errors.email.message}</p>
               )}
             </div>
 
             <div>
-              <label htmlFor="subject" className="block text-muted-foreground mb-2">
+              <label htmlFor="subject" className="block text-gray-700 mb-2 font-medium" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 Subject
               </label>
               <input
                 type="text"
                 id="subject"
                 {...register("subject")}
-                className={`w-full p-3 bg-background/40 backdrop-blur-sm border ${
-                  errors.subject ? "border-destructive" : "border-border"
-                } rounded-md text-foreground focus:border-secondary focus:outline-none transition-colors`}
+                className={`w-full p-4 bg-gray-50 border ${
+                  errors.subject ? "border-red-500" : "border-gray-200"
+                } rounded-lg text-gray-900 focus:border-blue-600 focus:outline-none transition-colors`}
                 placeholder="Subject"
+                style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
               />
               {errors.subject && (
-                <p className="mt-1 text-xs text-destructive">{errors.subject.message}</p>
+                <p className="mt-1 text-xs text-red-500">{errors.subject.message}</p>
               )}
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-muted-foreground mb-2">
+              <label htmlFor="message" className="block text-gray-700 mb-2 font-medium" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 Message
               </label>
               <textarea
                 id="message"
                 {...register("message")}
                 rows={5}
-                className={`w-full p-3 bg-background/40 backdrop-blur-sm border ${
-                  errors.message ? "border-destructive" : "border-border"
-                } rounded-md text-foreground focus:border-secondary focus:outline-none transition-colors resize-none`}
+                className={`w-full p-4 bg-gray-50 border ${
+                  errors.message ? "border-red-500" : "border-gray-200"
+                } rounded-lg text-gray-900 focus:border-blue-600 focus:outline-none transition-colors resize-none`}
                 placeholder="Your message"
+                style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
               ></textarea>
               {errors.message && (
-                <p className="mt-1 text-xs text-destructive">{errors.message.message}</p>
+                <p className="mt-1 text-xs text-red-500">{errors.message.message}</p>
               )}
             </div>
 
             <button
               type="submit"
-              className="w-full py-3 bg-primary hover:bg-primary/90 text-white font-medium rounded-md transition-colors flex items-center justify-center"
+              className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors flex items-center justify-center"
               disabled={isSubmitting}
+              style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
             >
               {isSubmitting ? (
                 <span className="flex items-center">
