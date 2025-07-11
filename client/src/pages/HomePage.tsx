@@ -283,7 +283,7 @@ const HomePage = () => {
                 <img 
                   src={osuLogo} 
                   alt="Ohio State Fisher College of Business" 
-                  className="w-20 h-20 object-contain"
+                  className="w-28 h-28 object-contain"
                 />
               </div>
             </div>
@@ -335,7 +335,7 @@ const HomePage = () => {
                 <img 
                   src={missouriLogo} 
                   alt="Missouri S&T" 
-                  className="w-18 h-18 object-contain"
+                  className="w-16 h-16 object-contain"
                 />
               </div>
             </div>
