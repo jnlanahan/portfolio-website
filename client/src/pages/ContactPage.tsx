@@ -105,116 +105,37 @@ const ContactPage = () => {
           fontSize: 'clamp(32px, 5vw, 48px)',
           lineHeight: '1.2'
         }}>Get In Touch</h1>
-        <p className="text-gray-600 max-w-3xl mx-auto" style={{ 
+        <p className="text-gray-600 max-w-3xl mx-auto mb-4" style={{ 
           fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
           fontSize: '17px',
           lineHeight: '1.5'
         }}>
           Have a project in mind or just want to connect? I'd love to hear from you.
         </p>
+        <div className="text-center space-y-2">
+          <p className="text-gray-700" style={{ 
+            fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+            fontSize: '16px'
+          }}>
+            <a href="mailto:jnlanahan@gmail.com" className="hover:text-blue-600 transition-colors">
+              jnlanahan@gmail.com
+            </a>
+          </p>
+          <p className="text-gray-700" style={{ 
+            fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+            fontSize: '16px'
+          }}>
+            <a href="tel:+16145551234" className="hover:text-blue-600 transition-colors">
+              (614) 555-1234
+            </a>
+          </p>
+        </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="max-w-2xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="bg-white rounded-2xl p-8 shadow-sm border border-gray-200"
-        >
-          <div className="mb-8">
-            <h3 className="text-2xl font-semibold mb-6 text-gray-900" style={{ 
-              fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
-              fontSize: '20px'
-            }}>
-              Contact Information
-            </h3>
-            <ul className="space-y-4">
-              <li className="flex items-center">
-                <div className="bg-blue-50 p-3 rounded-full mr-4">
-                  <i className="ri-mail-line text-blue-600 text-xl"></i>
-                </div>
-                <a
-                  href="mailto:nick@example.com"
-                  className="text-gray-700 hover:text-blue-600 transition-colors"
-                  style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
-                >
-                  nick@example.com
-                </a>
-              </li>
-              <li className="flex items-center">
-                <div className="bg-blue-50 p-3 rounded-full mr-4">
-                  <i className="ri-phone-line text-blue-600 text-xl"></i>
-                </div>
-                <a
-                  href="tel:+15551234567"
-                  className="text-gray-700 hover:text-blue-600 transition-colors"
-                  style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
-                >
-                  +1 (555) 123-4567
-                </a>
-              </li>
-              <li className="flex items-center">
-                <div className="bg-blue-50 p-3 rounded-full mr-4">
-                  <i className="ri-map-pin-line text-blue-600 text-xl"></i>
-                </div>
-                <span className="text-gray-700" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
-                  Columbus, OH
-                </span>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-2xl font-semibold mb-6 text-gray-900" style={{ 
-              fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
-              fontSize: '20px'
-            }}>
-              Connect With Me
-            </h3>
-            <div className="flex space-x-4">
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gray-100 hover:bg-gray-200 p-4 rounded-full text-gray-700 hover:text-blue-600 transition-colors"
-                aria-label="GitHub"
-              >
-                <i className="ri-github-fill text-xl"></i>
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gray-100 hover:bg-gray-200 p-4 rounded-full text-gray-700 hover:text-blue-600 transition-colors"
-                aria-label="LinkedIn"
-              >
-                <i className="ri-linkedin-box-fill text-xl"></i>
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gray-100 hover:bg-gray-200 p-4 rounded-full text-gray-700 hover:text-blue-600 transition-colors"
-                aria-label="Twitter"
-              >
-                <i className="ri-twitter-fill text-xl"></i>
-              </a>
-              <a
-                href="https://codepen.io"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gray-100 hover:bg-gray-200 p-4 rounded-full text-gray-700 hover:text-blue-600 transition-colors"
-                aria-label="CodePen"
-              >
-                <i className="ri-codepen-line text-xl"></i>
-              </a>
-            </div>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="bg-white rounded-2xl p-8 shadow-sm border border-gray-200"
         >
