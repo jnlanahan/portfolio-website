@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crafting Delightful Interfaces</title>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="bg-white text-gray-900 font-[system-ui] font-normal leading-relaxed antialiased selection:bg-gray-900 selection:text-white">
+
+  <!-- Reading Progress Bar -->
+  <div id="progress-bar" style="height:3px;" class="fixed top-0 left-0 bg-gray-900 w-0 z-50"></div>
+
+  <!-- Header -->
+  <header class="w-full border-b border-gray-200 backdrop-blur-sm bg-white/70 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-4">
+      <a href="/" class="text-xl font-semibold tracking-tight">alex<span class="font-normal text-gray-500">.dev</span></a>
+      <button aria-label="Search" class="p-2 rounded-full hover:bg-gray-100 transition-colors group focus:outline-none focus-visible:ring focus-visible:ring-gray-300">
+        <i data-lucide="search" class="w-5 h-5 stroke-[1.5] text-gray-700 group-hover:text-gray-900"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Article Header -->
+  <section class="max-w-3xl mx-auto px-6 pt-16 md:pt-24" data-animate="fade-in" data-delay="0.05" style="opacity:0;transform:translateY(16px);">
+    <a href="/" class="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors">
+      <i data-lucide="arrow-left" class="w-4 h-4 stroke-[1.5]"></i> Back to blog
+    </a>
+
+    <h1 class="mt-6 text-4xl md:text-5xl font-semibold tracking-tight leading-tight">Crafting Delightful Interfaces</h1>
+
+    <div class="mt-6 flex items-center gap-4">
+      <img src="https://images.unsplash.com/photo-1642615835477-d303d7dc9ee9?w=1080&q=80" alt="Alex Turner" class="w-12 h-12 rounded-full object-cover" />
+      <div>
+        <p class="font-medium">Alex Turner</p>
+        <time class="text-sm text-gray-500">Apr&nbsp;24&nbsp;•&nbsp;7&nbsp;min&nbsp;read</time>
+      </div>
+    </div>
+
+    <img src="https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=1080&q=80" alt="" class="mt-10 w-full h-72 md:h-96 object-cover rounded-lg shadow-sm" />
+  </section>
+
+  <!-- Article Body -->
+  <article id="post" class="max-w-3xl mx-auto px-6 mt-16 space-y-12 leading-7" role="article">
+
+    <!-- Intro -->
+    <section data-animate="fade-in" data-delay="0.1" style="opacity:0;transform:translateY(16px);">
+      <p>Great interfaces don’t just <em>look</em> good—they <strong>feel</strong> good. They guide, educate and sometimes even delight the user. This post explores practical ways to weave subtle interactions, accessibility best-practices and motion into your design process.</p>
+    </section>
+
+    <!-- Micro-interactions -->
+    <section data-animate="fade-in" data-delay="0.15" style="opacity:0;transform:translateY(16px);">
+      <h2 class="text-2xl font-semibold tracking-tight">1. Micro-interactions</h2>
+      <p>Micro-interactions are those tiny details—a button ripple, a tooltip, a like animation—that collectively elevate the product. They should be:</p>
+      <ul class="list-disc pl-6 mt-4 space-y-2">
+        <li><strong>Functional</strong> &ndash; provide feedback or status.</li>
+        <li><strong>Focused</strong> &ndash; don’t overload with flair.</li>
+        <li><strong>Fast</strong> &ndash; complete in <code>&lt;200&nbsp;ms</code> to feel instant.</li>
+      </ul>
+
+      <!-- Code Example -->
+      <figure class="mt-8">
+        <figcaption class="text-sm text-gray-500 mb-2">Example button with spring animation (Framer-Motion):</figcaption>
+        <pre class="rounded-lg bg-gray-900 text-gray-50 p-6 overflow-auto text-sm"><code>
+import { motion } from "framer-motion";
+
+export default function SpringyButton() {
+  return (
+    &lt;motion.button
+      whileTap={{ scale: 0.95 }}
+      transition={{ type: "spring", stiffness: 400, damping: 20 }}
+      className="px-4 py-2 rounded-md bg-blue-600 text-white"
+    &gt;
+      Click me
+    &lt;/motion.button&gt;
+  );
+}
+        </code></pre>
+      </figure>
+    </section>
+
+    <!-- Accessibility -->
+    <section data-animate="fade-in" data-delay="0.2" style="opacity:0;transform:translateY(16px);">
+      <h2 class="text-2xl font-semibold tracking-tight">2. Accessibility First</h2>
+      <blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-600">“When we design for disability first, we often stumble upon solutions that are better for everyone.”</blockquote>
+      <p class="mt-6">Keyboard navigation, focus outlines and ARIA labels aren’t optional—they’re foundational. Use the <kbd>Tab</kbd> key to traverse your UI. If you get lost, so will your users.</p>
+    </section>
+
+    <!-- Motion -->
+    <section data-animate="fade-in" data-delay="0.25" style="opacity:0;transform:translateY(16px);">
+      <h2 class="text-2xl font-semibold tracking-tight">3. Motion that Informs</h2>
+      <p>Motion bridges states. A dropdown that fades in from its anchor conveys origin, while a card that slides away hints at dismissal. Follow the <strong>12-principle mnemonic <em>PIE</em></strong>:</p>
+      <ol class="list-decimal pl-6 mt-4 space-y-2">
+        <li><strong>Pace</strong> – use <code>ease-in-out</code> for natural acceleration.</li>
+        <li><strong>Intent</strong> – motion should clarify, never distract.</li>
+        <li><strong>Energy</strong> – small elements, small distances.</li>
+      </ol>
+    </section>
+
+    <!-- Chart -->
+    <section data-animate="fade-in" data-delay="0.3" style="opacity:0;transform:translateY(16px);">
+      <h2 class="text-2xl font-semibold tracking-tight">4. Measuring Delight</h2>
+      <p>Finally, track how your improvements impact engagement. Below is sample data (mocked) visualised with a simple bar chart:</p>
+
+      <div class="mt-8 border border-gray-200 rounded-lg p-6">
+        <div style="max-width:600px" class="mx-auto">
+          <canvas id="engagement-chart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conclusion -->
+    <section data-animate="fade-in" data-delay="0.35" style="opacity:0;transform:translateY(16px);">
+      <h2 class="text-2xl font-semibold tracking-tight">TL;DR</h2>
+      <ul class="list-disc pl-6 mt-4 space-y-2">
+        <li>Design <strong>with</strong> motion, not after.</li>
+        <li>Accessibility isn’t a checkbox; it’s craftsmanship.</li>
+        <li>Micro-interactions are the cherry, not the cake.</li>
+      </ul>
+      <p class="mt-6">Thanks for reading! Questions or thoughts? <a href="https://twitter.com" class="underline decoration-gray-300 hover:decoration-gray-500">Ping me on X</a>.</p>
+    </section>
+
+  </article>
+
+  <!-- Footer -->
+  <footer class="max-w-7xl mx-auto px-6 mt-24 pb-10 text-sm text-gray-500 border-t border-gray-200">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-10">
+      <p>&copy; 2024 Alex Turner. All rights reserved.</p>
+      <div class="flex gap-6">
+        <a href="#" class="hover:text-gray-900 transition-colors">Twitter</a>
+        <a href="#" class="hover:text-gray-900 transition-colors">GitHub</a>
+        <a href="#" class="hover:text-gray-900 transition-colors">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    lucide.createIcons();
+
+    // Fade-in animation
+    document.querySelectorAll('[data-animate]').forEach(el => {
+      const delay = parseFloat(el.dataset.delay || 0) * 1000;
+      setTimeout(() => {
+        el.style.transition = 'opacity .7s ease-out, transform .7s ease-out';
+        el.style.opacity = 1;
+        el.style.transform = 'translateY(0)';
+      }, delay + 200);
+    });
+
+    // Reading progress bar
+    window.addEventListener('scroll', () => {
+      const doc = document.documentElement;
+      const scrollTop = doc.scrollTop || document.body.scrollTop;
+      const height = doc.scrollHeight - doc.clientHeight;
+      const progress = (scrollTop / height) * 100;
+      document.getElementById('progress-bar').style.width = progress + '%';
+    });
+
+    // Chart.js example
+    const ctx = document.getElementById('engagement-chart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Hover', 'Click', 'Swipe', 'Drag'],
+        datasets: [{
+          label: 'Avg. Engagement (ms)',
+          data: [180, 240, 160, 220],
+          backgroundColor: ['#1e3a8a', '#1d4ed8', '#2563eb', '#3b82f6'],
+          borderRadius: 6
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, grid: { color: '#eef2ff' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
