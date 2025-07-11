@@ -233,7 +233,7 @@ const HomePage = () => {
             style={{ marginBottom: '16px', marginTop: '0px' }}
             className="relative z-10"
           >
-            <p className="font-medium text-gray-600 tracking-wide uppercase" style={{ fontSize: '14px', letterSpacing: '0.1em' }}>
+            <p className="text-gray-600 tracking-wide uppercase text-[21px] font-normal pt-[-1px] pb-[-1px]" style={{ fontSize: '14px', letterSpacing: '0.1em' }}>
               PORTFOLIO
             </p>
           </motion.div>
