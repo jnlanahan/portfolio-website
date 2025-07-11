@@ -199,30 +199,12 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen relative" style={{ padding: '24px 16px' }}> {/* 8-point grid: 24px vertical, 16px horizontal */}
-      {/* Full-bleed background with dark overlay */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop")',
-          filter: 'blur(1px)'
-        }}
-      />
-      <div 
-        className="absolute inset-0"
-        style={{
-          background: 'rgba(0, 0, 0, 0.4)',
-          backdropFilter: 'blur(0.5px)'
-        }}
-      />
-      
-      {/* Content layer */}
-      <div className="relative z-10">
-        {/* Navigation Tiles Grid */}
-        <div className="max-w-6xl mx-auto">
-          {/* Hero Section - Like the screenshot */}
-          <div className="text-center relative" style={{ marginBottom: '120px' }}>
-            {/* Circular glow background with parallax and animation */}
+    <div className="min-h-screen" style={{ padding: '24px 16px' }}> {/* 8-point grid: 24px vertical, 16px horizontal */}
+      {/* Navigation Tiles Grid */}
+      <div className="max-w-6xl mx-auto">
+        {/* Hero Section - Like the screenshot */}
+        <div className="text-center relative" style={{ marginBottom: '120px' }}>
+          {/* Circular glow background with parallax and animation */}
           <div 
             className="absolute inset-0 pointer-events-none animate-gradient-shift"
             style={{
@@ -245,7 +227,7 @@ const HomePage = () => {
             style={{ marginBottom: '16px' }}
             className="relative z-10"
           >
-            <p className="font-medium text-white/80 tracking-wide uppercase" style={{ fontSize: '14px', letterSpacing: '0.1em', textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)' }}>
+            <p className="font-medium text-gray-600 tracking-wide uppercase" style={{ fontSize: '14px', letterSpacing: '0.1em' }}>
               PORTFOLIO
             </p>
           </motion.div>
@@ -259,14 +241,14 @@ const HomePage = () => {
             className="relative z-10"
           >
             <h1 
-              className="text-white" 
+              className="text-gray-900" 
               style={{ 
                 fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
                 fontWeight: '600',
                 fontSize: 'clamp(48px, 8vw, 72px)', 
                 lineHeight: '1.1', 
                 letterSpacing: '-0.02em',
-                textShadow: '0 0 30px rgba(144, 238, 144, 0.6), 0 0 60px rgba(144, 238, 144, 0.5), 0 0 90px rgba(144, 238, 144, 0.4), 0 4px 20px rgba(0, 0, 0, 0.5)'
+                textShadow: '0 0 30px rgba(144, 238, 144, 0.6), 0 0 60px rgba(144, 238, 144, 0.5), 0 0 90px rgba(144, 238, 144, 0.4)'
               }}
             >
               NICK<br/>LANAHAN
@@ -334,7 +316,6 @@ const HomePage = () => {
             linkTo="https://linkedin.com/in/nicklanahan"
             delay={1.1}
           />
-          </div>
         </div>
       </div>
     </div>
