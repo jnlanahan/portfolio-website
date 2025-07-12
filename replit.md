@@ -95,14 +95,15 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Home page now focuses on site navigation rather than personal content
   - About page contains personal introduction, skills (Front-End/Back-End), and social links
   - Updated routing structure to reflect new page organization
-- **January 2025**: Completely redesigned About page with personal focus
-  - Removed technical skills and resume content in favor of personal storytelling
-  - Created prominent three-card layout highlighting Leadership, Strategy, and Innovation passions
-  - Added creative "Fun Facts" section with personal details and achievements
-  - Implemented "Beyond the Office" section with life philosophy and personal interests
-  - Added visual interests grid with hobbies (coffee, reading, music, photography)
+- **January 2025**: Completely redesigned About page with recruiter focus
+  - Removed extensive personal storytelling and verbose sections per user feedback
+  - Condensed page to focus on what recruiters need beyond resume/LinkedIn
+  - Created concise "How I Lead" section with military-to-corporate transition focus
+  - Added "What Sets Me Apart" highlighting unique value proposition
+  - Simplified to professional philosophy section with leadership quote
+  - Removed image placeholders and lifestyle content to reduce low-priority information
   - Maintained Apple-inspired design with clean white cards and smooth animations
-  - Focused on personal connection rather than professional credentials
+  - Focused on professional differentiators that add value for hiring managers
 - **January 2025**: Redesigned homepage with sleek tile-based interface
   - Completely removed top navigation bar for cleaner aesthetic
   - Created mixed asymmetrical layout with different sized tiles
