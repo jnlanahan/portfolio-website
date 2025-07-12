@@ -1,10 +1,7 @@
 import { motion } from "framer-motion";
 import { Target, Lightbulb, Users, MapPin, Coffee, Book, Music, Camera, Globe, Heart } from "lucide-react";
-import { useEffect, useState } from "react";
 
 const AboutPage = () => {
-  const [currentSection, setCurrentSection] = useState(0);
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -28,30 +25,10 @@ const AboutPage = () => {
     }
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = document.querySelectorAll('.sticky-section');
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
-
-      sections.forEach((section, index) => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        const sectionBottom = sectionTop + sectionHeight;
-
-        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-          setCurrentSection(index);
-        }
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <div className="page-container relative">
       {/* Hero Introduction */}
-      <section className="sticky-section min-h-screen flex items-center justify-center bg-white">
+      <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -71,7 +48,7 @@ const AboutPage = () => {
       </section>
 
       {/* Core Values Section - Enhanced with Images */}
-      <section className="sticky-section min-h-screen flex items-center justify-center bg-gray-50">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4 md:px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -221,7 +198,7 @@ const AboutPage = () => {
       </section>
 
       {/* Visual Journey Section */}
-      <section className="sticky-section min-h-screen flex items-center justify-center bg-white">
+      <section className="py-16">
         <div className="container mx-auto px-4 md:px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -393,7 +370,7 @@ const AboutPage = () => {
       </section>
 
       {/* Personal Life Section */}
-      <section className="sticky-section min-h-screen flex items-center justify-center bg-gray-50">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4 md:px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -461,7 +438,7 @@ const AboutPage = () => {
       </section>
 
       {/* Interests & Lifestyle Grid */}
-      <section className="sticky-section min-h-screen flex items-center justify-center bg-white">
+      <section className="py-16">
         <div className="container mx-auto px-4 md:px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
