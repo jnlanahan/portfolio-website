@@ -262,7 +262,7 @@ export default function AdminNewBlogPage() {
       published: false,
       tags: data.tags ? data.tags.split(',').map(tag => tag.trim()) : [],
       date: data.date ? new Date(data.date).toISOString() : new Date().toISOString(),
-      seriesId: data.seriesId ? parseInt(data.seriesId) : null,
+      seriesId: data.seriesId && data.seriesId !== "" ? parseInt(data.seriesId) : null,
     };
     
     createBlogMutation.mutate(payload);
@@ -295,7 +295,7 @@ export default function AdminNewBlogPage() {
       published: true,
       tags: data.tags ? data.tags.split(',').map(tag => tag.trim()) : [],
       date: data.date ? new Date(data.date).toISOString() : new Date().toISOString(),
-      seriesId: data.seriesId ? parseInt(data.seriesId) : null,
+      seriesId: data.seriesId && data.seriesId !== "" ? parseInt(data.seriesId) : null,
     };
     
     createBlogMutation.mutate(payload);
@@ -559,14 +559,14 @@ export default function AdminNewBlogPage() {
               <div className="space-y-2">
                 <Label htmlFor="seriesId">Blog Series <span className="text-gray-500 text-sm">(optional)</span></Label>
                 <Select
-                  value={watch("seriesId") || ""}
-                  onValueChange={(value) => setValue("seriesId", value || "")}
+                  value={watch("seriesId") || "none"}
+                  onValueChange={(value) => setValue("seriesId", value === "none" ? "" : value)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select a series (optional)" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">None</SelectItem>
+                    <SelectItem value="none">None</SelectItem>
                     {blogSeries.map((series: any) => (
                       <SelectItem key={series.id} value={series.id.toString()}>
                         {series.title}

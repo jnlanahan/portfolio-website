@@ -578,6 +578,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         req.body.readTime = Math.max(1, Math.ceil(wordCount / 200));
       }
       
+      // For draft posts, ensure we have required fields with defaults
+      if (!req.body.published) {
+        if (!req.body.title) req.body.title = "Untitled Draft";
+        if (!req.body.slug) req.body.slug = `draft-${Date.now()}`;
+      }
+      
       const validatedData = insertBlogPostSchema.parse(req.body);
       const post = await storage.createBlogPost(validatedData);
       res.json(post);
@@ -600,6 +606,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!req.body.readTime && req.body.content) {
         const wordCount = req.body.content.replace(/<[^>]*>/g, '').split(/\s+/).length;
         req.body.readTime = Math.max(1, Math.ceil(wordCount / 200));
+      }
+      
+      // For draft posts, ensure we have required fields with defaults
+      if (!req.body.published) {
+        if (!req.body.title) req.body.title = "Untitled Draft";
+        if (!req.body.slug) req.body.slug = `draft-${Date.now()}`;
       }
       
       const validatedData = insertBlogPostSchema.partial().parse(req.body);
