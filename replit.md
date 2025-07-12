@@ -155,6 +155,7 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Encourages natural sentence variation, authentic voice, and specific details
   - Provides instant feedback through quick tips and comprehensive analysis
   - Integrated seamlessly into blog creation and editing workflow
+  - **Enhanced with granular suggestions**: AI now provides 8-15 small, specific suggestions (2-8 words each) that users can individually accept or reject, rather than large sentence rewrites
 
 - **January 2025**: Migrated from in-memory storage to PostgreSQL database persistence
   - Replaced MemStorage with DatabaseStorage class implementation

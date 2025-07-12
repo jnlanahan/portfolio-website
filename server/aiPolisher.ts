@@ -181,7 +181,7 @@ Return only the improved text without explanations.`
 }
 
 function getSystemPrompt(contentType: string): string {
-  const basePrompt = `You are an expert writing coach and editor. Analyze the given text and provide specific, actionable suggestions to improve clarity, engagement, grammar, and style.
+  const basePrompt = `You are an expert writing coach and editor. Analyze the given text and provide MANY small, specific suggestions that users can individually accept or reject.
 
 CRITICAL: Your suggestions must sound natural and human. Avoid these AI writing patterns:
 - Overused phrases like "Dive into," "It's important to note," "Certainly," "Navigating the complexities of," "Delving into the intricacies of"
@@ -204,6 +204,22 @@ Instead, encourage:
 - Creative transitions between ideas
 - Natural flow that mirrors human speech patterns
 
+IMPORTANT: Break down your analysis into MANY small, granular suggestions:
+- Target individual words or short phrases (2-8 words maximum)
+- Focus on single clauses or sentences
+- Identify specific grammatical issues
+- Suggest individual word replacements
+- Highlight specific style improvements
+- Aim for 8-15 suggestions per analysis
+- Keep each suggestion small and focused
+
+EXAMPLE of granular suggestions:
+- Original: "very good" → Improved: "excellent" (2 words)
+- Original: "a lot of" → Improved: "many" (3 words to 1 word)
+- Original: "in order to" → Improved: "to" (3 words to 1 word)
+- Original: "due to the fact that" → Improved: "because" (5 words to 1 word)
+- Original: "it is important to note" → Improved: "notably" (5 words to 1 word)
+
 Focus on:
 1. Grammar and syntax errors
 2. Clarity and readability improvements
@@ -216,7 +232,7 @@ Respond with JSON in this exact format:
   "suggestions": [
     {
       "type": "grammar|clarity|style|tone|structure|engagement",
-      "original": "exact text that needs improvement",
+      "original": "exact text that needs improvement (MAXIMUM 8 words - preferably 2-4 words)",
       "improved": "suggested improvement",
       "explanation": "brief explanation of why this is better",
       "confidence": 0.8
@@ -225,7 +241,9 @@ Respond with JSON in this exact format:
   "overallScore": 85,
   "summary": "Brief overall assessment",
   "readabilityScore": 78
-}`;
+}
+
+CRITICAL: Each suggestion MUST target only 2-8 words maximum. DO NOT suggest entire sentence replacements.`;
 
   const contentSpecific = {
     blog: "This is blog post content. Focus on engaging storytelling, clear structure, and reader engagement. Encourage personal voice and authentic human connection.",
@@ -237,19 +255,30 @@ Respond with JSON in this exact format:
 }
 
 function getUserPrompt(content: string, contentType: string): string {
-  return `Please analyze this ${contentType} content and provide improvement suggestions:
+  return `Analyze this ${contentType} content and provide MANY small, specific word/phrase improvements:
 
 "${content}"
 
-Focus on making it more engaging, clear, and naturally human while maintaining the original voice and meaning. Identify and flag any AI-like patterns such as:
-- Overused phrases like "Dive into," "It's important to note," "Certainly," "Navigating the complexities of"
-- Excessive hedging language
-- Repetitive sentence structures
-- Generic, obvious content
-- Overly cautious language
-- Blogging clichés
+RULES FOR SUGGESTIONS:
+1. Each suggestion must target ONLY 2-8 words maximum
+2. Look for individual words or short phrases that can be improved
+3. Do NOT suggest entire sentence rewrites
+4. Focus on specific word replacements, redundant phrases, or awkward constructions
+5. Provide 8-15 separate small suggestions
 
-Suggest improvements that create natural sentence variation, authentic voice, specific details, and conversational flow.`;
+SCAN FOR THESE COMMON ISSUES:
+- "very good" → "excellent"
+- "a lot of" → "many"
+- "in order to" → "to"
+- "due to the fact that" → "because"
+- "it is important to note" → "notably"
+- "at this point in time" → "now"
+- "in the event that" → "if"
+- "make an effort to" → "try to"
+- "have the ability to" → "can"
+- "first and foremost" → "first"
+
+Each suggestion should be a small, specific improvement that I can accept or reject individually.`;
 }
 
 function formatSuggestion(suggestion: any): PolishSuggestion {
