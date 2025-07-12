@@ -1273,6 +1273,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Public chatbot routes (for visitor mode)
+  app.post("/api/chatbot/chat", async (req, res) => {
+    try {
+      const { message, sessionId } = req.body;
+      
+      if (!message) {
+        return res.status(400).json({ error: "Message is required" });
+      }
+
+      const response = await processRecruiterQuestion(message, sessionId);
+      res.json(response);
+    } catch (error) {
+      console.error("Error processing chatbot message:", error);
+      res.status(500).json({ error: "Failed to process message", details: error.message });
+    }
+  });
+
+  // Admin chatbot training conversation
+  app.post("/api/admin/chatbot/train", requireAdmin, async (req, res) => {
+    try {
+      const { message, sessionId } = req.body;
+      
+      if (!message) {
+        return res.status(400).json({ error: "Message is required" });
+      }
+
+      const response = await processTrainingConversation(message, sessionId);
+      res.json(response);
+    } catch (error) {
+      console.error("Error processing training conversation:", error);
+      res.status(500).json({ error: "Failed to process training conversation" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

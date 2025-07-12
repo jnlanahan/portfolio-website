@@ -7,11 +7,17 @@ import {
   InsertChatbotTrainingSession,
   InsertChatbotConversation
 } from '@shared/schema';
+import { storage } from './storage';
 
 // Initialize OpenAI
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+function getOpenAI(): OpenAI {
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error('OpenAI API key is not configured');
+  }
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+}
 
 export interface ChatbotResponse {
   response: string;
@@ -73,6 +79,7 @@ Return response in JSON format:
 }`;
 
   try {
+    const openai = getOpenAI();
     const response = await openai.chat.completions.create({
       model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
       messages: [{ role: "user", content: prompt }],
@@ -181,10 +188,8 @@ Answer the recruiter's question professionally and focus on how Nick's backgroun
     // Save conversation to database
     await storage.saveChatbotConversation({
       sessionId,
-      question,
-      response: botResponse,
-      isOnTopic: true,
-      confidence: isOnTopicResult.confidence
+      userQuestion: question,
+      botResponse: botResponse
     });
 
     return {
@@ -267,10 +272,8 @@ UNIVERSAL GUIDELINES:
     // Save training conversation to database
     await storage.saveChatbotConversation({
       sessionId,
-      question: message,
-      response: botResponse,
-      isOnTopic: true,
-      confidence: 1.0
+      userQuestion: message,
+      botResponse: botResponse
     });
 
     // Also save as training session for future reference
@@ -323,6 +326,7 @@ Consider these as OFF-TOPIC:
 - Random conversations`;
 
   try {
+    const openai = getOpenAI();
     const response = await openai.chat.completions.create({
       model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
       messages: [{ role: "user", content: prompt }],
