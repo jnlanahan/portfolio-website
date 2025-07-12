@@ -177,6 +177,7 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Integrated chatbot training link into admin dashboard Quick Actions
   - Chatbot provides contextual responses about Nick's experience while maintaining professional tone
   - System designed to make Nick sound professional without fabricating information
+  - **Fixed critical chatbot functionality**: Resolved API endpoint mismatch in FloatingChatbot component (changed from `/api/chatbot/ask` to `/api/chatbot/chat` with proper `message` parameter), corrected OpenAI API initialization across all services, and fixed database schema parameter mapping for conversation storage
 
 - **January 2025**: Created comprehensive test suite for quality assurance
   - Built automated API test suite covering all major functionality

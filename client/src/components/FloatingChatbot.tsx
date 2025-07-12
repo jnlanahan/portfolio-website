@@ -61,10 +61,10 @@ export default function FloatingChatbot() {
 
     try {
       const response = await apiRequest({
-        url: '/api/chatbot/ask',
+        url: '/api/chatbot/chat',
         method: 'POST',
         data: {
-          question: inputValue,
+          message: inputValue,
           sessionId
         }
       });
