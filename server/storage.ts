@@ -1001,6 +1001,38 @@ export class DatabaseStorage implements IStorage {
       return progress;
     }
   }
+
+  async saveChatbotConversation(insertConversation: InsertChatbotConversation): Promise<ChatbotConversation> {
+    const { db } = await import('./db');
+    const { chatbotConversations } = await import('@shared/schema');
+    
+    const [conversation] = await db.insert(chatbotConversations).values(insertConversation).returning();
+    return conversation;
+  }
+
+  async saveChatbotTrainingSession(insertSession: InsertChatbotTrainingSession): Promise<ChatbotTrainingSession> {
+    const { db } = await import('./db');
+    const { chatbotTrainingSessions } = await import('@shared/schema');
+    
+    const [session] = await db.insert(chatbotTrainingSessions).values(insertSession).returning();
+    return session;
+  }
+
+  async getChatbotTrainingSessions(): Promise<ChatbotTrainingSession[]> {
+    const { db } = await import('./db');
+    const { chatbotTrainingSessions } = await import('@shared/schema');
+    const { desc } = await import('drizzle-orm');
+    
+    return await db.select().from(chatbotTrainingSessions).orderBy(desc(chatbotTrainingSessions.createdAt));
+  }
+
+  async getChatbotDocuments(): Promise<ChatbotDocument[]> {
+    const { db } = await import('./db');
+    const { chatbotDocuments } = await import('@shared/schema');
+    const { desc } = await import('drizzle-orm');
+    
+    return await db.select().from(chatbotDocuments).orderBy(desc(chatbotDocuments.uploadedAt));
+  }
 }
 
 export const storage = new DatabaseStorage();

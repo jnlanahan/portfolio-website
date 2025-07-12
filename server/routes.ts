@@ -1065,6 +1065,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Process the training conversation using TRAINING MODE
       const response = await processTrainingConversation(message, sessionId);
       
+      // Update training progress - increment question count
+      const currentProgress = await storage.getChatbotTrainingProgress();
+      const newQuestionCount = (currentProgress?.totalQuestions || 0) + 1;
+      
+      await storage.updateChatbotTrainingProgress({
+        totalQuestions: newQuestionCount,
+        lastTrainingDate: new Date()
+      });
+      
       res.json({
         response: response.response,
         isOnTopic: response.isOnTopic,
@@ -1106,7 +1115,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Upload training document
-  app.post("/api/admin/chatbot/documents", requireAdmin, chatbotUpload.single('document'), async (req, res) => {
+  app.post("/api/admin/chatbot/upload", requireAdmin, chatbotUpload.single('document'), async (req, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({ error: "No file uploaded" });
