@@ -72,10 +72,17 @@ export default function AdminChatbotPage() {
   });
 
   // Fetch training documents
-  const { data: documents = [] } = useQuery<TrainingDocument[]>({
+  const { data: documents = [], isLoading: documentsLoading, error: documentsError } = useQuery<TrainingDocument[]>({
     queryKey: ['/api/admin/chatbot/documents'],
     queryFn: () => apiRequest({ url: '/api/admin/chatbot/documents' }),
   });
+
+  // Debug logging
+  useEffect(() => {
+    console.log('Documents data:', documents);
+    console.log('Documents loading:', documentsLoading);
+    console.log('Documents error:', documentsError);
+  }, [documents, documentsLoading, documentsError]);
 
   // Training conversation mutation
   const trainMutation = useMutation({
@@ -503,24 +510,36 @@ export default function AdminChatbotPage() {
                 </div>
                 
                 <ScrollArea className="h-[400px]">
-                  {documents.length === 0 ? (
+                  {documentsLoading ? (
+                    <p className="text-gray-500 text-center py-8">Loading documents...</p>
+                  ) : documentsError ? (
+                    <p className="text-red-400 text-center py-8">Error loading documents: {documentsError.message}</p>
+                  ) : documents.length === 0 ? (
                     <p className="text-gray-500 text-center py-8">No documents uploaded yet</p>
                   ) : (
                     <div className="space-y-3">
                       {documents.map((doc) => (
-                        <div key={doc.id} className="bg-[#1a1a1a] p-4 rounded-lg">
+                        <div key={doc.id} className="bg-[#1a1a1a] p-4 rounded-lg hover:bg-[#2a2a2a] transition-colors cursor-pointer">
                           <div className="flex items-center justify-between">
-                            <div>
+                            <div className="flex-1" onClick={() => {
+                              alert(`Document: ${doc.originalName}\nType: ${doc.fileType}\nSize: ${formatFileSize(doc.fileSize)}\nUploaded: ${new Date(doc.uploadedAt).toLocaleString()}\n\nThis document has been processed and is now part of Nack's training data.`);
+                            }}>
                               <p className="font-medium text-white">{doc.originalName}</p>
                               <p className="text-sm text-gray-400">
                                 {formatFileSize(doc.fileSize)} • {new Date(doc.uploadedAt).toLocaleDateString()}
                               </p>
                             </div>
                             <Button
-                              onClick={() => deleteMutation.mutate(doc.id)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                if (confirm(`Are you sure you want to delete "${doc.originalName}"?`)) {
+                                  deleteMutation.mutate(doc.id);
+                                }
+                              }}
                               variant="ghost"
                               size="sm"
                               className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                              disabled={deleteMutation.isPending}
                             >
                               <Trash2 className="w-4 h-4" />
                             </Button>
