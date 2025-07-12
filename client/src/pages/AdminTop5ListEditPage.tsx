@@ -109,7 +109,7 @@ export default function AdminTop5ListEditPage() {
       linkText: "",
       image: "",
       highlight: false,
-      position: 0,
+      position: 1,
     },
   });
 
@@ -176,10 +176,11 @@ export default function AdminTop5ListEditPage() {
       resetItem();
       setShowAddItem(false);
     },
-    onError: () => {
+    onError: (error: any) => {
+      console.error("Add item error:", error);
       toast({
         title: "Add failed",
-        description: "An error occurred while adding the item",
+        description: error.message || "An error occurred while adding the item",
         variant: "destructive",
       });
     },
@@ -211,7 +212,21 @@ export default function AdminTop5ListEditPage() {
   };
 
   const onSubmitItem = (data: any) => {
-    addItemMutation.mutate(data);
+    // Transform the data to match API expectations
+    const transformedData = {
+      ...data,
+      // Convert empty strings to null for optional fields
+      description: data.description || null,
+      link: data.link || null,
+      linkText: data.linkText || null,
+      image: data.image || null,
+      // Ensure position is a number and defaults to 1 if not provided
+      position: data.position || 1,
+      // Ensure highlight is a boolean
+      highlight: Boolean(data.highlight),
+    };
+    
+    addItemMutation.mutate(transformedData);
   };
 
   // Upload functions
@@ -516,6 +531,18 @@ export default function AdminTop5ListEditPage() {
                             onChange={handleItemImageUpload}
                             style={{ display: 'none' }}
                           />
+                        </div>
+
+                        <div className="flex items-center space-x-2">
+                          <input
+                            id="itemHighlight"
+                            type="checkbox"
+                            {...registerItem("highlight")}
+                            className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                          />
+                          <Label htmlFor="itemHighlight" className="text-sm font-medium">
+                            Highlight this item
+                          </Label>
                         </div>
 
                         <div className="flex gap-2">
