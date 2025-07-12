@@ -68,8 +68,8 @@ export type BlogSeries = typeof blogSeries.$inferSelect;
 // Blog posts model
 export const blogPosts = pgTable("blog_posts", {
   id: serial("id").primaryKey(),
-  title: text("title"),
-  slug: text("slug"),
+  title: text("title").notNull(),
+  slug: text("slug").notNull(),
   excerpt: text("excerpt"),
   content: text("content"),
   coverImage: text("cover_image"),
