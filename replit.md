@@ -95,15 +95,15 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Home page now focuses on site navigation rather than personal content
   - About page contains personal introduction, skills (Front-End/Back-End), and social links
   - Updated routing structure to reflect new page organization
-- **January 2025**: Completely redesigned About page with recruiter focus
-  - Removed extensive personal storytelling and verbose sections per user feedback
-  - Condensed page to focus on what recruiters need beyond resume/LinkedIn
-  - Created concise "How I Lead" section with military-to-corporate transition focus
-  - Added "What Sets Me Apart" highlighting unique value proposition
-  - Simplified to professional philosophy section with leadership quote
-  - Removed image placeholders and lifestyle content to reduce low-priority information
+- **January 2025**: Enhanced About page with visual elements and restored passions
+  - Added large professional photo placeholder in hero section (48x48 mobile, 64x64 desktop)
+  - Restored "My Passions" section with Leadership, Strategy, and Innovation cards
+  - Created comprehensive "Life in Pictures" section with 6 photo placeholders
+  - Maintained recruiter-focused content with "How I Lead" and "What Sets Me Apart" sections  
+  - Added visual storytelling through categorized photo placeholders (Professional, Military, Adventure, Travel, University, Family)
+  - Balanced professional value with personal connection through visual elements
   - Maintained Apple-inspired design with clean white cards and smooth animations
-  - Focused on professional differentiators that add value for hiring managers
+  - Structured page flow: Hero with photo → Leadership philosophy → Passions → Differentiators → Pictures → Professional philosophy
 - **January 2025**: Redesigned homepage with sleek tile-based interface
   - Completely removed top navigation bar for cleaner aesthetic
   - Created mixed asymmetrical layout with different sized tiles
