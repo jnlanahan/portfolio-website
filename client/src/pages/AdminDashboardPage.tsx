@@ -104,10 +104,10 @@ export default function AdminDashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen bg-[#1a1a1a] flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p>Loading admin dashboard...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#007AFF] mx-auto mb-4"></div>
+          <p className="text-white">Loading admin dashboard...</p>
         </div>
       </div>
     );
@@ -118,16 +118,16 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-[#1a1a1a] text-white">
       {/* Header */}
-      <div className="bg-white dark:bg-gray-800 shadow-sm border-b">
+      <div className="bg-[#2a2a2a] shadow-lg border-b border-[#3a3a3a]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+              <h1 className="text-2xl font-bold text-white">
                 Admin Dashboard
               </h1>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-sm text-gray-300">
                 Manage your portfolio content
               </p>
             </div>
@@ -135,7 +135,7 @@ export default function AdminDashboardPage() {
               variant="outline"
               onClick={() => logoutMutation.mutate()}
               disabled={logoutMutation.isPending}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 bg-transparent border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white"
             >
               <LogOut size={16} />
               {logoutMutation.isPending ? "Logging out..." : "Logout"}
@@ -148,315 +148,323 @@ export default function AdminDashboardPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Quick Actions */}
         <div className="mb-8">
-          <Card>
-            <CardHeader>
-              <CardTitle>Quick Actions</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <Button
-                  variant="outline"
-                  onClick={() => setLocation("/admin/resume/upload")}
-                  className="flex items-center gap-2"
-                >
-                  <Upload size={16} />
-                  Upload Resume
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => setLocation("/admin/blog/new")}
-                  className="flex items-center gap-2"
-                >
-                  <Edit size={16} />
-                  Write Blog Post
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => setLocation("/")}
-                  className="flex items-center gap-2"
-                >
-                  <Eye size={16} />
-                  View Live Site
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
+            <h2 className="text-xl font-semibold text-white mb-4">Quick Actions</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Button
+                onClick={() => setLocation("/admin/resume/upload")}
+                className="flex items-center gap-2 bg-[#007AFF] hover:bg-[#0056CC] text-white px-4 py-3 rounded-xl font-medium transition-all duration-200"
+              >
+                <Upload size={16} />
+                Upload Resume
+              </Button>
+              <Button
+                onClick={() => setLocation("/admin/blog/new")}
+                className="flex items-center gap-2 bg-[#007AFF] hover:bg-[#0056CC] text-white px-4 py-3 rounded-xl font-medium transition-all duration-200"
+              >
+                <Edit size={16} />
+                Write Blog Post
+              </Button>
+              <Button
+                onClick={() => setLocation("/")}
+                className="flex items-center gap-2 bg-[#007AFF] hover:bg-[#0056CC] text-white px-4 py-3 rounded-xl font-medium transition-all duration-200"
+              >
+                <Eye size={16} />
+                View Live Site
+              </Button>
+            </div>
+          </div>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                    Projects
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {projects?.length || 0}
-                  </p>
-                </div>
-                <Folder className="h-8 w-8 text-blue-500" />
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-300">
+                  Projects
+                </p>
+                <p className="text-2xl font-bold text-white">
+                  {projects?.length || 0}
+                </p>
               </div>
-            </CardContent>
-          </Card>
+              <Folder className="h-8 w-8 text-[#007AFF]" />
+            </div>
+          </div>
 
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                    Blog Posts
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {blogPosts?.length || 0}
-                  </p>
-                </div>
-                <FileText className="h-8 w-8 text-green-500" />
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-300">
+                  Blog Posts
+                </p>
+                <p className="text-2xl font-bold text-white">
+                  {blogPosts?.length || 0}
+                </p>
               </div>
-            </CardContent>
-          </Card>
+              <FileText className="h-8 w-8 text-[#34C759]" />
+            </div>
+          </div>
 
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                    Contact Messages
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {contactSubmissions?.length || 0}
-                  </p>
-                </div>
-                <Mail className="h-8 w-8 text-purple-500" />
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-300">
+                  Contact Messages
+                </p>
+                <p className="text-2xl font-bold text-white">
+                  {contactSubmissions?.length || 0}
+                </p>
               </div>
-            </CardContent>
-          </Card>
+              <Mail className="h-8 w-8 text-[#AF52DE]" />
+            </div>
+          </div>
 
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                    Top 5 Lists
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {topFiveLists?.length || 0}
-                  </p>
-                </div>
-                <Users className="h-8 w-8 text-orange-500" />
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-300">
+                  Top 5 Lists
+                </p>
+                <p className="text-2xl font-bold text-white">
+                  {topFiveLists?.length || 0}
+                </p>
               </div>
-            </CardContent>
-          </Card>
+              <Users className="h-8 w-8 text-[#FF9500]" />
+            </div>
+          </div>
         </div>
 
         {/* Management Sections */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Project Management */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                <span>Project Management</span>
-                <div className="flex gap-2">
-                  <Button size="sm" onClick={() => setLocation("/admin/projects/new")}>
-                    <Plus size={16} className="mr-2" />
-                    Add New
-                  </Button>
-                  <Button size="sm" variant="outline" onClick={() => setLocation("/admin/projects")}>
-                    <Edit size={16} className="mr-2" />
-                    Manage
-                  </Button>
-                </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {projects?.slice(0, 3).map((project: any) => (
-                  <div key={project.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <div>
-                      <p className="font-medium text-gray-900 dark:text-white">
-                        {project.title}
-                      </p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        {project.shortDescription}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="secondary">
-                        {project.featured ? "Featured" : "Standard"}
-                      </Badge>
-                    </div>
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-semibold text-white">Project Management</h3>
+            </div>
+            
+            {/* Action Buttons */}
+            <div className="flex gap-3 mb-6">
+              <Button 
+                onClick={() => setLocation("/admin/projects/new")}
+                className="flex-1 bg-[#007AFF] hover:bg-[#0056CC] text-white py-2 px-4 rounded-xl font-medium transition-all duration-200"
+              >
+                <Plus size={16} className="mr-2" />
+                Add New
+              </Button>
+              <Button 
+                onClick={() => setLocation("/admin/projects")}
+                className="flex-1 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white py-2 px-4 rounded-xl font-medium transition-all duration-200"
+              >
+                <Edit size={16} className="mr-2" />
+                Manage
+              </Button>
+            </div>
+
+            {/* Project List */}
+            <div className="space-y-3">
+              {projects?.slice(0, 3).map((project: any) => (
+                <div key={project.id} className="flex items-center justify-between p-4 bg-[#1a1a1a] rounded-xl border border-[#3a3a3a]">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-white truncate">
+                      {project.title}
+                    </p>
+                    <p className="text-sm text-gray-300 truncate">
+                      {project.shortDescription}
+                    </p>
                   </div>
-                ))}
-                {projects?.length === 0 && (
-                  <p className="text-gray-500 dark:text-gray-400 text-center py-4">
-                    No projects found
-                  </p>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+                  <div className="ml-3 flex-shrink-0">
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      project.featured 
+                        ? 'bg-[#007AFF] text-white' 
+                        : 'bg-[#3a3a3a] text-gray-300'
+                    }`}>
+                      {project.featured ? "Featured" : "Standard"}
+                    </span>
+                  </div>
+                </div>
+              ))}
+              {projects?.length === 0 && (
+                <p className="text-gray-400 text-center py-4">
+                  No projects found
+                </p>
+              )}
+            </div>
+          </div>
 
           {/* Blog Management */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                <span>Blog Management</span>
-                <div className="flex gap-2">
-                  <Button size="sm" onClick={() => setLocation("/admin/blog/new")}>
-                    <Plus size={16} className="mr-2" />
-                    Add New
-                  </Button>
-                  <Button size="sm" variant="outline" onClick={() => setLocation("/admin/blog")}>
-                    <Edit size={16} className="mr-2" />
-                    Manage
-                  </Button>
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-semibold text-white">Blog Management</h3>
+            </div>
+            
+            {/* Action Buttons */}
+            <div className="flex gap-3 mb-6">
+              <Button 
+                onClick={() => setLocation("/admin/blog/new")}
+                className="flex-1 bg-[#007AFF] hover:bg-[#0056CC] text-white py-2 px-4 rounded-xl font-medium transition-all duration-200"
+              >
+                <Plus size={16} className="mr-2" />
+                Add New
+              </Button>
+              <Button 
+                onClick={() => setLocation("/admin/blog")}
+                className="flex-1 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white py-2 px-4 rounded-xl font-medium transition-all duration-200"
+              >
+                <Edit size={16} className="mr-2" />
+                Manage
+              </Button>
+            </div>
+
+            {/* Blog Series Management */}
+            <div className="p-4 bg-[#007AFF]/10 rounded-xl border border-[#007AFF]/20 mb-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-medium text-[#007AFF]">
+                    Blog Series Management
+                  </p>
+                  <p className="text-sm text-[#007AFF]/80">
+                    Organize posts into series
+                  </p>
                 </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {/* Blog Series Management */}
-                <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-medium text-blue-900 dark:text-blue-100">
-                        Blog Series Management
+                <Button 
+                  onClick={() => setLocation("/admin/blog/series")}
+                  className="bg-[#007AFF] hover:bg-[#0056CC] text-white px-4 py-2 rounded-xl font-medium transition-all duration-200"
+                >
+                  <Edit size={16} className="mr-2" />
+                  Manage Series
+                </Button>
+              </div>
+            </div>
+            
+            {/* Recent Blog Posts */}
+            <div className="space-y-3">
+              {blogPosts?.slice(0, 2).map((post: any) => (
+                <div key={post.id} className="flex items-center justify-between p-4 bg-[#1a1a1a] rounded-xl border border-[#3a3a3a]">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-white truncate">
+                      {post.title}
+                    </p>
+                    <p className="text-sm text-gray-300 truncate">
+                      {post.excerpt}
+                    </p>
+                  </div>
+                  <div className="ml-3 flex-shrink-0">
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      post.featured 
+                        ? 'bg-[#34C759] text-white' 
+                        : 'bg-[#3a3a3a] text-gray-300'
+                    }`}>
+                      {post.featured ? "Featured" : "Standard"}
+                    </span>
+                  </div>
+                </div>
+              ))}
+              {blogPosts?.length === 0 && (
+                <p className="text-gray-400 text-center py-4">
+                  No blog posts found
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* Top 5 Lists Management */}
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-semibold text-white">Top 5 Lists Management</h3>
+            </div>
+            
+            {/* Action Buttons */}
+            <div className="flex gap-3 mb-6">
+              <Button 
+                onClick={() => setLocation("/admin/top5-lists/new")}
+                className="flex-1 bg-[#007AFF] hover:bg-[#0056CC] text-white py-2 px-4 rounded-xl font-medium transition-all duration-200"
+              >
+                <Plus size={16} className="mr-2" />
+                Add New
+              </Button>
+              <Button 
+                onClick={() => setLocation("/admin/top5-lists")}
+                className="flex-1 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white py-2 px-4 rounded-xl font-medium transition-all duration-200"
+              >
+                <Edit size={16} className="mr-2" />
+                Manage
+              </Button>
+            </div>
+
+            {/* Top 5 Lists */}
+            <div className="space-y-3">
+              {topFiveLists?.slice(0, 3).map((list: any) => (
+                <div key={list.id} className="flex items-center justify-between p-4 bg-[#1a1a1a] rounded-xl border border-[#3a3a3a]">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-white truncate">
+                      {list.title}
+                    </p>
+                    <p className="text-sm text-gray-300 truncate">
+                      {list.description}
+                    </p>
+                  </div>
+                  <div className="ml-3 flex-shrink-0">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#FF9500] text-white">
+                      List {list.position}
+                    </span>
+                  </div>
+                </div>
+              ))}
+              {topFiveLists?.length === 0 && (
+                <p className="text-gray-400 text-center py-4">
+                  No top 5 lists found
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* Contact Messages */}
+          <div className="lg:col-span-3 bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-semibold text-white">Recent Contact Messages</h3>
+            </div>
+            
+            <div className="space-y-4">
+              {contactSubmissions?.slice(0, 5).map((submission: any) => (
+                <div key={submission.id} className="flex items-start justify-between p-4 bg-[#1a1a1a] rounded-xl border border-[#3a3a3a]">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-3 mb-2">
+                      <p className="font-medium text-white">
+                        {submission.name}
                       </p>
-                      <p className="text-sm text-blue-700 dark:text-blue-300">
-                        Organize posts into series
-                      </p>
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#AF52DE] text-white">
+                        {submission.email}
+                      </span>
                     </div>
-                    <Button 
-                      size="sm" 
-                      variant="outline" 
-                      onClick={() => setLocation("/admin/blog/series")}
-                      className="border-blue-200 text-blue-700 hover:bg-blue-100 dark:border-blue-700 dark:text-blue-300 dark:hover:bg-blue-900/40"
+                    <p className="text-sm text-gray-300 font-medium mb-1">
+                      {submission.subject}
+                    </p>
+                    <p className="text-sm text-gray-400 mb-2">
+                      {submission.message.substring(0, 100)}...
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {new Date(submission.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 ml-4">
+                    <Button
+                      onClick={() => deleteContactMutation.mutate(submission.id)}
+                      disabled={deleteContactMutation.isPending}
+                      className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-xl font-medium transition-all duration-200"
                     >
-                      <Edit size={16} className="mr-2" />
-                      Manage Series
+                      <Trash2 size={16} />
                     </Button>
                   </div>
                 </div>
-                
-                {/* Recent Blog Posts */}
-                {blogPosts?.slice(0, 2).map((post: any) => (
-                  <div key={post.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <div>
-                      <p className="font-medium text-gray-900 dark:text-white">
-                        {post.title}
-                      </p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        {post.excerpt}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="secondary">
-                        {post.featured ? "Featured" : "Standard"}
-                      </Badge>
-                    </div>
-                  </div>
-                ))}
-                {blogPosts?.length === 0 && (
-                  <p className="text-gray-500 dark:text-gray-400 text-center py-4">
-                    No blog posts found
-                  </p>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Top 5 Lists Management */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                <span>Top 5 Lists Management</span>
-                <div className="flex gap-2">
-                  <Button size="sm" onClick={() => setLocation("/admin/top5-lists/new")}>
-                    <Plus size={16} className="mr-2" />
-                    Add New
-                  </Button>
-                  <Button size="sm" variant="outline" onClick={() => setLocation("/admin/top5-lists")}>
-                    <Edit size={16} className="mr-2" />
-                    Manage
-                  </Button>
-                </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {topFiveLists?.slice(0, 3).map((list: any) => (
-                  <div key={list.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <div>
-                      <p className="font-medium text-gray-900 dark:text-white">
-                        {list.title}
-                      </p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        {list.description}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="secondary">
-                        List {list.position}
-                      </Badge>
-                    </div>
-                  </div>
-                ))}
-                {topFiveLists?.length === 0 && (
-                  <p className="text-gray-500 dark:text-gray-400 text-center py-4">
-                    No top 5 lists found
-                  </p>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Contact Messages */}
-          <Card className="lg:col-span-3">
-            <CardHeader>
-              <CardTitle>Recent Contact Messages</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {contactSubmissions?.slice(0, 5).map((submission: any) => (
-                  <div key={submission.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <p className="font-medium text-gray-900 dark:text-white">
-                          {submission.name}
-                        </p>
-                        <Badge variant="outline">{submission.email}</Badge>
-                      </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">
-                        {submission.subject}
-                      </p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                        {submission.message.substring(0, 100)}...
-                      </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-500 mt-2">
-                        {new Date(submission.createdAt).toLocaleDateString()}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => deleteContactMutation.mutate(submission.id)}
-                        disabled={deleteContactMutation.isPending}
-                      >
-                        <Trash2 size={16} />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-                {contactSubmissions?.length === 0 && (
-                  <p className="text-gray-500 dark:text-gray-400 text-center py-4">
-                    No contact messages found
-                  </p>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+              ))}
+              {contactSubmissions?.length === 0 && (
+                <p className="text-gray-400 text-center py-8">
+                  No contact messages found
+                </p>
+              )}
+            </div>
+          </div>
         </div>
 
 

@@ -234,32 +234,47 @@ export default function AdminBlogSeriesPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
-      {/* Back Navigation */}
-      <div className="mb-6">
-        <Button 
-          variant="ghost" 
-          onClick={() => setLocation("/admin")}
-          className="gap-2 text-gray-600 hover:text-gray-900 -ml-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Admin Dashboard
-        </Button>
+    <div className="min-h-screen bg-[#1a1a1a] text-white">
+      {/* Header */}
+      <div className="bg-[#2a2a2a] shadow-lg border-b border-[#3a3a3a]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center gap-4">
+              <Button 
+                variant="ghost" 
+                onClick={() => setLocation("/admin")}
+                className="gap-2 text-gray-300 hover:text-white -ml-2"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back to Admin Dashboard
+              </Button>
+              <div>
+                <h1 className="text-2xl font-bold text-white">
+                  Blog Series Management
+                </h1>
+                <p className="text-sm text-gray-300">
+                  Organize your blog posts into series
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Blog Series Management</h1>
-          <p className="text-gray-600 mt-2">Organize your blog posts into series for better navigation</p>
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <p className="text-gray-300">Organize your blog posts into series for better navigation</p>
+          </div>
+          <Button 
+            onClick={() => setIsCreateDialogOpen(true)}
+            className="flex items-center gap-2 bg-[#007AFF] hover:bg-[#0056CC] text-white px-4 py-2 rounded-xl font-medium transition-all duration-200"
+          >
+            <Plus className="h-4 w-4" />
+            Create New Series
+          </Button>
         </div>
-        <Button 
-          onClick={() => setIsCreateDialogOpen(true)}
-          className="gap-2"
-        >
-          <Plus className="h-4 w-4" />
-          Create New Series
-        </Button>
-      </div>
 
       {series.length === 0 ? (
         <Card>
@@ -455,42 +470,43 @@ export default function AdminBlogSeriesPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Delete Confirmation Dialog */}
-      <Dialog open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Delete Blog Series</DialogTitle>
-          </DialogHeader>
-          <div className="py-4">
-            <p className="text-gray-700">
-              Are you sure you want to delete "{seriesToDelete?.title}"? This action cannot be undone.
-            </p>
-            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-sm text-red-800">
-                <strong>Warning:</strong> This will permanently delete the series and any associated data.
+        {/* Delete Confirmation Dialog */}
+        <Dialog open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Delete Blog Series</DialogTitle>
+            </DialogHeader>
+            <div className="py-4">
+              <p className="text-gray-700">
+                Are you sure you want to delete "{seriesToDelete?.title}"? This action cannot be undone.
               </p>
+              <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-sm text-red-800">
+                  <strong>Warning:</strong> This will permanently delete the series and any associated data.
+                </p>
+              </div>
             </div>
-          </div>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setDeleteConfirmOpen(false);
-                setSeriesToDelete(null);
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="destructive"
-              onClick={confirmDelete}
-              disabled={deleteSeriesMutation.isPending}
-            >
-              {deleteSeriesMutation.isPending ? 'Deleting...' : 'Delete Series'}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setDeleteConfirmOpen(false);
+                  setSeriesToDelete(null);
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={confirmDelete}
+                disabled={deleteSeriesMutation.isPending}
+              >
+                {deleteSeriesMutation.isPending ? 'Deleting...' : 'Delete Series'}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   );
 }
