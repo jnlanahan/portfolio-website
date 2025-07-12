@@ -26,6 +26,7 @@ import { sendContactEmail, verifyConnection } from "./mailer";
 import { 
   generateTrainingQuestion, 
   processRecruiterQuestion, 
+  processTrainingConversation,
   extractTextFromFile 
 } from "./chatbotService";
 import express from "express";
@@ -1029,7 +1030,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // CHATBOT API ROUTES
   
-  // Public chatbot endpoint for recruiters
+  // Public chatbot endpoint for recruiters (VISITOR MODE)
   app.post("/api/chatbot/ask", async (req, res) => {
     try {
       const { question, sessionId } = req.body;
@@ -1038,21 +1039,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Question is required" });
       }
 
-      // Get training data
-      const documents = await storage.getAllChatbotDocuments();
-      const trainingSessions = await storage.getAllChatbotTrainingSessions();
-      
-      // Process the question
-      const response = await processRecruiterQuestion(question, documents, trainingSessions);
-      
-      // Store the conversation for analytics
-      if (sessionId) {
-        await storage.createChatbotConversation({
-          sessionId,
-          userQuestion: question,
-          botResponse: response.response
-        });
-      }
+      // Process the question using the new VISITOR MODE function
+      const response = await processRecruiterQuestion(question, sessionId);
       
       res.json({
         response: response.response,
@@ -1062,6 +1050,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error processing chatbot question:", error);
       res.status(500).json({ error: "Failed to process question" });
+    }
+  });
+
+  // Training chatbot endpoint for admin (TRAINING MODE)
+  app.post("/api/admin/chatbot/train", requireAdmin, async (req, res) => {
+    try {
+      const { message, sessionId } = req.body;
+      
+      if (!message || typeof message !== 'string') {
+        return res.status(400).json({ error: "Message is required" });
+      }
+
+      // Process the training conversation using TRAINING MODE
+      const response = await processTrainingConversation(message, sessionId);
+      
+      res.json({
+        response: response.response,
+        isOnTopic: response.isOnTopic,
+        confidence: response.confidence
+      });
+    } catch (error) {
+      console.error("Error processing training conversation:", error);
+      res.status(500).json({ error: "Failed to process training message" });
     }
   });
 

@@ -103,75 +103,194 @@ Return response in JSON format:
 }
 
 /**
- * Process a recruiter's question and generate appropriate response
+ * Process a recruiter's question and generate appropriate response (VISITOR MODE)
  */
 export async function processRecruiterQuestion(
   question: string,
-  documents: ChatbotDocument[],
-  trainingSessions: ChatbotTrainingSession[]
+  sessionId: string = 'default'
 ): Promise<ChatbotResponse> {
-  // First, check if the question is on-topic
-  const isOnTopic = await checkIfOnTopic(question);
-  
-  if (!isOnTopic.isOnTopic) {
-    return {
-      response: "I'm specifically trained to answer questions about Nick Lanahan's professional background, skills, and experience. Could you please ask me something about Nick's career, projects, or qualifications?",
-      isOnTopic: false,
-      confidence: 0.9
-    };
-  }
-
-  // Create context from training data
-  const documentContext = documents.map(doc => 
-    `Document: ${doc.originalName}\nContent: ${doc.content}`
-  ).join('\n\n');
-  
-  const trainingContext = trainingSessions.map(session => 
-    `Q: ${session.question}\nA: ${session.answer}`
-  ).join('\n\n');
-
-  const systemPrompt = `You are a personal chatbot specifically trained to answer questions about Nick Lanahan for recruiters and hiring managers. 
-
-IMPORTANT GUIDELINES:
-1. Only answer questions about Nick Lanahan's professional background, skills, experience, and qualifications
-2. Present Nick in a positive, professional light while being truthful
-3. If you don't have specific information, say so rather than making things up
-4. Keep responses concise and relevant to recruiting/hiring context
-5. Be enthusiastic about Nick's qualifications but professional in tone
-6. Focus on his strengths, achievements, and value proposition
-
-CONTEXT ABOUT NICK:
-
-DOCUMENTS:
-${documentContext}
-
-TRAINING Q&A:
-${trainingContext}
-
-Respond to the recruiter's question professionally and helpfully.`;
-
   try {
+    const isOnTopicResult = await checkIfOnTopic(question);
+    
+    if (!isOnTopicResult.isOnTopic) {
+      return {
+        response: "Hi! I'm Nack, Nick's AI assistant, specifically trained to discuss his professional background and experience. I'd be happy to answer questions about his skills, career, projects, or qualifications. What would you like to know about Nick?",
+        isOnTopic: false,
+        confidence: 0.3
+      };
+    }
+
+    const openai = getOpenAI();
+    
+    // Get training data from database to provide context
+    const trainingData = await storage.getChatbotTrainingSessions();
+    const documents = await storage.getChatbotDocuments();
+    
+    // Build context from training data
+    let context = "Current profile data about Nick Lanahan:\n\n";
+    
+    // Add document context
+    documents.forEach(doc => {
+      context += `From ${doc.originalName}: ${doc.content.substring(0, 500)}...\n\n`;
+    });
+    
+    // Add Q&A context
+    trainingData.forEach(session => {
+      context += `Q: ${session.question}\nA: ${session.answer}\n\n`;
+    });
+
+    const systemPrompt = `You are Nack, Nick Lanahan's dual-mode personal assistant in VISITOR MODE. Your sole purpose is to represent Nick accurately and compellingly to recruiters.
+
+VISITOR MODE Behavior:
+- Begin with a warm greeting and briefly introduce yourself as Nick's assistant
+- Ask for job description or role details to tailor your answers: "To tailor my answers, could you share the job description or key requirements for this role?"
+- Pull facts from your profile memory to highlight why Nick is a strong fit
+- Match skills to the role's requirements
+- Cite relevant achievements with specifics (e.g. "In a recent evaluation, Nick increased X by 30%...")
+- Share anecdotes when appropriate ("During their tenure at Y, they led a cross-functional team of 12...")
+- Maintain professional, engaging, and concise tone
+- Use empathy and positive framing ("I understand you need someone with both strategic vision and hands-on expertise...")
+- Avoid jargon unless recruiter is clearly technical
+- Keep track of earlier questions to avoid repetition
+- Offer to expand on any point or provide additional examples
+- When conversation seems over, send polite sign-off: "Thank you for your time. Please let me know if you need anything else—happy to share additional details or documents."
+
+UNIVERSAL GUIDELINES:
+- Accuracy: Never fabricate or overstate. If you lack data, say "I don't have that information yet"
+- Confidentiality: Only share information that has been explicitly confirmed
+- Clarity: Break complex answers into numbered or bulleted lists
+- Empathy & Professionalism: Be courteous, respectful, and adaptive
+
+Here's what you know about Nick:
+${context}
+
+Answer the recruiter's question professionally and focus on how Nick's background relates to their needs.`;
+
     const response = await openai.chat.completions.create({
       model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: question }
       ],
+      max_tokens: 500,
       temperature: 0.7,
-      max_tokens: 300,
+    });
+
+    const botResponse = response.choices[0].message.content || "I'm sorry, I couldn't process your question. Please try again.";
+    
+    // Save conversation to database
+    await storage.saveChatbotConversation({
+      sessionId,
+      question,
+      response: botResponse,
+      isOnTopic: true,
+      confidence: isOnTopicResult.confidence
     });
 
     return {
-      response: response.choices[0].message.content || "I'm sorry, I couldn't generate a response. Could you please rephrase your question?",
+      response: botResponse,
       isOnTopic: true,
-      confidence: 0.8
+      confidence: isOnTopicResult.confidence
     };
   } catch (error) {
     console.error('Error processing recruiter question:', error);
     return {
-      response: "I'm experiencing technical difficulties. Please try asking your question again in a moment.",
+      response: "I'm sorry, I'm having trouble connecting right now. Please try again in a moment.",
+      isOnTopic: false,
+      confidence: 0
+    };
+  }
+}
+
+/**
+ * Process a training conversation with Nack in TRAINING MODE
+ */
+export async function processTrainingConversation(
+  message: string,
+  sessionId: string = 'training'
+): Promise<ChatbotResponse> {
+  try {
+    const openai = getOpenAI();
+    
+    // Get existing training data for context
+    const trainingData = await storage.getChatbotTrainingSessions();
+    const documents = await storage.getChatbotDocuments();
+    
+    // Build existing profile context
+    let profileContext = "Current profile data about Nick Lanahan:\n\n";
+    
+    documents.forEach(doc => {
+      profileContext += `From ${doc.originalName}: ${doc.content.substring(0, 300)}...\n\n`;
+    });
+    
+    trainingData.forEach(session => {
+      profileContext += `Q: ${session.question}\nA: ${session.answer}\n\n`;
+    });
+
+    const systemPrompt = `You are Nack, Nick Lanahan's dual-mode personal assistant in TRAINING MODE. Your goal is to elicit and store 100+ key data points about Nick Lanahan using questions that never take more than 3 minutes to answer.
+
+TRAINING MODE Behavior:
+- Use structured questioning with variety (multiple-choice, open-ended, ranking, "tell me more about...")
+- Cover: professional history, roles, companies, projects, skills, metrics, education, certifications, core strengths, values, personal interests, achievements, stories
+- Before each question, scan existing profile memory and identify gaps
+- Generate fresh questions that probe those gaps (e.g., "I see you mentioned leading a team at X; can you describe a specific challenge you overcame there?")
+- After every ~10 facts learned, summarize new profile entries and ask for confirmation
+- If a line of questioning yields no new facts, smoothly transition to next topic
+- Prompt for document uploads when relevant: "Would you like to upload or paste any relevant documents?"
+- Ensure each question can be answered within 3 minutes
+- Document ingestion: Summarize document sections, extract structured facts, link to existing profile data
+
+Current profile data (scan for gaps):
+${profileContext}
+
+Continue the training conversation naturally. If this is the start, introduce yourself as Nack and begin with foundational questions about Nick's current role and background.
+
+UNIVERSAL GUIDELINES:
+- Accuracy: Never fabricate information
+- Structured: Break complex questions into clear parts
+- Empathy: Be encouraging and professional
+- Memory: Automatically note each confirmed fact for later retrieval
+- Confirmation: After every ~10 facts, summarize and ask for confirmation/correction`;
+
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: message }
+      ],
+      max_tokens: 600,
+      temperature: 0.8,
+    });
+
+    const botResponse = response.choices[0].message.content || "I'm sorry, I couldn't process your message. Please try again.";
+    
+    // Save training conversation to database
+    await storage.saveChatbotConversation({
+      sessionId,
+      question: message,
+      response: botResponse,
       isOnTopic: true,
-      confidence: 0.1
+      confidence: 1.0
+    });
+
+    // Also save as training session for future reference
+    await storage.saveChatbotTrainingSession({
+      question: message,
+      answer: botResponse,
+      category: 'training-conversation'
+    });
+
+    return {
+      response: botResponse,
+      isOnTopic: true,
+      confidence: 1.0
+    };
+  } catch (error) {
+    console.error('Error processing training conversation:', error);
+    return {
+      response: "I'm sorry, I'm having trouble connecting right now. Please try again in a moment.",
+      isOnTopic: false,
+      confidence: 0
     };
   }
 }
