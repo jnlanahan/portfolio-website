@@ -5,6 +5,8 @@ import {
   type InsertProject,
   type BlogPost,
   type InsertBlogPost,
+  type BlogSeries,
+  type InsertBlogSeries,
   type ContactSubmission,
   type InsertContact,
   type Admin,
@@ -39,9 +41,18 @@ export interface IStorage {
   updateProject(id: number, project: Partial<InsertProject>): Promise<Project>;
   deleteProject(id: number): Promise<void>;
   
+  // Blog series methods
+  getAllBlogSeries(): Promise<BlogSeries[]>;
+  getBlogSeriesById(id: number): Promise<BlogSeries | undefined>;
+  getBlogSeriesBySlug(slug: string): Promise<BlogSeries | undefined>;
+  createBlogSeries(series: InsertBlogSeries): Promise<BlogSeries>;
+  updateBlogSeries(id: number, series: Partial<InsertBlogSeries>): Promise<BlogSeries>;
+  deleteBlogSeries(id: number): Promise<void>;
+  
   // Blog post methods
   getAllBlogPosts(): Promise<BlogPost[]>;
   getBlogPostById(id: number): Promise<BlogPost | undefined>;
+  getBlogPostsBySeriesId(seriesId: number): Promise<BlogPost[]>;
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
   updateBlogPost(id: number, post: Partial<InsertBlogPost>): Promise<BlogPost>;
   deleteBlogPost(id: number): Promise<void>;
@@ -264,6 +275,32 @@ export class MemStorage implements IStorage {
     }
   }
   
+  // Blog series methods (placeholder implementation for MemStorage)
+  async getAllBlogSeries(): Promise<BlogSeries[]> {
+    // MemStorage doesn't implement series yet
+    return [];
+  }
+
+  async getBlogSeriesById(id: number): Promise<BlogSeries | undefined> {
+    return undefined;
+  }
+
+  async getBlogSeriesBySlug(slug: string): Promise<BlogSeries | undefined> {
+    return undefined;
+  }
+
+  async createBlogSeries(insertSeries: InsertBlogSeries): Promise<BlogSeries> {
+    throw new Error("Blog series not implemented for MemStorage");
+  }
+
+  async updateBlogSeries(id: number, updateData: Partial<InsertBlogSeries>): Promise<BlogSeries> {
+    throw new Error("Blog series not implemented for MemStorage");
+  }
+
+  async deleteBlogSeries(id: number): Promise<void> {
+    throw new Error("Blog series not implemented for MemStorage");
+  }
+
   // Blog post methods
   async getAllBlogPosts(): Promise<BlogPost[]> {
     console.log("Fetching all blog posts");
@@ -283,6 +320,11 @@ export class MemStorage implements IStorage {
       console.log(`Blog post with ID ${id} not found`);
     }
     return post;
+  }
+
+  async getBlogPostsBySeriesId(seriesId: number): Promise<BlogPost[]> {
+    // MemStorage doesn't implement series yet
+    return [];
   }
   
   async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
@@ -523,6 +565,69 @@ export class DatabaseStorage implements IStorage {
     console.log(`Deleted project: ID=${id}`);
   }
 
+  // Blog series methods
+  async getAllBlogSeries(): Promise<BlogSeries[]> {
+    const { db } = await import('./db');
+    const { blogSeries } = await import('@shared/schema');
+    const { desc } = await import('drizzle-orm');
+    
+    return await db.select().from(blogSeries).orderBy(desc(blogSeries.position));
+  }
+
+  async getBlogSeriesById(id: number): Promise<BlogSeries | undefined> {
+    const { db } = await import('./db');
+    const { blogSeries } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [series] = await db.select().from(blogSeries).where(eq(blogSeries.id, id));
+    return series || undefined;
+  }
+
+  async getBlogSeriesBySlug(slug: string): Promise<BlogSeries | undefined> {
+    const { db } = await import('./db');
+    const { blogSeries } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [series] = await db.select().from(blogSeries).where(eq(blogSeries.slug, slug));
+    return series || undefined;
+  }
+
+  async createBlogSeries(insertSeries: InsertBlogSeries): Promise<BlogSeries> {
+    const { db } = await import('./db');
+    const { blogSeries } = await import('@shared/schema');
+    
+    const [series] = await db.insert(blogSeries).values(insertSeries).returning();
+    console.log(`Created blog series: ID=${series.id}, Title="${series.title}"`);
+    return series;
+  }
+
+  async updateBlogSeries(id: number, updateData: Partial<InsertBlogSeries>): Promise<BlogSeries> {
+    const { db } = await import('./db');
+    const { blogSeries } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [series] = await db.update(blogSeries)
+      .set({ ...updateData, updatedAt: new Date() })
+      .where(eq(blogSeries.id, id))
+      .returning();
+    
+    if (!series) {
+      throw new Error(`Blog series with ID ${id} not found`);
+    }
+    
+    console.log(`Updated blog series: ID=${id}, Title="${series.title}"`);
+    return series;
+  }
+
+  async deleteBlogSeries(id: number): Promise<void> {
+    const { db } = await import('./db');
+    const { blogSeries } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    await db.delete(blogSeries).where(eq(blogSeries.id, id));
+    console.log(`Deleted blog series: ID=${id}`);
+  }
+
   // Blog methods
   async getAllBlogPosts(): Promise<BlogPost[]> {
     const { db } = await import('./db');
@@ -539,6 +644,16 @@ export class DatabaseStorage implements IStorage {
     
     const [post] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
     return post || undefined;
+  }
+
+  async getBlogPostsBySeriesId(seriesId: number): Promise<BlogPost[]> {
+    const { db } = await import('./db');
+    const { blogPosts } = await import('@shared/schema');
+    const { eq, asc } = await import('drizzle-orm');
+    
+    return await db.select().from(blogPosts)
+      .where(eq(blogPosts.seriesId, seriesId))
+      .orderBy(asc(blogPosts.seriesPosition));
   }
 
   async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {

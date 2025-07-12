@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import RichTextEditor from "@/components/RichTextEditor";
 import AIContentPolisher from "@/components/AIContentPolisher";
 import { Switch } from "@/components/ui/switch";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Upload, X, FileText, Download } from "lucide-react";
@@ -24,6 +25,7 @@ const blogSchema = z.object({
   coverImage: z.string().optional(),
   tags: z.string().optional(),
   category: z.string().optional(),
+  seriesId: z.string().optional(), // Series selection
   featured: z.boolean().default(false),
   published: z.boolean().default(false), // Default to draft mode
   date: z.string().optional(),
@@ -62,6 +64,11 @@ export default function AdminNewBlogPage() {
     enabled: isEditMode && !!blogId,
   });
 
+  // Fetch available blog series
+  const { data: blogSeries = [] } = useQuery({
+    queryKey: ['/api/blog/series'],
+  });
+
   const {
     register,
     handleSubmit,
@@ -76,6 +83,7 @@ export default function AdminNewBlogPage() {
       featured: false,
       published: false, // Default to draft mode
       date: new Date().toISOString().split('T')[0],
+      seriesId: "",
     },
   });
   
@@ -90,6 +98,7 @@ export default function AdminNewBlogPage() {
         coverImage: postData.coverImage || "",
         tags: Array.isArray(postData.tags) ? postData.tags.join(", ") : "",
         category: postData.category || "",
+        seriesId: postData.seriesId ? postData.seriesId.toString() : "",
         featured: postData.featured || false,
         published: postData.published || false,
         date: postData.date ? new Date(postData.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
@@ -253,6 +262,7 @@ export default function AdminNewBlogPage() {
       published: false,
       tags: data.tags ? data.tags.split(',').map(tag => tag.trim()) : [],
       date: data.date ? new Date(data.date).toISOString() : new Date().toISOString(),
+      seriesId: data.seriesId ? parseInt(data.seriesId) : null,
     };
     
     createBlogMutation.mutate(payload);
@@ -285,6 +295,7 @@ export default function AdminNewBlogPage() {
       published: true,
       tags: data.tags ? data.tags.split(',').map(tag => tag.trim()) : [],
       date: data.date ? new Date(data.date).toISOString() : new Date().toISOString(),
+      seriesId: data.seriesId ? parseInt(data.seriesId) : null,
     };
     
     createBlogMutation.mutate(payload);
@@ -543,6 +554,29 @@ export default function AdminNewBlogPage() {
                     <p className="text-sm text-red-500">{errors.category.message}</p>
                   )}
                 </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="seriesId">Blog Series <span className="text-gray-500 text-sm">(optional)</span></Label>
+                <Select
+                  value={watch("seriesId") || ""}
+                  onValueChange={(value) => setValue("seriesId", value || "")}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a series (optional)" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">None</SelectItem>
+                    {blogSeries.map((series: any) => (
+                      <SelectItem key={series.id} value={series.id.toString()}>
+                        {series.title}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-sm text-gray-500">
+                  Organize this post as part of a series
+                </p>
               </div>
 
               <div className="space-y-2">

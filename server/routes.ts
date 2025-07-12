@@ -8,6 +8,7 @@ import { promises as fs } from "fs";
 import { 
   insertContactSchema,
   insertBlogPostSchema,
+  insertBlogSeriesSchema,
   insertProjectSchema,
   insertAdminSchema,
   insertResumeSchema,
@@ -307,6 +308,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Blog Series API Routes (before blog posts to avoid conflicts)
+  
+  // Get all blog series
+  app.get("/api/blog/series", async (req, res) => {
+    try {
+      const series = await storage.getAllBlogSeries();
+      res.json(series);
+    } catch (error) {
+      console.error("Error fetching blog series:", error);
+      res.status(500).json({ message: "Failed to fetch blog series" });
+    }
+  });
+
+  // Get specific blog series by ID or slug
+  app.get("/api/blog/series/:identifier", async (req, res) => {
+    try {
+      const identifier = req.params.identifier;
+      let series;
+      
+      // Try as ID first if identifier is a number
+      const numericId = parseInt(identifier);
+      if (!isNaN(numericId) && numericId.toString() === identifier) {
+        series = await storage.getBlogSeriesById(numericId);
+      }
+      
+      // If not found as ID or identifier is not numeric, try as slug
+      if (!series) {
+        series = await storage.getBlogSeriesBySlug(identifier);
+      }
+      
+      if (!series) {
+        return res.status(404).json({ message: "Blog series not found" });
+      }
+      
+      // Also get all posts in this series
+      const posts = await storage.getBlogPostsBySeriesId(series.id);
+      
+      res.json({ ...series, posts });
+    } catch (error) {
+      console.error("Error fetching blog series:", error);
+      res.status(500).json({ message: "Failed to fetch blog series" });
+    }
+  });
+
   // Get specific blog post by ID or slug
   app.get("/api/blog/:identifier", async (req, res) => {
     try {
@@ -333,6 +378,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching blog post:", error);
       res.status(500).json({ message: "Failed to fetch blog post" });
+    }
+  });
+
+  // Create new blog series (admin only)
+  app.post("/api/admin/blog/series", requireAdmin, async (req, res) => {
+    try {
+      const seriesData = insertBlogSeriesSchema.parse(req.body);
+      const series = await storage.createBlogSeries(seriesData);
+      res.status(201).json(series);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const formattedError = fromZodError(error);
+        return res.status(400).json({ message: formattedError.message });
+      }
+      console.error("Error creating blog series:", error);
+      res.status(500).json({ message: "Failed to create blog series" });
+    }
+  });
+
+  // Update blog series (admin only)
+  app.put("/api/admin/blog/series/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updateData = insertBlogSeriesSchema.partial().parse(req.body);
+      const series = await storage.updateBlogSeries(id, updateData);
+      res.json(series);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const formattedError = fromZodError(error);
+        return res.status(400).json({ message: formattedError.message });
+      }
+      console.error("Error updating blog series:", error);
+      res.status(500).json({ message: "Failed to update blog series" });
+    }
+  });
+
+  // Delete blog series (admin only)
+  app.delete("/api/admin/blog/series/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteBlogSeries(id);
+      res.json({ message: "Blog series deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting blog series:", error);
+      res.status(500).json({ message: "Failed to delete blog series" });
     }
   });
 

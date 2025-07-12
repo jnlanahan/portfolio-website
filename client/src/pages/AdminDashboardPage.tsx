@@ -316,7 +316,31 @@ export default function AdminDashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {blogPosts?.slice(0, 3).map((post: any) => (
+                {/* Blog Series Management */}
+                <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium text-blue-900 dark:text-blue-100">
+                        Blog Series Management
+                      </p>
+                      <p className="text-sm text-blue-700 dark:text-blue-300">
+                        Organize posts into series
+                      </p>
+                    </div>
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      onClick={() => setLocation("/admin/blog/series")}
+                      className="border-blue-200 text-blue-700 hover:bg-blue-100 dark:border-blue-700 dark:text-blue-300 dark:hover:bg-blue-900/40"
+                    >
+                      <Edit size={16} className="mr-2" />
+                      Manage Series
+                    </Button>
+                  </div>
+                </div>
+                
+                {/* Recent Blog Posts */}
+                {blogPosts?.slice(0, 2).map((post: any) => (
                   <div key={post.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
                     <div>
                       <p className="font-medium text-gray-900 dark:text-white">

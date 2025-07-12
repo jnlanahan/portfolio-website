@@ -21,6 +21,8 @@ import AdminResumePage from "@/pages/AdminResumePage";
 import AdminResumeUploadPage from "@/pages/AdminResumeUploadPage";
 import AdminTop5ListsPage from "@/pages/AdminTop5ListsPage";
 import AdminTop5ListEditPage from "@/pages/AdminTop5ListEditPage";
+import AdminBlogSeriesPage from "@/pages/AdminBlogSeriesPage";
+import BlogSeriesPage from "@/pages/BlogSeriesPage";
 import Layout from "./components/Layout";
 import { BlogDetail } from "./sections/BlogDetail";
 import { ProjectDetail } from "./sections/ProjectDetail";
@@ -34,6 +36,7 @@ function Router() {
       <Route path="/portfolio" component={PortfolioPage} />
       <Route path="/portfolio/:slug" component={ProjectDetail} />
       <Route path="/blog" component={BlogPage} />
+      <Route path="/blog/series/:slug" component={BlogSeriesPage} />
       <Route path="/blog/:slug" component={BlogDetail} />
       <Route path="/blog/category/:category" component={BlogPage} />
       <Route path="/top5" component={TopFiveListsPage} />
@@ -48,6 +51,7 @@ function Router() {
       <Route path="/admin/blog" component={AdminBlogPage} />
       <Route path="/admin/blog/new" component={AdminNewBlogPage} />
       <Route path="/admin/blog/edit/:id" component={AdminNewBlogPage} />
+      <Route path="/admin/blog/series" component={AdminBlogSeriesPage} />
       <Route path="/admin/resume" component={AdminResumePage} />
       <Route path="/admin/resume/upload" component={AdminResumeUploadPage} />
       <Route path="/admin/top5-lists" component={AdminTop5ListsPage} />

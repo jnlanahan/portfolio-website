@@ -44,6 +44,27 @@ export const insertProjectSchema = createInsertSchema(projects).omit({
 export type InsertProject = z.infer<typeof insertProjectSchema>;
 export type Project = typeof projects.$inferSelect;
 
+// Blog series model
+export const blogSeries = pgTable("blog_series", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
+  description: text("description"),
+  coverImage: text("cover_image"),
+  featured: boolean("featured").default(false).notNull(),
+  published: boolean("published").default(false).notNull(),
+  position: integer("position").default(0).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertBlogSeriesSchema = createInsertSchema(blogSeries).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertBlogSeries = z.infer<typeof insertBlogSeriesSchema>;
+export type BlogSeries = typeof blogSeries.$inferSelect;
+
 // Blog posts model
 export const blogPosts = pgTable("blog_posts", {
   id: serial("id").primaryKey(),
@@ -59,6 +80,20 @@ export const blogPosts = pgTable("blog_posts", {
   readTime: integer("read_time").default(5).notNull(),
   date: timestamp("date").defaultNow().notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
+  // Series support
+  seriesId: integer("series_id").references(() => blogSeries.id),
+  seriesPosition: integer("series_position").default(0),
+  // References and citations
+  references: text("references").array().default([]).notNull(), // JSON array of reference objects
+  footnotes: text("footnotes").array().default([]).notNull(), // JSON array of footnote objects
+  // Cross-linking
+  relatedPosts: text("related_posts").array().default([]).notNull(), // Array of post IDs
+  // SEO enhancements
+  metaTitle: text("meta_title"),
+  metaDescription: text("meta_description"),
+  // Content enhancements
+  tableOfContents: text("table_of_contents"), // JSON array of TOC items
+  wordCount: integer("word_count").default(0).notNull(),
 });
 
 export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
