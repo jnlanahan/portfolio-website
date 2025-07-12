@@ -43,10 +43,10 @@ const AboutPage = () => {
               </div>
             </div>
             
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-futura">
               Beyond the Resume
             </h1>
-            <p className="text-lg text-gray-600 leading-relaxed" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+            <p className="text-lg text-gray-600 leading-relaxed font-futura">
               What drives me as a leader and how I approach challenges that matter.
             </p>
           </motion.div>
@@ -63,7 +63,7 @@ const AboutPage = () => {
             transition={{ duration: 0.8 }}
             className="max-w-4xl mx-auto"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center font-futura">
               How I Lead
             </h2>
             
@@ -78,11 +78,11 @@ const AboutPage = () => {
               >
                 <div className="flex items-center mb-4">
                   <Users className="w-8 h-8 text-blue-600 mr-3" />
-                  <h3 className="text-xl font-bold text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                  <h3 className="text-xl font-bold text-gray-900 font-futura">
                     Military to Corporate
                   </h3>
                 </div>
-                <p className="text-gray-600 leading-relaxed" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                <p className="text-gray-600 leading-relaxed font-futura">
                   8+ years of military leadership taught me that great leaders empower others to succeed. I bring this servant-leadership approach to corporate environments, focusing on team development and mission accomplishment.
                 </p>
               </motion.div>
@@ -98,11 +98,11 @@ const AboutPage = () => {
               >
                 <div className="flex items-center mb-4">
                   <Target className="w-8 h-8 text-green-600 mr-3" />
-                  <h3 className="text-xl font-bold text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                  <h3 className="text-xl font-bold text-gray-900 font-futura">
                     Strategic Thinking
                   </h3>
                 </div>
-                <p className="text-gray-600 leading-relaxed" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                <p className="text-gray-600 leading-relaxed font-futura">
                   I break down complex business challenges into actionable strategies. My approach combines analytical rigor with creative problem-solving to deliver results that matter.
                 </p>
               </motion.div>
@@ -121,10 +121,10 @@ const AboutPage = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4 font-futura">
               My <span className="text-blue-600">Passions</span>
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto font-futura">
               Three principles that guide everything I do
             </p>
           </motion.div>
@@ -142,10 +142,10 @@ const AboutPage = () => {
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Users className="w-6 h-6 text-blue-600" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 text-center" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                <h3 className="text-xl font-bold text-gray-900 mb-3 text-center font-futura">
                   Leadership
                 </h3>
-                <p className="text-gray-600 text-center leading-relaxed" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                <p className="text-gray-600 text-center leading-relaxed font-futura">
                   From commanding troops to leading product teams, I believe leadership is about empowering others to achieve their best.
                 </p>
               </div>
@@ -164,10 +164,10 @@ const AboutPage = () => {
                 <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Target className="w-6 h-6 text-green-600" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 text-center" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                <h3 className="text-xl font-bold text-gray-900 mb-3 text-center font-futura">
                   Strategy
                 </h3>
-                <p className="text-gray-600 text-center leading-relaxed" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                <p className="text-gray-600 text-center leading-relaxed font-futura">
                   Breaking down complex challenges into actionable plans, aligning teams toward common goals and adapting when needed.
                 </p>
               </div>
@@ -186,10 +186,10 @@ const AboutPage = () => {
                 <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Lightbulb className="w-6 h-6 text-purple-600" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 text-center" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                <h3 className="text-xl font-bold text-gray-900 mb-3 text-center font-futura">
                   Innovation
                 </h3>
-                <p className="text-gray-600 text-center leading-relaxed" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                <p className="text-gray-600 text-center leading-relaxed font-futura">
                   Finding better ways to solve problems, challenging assumptions, and turning ideas into reality.
                 </p>
               </div>
@@ -208,7 +208,7 @@ const AboutPage = () => {
             transition={{ duration: 0.8 }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-8" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 font-futura">
               What Sets Me Apart
             </h2>
             
@@ -221,10 +221,10 @@ const AboutPage = () => {
                 viewport={{ once: true }}
                 className="bg-white p-6 rounded-2xl shadow-lg"
               >
-                <div className="text-2xl font-bold text-blue-600 mb-2" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                <div className="text-2xl font-bold text-blue-600 mb-2 font-futura">
                   Military → Corporate
                 </div>
-                <p className="text-gray-600 text-sm" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                <p className="text-gray-600 text-sm font-futura">
                   Unique perspective bridging military discipline with corporate innovation
                 </p>
               </motion.div>
@@ -238,10 +238,10 @@ const AboutPage = () => {
                 transition={{ delay: 0.1 }}
                 className="bg-white p-6 rounded-2xl shadow-lg"
               >
-                <div className="text-2xl font-bold text-green-600 mb-2" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                <div className="text-2xl font-bold text-green-600 mb-2 font-futura">
                   Technical + Business
                 </div>
-                <p className="text-gray-600 text-sm" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                <p className="text-gray-600 text-sm font-futura">
                   Engineering background with business strategy execution
                 </p>
               </motion.div>
@@ -255,10 +255,10 @@ const AboutPage = () => {
                 transition={{ delay: 0.2 }}
                 className="bg-white p-6 rounded-2xl shadow-lg"
               >
-                <div className="text-2xl font-bold text-purple-600 mb-2" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                <div className="text-2xl font-bold text-purple-600 mb-2 font-futura">
                   Mission-First
                 </div>
-                <p className="text-gray-600 text-sm" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                <p className="text-gray-600 text-sm font-futura">
                   Focused on outcomes that drive real business impact
                 </p>
               </motion.div>
@@ -277,7 +277,7 @@ const AboutPage = () => {
             transition={{ duration: 0.8 }}
             className="max-w-6xl mx-auto"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center font-futura">
               Life in Pictures
             </h2>
             
@@ -294,10 +294,10 @@ const AboutPage = () => {
                   <span className="text-gray-500 text-sm">Professional Team Photo</span>
                 </div>
                 <div className="p-4">
-                  <h3 className="font-bold text-gray-900 mb-2" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                  <h3 className="font-bold text-gray-900 mb-2 font-futura">
                     Leading Teams
                   </h3>
-                  <p className="text-gray-600 text-sm" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                  <p className="text-gray-600 text-sm font-futura">
                     Working with my team at EY
                   </p>
                 </div>
@@ -316,10 +316,10 @@ const AboutPage = () => {
                   <span className="text-gray-500 text-sm">Military Service Photo</span>
                 </div>
                 <div className="p-4">
-                  <h3 className="font-bold text-gray-900 mb-2" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                  <h3 className="font-bold text-gray-900 mb-2 font-futura">
                     Military Leadership
                   </h3>
-                  <p className="text-gray-600 text-sm" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                  <p className="text-gray-600 text-sm font-futura">
                     8+ years serving in the U.S. Army
                   </p>
                 </div>
@@ -338,10 +338,10 @@ const AboutPage = () => {
                   <span className="text-gray-500 text-sm">Adventure/Hiking Photo</span>
                 </div>
                 <div className="p-4">
-                  <h3 className="font-bold text-gray-900 mb-2" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                  <h3 className="font-bold text-gray-900 mb-2 font-futura">
                     Beyond Work
                   </h3>
-                  <p className="text-gray-600 text-sm" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                  <p className="text-gray-600 text-sm font-futura">
                     Exploring trails and recharging outdoors
                   </p>
                 </div>
@@ -360,10 +360,10 @@ const AboutPage = () => {
                   <span className="text-gray-500 text-sm">Travel/Location Photo</span>
                 </div>
                 <div className="p-4">
-                  <h3 className="font-bold text-gray-900 mb-2" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                  <h3 className="font-bold text-gray-900 mb-2 font-futura">
                     Journey Across States
                   </h3>
-                  <p className="text-gray-600 text-sm" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                  <p className="text-gray-600 text-sm font-futura">
                     From NC to Missouri to Ohio
                   </p>
                 </div>
@@ -382,10 +382,10 @@ const AboutPage = () => {
                   <span className="text-gray-500 text-sm">University Photo</span>
                 </div>
                 <div className="p-4">
-                  <h3 className="font-bold text-gray-900 mb-2" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                  <h3 className="font-bold text-gray-900 mb-2 font-futura">
                     Academic Journey
                   </h3>
-                  <p className="text-gray-600 text-sm" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                  <p className="text-gray-600 text-sm font-futura">
                     Engineering studies and continued learning
                   </p>
                 </div>
@@ -404,10 +404,10 @@ const AboutPage = () => {
                   <span className="text-gray-500 text-sm">Family/Personal Photo</span>
                 </div>
                 <div className="p-4">
-                  <h3 className="font-bold text-gray-900 mb-2" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                  <h3 className="font-bold text-gray-900 mb-2 font-futura">
                     What Matters Most
                   </h3>
-                  <p className="text-gray-600 text-sm" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                  <p className="text-gray-600 text-sm font-futura">
                     Family and personal connections
                   </p>
                 </div>
@@ -427,23 +427,23 @@ const AboutPage = () => {
             transition={{ duration: 0.8 }}
             className="max-w-3xl mx-auto text-center"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+            <h2 className="text-3xl font-bold text-gray-900 mb-6 font-futura">
               My Professional Philosophy
             </h2>
             
             <div className="bg-white p-8 rounded-2xl shadow-lg">
-              <blockquote className="text-lg text-gray-700 italic mb-6" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+              <blockquote className="text-lg text-gray-700 italic mb-6 font-futura">
                 "Leadership is not about being in charge. It's about taking care of those in your charge."
               </blockquote>
-              <p className="text-gray-600 leading-relaxed mb-6" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+              <p className="text-gray-600 leading-relaxed mb-6 font-futura">
                 This principle, learned through military service and refined in corporate environments, drives how I approach every challenge. Whether leading a team through complex transformations or solving technical problems, I focus on empowering others and delivering results that matter.
               </p>
               <div className="flex justify-center">
                 <div className="text-center">
-                  <p className="text-sm text-gray-500 mb-1" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                  <p className="text-sm text-gray-500 mb-1 font-futura">
                     Based in Columbus, Ohio
                   </p>
-                  <p className="text-sm text-gray-500" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                  <p className="text-sm text-gray-500 font-futura">
                     Ready for your next challenge
                   </p>
                 </div>
