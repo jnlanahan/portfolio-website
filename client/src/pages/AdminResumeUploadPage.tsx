@@ -150,7 +150,7 @@ export default function AdminResumeUploadPage() {
                     Supports PDF files only
                   </p>
                 </div>
-                <Label htmlFor="resume-file" className="cursor-pointer">
+                <div>
                   <Input
                     id="resume-file"
                     type="file"
@@ -163,10 +163,14 @@ export default function AdminResumeUploadPage() {
                       }
                     }}
                   />
-                  <Button variant="outline" type="button">
+                  <Button 
+                    variant="outline" 
+                    type="button"
+                    onClick={() => document.getElementById('resume-file')?.click()}
+                  >
                     Browse Files
                   </Button>
-                </Label>
+                </div>
               </div>
             </div>
 
