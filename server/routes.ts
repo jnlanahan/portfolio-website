@@ -112,31 +112,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
   // PUBLIC ROUTES - These must be registered before any catch-all routes
-  // Alternative resume download endpoint for direct access
+  // Direct resume download endpoint - now password protected
   app.get('/resume.pdf', async (req, res) => {
-    try {
-      const resume = await storage.getResume();
-      
-      if (!resume) {
-        return res.status(404).json({ error: 'No resume available' });
-      }
-      
-      const resumePath = path.join(process.cwd(), 'uploads', 'resumes', resume.filename);
-      
-      // Check if file exists
-      try {
-        await fs.access(resumePath);
-      } catch (err) {
-        return res.status(404).json({ error: 'Resume file not found' });
-      }
-      
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', `attachment; filename="${resume.originalName || 'resume.pdf'}"`);
-      res.sendFile(resumePath);
-    } catch (error) {
-      console.error('Error downloading resume:', error);
-      res.status(500).json({ error: 'Failed to download resume' });
-    }
+    // Return information about password protection instead of the file
+    res.status(401).json({ 
+      error: 'Password protected download',
+      message: 'This download is password protected. Please contact Nick for more details.'
+    });
   });
 
   // Public resume status endpoint (for testing)
@@ -234,9 +216,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Public resume download endpoint
-  app.get('/api/resume/download', async (req, res) => {
+  // Password-protected resume download endpoint
+  app.post('/api/resume/download', async (req, res) => {
     try {
+      const { password } = req.body;
+      
+      // Check password
+      if (!password || password !== 'wolfpack') {
+        return res.status(401).json({ error: 'Invalid password' });
+      }
+      
       const resume = await storage.getResume();
       
       if (!resume) {
@@ -253,7 +242,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', `attachment; filename="${resume.originalName || 'resume.pdf'}"`);
+      res.setHeader('Content-Disposition', `attachment; filename="${resume.originalName || 'Nick Lanahan Resume.pdf'}"`);
       res.sendFile(resumePath);
     } catch (error) {
       console.error('Error downloading resume:', error);

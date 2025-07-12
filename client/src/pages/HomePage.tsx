@@ -6,6 +6,7 @@ import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { Mail, Download, Linkedin } from "lucide-react";
 import { SiGmail } from "react-icons/si";
 import { useState, useEffect } from "react";
+import { PasswordDialog } from "@/components/PasswordDialog";
 
 // Import logos
 import missouriLogo from '@assets/MissouriS&T Logo_1752203136367.png';
@@ -134,12 +135,68 @@ const HomeTile = ({
 const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string; delay: number }) => {
   const isExternal = linkTo.startsWith('http') || linkTo.startsWith('mailto:');
   const isDownload = linkTo.includes('resume.pdf') || linkTo.includes('download');
+  const [showPasswordDialog, setShowPasswordDialog] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
     trackEvent('homepage_action_click', { 
       action: title, 
       destination: linkTo 
     });
+    
+    // If it's a resume download, show password dialog instead of direct download
+    if (isDownload) {
+      e.preventDefault();
+      setShowPasswordDialog(true);
+    }
+  };
+
+  const handlePasswordSubmit = async (password: string) => {
+    setIsLoading(true);
+    setError("");
+    
+    try {
+      // Call the password-protected download endpoint
+      const response = await fetch('/api/resume/download', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password }),
+      });
+      
+      if (response.ok) {
+        // Create a blob from the response and trigger download
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Nick Lanahan Resume.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+        
+        setShowPasswordDialog(false);
+        trackEvent('resume_download_success', { method: 'password_protected' });
+      } else {
+        const errorData = await response.json();
+        setError(errorData.error || 'Invalid password');
+        trackEvent('resume_download_failed', { method: 'password_protected', error: 'invalid_password' });
+      }
+    } catch (err) {
+      setError('Download failed. Please try again.');
+      trackEvent('resume_download_failed', { method: 'password_protected', error: 'network_error' });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePasswordDialogClose = () => {
+    setShowPasswordDialog(false);
+    setError("");
+    setIsLoading(false);
   };
 
   // Get icon component based on title
@@ -177,30 +234,43 @@ const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string;
   );
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
-    >
-      {isExternal || isDownload ? (
-        <a 
-          href={linkTo}
-          target={isDownload ? "_self" : "_blank"}
-          rel="noopener noreferrer"
-          onClick={handleClick}
-          download={isDownload ? true : undefined}
-        >
-          {buttonContent}
-        </a>
-      ) : (
-        <Link 
-          href={linkTo}
-          onClick={handleClick}
-        >
-          {buttonContent}
-        </Link>
-      )}
-    </motion.div>
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay }}
+      >
+        {isExternal ? (
+          <a 
+            href={linkTo}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={handleClick}
+          >
+            {buttonContent}
+          </a>
+        ) : isDownload ? (
+          <div onClick={handleClick}>
+            {buttonContent}
+          </div>
+        ) : (
+          <Link 
+            href={linkTo}
+            onClick={handleClick}
+          >
+            {buttonContent}
+          </Link>
+        )}
+      </motion.div>
+      
+      <PasswordDialog
+        isOpen={showPasswordDialog}
+        onClose={handlePasswordDialogClose}
+        onPasswordSubmit={handlePasswordSubmit}
+        isLoading={isLoading}
+        error={error}
+      />
+    </>
   );
 };
 

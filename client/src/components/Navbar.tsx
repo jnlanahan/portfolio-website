@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { trackEvent } from "@/lib/analytics";
+import { PasswordDialog } from "@/components/PasswordDialog";
 
 // Define navigation item type
 export interface NavItem {
@@ -15,6 +16,9 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showPasswordDialog, setShowPasswordDialog] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   // Handle navbar transparency on scroll
   useEffect(() => {
@@ -28,6 +32,57 @@ const Navbar = () => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleResumeClick = (e: React.MouseEvent, location: string) => {
+    e.preventDefault();
+    setShowPasswordDialog(true);
+    trackEvent('resume_download_click', { location });
+  };
+
+  const handlePasswordSubmit = async (password: string) => {
+    setIsLoading(true);
+    setError("");
+    
+    try {
+      const response = await fetch('/api/resume/download', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password }),
+      });
+      
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Nick Lanahan Resume.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+        
+        setShowPasswordDialog(false);
+        trackEvent('resume_download_success', { method: 'password_protected' });
+      } else {
+        const errorData = await response.json();
+        setError(errorData.error || 'Invalid password');
+        trackEvent('resume_download_failed', { method: 'password_protected', error: 'invalid_password' });
+      }
+    } catch (err) {
+      setError('Download failed. Please try again.');
+      trackEvent('resume_download_failed', { method: 'password_protected', error: 'network_error' });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePasswordDialogClose = () => {
+    setShowPasswordDialog(false);
+    setError("");
+    setIsLoading(false);
   };
 
   const isActive = (path: string) => {
@@ -101,16 +156,13 @@ const Navbar = () => {
               </Link>
             ))}
             <div className="flex space-x-3 ml-4">
-              <a 
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackEvent('resume_download_click', { location: 'navbar' })}
+              <button 
+                onClick={(e) => handleResumeClick(e, 'navbar')}
                 className="px-5 py-2 bg-secondary text-background rounded-md font-medium hover:bg-secondary/90 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
               >
                 <i className="ri-download-line mr-1.5"></i>
                 Resume
-              </a>
+              </button>
               <Link 
                 href="/contact"
                 onClick={() => trackEvent('contact_button_click', { location: 'navbar' })}
@@ -179,15 +231,12 @@ const Navbar = () => {
             </Link>
           ))}
           <div className="flex flex-col space-y-3 mt-4">
-            <a 
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="py-2 px-4 bg-secondary text-background rounded-md font-medium hover:bg-secondary/90 transition-colors text-center flex items-center justify-center"
-              onClick={() => {
-                trackEvent('resume_download_click', { location: 'mobile_menu' });
+            <button 
+              onClick={(e) => {
+                handleResumeClick(e, 'mobile_menu');
                 setIsMenuOpen(false);
               }}
+              className="py-2 px-4 bg-secondary text-background rounded-md font-medium hover:bg-secondary/90 transition-colors text-center flex items-center justify-center"
               style={{ 
                 transitionDelay: `${navItems.length * 50}ms`, 
                 opacity: isMenuOpen ? 1 : 0,
@@ -197,7 +246,7 @@ const Navbar = () => {
             >
               <i className="ri-download-line mr-2"></i>
               Resume
-            </a>
+            </button>
             <Link 
               href="/contact"
               className="py-2 px-4 bg-secondary text-background rounded-md font-medium hover:bg-secondary/90 transition-colors text-center flex items-center justify-center"
@@ -237,6 +286,14 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      
+      <PasswordDialog
+        isOpen={showPasswordDialog}
+        onClose={handlePasswordDialogClose}
+        onPasswordSubmit={handlePasswordSubmit}
+        isLoading={isLoading}
+        error={error}
+      />
     </nav>
   );
 };
