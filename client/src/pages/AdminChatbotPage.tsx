@@ -68,13 +68,13 @@ export default function AdminChatbotPage() {
   // Fetch training progress
   const { data: progress } = useQuery<TrainingProgress>({
     queryKey: ['/api/admin/chatbot/progress'],
-    queryFn: () => apiRequest({ url: '/api/admin/chatbot/progress' }),
+    queryFn: () => apiRequest('/api/admin/chatbot/progress'),
   });
 
   // Fetch training documents
   const { data: documents = [], isLoading: documentsLoading, error: documentsError } = useQuery<TrainingDocument[]>({
     queryKey: ['/api/admin/chatbot/documents'],
-    queryFn: () => apiRequest({ url: '/api/admin/chatbot/documents' }),
+    queryFn: () => apiRequest('/api/admin/chatbot/documents'),
   });
 
   // Debug logging
@@ -87,11 +87,11 @@ export default function AdminChatbotPage() {
   // Training conversation mutation
   const trainMutation = useMutation({
     mutationFn: async (message: string) => {
-      const response = await apiRequest({
-        url: '/api/admin/chatbot/train',
-        method: 'POST',
-        data: { message, sessionId }
-      });
+      const response = await apiRequest(
+        '/api/admin/chatbot/train',
+        'POST',
+        { message, sessionId }
+      );
       return response;
     },
     onSuccess: (response) => {
