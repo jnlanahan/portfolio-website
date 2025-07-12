@@ -1295,6 +1295,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const response = await processRecruiterQuestion(message, sessionId);
+      
+      // Automatically evaluate the conversation if it was saved
+      if (response.conversationId) {
+        // Run evaluation in the background without blocking the response
+        setTimeout(async () => {
+          try {
+            await evaluateChatbotResponse(response.conversationId);
+            console.log(`Evaluation completed for conversation ${response.conversationId}`);
+          } catch (error) {
+            console.error(`Error evaluating conversation ${response.conversationId}:`, error);
+          }
+        }, 1000); // Small delay to ensure conversation is saved
+      }
+      
       res.json(response);
     } catch (error) {
       console.error("Error processing chatbot message:", error);
@@ -1312,6 +1326,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const response = await processTrainingConversation(message, sessionId);
+      
+      // Automatically evaluate training conversations if they were saved
+      if (response.conversationId) {
+        // Run evaluation in the background without blocking the response
+        setTimeout(async () => {
+          try {
+            await evaluateChatbotResponse(response.conversationId);
+            console.log(`Training evaluation completed for conversation ${response.conversationId}`);
+          } catch (error) {
+            console.error(`Error evaluating training conversation ${response.conversationId}:`, error);
+          }
+        }, 1000); // Small delay to ensure conversation is saved
+      }
+      
       res.json(response);
     } catch (error) {
       console.error("Error processing training conversation:", error);
@@ -1392,6 +1420,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error evaluating conversation:", error);
       res.status(500).json({ error: "Failed to evaluate conversation" });
+    }
+  });
+
+  // Batch evaluate all unevaluated conversations
+  app.post("/api/admin/chatbot/evaluations/batch", requireAdmin, async (req, res) => {
+    try {
+      const conversations = await storage.getAllChatbotConversations();
+      const evaluations = await storage.getChatbotEvaluations();
+      
+      // Find conversations that haven't been evaluated yet
+      const evaluatedConversationIds = new Set(evaluations.map(e => e.conversationId));
+      const unevaluatedConversations = conversations.filter(conv => !evaluatedConversationIds.has(conv.id));
+      
+      console.log(`Starting batch evaluation for ${unevaluatedConversations.length} conversations`);
+      
+      // Use the existing batch evaluation function
+      const conversationIds = unevaluatedConversations.map(conv => conv.id);
+      const results = await batchEvaluateConversations(conversationIds);
+      
+      res.json({
+        totalConversations: conversations.length,
+        evaluatedBefore: evaluatedConversationIds.size,
+        newlyEvaluated: results.length,
+        results
+      });
+    } catch (error) {
+      console.error("Error in batch evaluation:", error);
+      res.status(500).json({ error: "Failed to perform batch evaluation" });
     }
   });
 
