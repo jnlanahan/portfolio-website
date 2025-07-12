@@ -50,10 +50,7 @@ export default function AdminBlogSeriesPage() {
   // Create series mutation
   const createSeriesMutation = useMutation({
     mutationFn: (data: BlogSeriesFormData) => 
-      apiRequest('/api/admin/blog/series', {
-        method: 'POST',
-        body: JSON.stringify(data),
-      }),
+      apiRequest('/api/admin/blog/series', 'POST', data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/blog/series'] });
       setIsCreateDialogOpen(false);
@@ -75,10 +72,7 @@ export default function AdminBlogSeriesPage() {
   // Update series mutation
   const updateSeriesMutation = useMutation({
     mutationFn: ({ id, data }: { id: number; data: Partial<BlogSeriesFormData> }) =>
-      apiRequest(`/api/admin/blog/series/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify(data),
-      }),
+      apiRequest(`/api/admin/blog/series/${id}`, 'PUT', data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/blog/series'] });
       setEditingSeries(null);
@@ -100,9 +94,7 @@ export default function AdminBlogSeriesPage() {
   // Delete series mutation
   const deleteSeriesMutation = useMutation({
     mutationFn: (id: number) =>
-      apiRequest(`/api/admin/blog/series/${id}`, {
-        method: 'DELETE',
-      }),
+      apiRequest(`/api/admin/blog/series/${id}`, 'DELETE'),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/blog/series'] });
       toast({

@@ -78,7 +78,7 @@ export default function AdminNewBlogPage() {
     clearErrors,
     reset,
   } = useForm<BlogFormData>({
-    resolver: zodResolver(blogSchema),
+    resolver: zodResolver(blogSchema), // Always use the basic schema
     defaultValues: {
       featured: false,
       published: false, // Default to draft mode
