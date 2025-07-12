@@ -201,8 +201,12 @@ export default function FloatingChatbot() {
                             <Button
                               size="sm"
                               variant="ghost"
-                              onClick={() => handleFeedback(message.id, 'positive')}
-                              className={`h-6 w-6 p-0 ${message.feedback === 'positive' ? 'bg-green-100 text-green-700' : 'hover:bg-green-50'}`}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                handleFeedback(message.id, 'positive');
+                              }}
+                              className={`h-6 w-6 p-0 ${message.feedback === 'positive' ? 'bg-green-100 text-green-700' : 'hover:bg-green-50 text-gray-500'}`}
                               disabled={message.feedback !== null}
                             >
                               <ThumbsUp className="h-3 w-3" />
@@ -210,8 +214,12 @@ export default function FloatingChatbot() {
                             <Button
                               size="sm"
                               variant="ghost"
-                              onClick={() => handleFeedback(message.id, 'negative')}
-                              className={`h-6 w-6 p-0 ${message.feedback === 'negative' ? 'bg-red-100 text-red-700' : 'hover:bg-red-50'}`}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                handleFeedback(message.id, 'negative');
+                              }}
+                              className={`h-6 w-6 p-0 ${message.feedback === 'negative' ? 'bg-red-100 text-red-700' : 'hover:bg-red-50 text-gray-500'}`}
                               disabled={message.feedback !== null}
                             >
                               <ThumbsDown className="h-3 w-3" />

@@ -1324,6 +1324,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get chatbot evaluations with conversation details
+  app.get("/api/admin/chatbot/evaluations/detailed", requireAdmin, async (req, res) => {
+    try {
+      const evaluations = await storage.getChatbotEvaluations();
+      const conversations = await storage.getAllChatbotConversations();
+      
+      // Create a map of conversation details
+      const conversationMap = new Map();
+      conversations.forEach(conv => {
+        conversationMap.set(conv.id, {
+          userQuestion: conv.userQuestion,
+          aiResponse: conv.botResponse,
+          sessionId: conv.sessionId,
+          createdAt: conv.createdAt
+        });
+      });
+      
+      // Combine evaluations with conversation details
+      const detailedEvaluations = evaluations.map(evaluation => ({
+        ...evaluation,
+        conversation: conversationMap.get(evaluation.conversationId) || null
+      }));
+      
+      res.json(detailedEvaluations);
+    } catch (error) {
+      console.error("Error fetching detailed chatbot evaluations:", error);
+      res.status(500).json({ error: "Failed to fetch detailed chatbot evaluations" });
+    }
+  });
+
   app.get("/api/admin/chatbot/evaluations/stats", requireAdmin, async (req, res) => {
     try {
       const stats = await getEvaluationStats();

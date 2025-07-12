@@ -21,6 +21,12 @@ interface ChatbotEvaluation {
   strengths: string[];
   improvements: string[];
   evaluatedAt: string;
+  conversation?: {
+    userQuestion: string;
+    aiResponse: string;
+    sessionId: string;
+    createdAt: string;
+  } | null;
 }
 
 interface UserFeedback {
@@ -60,8 +66,8 @@ export default function AdminChatbotEvaluationPage() {
   const queryClient = useQueryClient();
 
   const { data: evaluations, isLoading: evaluationsLoading } = useQuery({
-    queryKey: ['/api/admin/chatbot/evaluations'],
-    queryFn: () => apiRequest('/api/admin/chatbot/evaluations', 'GET') as Promise<ChatbotEvaluation[]>
+    queryKey: ['/api/admin/chatbot/evaluations/detailed'],
+    queryFn: () => apiRequest('/api/admin/chatbot/evaluations/detailed', 'GET') as Promise<ChatbotEvaluation[]>
   });
 
   const { data: feedback, isLoading: feedbackLoading } = useQuery({
@@ -83,7 +89,7 @@ export default function AdminChatbotEvaluationPage() {
     mutationFn: (conversationId: number) => 
       apiRequest(`/api/admin/chatbot/evaluations/evaluate/${conversationId}`, 'POST'),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/evaluations'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/evaluations/detailed'] });
       queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/evaluations/stats'] });
     }
   });
@@ -92,7 +98,7 @@ export default function AdminChatbotEvaluationPage() {
     mutationFn: (conversationIds: number[]) => 
       apiRequest('/api/admin/chatbot/evaluations/batch', 'POST', { conversationIds }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/evaluations'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/evaluations/detailed'] });
       queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/evaluations/stats'] });
     }
   });
@@ -326,6 +332,30 @@ export default function AdminChatbotEvaluationPage() {
                       </div>
                     </div>
 
+                    {/* Conversation Details */}
+                    {evaluation.conversation && (
+                      <div className="mb-6 p-4 bg-gray-700 rounded-lg">
+                        <h4 className="font-medium text-blue-400 mb-3">Conversation Details</h4>
+                        <div className="space-y-4">
+                          <div>
+                            <p className="text-xs text-gray-400 mb-1">User Question:</p>
+                            <p className="text-sm text-gray-200 bg-gray-800 p-3 rounded italic">
+                              "{evaluation.conversation.userQuestion}"
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-gray-400 mb-1">AI Response:</p>
+                            <p className="text-sm text-gray-200 bg-gray-800 p-3 rounded">
+                              {evaluation.conversation.aiResponse}
+                            </p>
+                          </div>
+                          <div className="text-xs text-gray-400">
+                            Session: {evaluation.conversation.sessionId} • {formatDistanceToNow(new Date(evaluation.conversation.createdAt))} ago
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
                     <div className="space-y-3">
                       <div>
                         <h4 className="font-medium text-green-400 mb-2">Strengths</h4>
@@ -352,7 +382,7 @@ export default function AdminChatbotEvaluationPage() {
                       </div>
 
                       <div>
-                        <h4 className="font-medium text-blue-400 mb-2">Feedback</h4>
+                        <h4 className="font-medium text-blue-400 mb-2">AI Feedback</h4>
                         <p className="text-sm text-gray-300">{evaluation.feedback}</p>
                       </div>
                     </div>
