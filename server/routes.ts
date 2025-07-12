@@ -111,6 +111,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Serve uploaded files
   app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
+  // PUBLIC ROUTES - These must be registered before any catch-all routes
+  // Alternative resume download endpoint for direct access
+  app.get('/resume.pdf', async (req, res) => {
+    try {
+      const resume = await storage.getResume();
+      
+      if (!resume) {
+        return res.status(404).json({ error: 'No resume available' });
+      }
+      
+      const resumePath = path.join(process.cwd(), 'uploads', 'resumes', resume.filename);
+      
+      // Check if file exists
+      try {
+        await fs.access(resumePath);
+      } catch (err) {
+        return res.status(404).json({ error: 'Resume file not found' });
+      }
+      
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="${resume.originalName || 'resume.pdf'}"`);
+      res.sendFile(resumePath);
+    } catch (error) {
+      console.error('Error downloading resume:', error);
+      res.status(500).json({ error: 'Failed to download resume' });
+    }
+  });
+
   // Middleware to check admin authentication
   const requireAdmin = (req: any, res: any, next: any) => {
     if (!req.session.isAdmin) {
@@ -260,6 +288,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Failed to fetch project" });
     }
   });
+
+
 
 
 
