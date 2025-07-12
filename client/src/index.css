@@ -338,3 +338,19 @@ body {
 .font-futura {
   font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
+
+/* Sticky section styles for About page */
+.sticky-section {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.sticky-section:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+.sticky-section:nth-child(odd) {
+  background-color: #ffffff;
+}
