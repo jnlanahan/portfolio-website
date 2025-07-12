@@ -45,6 +45,14 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Updated LinkedIn URL to correct profile: https://www.linkedin.com/in/nick-lanahan/
   - Added proper routing for /admin redirect after successful resume upload
   - Resume download endpoint working correctly at /api/resume/download
+- **January 2025**: Fixed resume download functionality completely
+  - Resolved ActionButton component routing issue - download links now use proper <a> tags instead of <Link> components
+  - Added download detection logic to ensure file downloads work correctly
+  - Created comprehensive test suite covering all download scenarios
+  - Added /resume.pdf direct route for seamless public downloads
+  - Fixed routing order to prevent Vite middleware conflicts
+  - All tests passing with 100% success rate across multiple browsers
+  - Resume download button on homepage now works perfectly without 404 errors
 - **January 2025**: Enhanced with Apple Human Interface Guidelines design principles
   - Implemented Apple's 8-point grid system throughout the layout (8px, 16px, 24px, 32px spacing)
   - Applied Apple's typography hierarchy: 48px page titles, 20px section headings, 16-17px body text

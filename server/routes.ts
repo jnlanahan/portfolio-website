@@ -139,6 +139,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Public resume status endpoint (for testing)
+  app.get('/api/resume/status', async (req, res) => {
+    try {
+      const resume = await storage.getResume();
+      res.json({ 
+        hasResume: !!resume,
+        resume: resume || null
+      });
+    } catch (error) {
+      console.error('Error checking resume status:', error);
+      res.status(500).json({ error: 'Failed to check resume status' });
+    }
+  });
+
   // Middleware to check admin authentication
   const requireAdmin = (req: any, res: any, next: any) => {
     if (!req.session.isAdmin) {

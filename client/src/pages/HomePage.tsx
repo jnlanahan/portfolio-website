@@ -133,6 +133,7 @@ const HomeTile = ({
 
 const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string; delay: number }) => {
   const isExternal = linkTo.startsWith('http') || linkTo.startsWith('mailto:');
+  const isDownload = linkTo.includes('resume.pdf') || linkTo.includes('download');
   
   const handleClick = () => {
     trackEvent('homepage_action_click', { 
@@ -181,12 +182,13 @@ const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string;
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
     >
-      {isExternal ? (
+      {isExternal || isDownload ? (
         <a 
           href={linkTo}
-          target="_blank"
+          target={isDownload ? "_self" : "_blank"}
           rel="noopener noreferrer"
           onClick={handleClick}
+          download={isDownload ? true : undefined}
         >
           {buttonContent}
         </a>
