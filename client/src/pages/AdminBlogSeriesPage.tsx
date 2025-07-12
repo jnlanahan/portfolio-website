@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useLocation } from 'wouter';
 import { apiRequest } from '@/lib/queryClient';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,7 +10,7 @@ import { Switch } from '@/components/ui/switch';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { AlertCircle, Plus, Edit, Trash2, BookOpen, Users } from 'lucide-react';
+import { AlertCircle, Plus, Edit, Trash2, BookOpen, Users, ArrowLeft } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
@@ -28,9 +29,12 @@ interface BlogSeriesFormData {
 export default function AdminBlogSeriesPage() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [, setLocation] = useLocation();
   
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [editingSeries, setEditingSeries] = useState<BlogSeries | null>(null);
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [seriesToDelete, setSeriesToDelete] = useState<BlogSeries | null>(null);
   const [formData, setFormData] = useState<BlogSeriesFormData>({
     title: '',
     slug: '',
@@ -147,9 +151,16 @@ export default function AdminBlogSeriesPage() {
     setIsCreateDialogOpen(true);
   };
 
-  const handleDelete = (id: number) => {
-    if (window.confirm('Are you sure you want to delete this blog series?')) {
-      deleteSeriesMutation.mutate(id);
+  const handleDelete = (series: BlogSeries) => {
+    setSeriesToDelete(series);
+    setDeleteConfirmOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (seriesToDelete) {
+      deleteSeriesMutation.mutate(seriesToDelete.id);
+      setDeleteConfirmOpen(false);
+      setSeriesToDelete(null);
     }
   };
 
@@ -170,8 +181,41 @@ export default function AdminBlogSeriesPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center">Loading blog series...</div>
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
+        {/* Back Navigation */}
+        <div className="mb-6">
+          <Button 
+            variant="ghost" 
+            onClick={() => setLocation("/admin")}
+            className="gap-2 text-gray-600 hover:text-gray-900 -ml-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Admin Dashboard
+          </Button>
+        </div>
+
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Blog Series Management</h1>
+            <p className="text-gray-600 mt-2">Organize your blog posts into series for better navigation</p>
+          </div>
+        </div>
+
+        {/* Loading skeleton */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {[...Array(6)].map((_, i) => (
+            <Card key={i} className="animate-pulse">
+              <CardHeader className="pb-4">
+                <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+              </CardHeader>
+              <CardContent>
+                <div className="h-4 bg-gray-200 rounded w-full mb-4"></div>
+                <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     );
   }
@@ -191,6 +235,18 @@ export default function AdminBlogSeriesPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
+      {/* Back Navigation */}
+      <div className="mb-6">
+        <Button 
+          variant="ghost" 
+          onClick={() => setLocation("/admin")}
+          className="gap-2 text-gray-600 hover:text-gray-900 -ml-2"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to Admin Dashboard
+        </Button>
+      </div>
+
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Blog Series Management</h1>
@@ -222,29 +278,31 @@ export default function AdminBlogSeriesPage() {
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {series.map((series: BlogSeries) => (
-            <Card key={series.id} className="relative">
+            <Card key={series.id} className="relative hover:shadow-lg transition-shadow duration-200">
               <CardHeader className="pb-4">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <CardTitle className="text-lg font-semibold text-gray-900 line-clamp-2">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1 min-w-0">
+                    <CardTitle className="text-lg font-semibold text-gray-900 line-clamp-2 leading-tight">
                       {series.title}
                     </CardTitle>
-                    <p className="text-sm text-gray-600 mt-1">/{series.slug}</p>
+                    <p className="text-sm text-gray-600 mt-1 truncate">/{series.slug}</p>
                   </div>
-                  <div className="flex gap-2 ml-4">
+                  <div className="flex gap-1 flex-shrink-0">
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => handleEdit(series)}
-                      className="h-8 w-8 p-0"
+                      className="h-8 w-8 p-0 hover:bg-gray-100"
+                      title="Edit series"
                     >
                       <Edit className="h-4 w-4" />
                     </Button>
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => handleDelete(series.id)}
+                      onClick={() => handleDelete(series)}
                       className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
+                      title="Delete series"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -394,6 +452,43 @@ export default function AdminBlogSeriesPage() {
               </Button>
             </DialogFooter>
           </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Blog Series</DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <p className="text-gray-700">
+              Are you sure you want to delete "{seriesToDelete?.title}"? This action cannot be undone.
+            </p>
+            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-sm text-red-800">
+                <strong>Warning:</strong> This will permanently delete the series and any associated data.
+              </p>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setDeleteConfirmOpen(false);
+                setSeriesToDelete(null);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={confirmDelete}
+              disabled={deleteSeriesMutation.isPending}
+            >
+              {deleteSeriesMutation.isPending ? 'Deleting...' : 'Delete Series'}
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
