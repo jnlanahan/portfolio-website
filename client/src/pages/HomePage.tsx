@@ -429,7 +429,7 @@ const HomePage = () => {
           />
           <ActionButton
             title="Connect with me on LinkedIn"
-            linkTo="https://linkedin.com/in/nicklanahan"
+            linkTo="https://www.linkedin.com/in/nick-lanahan/"
             delay={1.1}
           />
         </div>
