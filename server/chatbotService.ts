@@ -23,6 +23,7 @@ export interface ChatbotResponse {
   response: string;
   isOnTopic: boolean;
   confidence: number;
+  conversationId?: number;
 }
 
 export interface TrainingQuestion {
@@ -184,7 +185,7 @@ Provide a helpful, direct answer to the user's question about Nick. If you don't
     const botResponse = response.choices[0].message.content || "I'm sorry, I couldn't process your question. Please try again.";
     
     // Save conversation to database
-    await storage.saveChatbotConversation({
+    const conversation = await storage.saveChatbotConversation({
       sessionId,
       userQuestion: question,
       botResponse: botResponse
@@ -193,7 +194,8 @@ Provide a helpful, direct answer to the user's question about Nick. If you don't
     return {
       response: botResponse,
       isOnTopic: true,
-      confidence: isOnTopicResult.confidence
+      confidence: isOnTopicResult.confidence,
+      conversationId: conversation.id
     };
   } catch (error) {
     console.error('Error processing recruiter question:', error);
@@ -264,7 +266,7 @@ Now respond with acknowledgment + ONE question only.`;
     const botResponse = response.choices[0].message.content || "I'm sorry, I couldn't process your message. Please try again.";
     
     // Save training conversation to database
-    await storage.saveChatbotConversation({
+    const conversation = await storage.saveChatbotConversation({
       sessionId,
       userQuestion: message,
       botResponse: botResponse

@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 
 interface Message {
@@ -13,6 +13,8 @@ interface Message {
   timestamp: Date;
   isOnTopic?: boolean;
   confidence?: number;
+  conversationId?: number;
+  feedback?: 'positive' | 'negative' | null;
 }
 
 export default function FloatingChatbot() {
@@ -71,7 +73,8 @@ export default function FloatingChatbot() {
         sender: 'bot',
         timestamp: new Date(),
         isOnTopic: response.isOnTopic,
-        confidence: response.confidence
+        confidence: response.confidence,
+        conversationId: response.conversationId
       };
 
       setMessages(prev => [...prev, botMessage]);
@@ -100,6 +103,34 @@ export default function FloatingChatbot() {
 
   const formatTime = (date: Date) => {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
+  const handleFeedback = async (messageId: string, feedback: 'positive' | 'negative') => {
+    try {
+      // Find the message to get conversation ID
+      const message = messages.find(m => m.id === messageId);
+      if (!message || !message.conversationId) {
+        console.error('Message or conversation ID not found');
+        return;
+      }
+
+      await apiRequest('/api/chatbot/feedback', 'POST', {
+        conversationId: message.conversationId,
+        sessionId: sessionId,
+        rating: feedback === 'positive' ? 'thumbs_up' : 'thumbs_down'
+      });
+
+      // Update the message with feedback
+      setMessages(prev => 
+        prev.map(m => 
+          m.id === messageId 
+            ? { ...m, feedback } 
+            : m
+        )
+      );
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+    }
   };
 
   return (
@@ -159,11 +190,35 @@ export default function FloatingChatbot() {
                       <span className={`text-xs ${message.sender === 'user' ? 'text-blue-100' : 'text-gray-500'}`}>
                         {formatTime(message.timestamp)}
                       </span>
-                      {message.sender === 'bot' && message.isOnTopic === false && (
-                        <Badge variant="secondary" className="text-xs">
-                          Off-topic
-                        </Badge>
-                      )}
+                      <div className="flex items-center gap-2">
+                        {message.sender === 'bot' && message.isOnTopic === false && (
+                          <Badge variant="secondary" className="text-xs">
+                            Off-topic
+                          </Badge>
+                        )}
+                        {message.sender === 'bot' && message.id !== 'welcome' && (
+                          <div className="flex items-center gap-1">
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => handleFeedback(message.id, 'positive')}
+                              className={`h-6 w-6 p-0 ${message.feedback === 'positive' ? 'bg-green-100 text-green-700' : 'hover:bg-green-50'}`}
+                              disabled={message.feedback !== null}
+                            >
+                              <ThumbsUp className="h-3 w-3" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => handleFeedback(message.id, 'negative')}
+                              className={`h-6 w-6 p-0 ${message.feedback === 'negative' ? 'bg-red-100 text-red-700' : 'hover:bg-red-50'}`}
+                              disabled={message.feedback !== null}
+                            >
+                              <ThumbsDown className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>

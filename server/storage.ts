@@ -24,7 +24,11 @@ import {
   type ChatbotConversation,
   type InsertChatbotConversation,
   type ChatbotTrainingProgress,
-  type InsertChatbotTrainingProgress
+  type InsertChatbotTrainingProgress,
+  type ChatbotEvaluation,
+  type InsertChatbotEvaluation,
+  type UserFeedback,
+  type InsertUserFeedback
 } from "@shared/schema";
 import { getBlogPosts, getBlogPostById } from "../client/src/data/blog";
 import { getPortfolio } from "../client/src/data/portfolio";
@@ -104,6 +108,23 @@ export interface IStorage {
   
   getChatbotTrainingProgress(): Promise<ChatbotTrainingProgress | undefined>;
   updateChatbotTrainingProgress(progress: Partial<InsertChatbotTrainingProgress>): Promise<ChatbotTrainingProgress>;
+  
+  // Chatbot evaluation methods
+  getChatbotEvaluations(): Promise<ChatbotEvaluation[]>;
+  getChatbotEvaluationById(id: number): Promise<ChatbotEvaluation | undefined>;
+  getChatbotEvaluationsByConversationId(conversationId: number): Promise<ChatbotEvaluation[]>;
+  saveChatbotEvaluation(evaluation: InsertChatbotEvaluation): Promise<ChatbotEvaluation>;
+  
+  // User feedback methods
+  getUserFeedback(): Promise<UserFeedback[]>;
+  getUserFeedbackByConversationId(conversationId: number): Promise<UserFeedback[]>;
+  saveUserFeedback(feedback: InsertUserFeedback): Promise<UserFeedback>;
+  
+  // Helper methods for evaluation system
+  getChatbotConversation(id: number): Promise<ChatbotConversation | undefined>;
+  getChatbotDocuments(): Promise<ChatbotDocument[]>;
+  getChatbotTrainingSessions(): Promise<ChatbotTrainingSession[]>;
+  saveChatbotConversation(conversation: InsertChatbotConversation): Promise<ChatbotConversation>;
 }
 
 export class MemStorage implements IStorage {
@@ -1032,6 +1053,75 @@ export class DatabaseStorage implements IStorage {
     const { desc } = await import('drizzle-orm');
     
     return await db.select().from(chatbotDocuments).orderBy(desc(chatbotDocuments.uploadedAt));
+  }
+
+  // Chatbot evaluation methods
+  async getChatbotEvaluations(): Promise<ChatbotEvaluation[]> {
+    const { db } = await import('./db');
+    const { chatbotEvaluations } = await import('@shared/schema');
+    const { desc } = await import('drizzle-orm');
+    
+    return await db.select().from(chatbotEvaluations).orderBy(desc(chatbotEvaluations.evaluatedAt));
+  }
+
+  async getChatbotEvaluationById(id: number): Promise<ChatbotEvaluation | undefined> {
+    const { db } = await import('./db');
+    const { chatbotEvaluations } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [evaluation] = await db.select().from(chatbotEvaluations).where(eq(chatbotEvaluations.id, id));
+    return evaluation || undefined;
+  }
+
+  async getChatbotEvaluationsByConversationId(conversationId: number): Promise<ChatbotEvaluation[]> {
+    const { db } = await import('./db');
+    const { chatbotEvaluations } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    return await db.select().from(chatbotEvaluations).where(eq(chatbotEvaluations.conversationId, conversationId));
+  }
+
+  async saveChatbotEvaluation(insertEvaluation: InsertChatbotEvaluation): Promise<ChatbotEvaluation> {
+    const { db } = await import('./db');
+    const { chatbotEvaluations } = await import('@shared/schema');
+    
+    const [evaluation] = await db.insert(chatbotEvaluations).values(insertEvaluation).returning();
+    return evaluation;
+  }
+
+  // User feedback methods
+  async getUserFeedback(): Promise<UserFeedback[]> {
+    const { db } = await import('./db');
+    const { userFeedback } = await import('@shared/schema');
+    const { desc } = await import('drizzle-orm');
+    
+    return await db.select().from(userFeedback).orderBy(desc(userFeedback.createdAt));
+  }
+
+  async getUserFeedbackByConversationId(conversationId: number): Promise<UserFeedback[]> {
+    const { db } = await import('./db');
+    const { userFeedback } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    return await db.select().from(userFeedback).where(eq(userFeedback.conversationId, conversationId));
+  }
+
+  async saveUserFeedback(insertFeedback: InsertUserFeedback): Promise<UserFeedback> {
+    const { db } = await import('./db');
+    const { userFeedback } = await import('@shared/schema');
+    
+    const [feedback] = await db.insert(userFeedback).values(insertFeedback).returning();
+    return feedback;
+  }
+
+  // Helper method for evaluation system
+  async getChatbotConversation(id: number): Promise<ChatbotConversation | undefined> {
+    const { db } = await import('./db');
+    const { chatbotConversations } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [conversation] = await db.select().from(chatbotConversations).where(eq(chatbotConversations.id, id));
+    return conversation || undefined;
   }
 }
 

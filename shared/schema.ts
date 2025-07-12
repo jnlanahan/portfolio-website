@@ -267,3 +267,46 @@ export const insertChatbotTrainingProgressSchema = createInsertSchema(chatbotTra
 
 export type InsertChatbotTrainingProgress = z.infer<typeof insertChatbotTrainingProgressSchema>;
 export type ChatbotTrainingProgress = typeof chatbotTrainingProgress.$inferSelect;
+
+// Chatbot Evaluations model - AI-powered evaluation of chatbot responses
+export const chatbotEvaluations = pgTable("chatbot_evaluations", {
+  id: serial("id").primaryKey(),
+  conversationId: integer("conversation_id").references(() => chatbotConversations.id).notNull(),
+  accuracyScore: integer("accuracy_score").notNull(), // 1-10 scale
+  helpfulnessScore: integer("helpfulness_score").notNull(), // 1-10 scale
+  relevanceScore: integer("relevance_score").notNull(), // 1-10 scale
+  clarityScore: integer("clarity_score").notNull(), // 1-10 scale
+  overallScore: integer("overall_score").notNull(), // 1-10 scale
+  feedback: text("feedback").notNull(), // Detailed AI feedback
+  strengths: text("strengths").array().default([]).notNull(), // Array of strengths
+  improvements: text("improvements").array().default([]).notNull(), // Array of suggested improvements
+  evaluatedAt: timestamp("evaluated_at").defaultNow().notNull(),
+});
+
+export const insertChatbotEvaluationSchema = createInsertSchema(chatbotEvaluations).omit({
+  id: true,
+  evaluatedAt: true,
+});
+
+export type InsertChatbotEvaluation = z.infer<typeof insertChatbotEvaluationSchema>;
+export type ChatbotEvaluation = typeof chatbotEvaluations.$inferSelect;
+
+// User Feedback model - thumbs up/down from users
+export const userFeedback = pgTable("user_feedback", {
+  id: serial("id").primaryKey(),
+  conversationId: integer("conversation_id").references(() => chatbotConversations.id).notNull(),
+  sessionId: text("session_id").notNull(),
+  rating: text("rating").notNull(), // 'thumbs_up' or 'thumbs_down'
+  comment: text("comment"), // Optional user comment
+  userAgent: text("user_agent"), // Browser/device info
+  ipAddress: text("ip_address"), // For analytics (anonymized)
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertUserFeedbackSchema = createInsertSchema(userFeedback).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertUserFeedback = z.infer<typeof insertUserFeedbackSchema>;
+export type UserFeedback = typeof userFeedback.$inferSelect;

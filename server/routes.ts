@@ -16,7 +16,9 @@ import {
   insertTopFiveListItemSchema,
   insertChatbotDocumentSchema,
   insertChatbotTrainingSessionSchema,
-  insertChatbotConversationSchema
+  insertChatbotConversationSchema,
+  insertChatbotEvaluationSchema,
+  insertUserFeedbackSchema
 } from "@shared/schema";
 import { z } from "zod";
 import { ZodError } from "zod";
@@ -29,6 +31,7 @@ import {
   processTrainingConversation,
   extractTextFromFile 
 } from "./chatbotService";
+import { evaluateChatbotResponse, batchEvaluateConversations, getEvaluationStats } from "./chatbotEvaluator";
 import express from "express";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -1307,6 +1310,104 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error processing training conversation:", error);
       res.status(500).json({ error: "Failed to process training conversation" });
+    }
+  });
+
+  // Chatbot evaluation routes
+  app.get("/api/admin/chatbot/evaluations", requireAdmin, async (req, res) => {
+    try {
+      const evaluations = await storage.getChatbotEvaluations();
+      res.json(evaluations);
+    } catch (error) {
+      console.error("Error fetching evaluations:", error);
+      res.status(500).json({ error: "Failed to fetch evaluations" });
+    }
+  });
+
+  app.get("/api/admin/chatbot/evaluations/stats", requireAdmin, async (req, res) => {
+    try {
+      const stats = await getEvaluationStats();
+      res.json(stats);
+    } catch (error) {
+      console.error("Error fetching evaluation stats:", error);
+      res.status(500).json({ error: "Failed to fetch evaluation stats" });
+    }
+  });
+
+  app.get("/api/admin/chatbot/evaluations/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const evaluation = await storage.getChatbotEvaluationById(id);
+      if (!evaluation) {
+        return res.status(404).json({ error: "Evaluation not found" });
+      }
+      res.json(evaluation);
+    } catch (error) {
+      console.error("Error fetching evaluation:", error);
+      res.status(500).json({ error: "Failed to fetch evaluation" });
+    }
+  });
+
+  app.post("/api/admin/chatbot/evaluations/evaluate/:conversationId", requireAdmin, async (req, res) => {
+    try {
+      const conversationId = parseInt(req.params.conversationId);
+      const evaluation = await evaluateChatbotResponse(conversationId);
+      res.json(evaluation);
+    } catch (error) {
+      console.error("Error evaluating conversation:", error);
+      res.status(500).json({ error: "Failed to evaluate conversation" });
+    }
+  });
+
+  app.post("/api/admin/chatbot/evaluations/batch", requireAdmin, async (req, res) => {
+    try {
+      const { conversationIds } = req.body;
+      if (!Array.isArray(conversationIds)) {
+        return res.status(400).json({ error: "conversationIds must be an array" });
+      }
+      
+      const evaluations = await batchEvaluateConversations(conversationIds);
+      res.json(evaluations);
+    } catch (error) {
+      console.error("Error batch evaluating conversations:", error);
+      res.status(500).json({ error: "Failed to batch evaluate conversations" });
+    }
+  });
+
+  // User feedback routes
+  app.post("/api/chatbot/feedback", async (req, res) => {
+    try {
+      const validatedData = insertUserFeedbackSchema.parse(req.body);
+      const feedback = await storage.saveUserFeedback(validatedData);
+      res.json(feedback);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const validationError = fromZodError(error);
+        return res.status(400).json({ error: validationError.message });
+      }
+      console.error("Error saving user feedback:", error);
+      res.status(500).json({ error: "Failed to save feedback" });
+    }
+  });
+
+  app.get("/api/admin/chatbot/feedback", requireAdmin, async (req, res) => {
+    try {
+      const feedback = await storage.getUserFeedback();
+      res.json(feedback);
+    } catch (error) {
+      console.error("Error fetching user feedback:", error);
+      res.status(500).json({ error: "Failed to fetch feedback" });
+    }
+  });
+
+  app.get("/api/admin/chatbot/feedback/:conversationId", requireAdmin, async (req, res) => {
+    try {
+      const conversationId = parseInt(req.params.conversationId);
+      const feedback = await storage.getUserFeedbackByConversationId(conversationId);
+      res.json(feedback);
+    } catch (error) {
+      console.error("Error fetching feedback for conversation:", error);
+      res.status(500).json({ error: "Failed to fetch feedback" });
     }
   });
 
