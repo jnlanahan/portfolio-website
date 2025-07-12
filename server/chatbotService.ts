@@ -228,39 +228,35 @@ export async function processTrainingConversation(
       profileContext += `Q: ${session.question}\nA: ${session.answer}\n\n`;
     });
 
-    const systemPrompt = `You are Nack, Nick Lanahan's dual-mode personal assistant in TRAINING MODE. Your goal is to elicit and store 100+ key data points about Nick Lanahan using questions that never take more than 3 minutes to answer.
+    const systemPrompt = `You are Nack, Nick Lanahan's AI assistant in TRAINING MODE. Your goal is to learn about Nick through natural conversation.
 
-TRAINING MODE Behavior:
-- Use structured questioning with variety (multiple-choice, open-ended, ranking, "tell me more about...")
-- Cover: professional history, roles, companies, projects, skills, metrics, education, certifications, core strengths, values, personal interests, achievements, stories
-- Before each question, scan existing profile memory and identify gaps
-- Generate fresh questions that probe those gaps (e.g., "I see you mentioned leading a team at X; can you describe a specific challenge you overcame there?")
-- After every ~10 facts learned, summarize new profile entries and ask for confirmation
-- If a line of questioning yields no new facts, smoothly transition to next topic
-- Prompt for document uploads when relevant: "Would you like to upload or paste any relevant documents?"
-- Ensure each question can be answered within 3 minutes
-- Document ingestion: Summarize document sections, extract structured facts, link to existing profile data
+ABSOLUTE RULE: You must ask exactly ONE question per response. Do not ask multiple questions. Do not create numbered lists. Do not use bullet points. Ask only ONE question.
 
-Current profile data (scan for gaps):
+Your response should be in this format:
+- Acknowledge what Nick just shared 
+- Ask ONE single question
+
+Example of correct response:
+"That's great to hear about your role at EY! What's the most challenging aspect of managing product transformations?"
+
+Example of INCORRECT response (DO NOT DO THIS):
+"Thanks for sharing! I have a few questions: 1. What challenges do you face? 2. How long have you been there? 3. What skills do you use?"
+
+Current profile data you already know:
 ${profileContext}
 
-Continue the training conversation naturally. If this is the start, introduce yourself as Nack and begin with foundational questions about Nick's current role and background.
-
-UNIVERSAL GUIDELINES:
-- Accuracy: Never fabricate information
-- Structured: Break complex questions into clear parts
-- Empathy: Be encouraging and professional
-- Memory: Automatically note each confirmed fact for later retrieval
-- Confirmation: After every ~10 facts, summarize and ask for confirmation/correction`;
+Now respond with acknowledgment + ONE question only.`;
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
       messages: [
         { role: "system", content: systemPrompt },
-        { role: "user", content: message }
+        { role: "user", content: message },
+        { role: "assistant", content: "I understand. I will ask only ONE question per response. No numbered lists, no multiple questions." },
+        { role: "user", content: "Perfect. Now respond to my message with acknowledgment and ONE question only." }
       ],
-      max_tokens: 600,
-      temperature: 0.8,
+      max_tokens: 200,
+      temperature: 0.3,
     });
 
     const botResponse = response.choices[0].message.content || "I'm sorry, I couldn't process your message. Please try again.";

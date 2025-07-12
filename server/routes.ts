@@ -1065,14 +1065,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Process the training conversation using TRAINING MODE
       const response = await processTrainingConversation(message, sessionId);
       
-      // Update training progress - increment question count
-      const currentProgress = await storage.getChatbotTrainingProgress();
-      const newQuestionCount = (currentProgress?.totalQuestions || 0) + 1;
-      
-      await storage.updateChatbotTrainingProgress({
-        totalQuestions: newQuestionCount,
-        lastTrainingDate: new Date()
-      });
+      // Only increment progress when user provides substantial information (not just short responses)
+      // This helps track actual answered questions rather than every message exchange
+      if (message.length > 10 && !message.toLowerCase().includes('hello') && !message.toLowerCase().includes('hi')) {
+        const currentProgress = await storage.getChatbotTrainingProgress();
+        const newQuestionCount = (currentProgress?.totalQuestions || 0) + 1;
+        
+        await storage.updateChatbotTrainingProgress({
+          totalQuestions: newQuestionCount,
+          lastTrainingDate: new Date()
+        });
+      }
       
       res.json({
         response: response.response,
