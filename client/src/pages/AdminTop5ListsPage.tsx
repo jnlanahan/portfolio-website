@@ -38,7 +38,7 @@ export default function AdminTop5ListsPage() {
   // Fetch Top 5 lists
   const { data: lists, isLoading } = useQuery({
     queryKey: ["/api/admin/top5-lists"],
-    enabled: authCheck,
+    enabled: !!authCheck?.authenticated,
   });
 
   // Delete list mutation
