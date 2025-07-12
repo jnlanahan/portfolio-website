@@ -16,7 +16,15 @@ import {
   type TopFiveList,
   type InsertTopFiveList,
   type TopFiveListItem,
-  type InsertTopFiveListItem
+  type InsertTopFiveListItem,
+  type ChatbotDocument,
+  type InsertChatbotDocument,
+  type ChatbotTrainingSession,
+  type InsertChatbotTrainingSession,
+  type ChatbotConversation,
+  type InsertChatbotConversation,
+  type ChatbotTrainingProgress,
+  type InsertChatbotTrainingProgress
 } from "@shared/schema";
 import { getBlogPosts, getBlogPostById } from "../client/src/data/blog";
 import { getPortfolio } from "../client/src/data/portfolio";
@@ -81,6 +89,21 @@ export interface IStorage {
   getAllContactSubmissions(): Promise<ContactSubmission[]>;
   saveContactSubmission(submission: InsertContact): Promise<ContactSubmission>;
   deleteContactSubmission(id: number): Promise<void>;
+  
+  // Chatbot methods
+  getAllChatbotDocuments(): Promise<ChatbotDocument[]>;
+  getChatbotDocumentById(id: number): Promise<ChatbotDocument | undefined>;
+  createChatbotDocument(document: InsertChatbotDocument): Promise<ChatbotDocument>;
+  deleteChatbotDocument(id: number): Promise<void>;
+  
+  getAllChatbotTrainingSessions(): Promise<ChatbotTrainingSession[]>;
+  createChatbotTrainingSession(session: InsertChatbotTrainingSession): Promise<ChatbotTrainingSession>;
+  
+  getAllChatbotConversations(): Promise<ChatbotConversation[]>;
+  createChatbotConversation(conversation: InsertChatbotConversation): Promise<ChatbotConversation>;
+  
+  getChatbotTrainingProgress(): Promise<ChatbotTrainingProgress | undefined>;
+  updateChatbotTrainingProgress(progress: Partial<InsertChatbotTrainingProgress>): Promise<ChatbotTrainingProgress>;
 }
 
 export class MemStorage implements IStorage {
@@ -462,6 +485,47 @@ export class MemStorage implements IStorage {
       throw new Error(`Contact submission with ID ${id} not found`);
     }
   }
+
+  // Chatbot methods (placeholder implementation for MemStorage)
+  async getAllChatbotDocuments(): Promise<ChatbotDocument[]> {
+    return [];
+  }
+
+  async getChatbotDocumentById(id: number): Promise<ChatbotDocument | undefined> {
+    return undefined;
+  }
+
+  async createChatbotDocument(document: InsertChatbotDocument): Promise<ChatbotDocument> {
+    throw new Error("Chatbot features not implemented for MemStorage");
+  }
+
+  async deleteChatbotDocument(id: number): Promise<void> {
+    throw new Error("Chatbot features not implemented for MemStorage");
+  }
+
+  async getAllChatbotTrainingSessions(): Promise<ChatbotTrainingSession[]> {
+    return [];
+  }
+
+  async createChatbotTrainingSession(session: InsertChatbotTrainingSession): Promise<ChatbotTrainingSession> {
+    throw new Error("Chatbot features not implemented for MemStorage");
+  }
+
+  async getAllChatbotConversations(): Promise<ChatbotConversation[]> {
+    return [];
+  }
+
+  async createChatbotConversation(conversation: InsertChatbotConversation): Promise<ChatbotConversation> {
+    throw new Error("Chatbot features not implemented for MemStorage");
+  }
+
+  async getChatbotTrainingProgress(): Promise<ChatbotTrainingProgress | undefined> {
+    return undefined;
+  }
+
+  async updateChatbotTrainingProgress(progress: Partial<InsertChatbotTrainingProgress>): Promise<ChatbotTrainingProgress> {
+    throw new Error("Chatbot features not implemented for MemStorage");
+  }
 }
 
 // Database storage implementation
@@ -840,6 +904,102 @@ export class DatabaseStorage implements IStorage {
     const { eq } = await import('drizzle-orm');
     
     await db.delete(contactSubmissions).where(eq(contactSubmissions.id, id));
+  }
+
+  // Chatbot methods
+  async getAllChatbotDocuments(): Promise<ChatbotDocument[]> {
+    const { db } = await import('./db');
+    const { chatbotDocuments } = await import('@shared/schema');
+    const { desc } = await import('drizzle-orm');
+    
+    return await db.select().from(chatbotDocuments).orderBy(desc(chatbotDocuments.uploadedAt));
+  }
+
+  async getChatbotDocumentById(id: number): Promise<ChatbotDocument | undefined> {
+    const { db } = await import('./db');
+    const { chatbotDocuments } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [document] = await db.select().from(chatbotDocuments).where(eq(chatbotDocuments.id, id));
+    return document || undefined;
+  }
+
+  async createChatbotDocument(insertDocument: InsertChatbotDocument): Promise<ChatbotDocument> {
+    const { db } = await import('./db');
+    const { chatbotDocuments } = await import('@shared/schema');
+    
+    const [document] = await db.insert(chatbotDocuments).values(insertDocument).returning();
+    return document;
+  }
+
+  async deleteChatbotDocument(id: number): Promise<void> {
+    const { db } = await import('./db');
+    const { chatbotDocuments } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    await db.delete(chatbotDocuments).where(eq(chatbotDocuments.id, id));
+  }
+
+  async getAllChatbotTrainingSessions(): Promise<ChatbotTrainingSession[]> {
+    const { db } = await import('./db');
+    const { chatbotTrainingSessions } = await import('@shared/schema');
+    const { desc } = await import('drizzle-orm');
+    
+    return await db.select().from(chatbotTrainingSessions).orderBy(desc(chatbotTrainingSessions.createdAt));
+  }
+
+  async createChatbotTrainingSession(insertSession: InsertChatbotTrainingSession): Promise<ChatbotTrainingSession> {
+    const { db } = await import('./db');
+    const { chatbotTrainingSessions } = await import('@shared/schema');
+    
+    const [session] = await db.insert(chatbotTrainingSessions).values(insertSession).returning();
+    return session;
+  }
+
+  async getAllChatbotConversations(): Promise<ChatbotConversation[]> {
+    const { db } = await import('./db');
+    const { chatbotConversations } = await import('@shared/schema');
+    const { desc } = await import('drizzle-orm');
+    
+    return await db.select().from(chatbotConversations).orderBy(desc(chatbotConversations.createdAt));
+  }
+
+  async createChatbotConversation(insertConversation: InsertChatbotConversation): Promise<ChatbotConversation> {
+    const { db } = await import('./db');
+    const { chatbotConversations } = await import('@shared/schema');
+    
+    const [conversation] = await db.insert(chatbotConversations).values(insertConversation).returning();
+    return conversation;
+  }
+
+  async getChatbotTrainingProgress(): Promise<ChatbotTrainingProgress | undefined> {
+    const { db } = await import('./db');
+    const { chatbotTrainingProgress } = await import('@shared/schema');
+    
+    const [progress] = await db.select().from(chatbotTrainingProgress).limit(1);
+    return progress || undefined;
+  }
+
+  async updateChatbotTrainingProgress(updateData: Partial<InsertChatbotTrainingProgress>): Promise<ChatbotTrainingProgress> {
+    const { db } = await import('./db');
+    const { chatbotTrainingProgress } = await import('@shared/schema');
+    
+    // Get existing progress or create new one
+    const existing = await this.getChatbotTrainingProgress();
+    
+    if (existing) {
+      const [progress] = await db.update(chatbotTrainingProgress)
+        .set(updateData)
+        .returning();
+      return progress;
+    } else {
+      const [progress] = await db.insert(chatbotTrainingProgress).values({
+        totalQuestions: updateData.totalQuestions || 0,
+        documentsCount: updateData.documentsCount || 0,
+        lastTrainingDate: updateData.lastTrainingDate || new Date(),
+      }).returning();
+      return progress;
+    }
   }
 }
 

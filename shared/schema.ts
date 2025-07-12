@@ -199,3 +199,71 @@ export const insertTopFiveListItemSchema = createInsertSchema(topFiveListItems).
 
 export type InsertTopFiveListItem = z.infer<typeof insertTopFiveListItemSchema>;
 export type TopFiveListItem = typeof topFiveListItems.$inferSelect;
+
+// Chatbot Training Documents model
+export const chatbotDocuments = pgTable("chatbot_documents", {
+  id: serial("id").primaryKey(),
+  filename: text("filename").notNull(),
+  originalName: text("original_name").notNull(),
+  fileType: text("file_type").notNull(),
+  fileSize: integer("file_size").notNull(),
+  content: text("content").notNull(), // Extracted text content
+  uploadedAt: timestamp("uploaded_at").defaultNow().notNull(),
+});
+
+export const insertChatbotDocumentSchema = createInsertSchema(chatbotDocuments).omit({
+  id: true,
+  uploadedAt: true,
+});
+
+export type InsertChatbotDocument = z.infer<typeof insertChatbotDocumentSchema>;
+export type ChatbotDocument = typeof chatbotDocuments.$inferSelect;
+
+// Chatbot Training Sessions model
+export const chatbotTrainingSessions = pgTable("chatbot_training_sessions", {
+  id: serial("id").primaryKey(),
+  question: text("question").notNull(),
+  answer: text("answer").notNull(),
+  category: text("category"), // career, skills, personal, etc.
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertChatbotTrainingSessionSchema = createInsertSchema(chatbotTrainingSessions).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertChatbotTrainingSession = z.infer<typeof insertChatbotTrainingSessionSchema>;
+export type ChatbotTrainingSession = typeof chatbotTrainingSessions.$inferSelect;
+
+// Chatbot Conversations model (for analytics)
+export const chatbotConversations = pgTable("chatbot_conversations", {
+  id: serial("id").primaryKey(),
+  sessionId: text("session_id").notNull(), // Browser session ID
+  userQuestion: text("user_question").notNull(),
+  botResponse: text("bot_response").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertChatbotConversationSchema = createInsertSchema(chatbotConversations).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertChatbotConversation = z.infer<typeof insertChatbotConversationSchema>;
+export type ChatbotConversation = typeof chatbotConversations.$inferSelect;
+
+// Chatbot Training Progress model
+export const chatbotTrainingProgress = pgTable("chatbot_training_progress", {
+  id: serial("id").primaryKey(),
+  totalQuestions: integer("total_questions").default(0).notNull(),
+  lastTrainingDate: timestamp("last_training_date").defaultNow().notNull(),
+  documentsCount: integer("documents_count").default(0).notNull(),
+});
+
+export const insertChatbotTrainingProgressSchema = createInsertSchema(chatbotTrainingProgress).omit({
+  id: true,
+});
+
+export type InsertChatbotTrainingProgress = z.infer<typeof insertChatbotTrainingProgressSchema>;
+export type ChatbotTrainingProgress = typeof chatbotTrainingProgress.$inferSelect;

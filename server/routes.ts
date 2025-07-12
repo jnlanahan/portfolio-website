@@ -13,22 +13,32 @@ import {
   insertAdminSchema,
   insertResumeSchema,
   insertTopFiveListSchema,
-  insertTopFiveListItemSchema
+  insertTopFiveListItemSchema,
+  insertChatbotDocumentSchema,
+  insertChatbotTrainingSessionSchema,
+  insertChatbotConversationSchema
 } from "@shared/schema";
 import { z } from "zod";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
 
 import { sendContactEmail, verifyConnection } from "./mailer";
+import { 
+  generateTrainingQuestion, 
+  processRecruiterQuestion, 
+  extractTextFromFile 
+} from "./chatbotService";
 import express from "express";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Create uploads directories if they don't exist
   const uploadsDir = path.join(process.cwd(), 'uploads', 'projects');
   const resumeUploadsDir = path.join(process.cwd(), 'uploads', 'resumes');
+  const chatbotUploadsDir = path.join(process.cwd(), 'uploads', 'chatbot');
   try {
     await fs.mkdir(uploadsDir, { recursive: true });
     await fs.mkdir(resumeUploadsDir, { recursive: true });
+    await fs.mkdir(chatbotUploadsDir, { recursive: true });
   } catch (error) {
     console.error('Error creating uploads directory:', error);
   }
@@ -105,6 +115,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
         cb(null, true);
       } else {
         cb(new Error('Invalid file type. Only markdown (.md) files are allowed.'));
+      }
+    }
+  });
+
+  // Chatbot document upload configuration
+  const chatbotUpload = multer({
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, chatbotUploadsDir);
+      },
+      filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const ext = path.extname(file.originalname);
+        cb(null, `chatbot-${uniqueSuffix}${ext}`);
+      }
+    }),
+    limits: {
+      fileSize: 25 * 1024 * 1024, // 25MB limit for training documents
+    },
+    fileFilter: (req, file, cb) => {
+      // Accept various document types
+      const allowedMimes = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'text/plain',
+        'text/markdown',
+        'application/rtf',
+        'text/rtf'
+      ];
+      
+      if (allowedMimes.includes(file.mimetype) || file.originalname.endsWith('.md') || file.originalname.endsWith('.txt')) {
+        cb(null, true);
+      } else {
+        cb(new Error('Invalid file type. Only PDF, Word, text, and markdown files are allowed.'));
       }
     }
   });
@@ -979,6 +1024,232 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting top 5 list item:", error);
       res.status(500).json({ error: "Failed to delete top 5 list item" });
+    }
+  });
+
+  // CHATBOT API ROUTES
+  
+  // Public chatbot endpoint for recruiters
+  app.post("/api/chatbot/ask", async (req, res) => {
+    try {
+      const { question, sessionId } = req.body;
+      
+      if (!question || typeof question !== 'string') {
+        return res.status(400).json({ error: "Question is required" });
+      }
+
+      // Get training data
+      const documents = await storage.getAllChatbotDocuments();
+      const trainingSessions = await storage.getAllChatbotTrainingSessions();
+      
+      // Process the question
+      const response = await processRecruiterQuestion(question, documents, trainingSessions);
+      
+      // Store the conversation for analytics
+      if (sessionId) {
+        await storage.createChatbotConversation({
+          sessionId,
+          userQuestion: question,
+          botResponse: response.response
+        });
+      }
+      
+      res.json({
+        response: response.response,
+        isOnTopic: response.isOnTopic,
+        confidence: response.confidence
+      });
+    } catch (error) {
+      console.error("Error processing chatbot question:", error);
+      res.status(500).json({ error: "Failed to process question" });
+    }
+  });
+
+  // Admin chatbot management routes
+  
+  // Get training progress
+  app.get("/api/admin/chatbot/progress", requireAdmin, async (req, res) => {
+    try {
+      const progress = await storage.getChatbotTrainingProgress();
+      const documentsCount = (await storage.getAllChatbotDocuments()).length;
+      
+      res.json({
+        ...progress,
+        documentsCount
+      });
+    } catch (error) {
+      console.error("Error fetching chatbot progress:", error);
+      res.status(500).json({ error: "Failed to fetch training progress" });
+    }
+  });
+
+  // Get all training documents
+  app.get("/api/admin/chatbot/documents", requireAdmin, async (req, res) => {
+    try {
+      const documents = await storage.getAllChatbotDocuments();
+      res.json(documents);
+    } catch (error) {
+      console.error("Error fetching chatbot documents:", error);
+      res.status(500).json({ error: "Failed to fetch documents" });
+    }
+  });
+
+  // Upload training document
+  app.post("/api/admin/chatbot/documents", requireAdmin, chatbotUpload.single('document'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: "No file uploaded" });
+      }
+
+      // Read file content
+      const fileBuffer = await fs.readFile(req.file.path);
+      const extractedContent = extractTextFromFile(fileBuffer, req.file.mimetype, req.file.originalname);
+
+      // Create document record
+      const document = await storage.createChatbotDocument({
+        filename: req.file.filename,
+        originalName: req.file.originalname,
+        fileType: req.file.mimetype,
+        fileSize: req.file.size,
+        content: extractedContent
+      });
+
+      // Update progress
+      const currentProgress = await storage.getChatbotTrainingProgress();
+      const documentsCount = (await storage.getAllChatbotDocuments()).length;
+      
+      await storage.updateChatbotTrainingProgress({
+        documentsCount,
+        lastTrainingDate: new Date()
+      });
+
+      res.json({
+        document,
+        message: "Document uploaded and processed successfully"
+      });
+    } catch (error) {
+      console.error("Error uploading chatbot document:", error);
+      res.status(500).json({ error: "Failed to upload document" });
+    }
+  });
+
+  // Delete training document
+  app.delete("/api/admin/chatbot/documents/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const document = await storage.getChatbotDocumentById(id);
+      
+      if (!document) {
+        return res.status(404).json({ error: "Document not found" });
+      }
+
+      // Delete file from filesystem
+      try {
+        await fs.unlink(path.join(chatbotUploadsDir, document.filename));
+      } catch (error) {
+        console.warn("Could not delete file from filesystem:", error);
+      }
+
+      // Delete from database
+      await storage.deleteChatbotDocument(id);
+      
+      // Update progress
+      const documentsCount = (await storage.getAllChatbotDocuments()).length;
+      await storage.updateChatbotTrainingProgress({
+        documentsCount,
+        lastTrainingDate: new Date()
+      });
+
+      res.json({ message: "Document deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting chatbot document:", error);
+      res.status(500).json({ error: "Failed to delete document" });
+    }
+  });
+
+  // Generate training question
+  app.post("/api/admin/chatbot/training/question", requireAdmin, async (req, res) => {
+    try {
+      const documents = await storage.getAllChatbotDocuments();
+      const trainingSessions = await storage.getAllChatbotTrainingSessions();
+      const progress = await storage.getChatbotTrainingProgress();
+      
+      const question = await generateTrainingQuestion(documents, trainingSessions, progress);
+      
+      res.json(question);
+    } catch (error) {
+      console.error("Error generating training question:", error);
+      res.status(500).json({ error: "Failed to generate training question" });
+    }
+  });
+
+  // Submit training answer
+  app.post("/api/admin/chatbot/training/answer", requireAdmin, async (req, res) => {
+    try {
+      const { question, answer, category } = req.body;
+      
+      if (!question || !answer) {
+        return res.status(400).json({ error: "Question and answer are required" });
+      }
+
+      // Save training session
+      const session = await storage.createChatbotTrainingSession({
+        question,
+        answer,
+        category
+      });
+
+      // Update progress
+      const currentProgress = await storage.getChatbotTrainingProgress();
+      const newTotalQuestions = (currentProgress?.totalQuestions || 0) + 1;
+      
+      await storage.updateChatbotTrainingProgress({
+        totalQuestions: newTotalQuestions,
+        lastTrainingDate: new Date()
+      });
+
+      res.json({
+        session,
+        totalQuestions: newTotalQuestions,
+        message: "Training answer saved successfully"
+      });
+    } catch (error) {
+      console.error("Error saving training answer:", error);
+      res.status(500).json({ error: "Failed to save training answer" });
+    }
+  });
+
+  // Get training sessions
+  app.get("/api/admin/chatbot/training/sessions", requireAdmin, async (req, res) => {
+    try {
+      const sessions = await storage.getAllChatbotTrainingSessions();
+      res.json(sessions);
+    } catch (error) {
+      console.error("Error fetching training sessions:", error);
+      res.status(500).json({ error: "Failed to fetch training sessions" });
+    }
+  });
+
+  // Get conversation analytics
+  app.get("/api/admin/chatbot/analytics", requireAdmin, async (req, res) => {
+    try {
+      const conversations = await storage.getAllChatbotConversations();
+      
+      // Basic analytics
+      const analytics = {
+        totalConversations: conversations.length,
+        recentConversations: conversations.slice(0, 50),
+        topQuestions: conversations.reduce((acc, conv) => {
+          const question = conv.userQuestion.toLowerCase();
+          acc[question] = (acc[question] || 0) + 1;
+          return acc;
+        }, {} as Record<string, number>)
+      };
+
+      res.json(analytics);
+    } catch (error) {
+      console.error("Error fetching chatbot analytics:", error);
+      res.status(500).json({ error: "Failed to fetch analytics" });
     }
   });
 
