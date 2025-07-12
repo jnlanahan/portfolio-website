@@ -152,9 +152,10 @@ CORE BEHAVIOR:
 - Answer questions directly and conversationally about Nick's background
 - Provide specific details from his experience when available
 - Be helpful and informative without being overly formal
-- If you don't have specific information, say so honestly
+- If you don't have specific information, say "I don't know that specific detail" but offer what you do know
 - Keep responses concise but comprehensive
 - Focus on the most relevant aspects of Nick's background for each question
+- When asked about historical information (like "where was he in 2014"), provide context about his background and say if you don't have the specific detail
 
 CURRENT INFORMATION ABOUT NICK:
 - Manager, Product Management at EY (Ernst & Young)
@@ -163,11 +164,12 @@ CURRENT INFORMATION ABOUT NICK:
 - Has engineering and military background
 - Attended multiple universities including Ohio State, NC State, and Missouri S&T
 - Previously served in the U.S. Army and Army Corps of Engineers
+- Has experience in digital transformation, cloud migration, and process automation
 
 Here's additional context from training data:
 ${context}
 
-Provide a helpful, direct answer to the user's question about Nick. Be conversational and informative.`;
+Provide a helpful, direct answer to the user's question about Nick. If you don't have specific information, acknowledge that and offer what context you do have. Be conversational and informative.`;
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
@@ -291,10 +293,10 @@ Now respond with acknowledgment + ONE question only.`;
 }
 
 /**
- * Check if a question is on-topic (about Nick Lanahan)
+ * Check if a question is inappropriate or harmful (very lenient filtering)
  */
 async function checkIfOnTopic(question: string): Promise<{ isOnTopic: boolean; confidence: number }> {
-  const prompt = `Determine if this question is about Nick Lanahan's professional background, skills, experience, education, or personal qualities that would be relevant to a recruiter.
+  const prompt = `Is this question clearly harmful, offensive, or inappropriate? Only flag content that is obviously problematic.
 
 Question: "${question}"
 
@@ -304,21 +306,20 @@ Return JSON response:
   "confidence": 0-1 scale
 }
 
-Consider these as ON-TOPIC:
-- Questions about skills, experience, education, career
-- Questions about projects, achievements, leadership
-- Questions about work style, personality, motivations
-- Questions about availability, salary expectations, etc.
-- General questions about Nick (e.g., "Tell me about Nick", "Who is Nick?", "What does Nick do?")
-- Questions about Nick's background or current role
-- Any question that mentions Nick's name or refers to him directly
+ONLY mark as inappropriate (isOnTopic: false) if the question contains:
+- Clear hate speech or discrimination
+- Explicit sexual content
+- Requests for harmful/illegal activities
+- Obvious malicious intent
 
-Consider these as OFF-TOPIC:
-- General career advice not about Nick
-- Questions about other people (not Nick)
-- Requests for services unrelated to Nick
-- Technical questions not about Nick's skills
-- Random conversations unrelated to Nick`;
+ALL other questions should be marked as acceptable (isOnTopic: true), including:
+- Any questions about someone's background, career, or history
+- Questions using pronouns like "he", "she", "they"
+- Questions about locations, timelines, or events
+- Questions where the answer might be "I don't know"
+- General conversation about professional topics
+
+Default to acceptable (isOnTopic: true) unless clearly inappropriate.`;
 
   try {
     const openai = getOpenAI();
