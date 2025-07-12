@@ -39,7 +39,7 @@ body {
   --card-foreground: 0 0% 9%; /* Dark text on cards */
   --border: 0 0% 89%; /* Light grey borders */
   --input: 0 0% 96%; /* Very light grey input backgrounds */
-  --primary: 212 100% 48%; /* Apple-style blue */
+  --primary: 212 40% 55%; /* Muted blue */
   --primary-foreground: 0 0% 98%; /* White text on primary */
   --secondary: 0 0% 96%; /* Very light grey secondary */
   --secondary-foreground: 0 0% 9%; /* Dark text on secondary */
@@ -47,7 +47,7 @@ body {
   --accent-foreground: 0 0% 9%; /* Dark text on accent */
   --destructive: 0 84.2% 60.2%; /* Keep destructive red */
   --destructive-foreground: 0 0% 98%; /* White text on destructive */
-  --ring: 212 100% 48%; /* Blue ring matching primary */
+  --ring: 212 40% 55%; /* Muted blue ring matching primary */
   --radius: 1rem; /* Apple-style larger radius */
   --surface: 0 0% 100%; /* Pure white surface */
 }
@@ -63,7 +63,7 @@ body {
   --card-foreground: 0 0% 98%;
   --border: 240 3.7% 15.9%;
   --input: 240 3.7% 15.9%;
-  --primary: 212 100% 48%;
+  --primary: 212 40% 55%;
   --primary-foreground: 0 0% 100%;
   --secondary: 162 95% 39%;
   --secondary-foreground: 0 0% 9%;

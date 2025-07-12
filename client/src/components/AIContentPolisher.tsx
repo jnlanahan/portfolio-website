@@ -199,9 +199,9 @@ export default function AIContentPolisher({
   }, [content, selectedText, improvedText, onContentChange, toast]);
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-green-600 dark:text-green-400';
-    if (score >= 60) return 'text-yellow-600 dark:text-yellow-400';
-    return 'text-red-600 dark:text-red-400';
+    if (score >= 80) return 'text-slate-600 dark:text-slate-400';
+    if (score >= 60) return 'text-slate-500 dark:text-slate-500';
+    return 'text-slate-700 dark:text-slate-600';
   };
 
   return (

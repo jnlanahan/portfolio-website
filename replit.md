@@ -147,6 +147,20 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
     - Created large, bold "NICK LANAHAN" main title with responsive sizing
     - Centered layout with clean typography and proper spacing
     - Removed previous tile-based brand section in favor of impactful text-based header
+- **January 2025**: Comprehensive color palette refinement for calmer aesthetic
+  - Replaced all bright colors (blue-600, green-600, purple-600) with muted slate tones throughout application
+  - Updated CSS primary color from bright blue (#007AFF) to muted blue (hsl(212, 40%, 55%))
+  - Applied slate color palette systematically across all components:
+    - Target icons in Strategic Thinking section: bright green → slate-500
+    - Homepage tile hover colors: blue-600 → slate-600
+    - ActionButton icons: bright colors → slate-600/slate-700
+    - FloatingChatbot interface: blue-600 header/buttons → slate-600/slate-700
+    - About page passions section: bright accent colors → slate-600
+    - Navigation and dialog components: blue accents → slate accents
+    - AIContentPolisher score indicators: green/yellow/red → slate variations
+    - All spotlight card effects: bright blue → muted slate tones
+  - Maintained visual consistency while creating more professional, calming user experience
+  - Achieved user-requested "less bright" color scheme for portfolio website
 - **January 2025**: Updated homepage hero layout with improved spacing and logo arrangement
   - Moved "PORTFOLIO" text to the very top of the page (removed space above)
   - Reorganized logos from circular arrangement to responsive layout directly under "NICK LANAHAN"

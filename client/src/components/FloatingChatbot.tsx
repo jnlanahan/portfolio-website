@@ -140,7 +140,7 @@ export default function FloatingChatbot() {
         {!isOpen && (
           <Button
             onClick={() => setIsOpen(true)}
-            className="h-14 w-14 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+            className="h-14 w-14 rounded-full bg-slate-600 hover:bg-slate-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
             aria-label="Open chat with Nick's AI assistant"
           >
             <MessageCircle className="h-6 w-6" />
@@ -153,19 +153,19 @@ export default function FloatingChatbot() {
         <div className="fixed bottom-6 right-6 z-50 w-96 h-[500px] max-w-[calc(100vw-2rem)] max-h-[calc(100vh-2rem)]">
           <Card className="h-full bg-white border-2 border-gray-200 shadow-2xl flex flex-col">
             {/* Header */}
-            <div className="bg-blue-600 text-white p-4 rounded-t-lg flex items-center justify-between">
+            <div className="bg-slate-600 text-white p-4 rounded-t-lg flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <MessageCircle className="h-5 w-5" />
                 <div>
                   <h3 className="font-semibold text-sm">Nick's AI Assistant</h3>
-                  <p className="text-xs text-blue-100">Ask me about Nick's background!</p>
+                  <p className="text-xs text-slate-200">Ask me about Nick's background!</p>
                 </div>
               </div>
               <Button
                 onClick={() => setIsOpen(false)}
                 variant="ghost"
                 size="sm"
-                className="text-white hover:bg-blue-700 h-8 w-8 p-0"
+                className="text-white hover:bg-slate-700 h-8 w-8 p-0"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -181,13 +181,13 @@ export default function FloatingChatbot() {
                   <div
                     className={`max-w-[80%] rounded-lg px-3 py-2 text-sm ${
                       message.sender === 'user'
-                        ? 'bg-blue-600 text-white'
+                        ? 'bg-slate-600 text-white'
                         : 'bg-gray-100 text-gray-800 border border-gray-200'
                     }`}
                   >
                     <p className="whitespace-pre-wrap">{message.text}</p>
                     <div className="flex items-center justify-between mt-1 gap-2">
-                      <span className={`text-xs ${message.sender === 'user' ? 'text-blue-100' : 'text-gray-500'}`}>
+                      <span className={`text-xs ${message.sender === 'user' ? 'text-slate-200' : 'text-gray-500'}`}>
                         {formatTime(message.timestamp)}
                       </span>
                       <div className="flex items-center gap-2">
@@ -206,7 +206,7 @@ export default function FloatingChatbot() {
                                 e.stopPropagation();
                                 handleFeedback(message.id, 'positive');
                               }}
-                              className={`h-6 w-6 p-0 ${message.feedback === 'positive' ? 'bg-green-100 text-green-700' : 'hover:bg-green-50 text-gray-500'}`}
+                              className={`h-6 w-6 p-0 ${message.feedback === 'positive' ? 'bg-slate-100 text-slate-700' : 'hover:bg-slate-50 text-gray-500'}`}
                               disabled={message.feedback !== null}
                             >
                               <ThumbsUp className="h-3 w-3" />
@@ -219,7 +219,7 @@ export default function FloatingChatbot() {
                                 e.stopPropagation();
                                 handleFeedback(message.id, 'negative');
                               }}
-                              className={`h-6 w-6 p-0 ${message.feedback === 'negative' ? 'bg-red-100 text-red-700' : 'hover:bg-red-50 text-gray-500'}`}
+                              className={`h-6 w-6 p-0 ${message.feedback === 'negative' ? 'bg-slate-100 text-slate-700' : 'hover:bg-slate-50 text-gray-500'}`}
                               disabled={message.feedback !== null}
                             >
                               <ThumbsDown className="h-3 w-3" />
@@ -258,7 +258,7 @@ export default function FloatingChatbot() {
                 <Button
                   onClick={handleSendMessage}
                   disabled={!inputValue.trim() || isLoading}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-3"
+                  className="bg-slate-600 hover:bg-slate-700 text-white px-3"
                 >
                   <Send className="h-4 w-4" />
                 </Button>

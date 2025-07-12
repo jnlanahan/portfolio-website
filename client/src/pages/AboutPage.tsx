@@ -77,7 +77,7 @@ const AboutPage = () => {
                 className="bg-white p-6 rounded-2xl shadow-lg"
               >
                 <div className="flex items-center mb-4">
-                  <Users className="w-8 h-8 text-blue-600 mr-3" />
+                  <Users className="w-8 h-8 text-slate-500 mr-3" />
                   <h3 className="text-xl font-bold text-gray-900 font-futura">
                     Military to Corporate
                   </h3>
@@ -97,7 +97,7 @@ const AboutPage = () => {
                 className="bg-white p-6 rounded-2xl shadow-lg"
               >
                 <div className="flex items-center mb-4">
-                  <Target className="w-8 h-8 text-green-600 mr-3" />
+                  <Target className="w-8 h-8 text-slate-500 mr-3" />
                   <h3 className="text-xl font-bold text-gray-900 font-futura">
                     Strategic Thinking
                   </h3>
@@ -122,7 +122,7 @@ const AboutPage = () => {
             className="text-center mb-12"
           >
             <h2 className="text-3xl font-bold text-gray-900 mb-4 font-futura">
-              My <span className="text-blue-600">Passions</span>
+              My <span className="text-slate-600">Passions</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto font-futura">
               Three principles that guide everything I do
@@ -139,8 +139,8 @@ const AboutPage = () => {
               className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
               <div className="p-6">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-6 h-6 text-blue-600" />
+                <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-6 h-6 text-slate-600" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3 text-center font-futura">
                   Leadership
@@ -161,8 +161,8 @@ const AboutPage = () => {
               className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
               <div className="p-6">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Target className="w-6 h-6 text-green-600" />
+                <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Target className="w-6 h-6 text-slate-600" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3 text-center font-futura">
                   Strategy
@@ -183,8 +183,8 @@ const AboutPage = () => {
               className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
               <div className="p-6">
-                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Lightbulb className="w-6 h-6 text-purple-600" />
+                <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Lightbulb className="w-6 h-6 text-slate-600" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3 text-center font-futura">
                   Innovation
@@ -221,7 +221,7 @@ const AboutPage = () => {
                 viewport={{ once: true }}
                 className="bg-white p-6 rounded-2xl shadow-lg"
               >
-                <div className="text-2xl font-bold text-blue-600 mb-2 font-futura">
+                <div className="text-2xl font-bold text-slate-600 mb-2 font-futura">
                   Military → Corporate
                 </div>
                 <p className="text-gray-600 text-sm font-futura">
@@ -238,7 +238,7 @@ const AboutPage = () => {
                 transition={{ delay: 0.1 }}
                 className="bg-white p-6 rounded-2xl shadow-lg"
               >
-                <div className="text-2xl font-bold text-green-600 mb-2 font-futura">
+                <div className="text-2xl font-bold text-slate-600 mb-2 font-futura">
                   Technical + Business
                 </div>
                 <p className="text-gray-600 text-sm font-futura">
@@ -255,7 +255,7 @@ const AboutPage = () => {
                 transition={{ delay: 0.2 }}
                 className="bg-white p-6 rounded-2xl shadow-lg"
               >
-                <div className="text-2xl font-bold text-purple-600 mb-2 font-futura">
+                <div className="text-2xl font-bold text-slate-600 mb-2 font-futura">
                   Mission-First
                 </div>
                 <p className="text-gray-600 text-sm font-futura">

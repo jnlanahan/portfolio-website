@@ -54,9 +54,9 @@ const HomeTile = ({
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)', /* Apple-style subtle shadow */
         height: '64px' /* 8-point grid height */
       }}
-      spotlightColor="rgba(0, 122, 255, 0.1)"
+      spotlightColor="rgba(100, 116, 139, 0.1)"
     >
-      <h3 className="font-futura font-medium text-gray-900 group-hover:text-primary transition-colors" style={{ fontSize: '14px' }}> {/* Consistent sizing */}
+      <h3 className="font-futura font-medium text-gray-900 group-hover:text-slate-600 transition-colors" style={{ fontSize: '14px' }}> {/* Consistent sizing */}
         {title}
       </h3>
     </SpotlightCard>
@@ -67,11 +67,11 @@ const HomeTile = ({
         borderRadius: '16px', /* 8-point grid radius */
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)' /* Apple-style subtle shadow */
       }}
-      spotlightColor="rgba(0, 122, 255, 0.1)"
+      spotlightColor="rgba(100, 116, 139, 0.1)"
     >
       {/* Header with title */}
       <div style={{ padding: '16px 16px 8px' }}> {/* 8-point grid padding */}
-        <h3 className="font-futura font-medium text-gray-900 group-hover:text-blue-600 transition-colors" style={{ fontSize: '20px' }}> {/* Apple HIG: Section headings 20-24px */}
+        <h3 className="font-futura font-medium text-gray-900 group-hover:text-slate-600 transition-colors" style={{ fontSize: '20px' }}> {/* Apple HIG: Section headings 20-24px */}
           {title}
         </h3>
       </div>
@@ -90,7 +90,7 @@ const HomeTile = ({
         ) : (
           <div style={{ marginBottom: '12px', height: '48px' }} className="flex items-center justify-center"> {/* 8-point grid dimensions */}
             <div style={{ width: '40px', height: '40px', borderRadius: '12px' }} className="bg-gray-100 flex items-center justify-center"> {/* 8-point grid dimensions */}
-              <i className={`${icon} text-primary text-xl`}></i>
+              <i className={`${icon} text-slate-600 text-xl`}></i>
             </div>
           </div>
         )}
@@ -202,9 +202,9 @@ const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string;
   // Get icon component based on title
   const getIconComponent = () => {
     if (title.includes('Contact')) return <img src={gmailLogo} alt="Gmail" className="w-6 h-6" />;
-    if (title.includes('Resume')) return <Download size={24} className="text-gray-900 group-hover:text-blue-600 transition-colors" />;
+    if (title.includes('Resume')) return <Download size={24} className="text-gray-900 group-hover:text-slate-600 transition-colors" />;
     if (title.includes('LinkedIn')) return (
-      <div className="w-6 h-6 bg-blue-600 rounded-sm flex items-center justify-center group-hover:bg-blue-700 transition-colors">
+      <div className="w-6 h-6 bg-slate-600 rounded-sm flex items-center justify-center group-hover:bg-slate-700 transition-colors">
         <span className="text-white font-bold text-sm">in</span>
       </div>
     );
@@ -227,7 +227,7 @@ const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string;
       </div>
       
       {/* Text Label */}
-      <span className="font-futura font-medium text-gray-900 group-hover:text-blue-600 transition-colors mt-2 text-center leading-tight" style={{ fontSize: '14px' }}>
+      <span className="font-futura font-medium text-gray-900 group-hover:text-slate-600 transition-colors mt-2 text-center leading-tight" style={{ fontSize: '14px' }}>
         {title}
       </span>
     </div>
