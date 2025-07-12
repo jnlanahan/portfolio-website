@@ -424,7 +424,7 @@ const HomePage = () => {
           />
           <ActionButton
             title="Download my Resume"
-            linkTo="/resume.pdf"
+            linkTo="/api/resume/download"
             delay={1.0}
           />
           <ActionButton

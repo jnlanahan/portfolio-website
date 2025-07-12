@@ -39,6 +39,12 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Updated typography to use dark grey (#1a1a1a) for excellent readability
   - Simplified glow effects to be very subtle and professional
   - Designed for maximum recruiter appeal with clean, accessible interface
+- **January 2025**: Fixed resume upload functionality and LinkedIn URL
+  - Resolved database schema issue with resume_content table missing columns
+  - Fixed browse button click handler in admin resume upload page  
+  - Updated LinkedIn URL to correct profile: https://www.linkedin.com/in/nick-lanahan/
+  - Added proper routing for /admin redirect after successful resume upload
+  - Resume download endpoint working correctly at /api/resume/download
 - **January 2025**: Enhanced with Apple Human Interface Guidelines design principles
   - Implemented Apple's 8-point grid system throughout the layout (8px, 16px, 24px, 32px spacing)
   - Applied Apple's typography hierarchy: 48px page titles, 20px section headings, 16-17px body text

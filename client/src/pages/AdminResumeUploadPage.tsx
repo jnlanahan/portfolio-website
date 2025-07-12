@@ -38,7 +38,10 @@ export default function AdminResumeUploadPage() {
         title: "Resume uploaded successfully",
         description: "Your resume has been uploaded and is now available for download",
       });
-      setLocation("/admin");
+      // Add a small delay to ensure the toast is visible before redirect
+      setTimeout(() => {
+        setLocation("/admin");
+      }, 500);
     },
     onError: (error: any) => {
       toast({
