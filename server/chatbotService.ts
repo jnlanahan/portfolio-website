@@ -8,6 +8,7 @@ import {
   InsertChatbotConversation
 } from '@shared/schema';
 import { storage } from './storage';
+import { generateEnhancedSystemPrompt } from './chatbotLearningService';
 
 // Initialize OpenAI
 function getOpenAI(): OpenAI {
@@ -147,27 +148,12 @@ export async function processRecruiterQuestion(
       context += `Q: ${session.question}\nA: ${session.answer}\n\n`;
     });
 
-    const systemPrompt = `You are Nack, Nick Lanahan's AI assistant. Your purpose is to provide helpful, accurate information about Nick's professional background, experience, and qualifications.
+    // Get enhanced system prompt with learning insights
+    const enhancedSystemPrompt = await generateEnhancedSystemPrompt();
+    
+    const systemPrompt = `${enhancedSystemPrompt}
 
-CORE BEHAVIOR:
-- Answer questions directly and conversationally about Nick's background
-- Provide specific details from his experience when available
-- Be helpful and informative without being overly formal
-- If you don't have specific information, say "I don't know that specific detail" but offer what you do know
-- Keep responses concise but comprehensive
-- Focus on the most relevant aspects of Nick's background for each question
-- When asked about historical information (like "where was he in 2014"), provide context about his background and say if you don't have the specific detail
-
-CURRENT INFORMATION ABOUT NICK:
-- Manager, Product Management at EY (Ernst & Young)
-- Based in Columbus, Ohio
-- Leads high-impact product transformations
-- Has engineering and military background
-- Attended multiple universities including Ohio State, NC State, and Missouri S&T
-- Previously served in the U.S. Army and Army Corps of Engineers
-- Has experience in digital transformation, cloud migration, and process automation
-
-Here's additional context from training data:
+CURRENT CONTEXT FROM TRAINING DATA:
 ${context}
 
 Provide a helpful, direct answer to the user's question about Nick. If you don't have specific information, acknowledge that and offer what context you do have. Be conversational and informative.`;

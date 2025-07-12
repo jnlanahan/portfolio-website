@@ -310,3 +310,23 @@ export const insertUserFeedbackSchema = createInsertSchema(userFeedback).omit({
 
 export type InsertUserFeedback = z.infer<typeof insertUserFeedbackSchema>;
 export type UserFeedback = typeof userFeedback.$inferSelect;
+
+// Chatbot Learning Insights model - stores key lessons from evaluations
+export const chatbotLearningInsights = pgTable("chatbot_learning_insights", {
+  id: serial("id").primaryKey(),
+  category: text("category").notNull(), // 'improvement', 'best_practice', 'avoid_pattern'
+  insight: text("insight").notNull(), // The key learning or pattern
+  examples: text("examples").array().default([]).notNull(), // Example phrases or patterns
+  sourceEvaluationId: integer("source_evaluation_id").references(() => chatbotEvaluations.id),
+  importance: integer("importance").default(5).notNull(), // 1-10 scale
+  isActive: boolean("is_active").default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertChatbotLearningInsightSchema = createInsertSchema(chatbotLearningInsights).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertChatbotLearningInsight = z.infer<typeof insertChatbotLearningInsightSchema>;
+export type ChatbotLearningInsight = typeof chatbotLearningInsights.$inferSelect;

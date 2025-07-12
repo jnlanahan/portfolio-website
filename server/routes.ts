@@ -32,6 +32,12 @@ import {
   extractTextFromFile 
 } from "./chatbotService";
 import { evaluateChatbotResponse, batchEvaluateConversations, getEvaluationStats } from "./chatbotEvaluator";
+import { 
+  extractLearningInsights, 
+  processRecentEvaluations, 
+  getLearningInsightsStats,
+  updateSystemPromptWithLearning
+} from "./chatbotLearningService";
 import express from "express";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -1438,6 +1444,86 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching feedback for conversation:", error);
       res.status(500).json({ error: "Failed to fetch feedback" });
+    }
+  });
+
+  // Learning system routes
+  app.get("/api/admin/chatbot/learning/insights", requireAdmin, async (req, res) => {
+    try {
+      const insights = await storage.getChatbotLearningInsights();
+      res.json(insights);
+    } catch (error) {
+      console.error("Error fetching learning insights:", error);
+      res.status(500).json({ error: "Failed to fetch learning insights" });
+    }
+  });
+
+  app.get("/api/admin/chatbot/learning/stats", requireAdmin, async (req, res) => {
+    try {
+      const stats = await getLearningInsightsStats();
+      res.json(stats);
+    } catch (error) {
+      console.error("Error fetching learning stats:", error);
+      res.status(500).json({ error: "Failed to fetch learning stats" });
+    }
+  });
+
+  app.post("/api/admin/chatbot/learning/extract/:evaluationId", requireAdmin, async (req, res) => {
+    try {
+      const evaluationId = parseInt(req.params.evaluationId);
+      const insights = await extractLearningInsights(evaluationId);
+      res.json(insights);
+    } catch (error) {
+      console.error("Error extracting learning insights:", error);
+      res.status(500).json({ error: "Failed to extract insights" });
+    }
+  });
+
+  app.post("/api/admin/chatbot/learning/process-recent", requireAdmin, async (req, res) => {
+    try {
+      const result = await processRecentEvaluations();
+      res.json(result);
+    } catch (error) {
+      console.error("Error processing recent evaluations:", error);
+      res.status(500).json({ error: "Failed to process recent evaluations" });
+    }
+  });
+
+  app.post("/api/admin/chatbot/learning/update-prompt", requireAdmin, async (req, res) => {
+    try {
+      const updatedPrompt = await updateSystemPromptWithLearning();
+      res.json({ message: "System prompt updated successfully", prompt: updatedPrompt });
+    } catch (error) {
+      console.error("Error updating system prompt:", error);
+      res.status(500).json({ error: "Failed to update system prompt" });
+    }
+  });
+
+  app.delete("/api/admin/chatbot/learning/insights/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteChatbotLearningInsight(id);
+      res.json({ message: "Learning insight deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting learning insight:", error);
+      res.status(500).json({ error: "Failed to delete insight" });
+    }
+  });
+
+  app.patch("/api/admin/chatbot/learning/insights/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { isActive, importance } = req.body;
+      
+      const updateData: any = {};
+      if (typeof isActive === 'boolean') updateData.isActive = isActive;
+      if (typeof importance === 'number') updateData.importance = importance;
+      
+      const updatedInsight = await storage.updateChatbotLearningInsight(id, updateData);
+      res.json(updatedInsight);
+    } catch (error) {
+      console.error("Error updating learning insight:", error);
+      res.status(500).json({ error: "Failed to update insight" });
     }
   });
 

@@ -28,7 +28,9 @@ import {
   type ChatbotEvaluation,
   type InsertChatbotEvaluation,
   type UserFeedback,
-  type InsertUserFeedback
+  type InsertUserFeedback,
+  type ChatbotLearningInsight,
+  type InsertChatbotLearningInsight
 } from "@shared/schema";
 import { getBlogPosts, getBlogPostById } from "../client/src/data/blog";
 import { getPortfolio } from "../client/src/data/portfolio";
@@ -125,6 +127,14 @@ export interface IStorage {
   getChatbotDocuments(): Promise<ChatbotDocument[]>;
   getChatbotTrainingSessions(): Promise<ChatbotTrainingSession[]>;
   saveChatbotConversation(conversation: InsertChatbotConversation): Promise<ChatbotConversation>;
+  getChatbotConversationById(id: number): Promise<ChatbotConversation | undefined>;
+  
+  // Learning insights methods
+  getChatbotLearningInsights(): Promise<ChatbotLearningInsight[]>;
+  getChatbotLearningInsightsByEvaluationId(evaluationId: number): Promise<ChatbotLearningInsight[]>;
+  createChatbotLearningInsight(insight: InsertChatbotLearningInsight): Promise<ChatbotLearningInsight>;
+  updateChatbotLearningInsight(id: number, insight: Partial<InsertChatbotLearningInsight>): Promise<ChatbotLearningInsight>;
+  deleteChatbotLearningInsight(id: number): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
@@ -1122,6 +1132,66 @@ export class DatabaseStorage implements IStorage {
     
     const [conversation] = await db.select().from(chatbotConversations).where(eq(chatbotConversations.id, id));
     return conversation || undefined;
+  }
+
+  async getChatbotConversationById(id: number): Promise<ChatbotConversation | undefined> {
+    return this.getChatbotConversation(id);
+  }
+
+  // Learning insights methods
+  async getChatbotLearningInsights(): Promise<ChatbotLearningInsight[]> {
+    const { db } = await import('./db');
+    const { chatbotLearningInsights } = await import('@shared/schema');
+    const { desc } = await import('drizzle-orm');
+    
+    return await db.select().from(chatbotLearningInsights).orderBy(desc(chatbotLearningInsights.createdAt));
+  }
+
+  async getChatbotLearningInsightsByEvaluationId(evaluationId: number): Promise<ChatbotLearningInsight[]> {
+    const { db } = await import('./db');
+    const { chatbotLearningInsights } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    return await db.select().from(chatbotLearningInsights).where(eq(chatbotLearningInsights.sourceEvaluationId, evaluationId));
+  }
+
+  async createChatbotLearningInsight(insertInsight: InsertChatbotLearningInsight): Promise<ChatbotLearningInsight> {
+    const { db } = await import('./db');
+    const { chatbotLearningInsights } = await import('@shared/schema');
+    
+    const [insight] = await db.insert(chatbotLearningInsights).values(insertInsight).returning();
+    return insight;
+  }
+
+  async updateChatbotLearningInsight(id: number, updateData: Partial<InsertChatbotLearningInsight>): Promise<ChatbotLearningInsight> {
+    const { db } = await import('./db');
+    const { chatbotLearningInsights } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [insight] = await db.update(chatbotLearningInsights)
+      .set(updateData)
+      .where(eq(chatbotLearningInsights.id, id))
+      .returning();
+    
+    if (!insight) {
+      throw new Error(`Learning insight with ID ${id} not found`);
+    }
+    
+    return insight;
+  }
+
+  async deleteChatbotLearningInsight(id: number): Promise<void> {
+    const { db } = await import('./db');
+    const { chatbotLearningInsights } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [deleted] = await db.delete(chatbotLearningInsights)
+      .where(eq(chatbotLearningInsights.id, id))
+      .returning();
+    
+    if (!deleted) {
+      throw new Error(`Learning insight with ID ${id} not found`);
+    }
   }
 }
 

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { AlertCircle, TrendingUp, ThumbsUp, ThumbsDown, BarChart3, MessageSquare, CheckCircle, XCircle } from 'lucide-react';
+import { AlertCircle, TrendingUp, ThumbsUp, ThumbsDown, BarChart3, MessageSquare, CheckCircle, XCircle, Brain, Target, Lightbulb, Shield, Trash2, ToggleLeft, ToggleRight, Clock, Activity } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 import { formatDistanceToNow } from 'date-fns';
 import { Link } from 'wouter';
@@ -61,8 +61,28 @@ interface EvaluationStats {
   };
 }
 
+interface LearningInsight {
+  id: number;
+  category: 'improvement' | 'best_practice' | 'avoid_pattern';
+  insight: string;
+  examples: string[];
+  sourceEvaluationId: number;
+  importance: number;
+  isActive: boolean;
+  createdAt: string;
+}
+
+interface LearningStats {
+  totalInsights: number;
+  bestPractices: number;
+  improvements: number;
+  avoidPatterns: number;
+  avgImportance: number;
+  recentInsights: LearningInsight[];
+}
+
 export default function AdminChatbotEvaluationPage() {
-  const [selectedTab, setSelectedTab] = useState<'overview' | 'evaluations' | 'feedback'>('overview');
+  const [selectedTab, setSelectedTab] = useState<'overview' | 'evaluations' | 'feedback' | 'learning'>('overview');
   const queryClient = useQueryClient();
 
   const { data: evaluations, isLoading: evaluationsLoading } = useQuery({
@@ -85,6 +105,16 @@ export default function AdminChatbotEvaluationPage() {
     queryFn: () => apiRequest('/api/admin/chatbot/evaluations/stats', 'GET') as Promise<EvaluationStats>
   });
 
+  const { data: learningInsights, isLoading: learningInsightsLoading } = useQuery({
+    queryKey: ['/api/admin/chatbot/learning/insights'],
+    queryFn: () => apiRequest('/api/admin/chatbot/learning/insights', 'GET') as Promise<LearningInsight[]>
+  });
+
+  const { data: learningStats, isLoading: learningStatsLoading } = useQuery({
+    queryKey: ['/api/admin/chatbot/learning/stats'],
+    queryFn: () => apiRequest('/api/admin/chatbot/learning/stats', 'GET') as Promise<LearningStats>
+  });
+
   const evaluateConversationMutation = useMutation({
     mutationFn: (conversationId: number) => 
       apiRequest(`/api/admin/chatbot/evaluations/evaluate/${conversationId}`, 'POST'),
@@ -100,6 +130,39 @@ export default function AdminChatbotEvaluationPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/evaluations/detailed'] });
       queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/evaluations/stats'] });
+    }
+  });
+
+  const processRecentEvaluationsMutation = useMutation({
+    mutationFn: () => apiRequest('/api/admin/chatbot/learning/process-recent', 'POST'),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/learning/insights'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/learning/stats'] });
+    }
+  });
+
+  const updateSystemPromptMutation = useMutation({
+    mutationFn: () => apiRequest('/api/admin/chatbot/learning/update-prompt', 'POST'),
+    onSuccess: () => {
+      // No need to invalidate queries, just show success
+    }
+  });
+
+  const toggleInsightMutation = useMutation({
+    mutationFn: ({ id, isActive }: { id: number; isActive: boolean }) => 
+      apiRequest(`/api/admin/chatbot/learning/insights/${id}`, 'PATCH', { isActive }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/learning/insights'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/learning/stats'] });
+    }
+  });
+
+  const deleteInsightMutation = useMutation({
+    mutationFn: (id: number) => 
+      apiRequest(`/api/admin/chatbot/learning/insights/${id}`, 'DELETE'),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/learning/insights'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/learning/stats'] });
     }
   });
 
@@ -167,7 +230,8 @@ export default function AdminChatbotEvaluationPage() {
           {[
             { id: 'overview', label: 'Overview', icon: BarChart3 },
             { id: 'evaluations', label: 'Evaluations', icon: MessageSquare },
-            { id: 'feedback', label: 'User Feedback', icon: ThumbsUp }
+            { id: 'feedback', label: 'User Feedback', icon: ThumbsUp },
+            { id: 'learning', label: 'AI Learning', icon: Brain }
           ].map(tab => (
             <Button
               key={tab.id}
@@ -484,6 +548,158 @@ export default function AdminChatbotEvaluationPage() {
               <div className="text-center py-8">
                 <ThumbsUp className="w-12 h-12 text-gray-600 mx-auto mb-4" />
                 <p className="text-gray-400">No user feedback yet. Feedback will appear here once users interact with the chatbot.</p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Learning Insights Tab */}
+        {selectedTab === 'learning' && (
+          <div className="space-y-6">
+            {/* Learning Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="bg-gray-800 rounded-lg p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-blue-600 rounded-lg">
+                    <Brain className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Total Insights</h3>
+                    <p className="text-2xl font-bold text-blue-400">{learningStats?.totalInsights || 0}</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gray-800 rounded-lg p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-green-600 rounded-lg">
+                    <Target className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Best Practices</h3>
+                    <p className="text-2xl font-bold text-green-400">{learningStats?.bestPractices || 0}</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gray-800 rounded-lg p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-yellow-600 rounded-lg">
+                    <Lightbulb className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Improvements</h3>
+                    <p className="text-2xl font-bold text-yellow-400">{learningStats?.improvements || 0}</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gray-800 rounded-lg p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-red-600 rounded-lg">
+                    <Shield className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Avoid Patterns</h3>
+                    <p className="text-2xl font-bold text-red-400">{learningStats?.avoidPatterns || 0}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Learning Controls */}
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-lg font-semibold mb-4">Learning System Controls</h3>
+              <div className="flex gap-4">
+                <Button
+                  onClick={() => processRecentEvaluationsMutation.mutate()}
+                  disabled={processRecentEvaluationsMutation.isPending}
+                  className="bg-blue-600 hover:bg-blue-700"
+                >
+                  {processRecentEvaluationsMutation.isPending ? 'Processing...' : 'Process Recent Evaluations'}
+                </Button>
+                <Button
+                  onClick={() => updateSystemPromptMutation.mutate()}
+                  disabled={updateSystemPromptMutation.isPending}
+                  className="bg-green-600 hover:bg-green-700"
+                >
+                  {updateSystemPromptMutation.isPending ? 'Updating...' : 'Update System Prompt'}
+                </Button>
+              </div>
+            </div>
+
+            {/* Learning Insights List */}
+            {learningInsights && learningInsights.length > 0 ? (
+              <div className="bg-gray-800 rounded-lg p-6">
+                <h3 className="text-lg font-semibold mb-4">Learning Insights</h3>
+                <div className="space-y-4">
+                  {learningInsights.map((insight) => (
+                    <div key={insight.id} className="bg-gray-700 rounded-lg p-4">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Badge className={
+                              insight.category === 'best_practice' ? 'bg-green-100 text-green-800' :
+                              insight.category === 'improvement' ? 'bg-yellow-100 text-yellow-800' :
+                              'bg-red-100 text-red-800'
+                            }>
+                              {insight.category === 'best_practice' ? 'Best Practice' :
+                               insight.category === 'improvement' ? 'Improvement' :
+                               'Avoid Pattern'}
+                            </Badge>
+                            <Badge variant="outline">
+                              Importance: {insight.importance}/10
+                            </Badge>
+                            <Badge variant={insight.isActive ? 'default' : 'secondary'}>
+                              {insight.isActive ? 'Active' : 'Inactive'}
+                            </Badge>
+                          </div>
+                          <p className="text-gray-300 mb-2">{insight.insight}</p>
+                          {insight.examples && insight.examples.length > 0 && (
+                            <div className="ml-4">
+                              <p className="text-sm text-gray-400 mb-1">Examples:</p>
+                              <ul className="text-sm text-gray-400 space-y-1">
+                                {insight.examples.map((example, idx) => (
+                                  <li key={idx}>• {example}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 ml-4">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => toggleInsightMutation.mutate({ id: insight.id, isActive: !insight.isActive })}
+                            disabled={toggleInsightMutation.isPending}
+                          >
+                            {insight.isActive ? <ToggleRight className="w-4 h-4" /> : <ToggleLeft className="w-4 h-4" />}
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => deleteInsightMutation.mutate(insight.id)}
+                            disabled={deleteInsightMutation.isPending}
+                            className="text-red-400 hover:text-red-300"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
+                        <Clock className="w-3 h-3" />
+                        <span>Created {formatDistanceToNow(new Date(insight.createdAt))} ago</span>
+                        <span>•</span>
+                        <span>From evaluation #{insight.sourceEvaluationId}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <Brain className="w-12 h-12 text-gray-600 mx-auto mb-4" />
+                <p className="text-gray-400">No learning insights yet. Insights will be generated from evaluation feedback.</p>
               </div>
             )}
           </div>
