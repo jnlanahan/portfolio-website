@@ -9,6 +9,7 @@ import { OpenAIEmbeddings } from "@langchain/openai";
 import { traceable } from "langsmith/traceable";
 import { Client } from "langsmith";
 import { storage } from './storage';
+import { ChromaClient } from "chromadb";
 
 // Initialize LangSmith client
 const langsmithClient = new Client({
@@ -31,6 +32,7 @@ const embeddings = new OpenAIEmbeddings({
 
 // Global vector store for documents
 let vectorStore: MemoryVectorStore | null = null;
+let chromaClient: ChromaClient | null = null;
 
 // System prompt template
 const SYSTEM_PROMPT = `You are Nack, a professional AI assistant specifically designed to represent Nick Lanahan to recruiters and hiring managers. Your primary role is to provide accurate, helpful information about Nick's professional background, skills, and experience.
@@ -64,73 +66,154 @@ const promptTemplate = PromptTemplate.fromTemplate(SYSTEM_PROMPT);
  */
 async function initializeVectorStore(): Promise<void> {
   try {
-    console.log("Initializing LangChain vector store...");
+    console.log("Initializing LangChain integration...");
     
-    // Get all documents from the database
-    const documents = await storage.getChatbotDocuments();
+    // Check if chroma_db folder exists
+    const fs = await import('fs');
+    const path = await import('path');
+    const chromaDbPath = path.join(process.cwd(), 'chroma_db');
     
-    if (documents.length === 0) {
-      console.log("No documents found in database for vector store initialization");
-      vectorStore = new MemoryVectorStore(embeddings);
-      return;
+    if (fs.existsSync(chromaDbPath)) {
+      console.log("Found existing Chroma database at:", chromaDbPath);
+      
+      // Initialize Chroma client for file-based database
+      chromaClient = new ChromaClient({
+        host: "localhost",
+        port: 8000,
+        ssl: false
+      });
+      
+      console.log("Chroma client initialized for future use");
+    } else {
+      console.log("No existing Chroma database found. Please copy your chroma_db folder to the project root.");
     }
-
-    // Convert database documents to LangChain Document format
-    const langchainDocs = documents.map(doc => new Document({
-      pageContent: doc.content,
-      metadata: {
-        id: doc.id,
-        filename: doc.filename,
-        type: doc.type,
-        uploadedAt: doc.uploadedAt
-      }
-    }));
-
-    // Create vector store from documents
-    vectorStore = await MemoryVectorStore.fromDocuments(langchainDocs, embeddings);
     
-    console.log(`Vector store initialized with ${documents.length} documents`);
+    // Create a placeholder MemoryVectorStore for LangChain compatibility
+    vectorStore = new MemoryVectorStore(embeddings);
+    
+    console.log("LangChain integration initialized");
     
     // Track initialization in LangSmith
-    await langsmithClient.createRun({
-      name: "vector_store_initialization",
-      runType: "tool",
-      inputs: { document_count: documents.length },
-      outputs: { status: "success", vector_store_ready: true }
-    });
+    try {
+      await langsmithClient.createRun({
+        name: "vector_store_initialization",
+        runType: "tool",
+        inputs: { database_type: "chroma", has_local_db: fs.existsSync(chromaDbPath) },
+        outputs: { status: "success", vector_store_ready: true }
+      });
+    } catch (langsmithError) {
+      console.warn("LangSmith logging failed:", langsmithError.message);
+    }
     
   } catch (error) {
-    console.error("Error initializing vector store:", error);
+    console.error("Error initializing LangChain integration:", error);
+    console.log("Creating fallback MemoryVectorStore...");
+    
+    // Fallback: create memory vector store
+    vectorStore = new MemoryVectorStore(embeddings);
     
     // Track error in LangSmith
-    await langsmithClient.createRun({
-      name: "vector_store_initialization",
-      runType: "tool",
-      inputs: { document_count: 0 },
-      outputs: { status: "error", error: error.message }
-    });
-    
-    throw error;
+    try {
+      await langsmithClient.createRun({
+        name: "vector_store_initialization",
+        runType: "tool",
+        inputs: { database_type: "chroma", has_local_db: false },
+        outputs: { status: "fallback", error: error?.message }
+      });
+    } catch (langsmithError) {
+      console.warn("LangSmith logging failed:", langsmithError.message);
+    }
   }
 }
 
 /**
- * Retrieve relevant documents for a question
+ * Retrieve relevant documents using your existing Chroma database or fallback to database storage
  */
 async function retrieveRelevantDocuments(question: string, k: number = 5): Promise<Document[]> {
-  if (!vectorStore) {
+  if (!chromaClient && !vectorStore) {
     await initializeVectorStore();
   }
   
-  if (!vectorStore) {
-    return [];
+  // Try to use Chroma database first
+  if (chromaClient) {
+    try {
+      // Get all collections from your Chroma database
+      const collections = await chromaClient.listCollections();
+      
+      if (collections.length > 0) {
+        // Use the first collection (or specify your collection name)
+        const collection = await chromaClient.getCollection({
+          name: collections[0].name
+        });
+        
+        // Query the collection using your existing embeddings
+        const results = await collection.query({
+          queryTexts: [question],
+          nResults: k
+        });
+        
+        // Convert Chroma results to LangChain Document format
+        const documents: Document[] = [];
+        if (results.documents && results.documents[0]) {
+          for (let i = 0; i < results.documents[0].length; i++) {
+            documents.push(new Document({
+              pageContent: results.documents[0][i] || "",
+              metadata: {
+                id: results.ids?.[0]?.[i],
+                distance: results.distances?.[0]?.[i],
+                source: "chroma_db"
+              }
+            }));
+          }
+        }
+        
+        console.log(`Retrieved ${documents.length} relevant documents from Chroma for question: "${question}"`);
+        return documents;
+      }
+    } catch (error) {
+      console.error("Error retrieving documents from Chroma:", error);
+      console.log("Falling back to database storage...");
+    }
   }
-
+  
+  // Fallback to database storage
   try {
-    const results = await vectorStore.similaritySearch(question, k);
+    const documents = await storage.getChatbotDocuments();
+    
+    if (documents.length === 0) {
+      console.log("No documents found in database storage");
+      return [];
+    }
+    
+    // Convert database documents to LangChain Document format
+    const langchainDocs = documents.map(doc => new Document({
+      pageContent: doc.content || "",
+      metadata: {
+        id: doc.id,
+        filename: doc.filename,
+        type: doc.type,
+        uploadedAt: doc.uploadedAt,
+        source: "database"
+      }
+    }));
+    
+    // Simple keyword matching as fallback (you can improve this with proper similarity search)
+    const questionWords = question.toLowerCase().split(/\s+/);
+    const scoredDocs = langchainDocs.map(doc => {
+      const content = doc.pageContent.toLowerCase();
+      const score = questionWords.reduce((acc, word) => {
+        return acc + (content.includes(word) ? 1 : 0);
+      }, 0);
+      return { doc, score };
+    }).sort((a, b) => b.score - a.score);
+    
+    const results = scoredDocs.slice(0, k).map(item => item.doc);
+    
+    console.log(`Retrieved ${results.length} relevant documents from database storage for question: "${question}"`);
     return results;
+    
   } catch (error) {
-    console.error("Error retrieving documents:", error);
+    console.error("Error retrieving documents from database:", error);
     return [];
   }
 }

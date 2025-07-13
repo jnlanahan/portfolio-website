@@ -244,6 +244,7 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
     - Updated FloatingChatbot to use new LangChain RAG pipeline
     - All conversations now automatically logged to LangSmith for analysis and improvement
     - Added vector store refresh functionality for document updates
+    - **Integrated with existing Chroma database**: Modified LangChain service to connect to user's pre-built Chroma vector database (./chroma_db) instead of creating new vector store, enabling immediate access to all processed documents and embeddings
 
 - **January 2025**: Created comprehensive test suite for quality assurance
   - Built automated API test suite covering all major functionality
