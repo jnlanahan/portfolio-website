@@ -122,10 +122,22 @@ export default function FloatingChatbot() {
     try {
       // Find the message to get conversation ID
       const message = messages.find(m => m.id === messageId);
-      console.log('handleFeedback called with:', { messageId, feedback, message, comment });
+      console.log('=== FEEDBACK DEBUG ===');
+      console.log('messageId:', messageId);
+      console.log('feedback:', feedback);
+      console.log('message found:', message);
+      console.log('message.conversationId:', message?.conversationId);
+      console.log('messages array:', messages);
       
-      if (!message || !message.conversationId) {
-        console.error('Message or conversation ID not found', { message });
+      if (!message) {
+        console.error('Message not found with ID:', messageId);
+        alert('Error: Message not found');
+        return;
+      }
+
+      if (!message.conversationId) {
+        console.error('Message found but no conversationId:', message);
+        alert('Error: No conversation ID found for this message');
         return;
       }
 
@@ -144,6 +156,7 @@ export default function FloatingChatbot() {
       });
 
       console.log('Feedback submitted successfully:', response);
+      alert('Feedback submitted successfully!');
 
       // Update the message with feedback
       setMessages(prev => 
@@ -155,6 +168,7 @@ export default function FloatingChatbot() {
       );
     } catch (error) {
       console.error('Error submitting feedback:', error);
+      alert('Error submitting feedback: ' + error.message);
     }
   };
 
@@ -248,7 +262,11 @@ export default function FloatingChatbot() {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                console.log('Thumbs up clicked for message:', message.id, 'conversationId:', message.conversationId);
+                                console.log('=== THUMBS UP CLICKED ===');
+                                console.log('Button clicked for message:', message.id);
+                                console.log('Message object:', message);
+                                console.log('ConversationId:', message.conversationId);
+                                console.log('Feedback status:', message.feedback);
                                 handleFeedback(message.id, 'positive');
                               }}
                               className={`h-6 w-6 p-0 cursor-pointer ${message.feedback === 'positive' ? 'bg-green-100 text-green-700' : 'hover:bg-green-50 text-gray-500 hover:text-green-600'}`}
@@ -263,7 +281,11 @@ export default function FloatingChatbot() {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                console.log('Thumbs down clicked for message:', message.id, 'conversationId:', message.conversationId);
+                                console.log('=== THUMBS DOWN CLICKED ===');
+                                console.log('Button clicked for message:', message.id);
+                                console.log('Message object:', message);
+                                console.log('ConversationId:', message.conversationId);
+                                console.log('Feedback status:', message.feedback);
                                 handleFeedback(message.id, 'negative');
                               }}
                               className={`h-6 w-6 p-0 cursor-pointer ${message.feedback === 'negative' ? 'bg-red-100 text-red-700' : 'hover:bg-red-50 text-gray-500 hover:text-red-600'}`}
