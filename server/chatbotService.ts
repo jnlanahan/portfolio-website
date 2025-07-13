@@ -215,51 +215,14 @@ export async function processRecruiterQuestion(
     // First, determine what kind of information the question is asking about
     const questionAnalysis = await analyzeQuestion(question);
     
-    // Search for relevant documents based on the question
+    // ALWAYS search ALL documents for every question
     let relevantContext = "";
     
-    if (questionAnalysis.isAskingAbout.includes('education') || 
-        questionAnalysis.isAskingAbout.includes('coursework') ||
-        questionAnalysis.isAskingAbout.includes('academic')) {
-      // Look for transcripts
-      const transcripts = documents.filter(doc => 
-        doc.originalName.toLowerCase().includes('transcript') ||
-        doc.originalName.toLowerCase().includes('academic')
-      );
-      
-      for (const transcript of transcripts) {
-        const relevantParts = searchDocumentForRelevance(transcript.content, question);
-        if (relevantParts) {
-          relevantContext += `\nFrom ${transcript.originalName}:\n${relevantParts}\n`;
-        }
-      }
-    }
-    
-    if (questionAnalysis.isAskingAbout.includes('work') || 
-        questionAnalysis.isAskingAbout.includes('experience') ||
-        questionAnalysis.isAskingAbout.includes('career')) {
-      // Look for resume and LinkedIn
-      const careerDocs = documents.filter(doc => 
-        doc.originalName.toLowerCase().includes('resume') ||
-        doc.originalName.toLowerCase().includes('linkedin') ||
-        doc.originalName.toLowerCase().includes('cv')
-      );
-      
-      for (const doc of careerDocs) {
-        const relevantParts = searchDocumentForRelevance(doc.content, question);
-        if (relevantParts) {
-          relevantContext += `\nFrom ${doc.originalName}:\n${relevantParts}\n`;
-        }
-      }
-    }
-    
-    // If no specific category matched, search all documents
-    if (!relevantContext) {
-      for (const doc of documents) {
-        const relevantParts = searchDocumentForRelevance(doc.content, question);
-        if (relevantParts) {
-          relevantContext += `\nFrom ${doc.originalName}:\n${relevantParts}\n`;
-        }
+    // Search through ALL documents regardless of question type
+    for (const doc of documents) {
+      const relevantParts = searchDocumentForRelevance(doc.content, question);
+      if (relevantParts) {
+        relevantContext += `\nFrom ${doc.originalName}:\n${relevantParts}\n`;
       }
     }
     

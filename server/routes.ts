@@ -1619,6 +1619,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.post("/api/admin/chatbot/learning/generate-suggestion", requireAdmin, async (req, res) => {
+    try {
+      // Generate AI suggestion based on current insights and feedback
+      const suggestedPrompt = await generateEnhancedSystemPrompt();
+      res.json({ prompt: suggestedPrompt });
+    } catch (error) {
+      console.error("Error generating AI suggestion:", error);
+      res.status(500).json({ error: "Failed to generate AI suggestion" });
+    }
+  });
+
   app.post("/api/admin/chatbot/learning/update-prompt", requireAdmin, async (req, res) => {
     try {
       const { customPrompt } = req.body;

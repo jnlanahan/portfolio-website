@@ -215,6 +215,8 @@ export default function AdminChatbotEvaluationPage() {
   const [selectedTab, setSelectedTab] = useState<'overview' | 'evaluations' | 'learning'>('overview');
   const [showPromptPreview, setShowPromptPreview] = useState(false);
   const [editedPrompt, setEditedPrompt] = useState('');
+  const [showApprovalDialog, setShowApprovalDialog] = useState(false);
+  const [suggestedPrompt, setSuggestedPrompt] = useState('');
   const queryClient = useQueryClient();
 
   const { data: evaluations, isLoading: evaluationsLoading } = useQuery({
@@ -318,6 +320,28 @@ export default function AdminChatbotEvaluationPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/learning/insights'] });
       queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/learning/stats'] });
+    }
+  });
+
+  const generateSuggestionMutation = useMutation({
+    mutationFn: () => apiRequest('/api/admin/chatbot/learning/generate-suggestion', 'POST'),
+    onSuccess: (suggestion) => {
+      setSuggestedPrompt(suggestion.prompt);
+      setShowApprovalDialog(true);
+    }
+  });
+
+  const approveSuggestionMutation = useMutation({
+    mutationFn: (approved: boolean) => {
+      if (approved) {
+        return apiRequest('/api/admin/chatbot/learning/update-prompt', 'POST', { customPrompt: suggestedPrompt });
+      }
+      return Promise.resolve();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/learning/system-prompt'] });
+      setShowApprovalDialog(false);
+      setSuggestedPrompt('');
     }
   });
 
@@ -799,10 +823,11 @@ export default function AdminChatbotEvaluationPage() {
                       {deduplicateInsightsMutation.isPending ? 'Deduplicating...' : 'Deduplicate Insights'}
                     </Button>
                     <Button
-                      onClick={() => setShowPromptPreview(true)}
+                      onClick={() => generateSuggestionMutation.mutate()}
+                      disabled={generateSuggestionMutation.isPending}
                       className="bg-green-600 hover:bg-green-700"
                     >
-                      Update System Prompt
+                      {generateSuggestionMutation.isPending ? 'Generating...' : 'Get AI Suggestion'}
                     </Button>
                   </div>
                 </div>
@@ -890,36 +915,56 @@ export default function AdminChatbotEvaluationPage() {
         )}
       </div>
 
-      {/* System Prompt Preview Dialog */}
-      {showPromptPreview && (
+      {/* AI Suggestion Approval Dialog */}
+      {showApprovalDialog && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-gray-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
             <div className="p-6 border-b border-gray-700">
-              <h2 className="text-xl font-semibold">System Prompt Preview</h2>
-              <p className="text-sm text-gray-400 mt-1">Review the changes that will be applied to the system prompt</p>
+              <h2 className="text-xl font-semibold">AI System Prompt Suggestion</h2>
+              <p className="text-sm text-gray-400 mt-1">AI has generated a suggested improvement to the system prompt. Review and approve or reject.</p>
             </div>
             
             <div className="p-6 overflow-y-auto max-h-[60vh]">
-              <PromptDiffPreview onPromptChange={setEditedPrompt} />
+              <div className="space-y-4">
+                <div>
+                  <h3 className="font-medium mb-2">Suggested System Prompt:</h3>
+                  <div className="bg-gray-900 p-4 rounded-lg">
+                    <pre className="text-sm text-gray-300 whitespace-pre-wrap">{suggestedPrompt}</pre>
+                  </div>
+                </div>
+                
+                <div className="bg-blue-900 bg-opacity-30 p-4 rounded-lg">
+                  <div className="flex items-start gap-3">
+                    <Brain className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="text-sm text-blue-300 font-medium">AI Recommendation</p>
+                      <p className="text-sm text-blue-200 mt-1">
+                        This prompt has been generated based on recent learning insights, user feedback, and evaluation results. 
+                        It should improve the chatbot's accuracy and helpfulness.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="p-6 border-t border-gray-700 flex gap-4 justify-end">
               <Button
                 variant="outline"
-                onClick={() => setShowPromptPreview(false)}
+                onClick={() => {
+                  approveSuggestionMutation.mutate(false);
+                  setShowApprovalDialog(false);
+                }}
                 className="text-gray-300 border-gray-600 hover:bg-gray-700"
               >
-                Cancel
+                No, Reject
               </Button>
               <Button
-                onClick={() => {
-                  updateSystemPromptMutation.mutate(editedPrompt);
-                  setShowPromptPreview(false);
-                }}
-                disabled={updateSystemPromptMutation.isPending}
+                onClick={() => approveSuggestionMutation.mutate(true)}
+                disabled={approveSuggestionMutation.isPending}
                 className="bg-green-600 hover:bg-green-700"
               >
-                {updateSystemPromptMutation.isPending ? 'Applying Changes...' : 'Apply Changes'}
+                {approveSuggestionMutation.isPending ? 'Applying...' : 'Yes, Apply'}
               </Button>
             </div>
           </div>

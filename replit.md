@@ -205,6 +205,13 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - **Relaxed off-topic filtering**: Updated visitor chatbot to be much more lenient about what's considered "off-topic" - now only blocks clearly inappropriate or harmful content, allows reasonable questions even when specific information isn't available (responds with "I don't know" + context)
   - **Fixed chatbot feedback system**: Resolved JavaScript null/undefined comparison bug that prevented feedback dialog from opening (changed `!== null` to truthy check), fixed apiRequest call format issue, and enhanced admin dashboard to display detailed feedback comments alongside ratings for better training insights
   - **Enhanced chatbot evaluation system**: Combined User Feedback and AI Judge into single "Learning & Feedback" tab, implemented conversation-level evaluations instead of per-message processing, added system prompt preview dialog that shows exact lines being added/deleted/modified before applying changes, fixed missing getUserFeedbackById storage method, and improved learning system to extract FACT-based knowledge from user feedback
+  - **Fixed critical chatbot functionality and improved approval system**:
+    - Fixed document retrieval to ALWAYS search ALL documents for every question (removed selective filtering)
+    - Created proper AI suggestion system with simple Yes/No approval buttons
+    - Added database table for system prompt templates (fixed missing table error)
+    - Replaced complex diff preview with simple suggestion approval dialog
+    - System now generates AI-suggested prompt improvements based on learning insights
+    - Manual approval required for all system prompt changes with clear reject option
 
 - **January 2025**: Created comprehensive test suite for quality assurance
   - Built automated API test suite covering all major functionality
