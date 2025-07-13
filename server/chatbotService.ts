@@ -135,9 +135,11 @@ export async function processRecruiterQuestion(
     // Get training data from database to provide context
     const trainingData = await storage.getChatbotTrainingSessions();
     const documents = await storage.getChatbotDocuments();
+    const learningInsights = await storage.getChatbotLearningInsights();
     
     console.log(`Retrieved ${documents.length} documents from storage`);
     console.log(`Retrieved ${trainingData.length} training sessions from storage`);
+    console.log(`Retrieved ${learningInsights.length} learning insights from storage`);
     
     // Build context from training data
     let context = "Current profile data about Nick Lanahan:\n\n";
@@ -155,6 +157,20 @@ export async function processRecruiterQuestion(
     trainingData.forEach(session => {
       context += `Q: ${session.question}\nA: ${session.answer}\n\n`;
     });
+    
+    // Add important facts from learning insights
+    const factInsights = learningInsights.filter(i => 
+      i.isActive && i.insight.startsWith('FACT:') && i.importance >= 9
+    );
+    
+    if (factInsights.length > 0) {
+      context += "\nIMPORTANT FACTS (extracted from user feedback):\n";
+      factInsights.forEach(fact => {
+        const factText = fact.insight.replace('FACT: ', '');
+        context += `• ${factText}\n`;
+      });
+      context += "\n";
+    }
 
     const systemPrompt = `You are Nack, a professional AI assistant specifically designed to represent Nick Lanahan to recruiters and hiring managers. Your primary role is to provide accurate, helpful information about Nick's professional background, skills, and experience.
 
@@ -163,8 +179,10 @@ ${context}
 
 INSTRUCTIONS:
 - Use the detailed information provided above to answer questions about Nick's background
+- PRIORITIZE the "IMPORTANT FACTS" section - these are corrections and clarifications from direct feedback
 - When specific information is available in the context, provide it directly
 - Be confident and informative when answering questions about information that's clearly documented
+- If facts contradict earlier content, trust the IMPORTANT FACTS as they are the most recent updates
 - Maintain a professional, helpful tone suitable for recruiter interactions
 - Focus on Nick's achievements, experience, and qualifications`;
 

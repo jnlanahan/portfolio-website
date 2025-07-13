@@ -38,6 +38,13 @@ import {
   getLearningInsightsStats,
   updateSystemPromptWithLearning
 } from "./chatbotLearningService";
+import {
+  processUserFeedback,
+  processConversationSession,
+  deduplicateInsights,
+  convertToLearningInsights,
+  createKnowledgeFact
+} from "./chatbotKnowledgeService";
 import express from "express";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -1647,6 +1654,113 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error updating learning insight:", error);
       res.status(500).json({ error: "Failed to update insight" });
+    }
+  });
+
+  // New knowledge-based learning routes
+  app.post("/api/admin/chatbot/knowledge/process-feedback/:feedbackId", requireAdmin, async (req, res) => {
+    try {
+      const feedbackId = parseInt(req.params.feedbackId);
+      const knowledgeUpdate = await processUserFeedback(feedbackId);
+      
+      // Create knowledge facts from the feedback
+      for (const gap of knowledgeUpdate.knowledgeGaps) {
+        await createKnowledgeFact(gap, 'user_feedback', feedbackId);
+      }
+      
+      for (const correction of knowledgeUpdate.factCorrections) {
+        await createKnowledgeFact(correction, 'user_feedback', feedbackId);
+      }
+      
+      res.json({
+        message: "Feedback processed successfully",
+        knowledgeUpdate,
+        factsCreated: knowledgeUpdate.knowledgeGaps.length + knowledgeUpdate.factCorrections.length
+      });
+    } catch (error) {
+      console.error("Error processing user feedback:", error);
+      res.status(500).json({ error: "Failed to process feedback" });
+    }
+  });
+
+  app.post("/api/admin/chatbot/knowledge/process-session/:conversationId", requireAdmin, async (req, res) => {
+    try {
+      const conversationId = parseInt(req.params.conversationId);
+      const sessionInsights = await processConversationSession(conversationId);
+      const learningInsights = await convertToLearningInsights(sessionInsights, conversationId);
+      
+      res.json({
+        message: "Session processed successfully",
+        sessionInsights,
+        learningInsights,
+        insightsCreated: learningInsights.length
+      });
+    } catch (error) {
+      console.error("Error processing conversation session:", error);
+      res.status(500).json({ error: "Failed to process session" });
+    }
+  });
+
+  app.post("/api/admin/chatbot/knowledge/deduplicate", requireAdmin, async (req, res) => {
+    try {
+      const deduplicatedCount = await deduplicateInsights();
+      res.json({
+        message: "Deduplication complete",
+        deduplicatedCount,
+        status: deduplicatedCount > 0 ? "Insights merged successfully" : "No duplicates found"
+      });
+    } catch (error) {
+      console.error("Error deduplicating insights:", error);
+      res.status(500).json({ error: "Failed to deduplicate insights" });
+    }
+  });
+
+  app.post("/api/admin/chatbot/knowledge/process-all-feedback", requireAdmin, async (req, res) => {
+    try {
+      // Get all negative feedback with comments
+      const allFeedback = await storage.getUserFeedback();
+      const negativeFeedback = allFeedback.filter(fb => 
+        fb.rating === 'thumbs_down' && fb.comment && fb.comment.length > 0
+      );
+      
+      let processedCount = 0;
+      const knowledgeUpdates = [];
+      
+      for (const feedback of negativeFeedback) {
+        try {
+          const update = await processUserFeedback(feedback.id);
+          if (update.knowledgeGaps.length > 0 || update.factCorrections.length > 0) {
+            knowledgeUpdates.push({
+              feedbackId: feedback.id,
+              conversationId: feedback.conversationId,
+              update
+            });
+            
+            // Create knowledge facts
+            for (const gap of update.knowledgeGaps) {
+              await createKnowledgeFact(gap, 'user_feedback', feedback.id);
+            }
+            
+            for (const correction of update.factCorrections) {
+              await createKnowledgeFact(correction, 'user_feedback', feedback.id);
+            }
+            
+            processedCount++;
+          }
+        } catch (error) {
+          console.error(`Error processing feedback ${feedback.id}:`, error);
+        }
+      }
+      
+      res.json({
+        message: "All feedback processed",
+        totalFeedback: negativeFeedback.length,
+        processedCount,
+        knowledgeUpdates
+      });
+    } catch (error) {
+      console.error("Error processing all feedback:", error);
+      res.status(500).json({ error: "Failed to process all feedback" });
     }
   });
 

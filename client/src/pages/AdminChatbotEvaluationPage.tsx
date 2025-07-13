@@ -148,6 +148,22 @@ export default function AdminChatbotEvaluationPage() {
     }
   });
 
+  const processFeedbackMutation = useMutation({
+    mutationFn: () => apiRequest('/api/admin/chatbot/knowledge/process-all-feedback', 'POST'),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/learning/insights'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/learning/stats'] });
+    }
+  });
+
+  const deduplicateInsightsMutation = useMutation({
+    mutationFn: () => apiRequest('/api/admin/chatbot/knowledge/deduplicate', 'POST'),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/learning/insights'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/learning/stats'] });
+    }
+  });
+
   const toggleInsightMutation = useMutation({
     mutationFn: ({ id, isActive }: { id: number; isActive: boolean }) => 
       apiRequest(`/api/admin/chatbot/learning/insights/${id}`, 'PATCH', { isActive }),
@@ -620,21 +636,39 @@ export default function AdminChatbotEvaluationPage() {
             {/* Learning Controls */}
             <div className="bg-gray-800 rounded-lg p-6">
               <h3 className="text-lg font-semibold mb-4">Learning System Controls</h3>
-              <div className="flex gap-4">
-                <Button
-                  onClick={() => processRecentEvaluationsMutation.mutate()}
-                  disabled={processRecentEvaluationsMutation.isPending}
-                  className="bg-blue-600 hover:bg-blue-700"
-                >
-                  {processRecentEvaluationsMutation.isPending ? 'Processing...' : 'Process Recent Evaluations'}
-                </Button>
-                <Button
-                  onClick={() => updateSystemPromptMutation.mutate()}
-                  disabled={updateSystemPromptMutation.isPending}
-                  className="bg-green-600 hover:bg-green-700"
-                >
-                  {updateSystemPromptMutation.isPending ? 'Updating...' : 'Update System Prompt'}
-                </Button>
+              <div className="space-y-4">
+                <div className="bg-gray-700 p-4 rounded-lg">
+                  <h4 className="font-medium mb-2 text-yellow-400">Quality-First Learning</h4>
+                  <p className="text-sm text-gray-300 mb-3">
+                    Focus on extracting high-quality insights from user feedback and session-level patterns.
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    <Button
+                      onClick={() => processFeedbackMutation.mutate()}
+                      disabled={processFeedbackMutation.isPending}
+                      className="bg-purple-600 hover:bg-purple-700"
+                    >
+                      {processFeedbackMutation.isPending ? 'Processing...' : 'Process User Feedback'}
+                    </Button>
+                    <Button
+                      onClick={() => deduplicateInsightsMutation.mutate()}
+                      disabled={deduplicateInsightsMutation.isPending}
+                      className="bg-orange-600 hover:bg-orange-700"
+                    >
+                      {deduplicateInsightsMutation.isPending ? 'Deduplicating...' : 'Deduplicate Insights'}
+                    </Button>
+                    <Button
+                      onClick={() => updateSystemPromptMutation.mutate()}
+                      disabled={updateSystemPromptMutation.isPending}
+                      className="bg-green-600 hover:bg-green-700"
+                    >
+                      {updateSystemPromptMutation.isPending ? 'Updating...' : 'Update System Prompt'}
+                    </Button>
+                  </div>
+                </div>
+                <div className="text-sm text-gray-400">
+                  <p>💡 Tip: Process user feedback first to extract knowledge gaps, then deduplicate to merge similar insights.</p>
+                </div>
               </div>
             </div>
 
