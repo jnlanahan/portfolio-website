@@ -476,14 +476,14 @@ export async function extractTextFromFile(buffer: Buffer, mimeType: string, file
     
     // Handle PDF files
     if (mimeType === 'application/pdf') {
-      try {
-        const pdfParse = await import('pdf-parse');
-        const data = await pdfParse.default(buffer);
-        return `Document: ${filename}\nExtracted from PDF:\n\n${data.text}`;
-      } catch (error) {
-        console.error('Error parsing PDF:', error);
-        return `File: ${filename}\nPDF parsing failed: ${error.message}`;
-      }
+      // For now, PDF extraction is not working reliably
+      // The user should be informed that these documents need manual processing
+      return `Document: ${filename}\nPDF document detected - ${buffer.length} bytes\n\nIMPORTANT: PDF text extraction is currently not working properly. To ensure the chatbot can read this document, please:
+1. Convert the PDF to a text file (.txt)
+2. Or extract the text manually and create a new document
+3. Or provide key information during training sessions
+
+This document contains important information but cannot be automatically processed at this time.`;
     }
     
     // Handle Word documents (.docx)
