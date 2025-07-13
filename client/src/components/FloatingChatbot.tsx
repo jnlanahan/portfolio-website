@@ -182,7 +182,14 @@ export default function FloatingChatbot() {
   };
 
   const handleCustomFeedbackSubmit = async () => {
-    if (!customFeedbackDialog.messageId || !customFeedbackDialog.rating) return;
+    console.log('=== CUSTOM FEEDBACK SUBMIT ===');
+    console.log('customFeedbackDialog:', customFeedbackDialog);
+    console.log('customFeedbackText:', customFeedbackText);
+    
+    if (!customFeedbackDialog.messageId || !customFeedbackDialog.rating) {
+      console.log('Missing required data - messageId:', customFeedbackDialog.messageId, 'rating:', customFeedbackDialog.rating);
+      return;
+    }
     
     await handleFeedback(
       customFeedbackDialog.messageId, 
@@ -363,10 +370,15 @@ export default function FloatingChatbot() {
                                     </Button>
                                     <Button
                                       onClick={handleCustomFeedbackSubmit}
-                                      disabled={!customFeedbackDialog.rating}
+                                      disabled={false}
+                                      className={!customFeedbackDialog.rating ? 'opacity-50' : ''}
                                     >
                                       Submit Feedback
                                     </Button>
+                                    {/* Debug info */}
+                                    <div className="text-xs text-gray-500 mt-2">
+                                      Debug: Rating = {customFeedbackDialog.rating || 'null'} | MessageId = {customFeedbackDialog.messageId || 'null'}
+                                    </div>
                                   </div>
                                 </div>
                               </DialogContent>
