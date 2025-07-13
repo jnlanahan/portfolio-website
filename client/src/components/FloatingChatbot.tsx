@@ -308,28 +308,27 @@ export default function FloatingChatbot() {
                             >
                               <ThumbsDown className="h-4 w-4" />
                             </button>
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                if (message.feedback !== null) return; // Don't allow clicking if feedback already given
+                                console.log('Opening custom feedback dialog for message:', message.id);
+                                openCustomFeedbackDialog(message.id, 'positive');
+                              }}
+                              className={`h-8 w-8 p-1 rounded border-2 transition-all duration-200 hover:scale-110 ${message.feedback !== null ? 'bg-gray-100 text-gray-400 border-gray-300 cursor-not-allowed' : 'bg-white text-gray-600 border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 cursor-pointer'}`}
+                              title="Provide detailed feedback"
+                              style={{ zIndex: 1000, position: 'relative' }}
+                              disabled={message.feedback !== null}
+                            >
+                              <MessageSquare className="h-4 w-4" />
+                            </button>
                             <Dialog open={customFeedbackDialog.isOpen} onOpenChange={(open) => {
                               if (!open) {
                                 setCustomFeedbackDialog({ isOpen: false, messageId: '', rating: null });
                                 setCustomFeedbackText('');
                               }
                             }}>
-                              <DialogTrigger asChild>
-                                <button
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    if (message.feedback !== null) return; // Don't allow clicking if feedback already given
-                                    console.log('Opening custom feedback dialog for message:', message.id);
-                                    openCustomFeedbackDialog(message.id, 'positive');
-                                  }}
-                                  className={`h-8 w-8 p-1 rounded border-2 transition-all duration-200 hover:scale-110 ${message.feedback !== null ? 'bg-gray-100 text-gray-400 border-gray-300 cursor-not-allowed' : 'bg-white text-gray-600 border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 cursor-pointer'}`}
-                                  title="Provide detailed feedback"
-                                  style={{ zIndex: 1000, position: 'relative' }}
-                                >
-                                  <MessageSquare className="h-4 w-4" />
-                                </button>
-                              </DialogTrigger>
                               <DialogContent className="sm:max-w-[425px]">
                                 <DialogHeader>
                                   <DialogTitle>Provide Detailed Feedback</DialogTitle>
