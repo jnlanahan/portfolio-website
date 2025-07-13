@@ -148,24 +148,33 @@ export default function FloatingChatbot() {
         comment
       });
 
-      const response = await apiRequest('/api/chatbot/feedback', 'POST', {
-        conversationId: message.conversationId,
-        sessionId: sessionId,
-        rating: feedback === 'positive' ? 'thumbs_up' : 'thumbs_down',
-        comment: comment || null
+      const response = await apiRequest('/api/chatbot/feedback', {
+        method: 'POST',
+        body: {
+          conversationId: message.conversationId,
+          sessionId: sessionId,
+          rating: feedback === 'positive' ? 'thumbs_up' : 'thumbs_down',
+          comment: comment || null,
+          userAgent: navigator.userAgent,
+          ipAddress: null
+        }
       });
 
       console.log('Feedback submitted successfully:', response);
-      alert('Feedback submitted successfully!');
+      console.log('About to update message state with feedback:', feedback);
 
       // Update the message with feedback
-      setMessages(prev => 
-        prev.map(m => 
+      setMessages(prev => {
+        const updated = prev.map(m => 
           m.id === messageId 
             ? { ...m, feedback } 
             : m
-        )
-      );
+        );
+        console.log('Updated messages:', updated);
+        return updated;
+      });
+
+      alert('Feedback submitted successfully! Thank you for your input.');
     } catch (error) {
       console.error('Error submitting feedback:', error);
       alert('Error submitting feedback: ' + error.message);
@@ -267,7 +276,7 @@ export default function FloatingChatbot() {
                                 console.log('Feedback status:', message.feedback);
                                 handleFeedback(message.id, 'positive');
                               }}
-                              className={`h-8 w-8 p-1 cursor-pointer rounded border-2 transition-all duration-200 hover:scale-110 ${message.feedback === 'positive' ? 'bg-green-100 text-green-700 border-green-300' : 'bg-white text-gray-600 border-gray-300 hover:bg-green-50 hover:text-green-600 hover:border-green-300'}`}
+                              className={`h-8 w-8 p-1 cursor-pointer rounded border-2 transition-all duration-200 hover:scale-110 ${message.feedback === 'positive' ? 'bg-green-100 text-green-700 border-green-300' : message.feedback !== null ? 'bg-gray-100 text-gray-400 border-gray-300 cursor-not-allowed' : 'bg-white text-gray-600 border-gray-300 hover:bg-green-50 hover:text-green-600 hover:border-green-300'}`}
                               disabled={message.feedback !== null}
                               title="Rate this response as helpful"
                               style={{ zIndex: 1000, position: 'relative' }}
@@ -285,7 +294,7 @@ export default function FloatingChatbot() {
                                 console.log('Feedback status:', message.feedback);
                                 handleFeedback(message.id, 'negative');
                               }}
-                              className={`h-8 w-8 p-1 cursor-pointer rounded border-2 transition-all duration-200 hover:scale-110 ${message.feedback === 'negative' ? 'bg-red-100 text-red-700 border-red-300' : 'bg-white text-gray-600 border-gray-300 hover:bg-red-50 hover:text-red-600 hover:border-red-300'}`}
+                              className={`h-8 w-8 p-1 cursor-pointer rounded border-2 transition-all duration-200 hover:scale-110 ${message.feedback === 'negative' ? 'bg-red-100 text-red-700 border-red-300' : message.feedback !== null ? 'bg-gray-100 text-gray-400 border-gray-300 cursor-not-allowed' : 'bg-white text-gray-600 border-gray-300 hover:bg-red-50 hover:text-red-600 hover:border-red-300'}`}
                               disabled={message.feedback !== null}
                               title="Rate this response as not helpful"
                               style={{ zIndex: 1000, position: 'relative' }}
@@ -294,16 +303,15 @@ export default function FloatingChatbot() {
                             </button>
                             <Dialog>
                               <DialogTrigger asChild>
-                                <Button
-                                  size="sm"
-                                  variant="ghost"
+                                <button
                                   onClick={() => openCustomFeedbackDialog(message.id, 'positive')}
-                                  className="h-6 w-6 p-0 cursor-pointer hover:bg-blue-50 text-gray-500 hover:text-blue-600"
+                                  className={`h-8 w-8 p-1 cursor-pointer rounded border-2 transition-all duration-200 hover:scale-110 ${message.feedback !== null ? 'bg-gray-100 text-gray-400 border-gray-300 cursor-not-allowed' : 'bg-white text-gray-600 border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300'}`}
                                   disabled={message.feedback !== null}
                                   title="Provide detailed feedback"
+                                  style={{ zIndex: 1000, position: 'relative' }}
                                 >
-                                  <MessageSquare className="h-3 w-3" />
-                                </Button>
+                                  <MessageSquare className="h-4 w-4" />
+                                </button>
                               </DialogTrigger>
                               <DialogContent className="sm:max-w-[425px]">
                                 <DialogHeader>
