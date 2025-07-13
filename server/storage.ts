@@ -119,6 +119,7 @@ export interface IStorage {
   
   // User feedback methods
   getUserFeedback(): Promise<UserFeedback[]>;
+  getUserFeedbackById(id: number): Promise<UserFeedback | undefined>;
   getUserFeedbackByConversationId(conversationId: number): Promise<UserFeedback[]>;
   saveUserFeedback(feedback: InsertUserFeedback): Promise<UserFeedback>;
   
@@ -1121,6 +1122,15 @@ export class DatabaseStorage implements IStorage {
     const { desc } = await import('drizzle-orm');
     
     return await db.select().from(userFeedback).orderBy(desc(userFeedback.createdAt));
+  }
+
+  async getUserFeedbackById(id: number): Promise<UserFeedback | undefined> {
+    const { db } = await import('./db');
+    const { userFeedback } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [feedback] = await db.select().from(userFeedback).where(eq(userFeedback.id, id));
+    return feedback || undefined;
   }
 
   async getUserFeedbackByConversationId(conversationId: number): Promise<UserFeedback[]> {

@@ -115,6 +115,12 @@ export default function AdminChatbotEvaluationPage() {
     queryFn: () => apiRequest('/api/admin/chatbot/learning/stats', 'GET') as Promise<LearningStats>
   });
 
+  const { data: systemPromptData, isLoading: systemPromptLoading } = useQuery({
+    queryKey: ['/api/admin/chatbot/learning/system-prompt'],
+    queryFn: () => apiRequest('/api/admin/chatbot/learning/system-prompt', 'GET') as Promise<{ prompt: string; stats: any }>,
+    enabled: selectedTab === 'learning'
+  });
+
   const evaluateConversationMutation = useMutation({
     mutationFn: (conversationId: number) => 
       apiRequest(`/api/admin/chatbot/evaluations/evaluate/${conversationId}`, 'POST'),
@@ -144,7 +150,7 @@ export default function AdminChatbotEvaluationPage() {
   const updateSystemPromptMutation = useMutation({
     mutationFn: () => apiRequest('/api/admin/chatbot/learning/update-prompt', 'POST'),
     onSuccess: () => {
-      // No need to invalidate queries, just show success
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/learning/system-prompt'] });
     }
   });
 
@@ -632,6 +638,31 @@ export default function AdminChatbotEvaluationPage() {
                 </div>
               </div>
             </div>
+
+            {/* Current System Prompt */}
+            {systemPromptData && (
+              <div className="bg-gray-800 rounded-lg p-6">
+                <h3 className="text-lg font-semibold mb-4">Current System Prompt</h3>
+                <div className="space-y-4">
+                  <div className="bg-gray-700 p-4 rounded-lg">
+                    <div className="flex items-center gap-4 mb-3 text-sm">
+                      <span className="text-gray-400">Documents: {systemPromptData.stats.documents}</span>
+                      <span className="text-gray-400">•</span>
+                      <span className="text-gray-400">Training Sessions: {systemPromptData.stats.trainingSessions}</span>
+                      <span className="text-gray-400">•</span>
+                      <span className="text-yellow-400">Active Facts: {systemPromptData.stats.activeFacts}</span>
+                    </div>
+                    <div className="bg-gray-900 p-4 rounded-lg overflow-x-auto">
+                      <pre className="text-xs text-gray-300 whitespace-pre-wrap">{systemPromptData.prompt}</pre>
+                    </div>
+                  </div>
+                  <div className="text-sm text-gray-400">
+                    <p>📌 The system prompt is automatically updated when you click "Update System Prompt".</p>
+                    <p>📌 IMPORTANT FACTS section contains knowledge extracted from user feedback.</p>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Learning Controls */}
             <div className="bg-gray-800 rounded-lg p-6">

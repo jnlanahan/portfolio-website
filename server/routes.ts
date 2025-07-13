@@ -1715,6 +1715,72 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/admin/chatbot/learning/system-prompt", requireAdmin, async (req, res) => {
+    try {
+      // Get training data from database to provide context
+      const trainingData = await storage.getChatbotTrainingSessions();
+      const documents = await storage.getChatbotDocuments();
+      const learningInsights = await storage.getChatbotLearningInsights();
+      
+      // Build context from training data
+      let context = "Current profile data about Nick Lanahan:\n\n";
+      
+      // Add document context - focus on documents with substantial content
+      const substantialDocs = documents.filter(doc => doc.content.length > 1000);
+      
+      substantialDocs.forEach(doc => {
+        context += `From ${doc.originalName}: ${doc.content.substring(0, 3000)}...\n\n`;
+      });
+      
+      // Add Q&A context
+      trainingData.forEach(session => {
+        context += `Q: ${session.question}\nA: ${session.answer}\n\n`;
+      });
+      
+      // Add important facts from learning insights
+      const factInsights = learningInsights.filter(i => 
+        i.isActive && i.insight.startsWith('FACT:') && i.importance >= 9
+      );
+      
+      if (factInsights.length > 0) {
+        context += "\nIMPORTANT FACTS (extracted from user feedback):\n";
+        factInsights.forEach(fact => {
+          const factText = fact.insight.replace('FACT: ', '');
+          context += `• ${factText}\n`;
+        });
+        context += "\n";
+      }
+
+      const systemPrompt = `You are Nack, a professional AI assistant specifically designed to represent Nick Lanahan to recruiters and hiring managers. Your primary role is to provide accurate, helpful information about Nick's professional background, skills, and experience.
+
+DETAILED CONTEXT FROM NICK'S DOCUMENTS:
+${context}
+
+INSTRUCTIONS:
+- Use the detailed information provided above to answer questions about Nick's background
+- PRIORITIZE the "IMPORTANT FACTS" section - these are corrections and clarifications from direct feedback
+- When specific information is available in the context, provide it directly
+- Be confident and informative when answering questions about information that's clearly documented
+- If facts contradict earlier content, trust the IMPORTANT FACTS as they are the most recent updates
+- Maintain a professional, helpful tone suitable for recruiter interactions
+- Focus on Nick's achievements, experience, and qualifications`;
+      
+      res.json({
+        prompt: systemPrompt,
+        stats: {
+          documents: documents.length,
+          substantialDocs: substantialDocs.length,
+          trainingSessions: trainingData.length,
+          learningInsights: learningInsights.length,
+          activeFacts: factInsights.length
+        }
+      });
+    } catch (error) {
+      console.error("Error getting system prompt:", error);
+      res.status(500).json({ error: "Failed to get system prompt" });
+    }
+  });
+
   app.post("/api/admin/chatbot/knowledge/process-all-feedback", requireAdmin, async (req, res) => {
     try {
       // Get all negative feedback with comments
