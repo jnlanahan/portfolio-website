@@ -30,7 +30,9 @@ import {
   type UserFeedback,
   type InsertUserFeedback,
   type ChatbotLearningInsight,
-  type InsertChatbotLearningInsight
+  type InsertChatbotLearningInsight,
+  type SystemPromptTemplate,
+  type InsertSystemPromptTemplate
 } from "@shared/schema";
 import { getBlogPosts, getBlogPostById } from "../client/src/data/blog";
 import { getPortfolio } from "../client/src/data/portfolio";
@@ -136,6 +138,10 @@ export interface IStorage {
   createChatbotLearningInsight(insight: InsertChatbotLearningInsight): Promise<ChatbotLearningInsight>;
   updateChatbotLearningInsight(id: number, insight: Partial<InsertChatbotLearningInsight>): Promise<ChatbotLearningInsight>;
   deleteChatbotLearningInsight(id: number): Promise<void>;
+  
+  // System prompt template methods
+  getActiveSystemPromptTemplate(): Promise<SystemPromptTemplate | undefined>;
+  saveSystemPromptTemplate(template: InsertSystemPromptTemplate): Promise<SystemPromptTemplate>;
 }
 
 export class MemStorage implements IStorage {
@@ -1217,6 +1223,39 @@ export class DatabaseStorage implements IStorage {
     if (!deleted) {
       throw new Error(`Learning insight with ID ${id} not found`);
     }
+  }
+
+  async getActiveSystemPromptTemplate(): Promise<SystemPromptTemplate | undefined> {
+    const { db } = await import('./db');
+    const { systemPromptTemplate } = await import('@shared/schema');
+    const { eq, desc } = await import('drizzle-orm');
+    
+    const templates = await db.select()
+      .from(systemPromptTemplate)
+      .where(eq(systemPromptTemplate.isActive, true))
+      .orderBy(desc(systemPromptTemplate.createdAt))
+      .limit(1);
+    
+    return templates[0];
+  }
+
+  async saveSystemPromptTemplate(template: InsertSystemPromptTemplate): Promise<SystemPromptTemplate> {
+    const { db } = await import('./db');
+    const { systemPromptTemplate } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    // Deactivate all existing templates if this one is active
+    if (template.isActive) {
+      await db.update(systemPromptTemplate)
+        .set({ isActive: false })
+        .where(eq(systemPromptTemplate.isActive, true));
+    }
+    
+    const [newTemplate] = await db.insert(systemPromptTemplate)
+      .values(template)
+      .returning();
+    
+    return newTemplate;
   }
 }
 

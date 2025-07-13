@@ -1621,8 +1621,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/admin/chatbot/learning/update-prompt", requireAdmin, async (req, res) => {
     try {
-      const updatedPrompt = await updateSystemPromptWithLearning();
-      res.json({ message: "System prompt updated successfully", prompt: updatedPrompt });
+      const { customPrompt } = req.body;
+      
+      if (customPrompt) {
+        // Save the custom system prompt
+        await storage.saveSystemPromptTemplate({
+          name: 'custom',
+          template: customPrompt,
+          isActive: true
+        });
+        res.json({ message: "Custom system prompt saved successfully", prompt: customPrompt });
+      } else {
+        // Use the auto-generated prompt
+        const updatedPrompt = await updateSystemPromptWithLearning();
+        res.json({ message: "System prompt updated successfully", prompt: updatedPrompt });
+      }
     } catch (error) {
       console.error("Error updating system prompt:", error);
       res.status(500).json({ error: "Failed to update system prompt" });
@@ -1722,54 +1735,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const documents = await storage.getChatbotDocuments();
       const learningInsights = await storage.getChatbotLearningInsights();
       
-      // Build context from training data
-      let context = "Current profile data about Nick Lanahan:\n\n";
-      
-      // Add document context - focus on documents with substantial content
-      const substantialDocs = documents.filter(doc => doc.content.length > 1000);
-      
-      substantialDocs.forEach(doc => {
-        context += `From ${doc.originalName}: ${doc.content.substring(0, 3000)}...\n\n`;
-      });
-      
-      // Add Q&A context
-      trainingData.forEach(session => {
-        context += `Q: ${session.question}\nA: ${session.answer}\n\n`;
-      });
-      
-      // Add important facts from learning insights
+      // Build a list of important facts from learning insights
       const factInsights = learningInsights.filter(i => 
-        i.isActive && i.insight.startsWith('FACT:') && i.importance >= 9
+        i.isActive && i.insight.startsWith('FACT:')
       );
       
+      let factsSection = "";
       if (factInsights.length > 0) {
-        context += "\nIMPORTANT FACTS (extracted from user feedback):\n";
+        factsSection = "\n\nIMPORTANT FACTS (from user feedback):\n";
         factInsights.forEach(fact => {
           const factText = fact.insight.replace('FACT: ', '');
-          context += `• ${factText}\n`;
+          factsSection += `• ${factText}\n`;
         });
-        context += "\n";
       }
 
       const systemPrompt = `You are Nack, a professional AI assistant specifically designed to represent Nick Lanahan to recruiters and hiring managers. Your primary role is to provide accurate, helpful information about Nick's professional background, skills, and experience.
 
-DETAILED CONTEXT FROM NICK'S DOCUMENTS:
-${context}
-
-INSTRUCTIONS:
-- Use the detailed information provided above to answer questions about Nick's background
-- PRIORITIZE the "IMPORTANT FACTS" section - these are corrections and clarifications from direct feedback
-- When specific information is available in the context, provide it directly
-- Be confident and informative when answering questions about information that's clearly documented
-- If facts contradict earlier content, trust the IMPORTANT FACTS as they are the most recent updates
+CRITICAL INSTRUCTIONS:
+- Always search available documents before answering questions
+- When asked about specific topics, look for relevant documents:
+  * For coursework or education details → Check for transcripts or academic records
+  * For work experience or duration → Check resume and LinkedIn profile 
+  * For project details → Check portfolio documents or project descriptions
+  * For technical skills → Check resume, LinkedIn, and project documentation
+  * For certifications or achievements → Check resume and professional documents
+- Never assume information is not available without checking all documents
+- If you cannot find specific information after searching, say "I don't have that specific information in the documents available"
+- Be confident when information is found in documents
 - Maintain a professional, helpful tone suitable for recruiter interactions
-- Focus on Nick's achievements, experience, and qualifications`;
+- Focus on Nick's achievements, experience, and qualifications
+
+AVAILABLE DOCUMENT TYPES:
+- Resume documents
+- LinkedIn profile
+- Academic transcripts (MBA and MS transcripts)
+- Project documentation
+- Professional certifications
+- Work samples and portfolio pieces${factsSection}`;
       
       res.json({
         prompt: systemPrompt,
         stats: {
           documents: documents.length,
-          substantialDocs: substantialDocs.length,
           trainingSessions: trainingData.length,
           learningInsights: learningInsights.length,
           activeFacts: factInsights.length
@@ -1789,54 +1796,48 @@ INSTRUCTIONS:
       const documents = await storage.getChatbotDocuments();
       const learningInsights = await storage.getChatbotLearningInsights();
       
-      // Build context from training data
-      let context = "Current profile data about Nick Lanahan:\n\n";
-      
-      // Add document context - focus on documents with substantial content
-      const substantialDocs = documents.filter(doc => doc.content.length > 1000);
-      
-      substantialDocs.forEach(doc => {
-        context += `From ${doc.originalName}: ${doc.content.substring(0, 3000)}...\n\n`;
-      });
-      
-      // Add Q&A context
-      trainingData.forEach(session => {
-        context += `Q: ${session.question}\nA: ${session.answer}\n\n`;
-      });
-      
-      // Add ALL active facts from learning insights (not just high importance)
+      // Build a list of ALL active facts from learning insights
       const factInsights = learningInsights.filter(i => 
         i.isActive && i.insight.startsWith('FACT:')
       );
       
+      let factsSection = "";
       if (factInsights.length > 0) {
-        context += "\nIMPORTANT FACTS (extracted from user feedback):\n";
+        factsSection = "\n\nIMPORTANT FACTS (from user feedback):\n";
         factInsights.forEach(fact => {
           const factText = fact.insight.replace('FACT: ', '');
-          context += `• ${factText}\n`;
+          factsSection += `• ${factText}\n`;
         });
-        context += "\n";
       }
-      
+
       const systemPrompt = `You are Nack, a professional AI assistant specifically designed to represent Nick Lanahan to recruiters and hiring managers. Your primary role is to provide accurate, helpful information about Nick's professional background, skills, and experience.
 
-DETAILED CONTEXT FROM NICK'S DOCUMENTS:
-${context}
-
-INSTRUCTIONS:
-- Use the detailed information provided above to answer questions about Nick's background
-- PRIORITIZE the "IMPORTANT FACTS" section - these are corrections and clarifications from direct feedback
-- When specific information is available in the context, provide it directly
-- Be confident and informative when answering questions about information that's clearly documented
-- If facts contradict earlier content, trust the IMPORTANT FACTS as they are the most recent updates
+CRITICAL INSTRUCTIONS:
+- Always search available documents before answering questions
+- When asked about specific topics, look for relevant documents:
+  * For coursework or education details → Check for transcripts or academic records
+  * For work experience or duration → Check resume and LinkedIn profile 
+  * For project details → Check portfolio documents or project descriptions
+  * For technical skills → Check resume, LinkedIn, and project documentation
+  * For certifications or achievements → Check resume and professional documents
+- Never assume information is not available without checking all documents
+- If you cannot find specific information after searching, say "I don't have that specific information in the documents available"
+- Be confident when information is found in documents
 - Maintain a professional, helpful tone suitable for recruiter interactions
-- Focus on Nick's achievements, experience, and qualifications`;
+- Focus on Nick's achievements, experience, and qualifications
+
+AVAILABLE DOCUMENT TYPES:
+- Resume documents
+- LinkedIn profile
+- Academic transcripts (MBA and MS transcripts)
+- Project documentation
+- Professional certifications
+- Work samples and portfolio pieces${factsSection}`;
       
       res.json({
         prompt: systemPrompt,
         stats: {
           documents: documents.length,
-          substantialDocs: substantialDocs.length,
           trainingSessions: trainingData.length,
           learningInsights: learningInsights.length,
           activeFacts: factInsights.length

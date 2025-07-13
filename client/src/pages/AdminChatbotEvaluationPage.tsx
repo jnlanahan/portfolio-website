@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { AlertCircle, TrendingUp, ThumbsUp, ThumbsDown, BarChart3, MessageSquare, CheckCircle, XCircle, Brain, Target, Lightbulb, Shield, Trash2, ToggleLeft, ToggleRight, Clock, Activity } from 'lucide-react';
+import { AlertCircle, TrendingUp, ThumbsUp, ThumbsDown, BarChart3, MessageSquare, CheckCircle, XCircle, Brain, Target, Lightbulb, Shield, Trash2, ToggleLeft, ToggleRight, Clock, Activity, Edit, Check } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 import { formatDistanceToNow } from 'date-fns';
 import { Link } from 'wouter';
@@ -82,7 +82,10 @@ interface LearningStats {
 }
 
 // PromptDiffPreview Component
-function PromptDiffPreview() {
+function PromptDiffPreview({ onPromptChange }: { onPromptChange: (prompt: string) => void }) {
+  const [editMode, setEditMode] = useState(false);
+  const [editedPrompt, setEditedPrompt] = useState('');
+  
   const { data: currentPrompt, isLoading: currentLoading } = useQuery({
     queryKey: ['/api/admin/chatbot/learning/system-prompt'],
   });
@@ -91,6 +94,13 @@ function PromptDiffPreview() {
     queryKey: ['/api/admin/chatbot/learning/prompt-preview'],
     enabled: !!currentPrompt,
   });
+
+  useEffect(() => {
+    if (previewData?.prompt) {
+      setEditedPrompt(previewData.prompt);
+      onPromptChange(previewData.prompt);
+    }
+  }, [previewData, onPromptChange]);
 
   if (currentLoading || previewLoading) {
     return (
@@ -102,7 +112,8 @@ function PromptDiffPreview() {
   }
 
   const currentLines = currentPrompt?.prompt?.split('\n') || [];
-  const newLines = previewData?.prompt?.split('\n') || [];
+  const displayPrompt = editMode ? editedPrompt : (previewData?.prompt || '');
+  const newLines = displayPrompt.split('\n');
   
   // Simple diff implementation
   const changes = [];
@@ -130,44 +141,70 @@ function PromptDiffPreview() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-4 text-sm">
-        <span className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-green-600 rounded"></div>
-          <span className="text-gray-400">Added</span>
-        </span>
-        <span className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-red-600 rounded"></div>
-          <span className="text-gray-400">Deleted</span>
-        </span>
-        <span className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-gray-600 rounded"></div>
-          <span className="text-gray-400">Unchanged</span>
-        </span>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4 text-sm">
+          <span className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-green-600 rounded"></div>
+            <span className="text-gray-400">Added</span>
+          </span>
+          <span className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-red-600 rounded"></div>
+            <span className="text-gray-400">Deleted</span>
+          </span>
+          <span className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-gray-600 rounded"></div>
+            <span className="text-gray-400">Unchanged</span>
+          </span>
+        </div>
+        <Button
+          size="sm"
+          variant={editMode ? "default" : "outline"}
+          onClick={() => setEditMode(!editMode)}
+          className={editMode ? "bg-blue-600 hover:bg-blue-700" : "text-gray-300 border-gray-600 hover:bg-gray-700"}
+        >
+          {editMode ? <Check className="w-4 h-4 mr-2" /> : <Edit className="w-4 h-4 mr-2" />}
+          {editMode ? "Done Editing" : "Edit Prompt"}
+        </Button>
       </div>
 
-      <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-        <pre className="text-xs">
-          {changes.map((change, idx) => (
-            <div
-              key={idx}
-              className={`${
-                change.type === 'added' ? 'bg-green-900 bg-opacity-30 text-green-400' :
-                change.type === 'deleted' ? 'bg-red-900 bg-opacity-30 text-red-400 line-through' :
-                'text-gray-500'
-              }`}
-            >
-              <span className="select-none mr-2 text-gray-600">
-                {change.type === 'added' ? '+' : change.type === 'deleted' ? '-' : ' '}
-              </span>
-              {change.line || ' '}
-            </div>
-          ))}
-        </pre>
-      </div>
+      {editMode ? (
+        <div className="space-y-2">
+          <label className="text-sm text-gray-400">Edit System Prompt:</label>
+          <textarea
+            value={editedPrompt}
+            onChange={(e) => {
+              setEditedPrompt(e.target.value);
+              onPromptChange(e.target.value);
+            }}
+            className="w-full h-96 bg-gray-900 text-gray-300 p-4 rounded-lg border border-gray-700 focus:border-blue-500 focus:outline-none font-mono text-xs"
+            placeholder="Enter system prompt..."
+          />
+        </div>
+      ) : (
+        <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
+          <pre className="text-xs">
+            {changes.map((change, idx) => (
+              <div
+                key={idx}
+                className={`${
+                  change.type === 'added' ? 'bg-green-900 bg-opacity-30 text-green-400' :
+                  change.type === 'deleted' ? 'bg-red-900 bg-opacity-30 text-red-400 line-through' :
+                  'text-gray-500'
+                }`}
+              >
+                <span className="select-none mr-2 text-gray-600">
+                  {change.type === 'added' ? '+' : change.type === 'deleted' ? '-' : ' '}
+                </span>
+                {change.line || ' '}
+              </div>
+            ))}
+          </pre>
+        </div>
+      )}
 
       <div className="text-sm text-gray-400">
         <p>📌 Review the changes carefully before applying them.</p>
-        <p>📌 New FACTS will be added to the system prompt from user feedback.</p>
+        <p>📌 You can edit the prompt directly by clicking "Edit Prompt".</p>
         <p>📌 The chatbot will use this updated prompt for all future conversations.</p>
       </div>
     </div>
@@ -177,6 +214,7 @@ function PromptDiffPreview() {
 export default function AdminChatbotEvaluationPage() {
   const [selectedTab, setSelectedTab] = useState<'overview' | 'evaluations' | 'learning'>('overview');
   const [showPromptPreview, setShowPromptPreview] = useState(false);
+  const [editedPrompt, setEditedPrompt] = useState('');
   const queryClient = useQueryClient();
 
   const { data: evaluations, isLoading: evaluationsLoading } = useQuery({
@@ -242,7 +280,8 @@ export default function AdminChatbotEvaluationPage() {
   });
 
   const updateSystemPromptMutation = useMutation({
-    mutationFn: () => apiRequest('/api/admin/chatbot/learning/update-prompt', 'POST'),
+    mutationFn: (customPrompt?: string) => 
+      apiRequest('/api/admin/chatbot/learning/update-prompt', 'POST', { customPrompt }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/learning/system-prompt'] });
     }
@@ -761,10 +800,9 @@ export default function AdminChatbotEvaluationPage() {
                     </Button>
                     <Button
                       onClick={() => setShowPromptPreview(true)}
-                      disabled={updateSystemPromptMutation.isPending}
                       className="bg-green-600 hover:bg-green-700"
                     >
-                      {updateSystemPromptMutation.isPending ? 'Updating...' : 'Update System Prompt'}
+                      Update System Prompt
                     </Button>
                   </div>
                 </div>
@@ -862,7 +900,7 @@ export default function AdminChatbotEvaluationPage() {
             </div>
             
             <div className="p-6 overflow-y-auto max-h-[60vh]">
-              <PromptDiffPreview />
+              <PromptDiffPreview onPromptChange={setEditedPrompt} />
             </div>
 
             <div className="p-6 border-t border-gray-700 flex gap-4 justify-end">
@@ -875,7 +913,7 @@ export default function AdminChatbotEvaluationPage() {
               </Button>
               <Button
                 onClick={() => {
-                  updateSystemPromptMutation.mutate();
+                  updateSystemPromptMutation.mutate(editedPrompt);
                   setShowPromptPreview(false);
                 }}
                 disabled={updateSystemPromptMutation.isPending}

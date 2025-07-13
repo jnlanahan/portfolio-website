@@ -113,6 +113,79 @@ Return response in JSON format:
 }
 
 /**
+ * Analyze what kind of information a question is asking about
+ */
+async function analyzeQuestion(question: string): Promise<{isAskingAbout: string[]}> {
+  const questionLower = question.toLowerCase();
+  const topics = [];
+  
+  // Education-related keywords
+  if (questionLower.includes('course') || questionLower.includes('class') || 
+      questionLower.includes('education') || questionLower.includes('school') ||
+      questionLower.includes('university') || questionLower.includes('degree') ||
+      questionLower.includes('transcript') || questionLower.includes('gpa') ||
+      questionLower.includes('mba') || questionLower.includes('master')) {
+    topics.push('education');
+  }
+  
+  // Work experience keywords
+  if (questionLower.includes('work') || questionLower.includes('job') ||
+      questionLower.includes('experience') || questionLower.includes('career') ||
+      questionLower.includes('position') || questionLower.includes('role') ||
+      questionLower.includes('company') || questionLower.includes('employer')) {
+    topics.push('work', 'experience', 'career');
+  }
+  
+  // Project keywords
+  if (questionLower.includes('project') || questionLower.includes('built') ||
+      questionLower.includes('developed') || questionLower.includes('created')) {
+    topics.push('projects');
+  }
+  
+  // Skills keywords
+  if (questionLower.includes('skill') || questionLower.includes('technology') ||
+      questionLower.includes('programming') || questionLower.includes('language')) {
+    topics.push('skills');
+  }
+  
+  return { isAskingAbout: topics };
+}
+
+/**
+ * Search a document for content relevant to a question
+ */
+function searchDocumentForRelevance(content: string, question: string): string {
+  const questionWords = question.toLowerCase().split(/\s+/).filter(word => word.length > 3);
+  const lines = content.split('\n');
+  const relevantLines = [];
+  
+  // Look for lines that contain question keywords
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const lineLower = line.toLowerCase();
+    
+    // Check if line contains any of the question words
+    const hasRelevance = questionWords.some(word => lineLower.includes(word));
+    
+    if (hasRelevance) {
+      // Include context: 2 lines before and after
+      const startIdx = Math.max(0, i - 2);
+      const endIdx = Math.min(lines.length - 1, i + 2);
+      
+      for (let j = startIdx; j <= endIdx; j++) {
+        if (lines[j].trim() && !relevantLines.includes(lines[j])) {
+          relevantLines.push(lines[j]);
+        }
+      }
+    }
+  }
+  
+  // Return up to 1500 characters of relevant content
+  const result = relevantLines.join('\n').substring(0, 1500);
+  return result || "";
+}
+
+/**
  * Process a recruiter's question and generate appropriate response (VISITOR MODE)
  */
 export async function processRecruiterQuestion(
@@ -132,65 +205,128 @@ export async function processRecruiterQuestion(
 
     const openai = getOpenAI();
     
-    // Get training data from database to provide context
-    const trainingData = await storage.getChatbotTrainingSessions();
+    // Get data from database
     const documents = await storage.getChatbotDocuments();
     const learningInsights = await storage.getChatbotLearningInsights();
     
     console.log(`Retrieved ${documents.length} documents from storage`);
-    console.log(`Retrieved ${trainingData.length} training sessions from storage`);
     console.log(`Retrieved ${learningInsights.length} learning insights from storage`);
     
-    // Build context from training data
-    let context = "Current profile data about Nick Lanahan:\n\n";
+    // First, determine what kind of information the question is asking about
+    const questionAnalysis = await analyzeQuestion(question);
     
-    // Add document context - focus on documents with substantial content
-    const substantialDocs = documents.filter(doc => doc.content.length > 1000);
-    console.log(`Using ${substantialDocs.length} substantial documents out of ${documents.length} total`);
+    // Search for relevant documents based on the question
+    let relevantContext = "";
     
-    substantialDocs.forEach(doc => {
-      console.log(`Document: ${doc.originalName}, Content length: ${doc.content.length}`);
-      context += `From ${doc.originalName}: ${doc.content.substring(0, 3000)}...\n\n`;
-    });
+    if (questionAnalysis.isAskingAbout.includes('education') || 
+        questionAnalysis.isAskingAbout.includes('coursework') ||
+        questionAnalysis.isAskingAbout.includes('academic')) {
+      // Look for transcripts
+      const transcripts = documents.filter(doc => 
+        doc.originalName.toLowerCase().includes('transcript') ||
+        doc.originalName.toLowerCase().includes('academic')
+      );
+      
+      for (const transcript of transcripts) {
+        const relevantParts = searchDocumentForRelevance(transcript.content, question);
+        if (relevantParts) {
+          relevantContext += `\nFrom ${transcript.originalName}:\n${relevantParts}\n`;
+        }
+      }
+    }
     
-    // Add Q&A context
-    trainingData.forEach(session => {
-      context += `Q: ${session.question}\nA: ${session.answer}\n\n`;
-    });
+    if (questionAnalysis.isAskingAbout.includes('work') || 
+        questionAnalysis.isAskingAbout.includes('experience') ||
+        questionAnalysis.isAskingAbout.includes('career')) {
+      // Look for resume and LinkedIn
+      const careerDocs = documents.filter(doc => 
+        doc.originalName.toLowerCase().includes('resume') ||
+        doc.originalName.toLowerCase().includes('linkedin') ||
+        doc.originalName.toLowerCase().includes('cv')
+      );
+      
+      for (const doc of careerDocs) {
+        const relevantParts = searchDocumentForRelevance(doc.content, question);
+        if (relevantParts) {
+          relevantContext += `\nFrom ${doc.originalName}:\n${relevantParts}\n`;
+        }
+      }
+    }
+    
+    // If no specific category matched, search all documents
+    if (!relevantContext) {
+      for (const doc of documents) {
+        const relevantParts = searchDocumentForRelevance(doc.content, question);
+        if (relevantParts) {
+          relevantContext += `\nFrom ${doc.originalName}:\n${relevantParts}\n`;
+        }
+      }
+    }
     
     // Add important facts from learning insights
     const factInsights = learningInsights.filter(i => 
-      i.isActive && i.insight.startsWith('FACT:') && i.importance >= 9
+      i.isActive && i.insight.startsWith('FACT:')
     );
     
+    let factsSection = "";
     if (factInsights.length > 0) {
-      context += "\nIMPORTANT FACTS (extracted from user feedback):\n";
+      factsSection = "\n\nIMPORTANT FACTS (from user feedback):\n";
       factInsights.forEach(fact => {
         const factText = fact.insight.replace('FACT: ', '');
-        context += `• ${factText}\n`;
+        factsSection += `• ${factText}\n`;
       });
-      context += "\n";
     }
 
-    const systemPrompt = `You are Nack, a professional AI assistant specifically designed to represent Nick Lanahan to recruiters and hiring managers. Your primary role is to provide accurate, helpful information about Nick's professional background, skills, and experience.
+    // Check if there's a custom system prompt template
+    let systemPrompt = "";
+    const customPromptTemplate = await storage.getActiveSystemPromptTemplate();
+    
+    if (customPromptTemplate) {
+      // Use the custom prompt and append facts and context
+      systemPrompt = customPromptTemplate.template;
+      
+      // Append facts if not already included
+      if (!systemPrompt.includes('IMPORTANT FACTS') && factsSection) {
+        systemPrompt += factsSection;
+      }
+      
+      // Append context for this specific question
+      systemPrompt += `\n\nRELEVANT CONTEXT FOR THIS QUESTION:
+${relevantContext || "No specific documents found for this question. Please provide information based on general knowledge about Nick if available."}`;
+    } else {
+      // Use default system prompt
+      systemPrompt = `You are Nack, a professional AI assistant specifically designed to represent Nick Lanahan to recruiters and hiring managers. Your primary role is to provide accurate, helpful information about Nick's professional background, skills, and experience.
 
-DETAILED CONTEXT FROM NICK'S DOCUMENTS:
-${context}
-
-INSTRUCTIONS:
-- Use the detailed information provided above to answer questions about Nick's background
-- PRIORITIZE the "IMPORTANT FACTS" section - these are corrections and clarifications from direct feedback
-- When specific information is available in the context, provide it directly
-- Be confident and informative when answering questions about information that's clearly documented
-- If facts contradict earlier content, trust the IMPORTANT FACTS as they are the most recent updates
+CRITICAL INSTRUCTIONS:
+- Always search available documents before answering questions
+- When asked about specific topics, look for relevant documents:
+  * For coursework or education details → Check for transcripts or academic records
+  * For work experience or duration → Check resume and LinkedIn profile 
+  * For project details → Check portfolio documents or project descriptions
+  * For technical skills → Check resume, LinkedIn, and project documentation
+  * For certifications or achievements → Check resume and professional documents
+- Never assume information is not available without checking all documents
+- If you cannot find specific information after searching, say "I don't have that specific information in the documents available"
+- Be confident when information is found in documents
 - Maintain a professional, helpful tone suitable for recruiter interactions
-- Focus on Nick's achievements, experience, and qualifications`;
+- Focus on Nick's achievements, experience, and qualifications
+
+AVAILABLE DOCUMENT TYPES:
+- Resume documents
+- LinkedIn profile
+- Academic transcripts (MBA and MS transcripts)
+- Project documentation
+- Professional certifications
+- Work samples and portfolio pieces${factsSection}
+
+RELEVANT CONTEXT FOR THIS QUESTION:
+${relevantContext || "No specific documents found for this question. Please provide information based on general knowledge about Nick if available."}`;
+    }
 
     // Debug logging
-    console.log('Context length:', context.length);
-    console.log('Context contains "South Korea":', context.includes('South Korea'));
-    console.log('Context contains "Seoul":', context.includes('Seoul'));
-    console.log('Context contains "Pyeongtaek":', context.includes('Pyeongtaek'));
+    console.log('Using custom prompt:', !!customPromptTemplate);
+    console.log('Relevant context length:', relevantContext.length);
+    console.log('Documents searched:', documents.map(d => d.originalName).join(', '));
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
