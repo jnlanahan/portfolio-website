@@ -273,10 +273,6 @@ export default function FloatingChatbot() {
                         )}
                         {message.sender === 'bot' && message.id !== 'welcome' && (
                           <div className="flex items-center gap-1 relative z-10">
-                            {/* Debug: Show feedback state */}
-                            <span className="text-xs text-red-500">
-                              {message.feedback ? `Feedback: ${message.feedback}` : 'No feedback'}
-                            </span>
                             <button
                               onClick={(e) => {
                                 e.preventDefault();
@@ -317,18 +313,10 @@ export default function FloatingChatbot() {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                // Always log to see if click is received
-                                console.log('CLICK RECEIVED on message:', message.id, 'feedback:', message.feedback);
-                                window.clickCount = (window.clickCount || 0) + 1;
-                                console.log('Total clicks:', window.clickCount);
-                                
-                                if (message.feedback !== null) {
-                                  console.log('Button disabled - feedback already given');
-                                  return;
-                                }
+                                if (message.feedback) return;
                                 openCustomFeedbackDialog(message.id, 'positive');
                               }}
-                              className="h-8 w-8 p-1 rounded border-2 transition-all duration-200 hover:scale-110 bg-white text-gray-600 border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 cursor-pointer"
+                              className={`h-8 w-8 p-1 rounded border-2 transition-all duration-200 hover:scale-110 ${message.feedback ? 'bg-gray-100 text-gray-400 border-gray-300 cursor-not-allowed' : 'bg-white text-gray-600 border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 cursor-pointer'}`}
                               title="Provide detailed feedback"
                               style={{ zIndex: 1000, position: 'relative', pointerEvents: 'auto' }}
                               type="button"
