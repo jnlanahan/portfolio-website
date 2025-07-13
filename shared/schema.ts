@@ -330,3 +330,22 @@ export const insertChatbotLearningInsightSchema = createInsertSchema(chatbotLear
 
 export type InsertChatbotLearningInsight = z.infer<typeof insertChatbotLearningInsightSchema>;
 export type ChatbotLearningInsight = typeof chatbotLearningInsights.$inferSelect;
+
+// System prompt template model
+export const systemPromptTemplate = pgTable("system_prompt_template", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull().default("default"),
+  template: text("template").notNull(),
+  isActive: boolean("is_active").default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const insertSystemPromptTemplateSchema = createInsertSchema(systemPromptTemplate).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type InsertSystemPromptTemplate = z.infer<typeof insertSystemPromptTemplateSchema>;
+export type SystemPromptTemplate = typeof systemPromptTemplate.$inferSelect;
