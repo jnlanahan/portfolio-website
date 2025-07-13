@@ -227,6 +227,13 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
     - System now displays warnings like "*Note: 1 of 24 documents could not be fully read due to formatting or encryption issues*"
     - Console logging provides detailed document status for troubleshooting
     - Chatbot now provides more specific and detailed responses when information is available in documents
+  - **Added manual system prompt editing capability**:
+    - Created "Edit" button in Current System Prompt section of admin dashboard
+    - Built comprehensive edit dialog with large textarea for full prompt editing
+    - Added proper warning about manual edit mode and preserving important sections
+    - Implemented Save/Cancel functionality with loading states
+    - Manual edits override AI-generated suggestions and are saved immediately
+    - System displays "Using custom prompt: true" when manual edits are active
 
 - **January 2025**: Created comprehensive test suite for quality assurance
   - Built automated API test suite covering all major functionality

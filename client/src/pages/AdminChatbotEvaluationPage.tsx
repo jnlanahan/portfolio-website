@@ -217,6 +217,8 @@ export default function AdminChatbotEvaluationPage() {
   const [editedPrompt, setEditedPrompt] = useState('');
   const [showApprovalDialog, setShowApprovalDialog] = useState(false);
   const [suggestedPrompt, setSuggestedPrompt] = useState('');
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [manualEditPrompt, setManualEditPrompt] = useState('');
   const queryClient = useQueryClient();
 
   const { data: evaluations, isLoading: evaluationsLoading } = useQuery({
@@ -776,7 +778,20 @@ export default function AdminChatbotEvaluationPage() {
             {/* Current System Prompt */}
             {systemPromptData && (
               <div className="bg-gray-800 rounded-lg p-6">
-                <h3 className="text-lg font-semibold mb-4">Current System Prompt</h3>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold">Current System Prompt</h3>
+                  <Button
+                    onClick={() => {
+                      setManualEditPrompt(systemPromptData.prompt);
+                      setShowEditDialog(true);
+                    }}
+                    className="bg-blue-600 hover:bg-blue-700"
+                    size="sm"
+                  >
+                    <Edit className="w-4 h-4 mr-2" />
+                    Edit
+                  </Button>
+                </div>
                 <div className="space-y-4">
                   <div className="bg-gray-700 p-4 rounded-lg">
                     <div className="flex items-center gap-4 mb-3 text-sm">
@@ -965,6 +980,67 @@ export default function AdminChatbotEvaluationPage() {
                 className="bg-green-600 hover:bg-green-700"
               >
                 {approveSuggestionMutation.isPending ? 'Applying...' : 'Yes, Apply'}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Manual Edit Dialog */}
+      {showEditDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-gray-800 rounded-lg max-w-6xl w-full max-h-[90vh] overflow-hidden">
+            <div className="p-6 border-b border-gray-700">
+              <h2 className="text-xl font-semibold">Edit System Prompt</h2>
+              <p className="text-sm text-gray-400 mt-1">Manually edit the system prompt. Changes will be applied immediately.</p>
+            </div>
+            
+            <div className="p-6 overflow-y-auto max-h-[70vh]">
+              <div className="space-y-4">
+                <div className="bg-gray-700 p-4 rounded-lg">
+                  <label className="block text-sm font-medium mb-2">System Prompt</label>
+                  <textarea
+                    value={manualEditPrompt}
+                    onChange={(e) => setManualEditPrompt(e.target.value)}
+                    className="w-full h-96 bg-gray-900 text-gray-300 rounded-lg p-4 font-mono text-sm resize-none"
+                    placeholder="Enter system prompt..."
+                  />
+                </div>
+                
+                <div className="bg-blue-900 bg-opacity-30 border border-blue-600 rounded-lg p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <AlertCircle className="w-5 h-5 text-blue-400" />
+                    <p className="text-sm font-medium text-blue-300">Manual Edit Mode</p>
+                  </div>
+                  <p className="text-sm text-blue-200">
+                    You are manually editing the system prompt. This will override any AI-generated suggestions. 
+                    Make sure to preserve important sections like CRITICAL INSTRUCTIONS and IMPORTANT FACTS.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 border-t border-gray-700 flex gap-4 justify-end">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setShowEditDialog(false);
+                  setManualEditPrompt('');
+                }}
+                className="text-gray-300 border-gray-600 hover:bg-gray-700"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  updateSystemPromptMutation.mutate(manualEditPrompt);
+                  setShowEditDialog(false);
+                  setManualEditPrompt('');
+                }}
+                disabled={updateSystemPromptMutation.isPending}
+                className="bg-green-600 hover:bg-green-700"
+              >
+                {updateSystemPromptMutation.isPending ? 'Saving...' : 'Save Changes'}
               </Button>
             </div>
           </div>
