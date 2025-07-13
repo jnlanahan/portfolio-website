@@ -3,7 +3,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { MessageCircle, X, Send, Loader2, ThumbsUp, ThumbsDown } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { MessageCircle, X, Send, Loader2, ThumbsUp, ThumbsDown, MessageSquare } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 
 interface Message {
@@ -23,6 +26,16 @@ export default function FloatingChatbot() {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId] = useState(() => `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
+  const [customFeedbackDialog, setCustomFeedbackDialog] = useState<{
+    isOpen: boolean;
+    messageId: string;
+    rating: 'positive' | 'negative' | null;
+  }>({
+    isOpen: false,
+    messageId: '',
+    rating: null,
+  });
+  const [customFeedbackText, setCustomFeedbackText] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -105,11 +118,11 @@ export default function FloatingChatbot() {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
-  const handleFeedback = async (messageId: string, feedback: 'positive' | 'negative') => {
+  const handleFeedback = async (messageId: string, feedback: 'positive' | 'negative', comment?: string) => {
     try {
       // Find the message to get conversation ID
       const message = messages.find(m => m.id === messageId);
-      console.log('handleFeedback called with:', { messageId, feedback, message });
+      console.log('handleFeedback called with:', { messageId, feedback, message, comment });
       
       if (!message || !message.conversationId) {
         console.error('Message or conversation ID not found', { message });
@@ -119,13 +132,15 @@ export default function FloatingChatbot() {
       console.log('Submitting feedback:', {
         conversationId: message.conversationId,
         sessionId: sessionId,
-        rating: feedback === 'positive' ? 'thumbs_up' : 'thumbs_down'
+        rating: feedback === 'positive' ? 'thumbs_up' : 'thumbs_down',
+        comment
       });
 
       const response = await apiRequest('/api/chatbot/feedback', 'POST', {
         conversationId: message.conversationId,
         sessionId: sessionId,
-        rating: feedback === 'positive' ? 'thumbs_up' : 'thumbs_down'
+        rating: feedback === 'positive' ? 'thumbs_up' : 'thumbs_down',
+        comment: comment || null
       });
 
       console.log('Feedback submitted successfully:', response);
@@ -141,6 +156,25 @@ export default function FloatingChatbot() {
     } catch (error) {
       console.error('Error submitting feedback:', error);
     }
+  };
+
+  const handleCustomFeedbackSubmit = async () => {
+    if (!customFeedbackDialog.messageId || !customFeedbackDialog.rating) return;
+    
+    await handleFeedback(
+      customFeedbackDialog.messageId, 
+      customFeedbackDialog.rating, 
+      customFeedbackText.trim() || undefined
+    );
+    
+    // Close dialog and reset state
+    setCustomFeedbackDialog({ isOpen: false, messageId: '', rating: null });
+    setCustomFeedbackText('');
+  };
+
+  const openCustomFeedbackDialog = (messageId: string, rating: 'positive' | 'negative') => {
+    setCustomFeedbackDialog({ isOpen: true, messageId, rating });
+    setCustomFeedbackText('');
   };
 
   return (
@@ -238,6 +272,75 @@ export default function FloatingChatbot() {
                             >
                               <ThumbsDown className="h-3 w-3" />
                             </Button>
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  onClick={() => openCustomFeedbackDialog(message.id, 'positive')}
+                                  className="h-6 w-6 p-0 cursor-pointer hover:bg-blue-50 text-gray-500 hover:text-blue-600"
+                                  disabled={message.feedback !== null}
+                                  title="Provide detailed feedback"
+                                >
+                                  <MessageSquare className="h-3 w-3" />
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent className="sm:max-w-[425px]">
+                                <DialogHeader>
+                                  <DialogTitle>Provide Detailed Feedback</DialogTitle>
+                                </DialogHeader>
+                                <div className="space-y-4">
+                                  <div>
+                                    <Label htmlFor="feedback-type">Rate this response:</Label>
+                                    <div className="flex gap-2 mt-2">
+                                      <Button
+                                        variant={customFeedbackDialog.rating === 'positive' ? 'default' : 'outline'}
+                                        size="sm"
+                                        onClick={() => setCustomFeedbackDialog(prev => ({ ...prev, rating: 'positive' }))}
+                                        className="flex items-center gap-1"
+                                      >
+                                        <ThumbsUp className="h-3 w-3" />
+                                        Helpful
+                                      </Button>
+                                      <Button
+                                        variant={customFeedbackDialog.rating === 'negative' ? 'default' : 'outline'}
+                                        size="sm"
+                                        onClick={() => setCustomFeedbackDialog(prev => ({ ...prev, rating: 'negative' }))}
+                                        className="flex items-center gap-1"
+                                      >
+                                        <ThumbsDown className="h-3 w-3" />
+                                        Not Helpful
+                                      </Button>
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <Label htmlFor="feedback-comment">What did you think about this response? (Optional)</Label>
+                                    <Textarea
+                                      id="feedback-comment"
+                                      placeholder="Please share your thoughts on how this response could be improved..."
+                                      value={customFeedbackText}
+                                      onChange={(e) => setCustomFeedbackText(e.target.value)}
+                                      rows={3}
+                                      className="mt-2"
+                                    />
+                                  </div>
+                                  <div className="flex justify-end gap-2">
+                                    <Button
+                                      variant="outline"
+                                      onClick={() => setCustomFeedbackDialog({ isOpen: false, messageId: '', rating: null })}
+                                    >
+                                      Cancel
+                                    </Button>
+                                    <Button
+                                      onClick={handleCustomFeedbackSubmit}
+                                      disabled={!customFeedbackDialog.rating}
+                                    >
+                                      Submit Feedback
+                                    </Button>
+                                  </div>
+                                </div>
+                              </DialogContent>
+                            </Dialog>
                           </div>
                         )}
                       </div>
