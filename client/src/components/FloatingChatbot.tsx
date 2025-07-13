@@ -148,9 +148,10 @@ export default function FloatingChatbot() {
         comment
       });
 
-      const response = await apiRequest('/api/chatbot/feedback', {
-        method: 'POST',
-        body: {
+      const response = await apiRequest(
+        '/api/chatbot/feedback',
+        'POST',
+        {
           conversationId: message.conversationId,
           sessionId: sessionId,
           rating: feedback === 'positive' ? 'thumbs_up' : 'thumbs_down',
@@ -158,7 +159,7 @@ export default function FloatingChatbot() {
           userAgent: navigator.userAgent,
           ipAddress: null
         }
-      });
+      );
 
       console.log('Feedback submitted successfully:', response);
       console.log('About to update message state with feedback:', feedback);
@@ -312,12 +313,12 @@ export default function FloatingChatbot() {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                alert(`Button clicked! Message ID: ${message.id}, Feedback: ${message.feedback}`);
+                                if (message.feedback !== null) return;
                                 openCustomFeedbackDialog(message.id, 'positive');
                               }}
-                              className="h-8 w-8 p-1 rounded border-2 transition-all duration-200 hover:scale-110 bg-white text-gray-600 border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 cursor-pointer"
+                              className={`h-8 w-8 p-1 rounded border-2 transition-all duration-200 hover:scale-110 ${message.feedback !== null ? 'bg-gray-100 text-gray-400 border-gray-300 cursor-not-allowed' : 'bg-white text-gray-600 border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 cursor-pointer'}`}
                               title="Provide detailed feedback"
-                              style={{ zIndex: 9999, position: 'relative', pointerEvents: 'auto' }}
+                              style={{ zIndex: 1000, position: 'relative' }}
                               type="button"
                             >
                               <MessageSquare className="h-4 w-4" />
