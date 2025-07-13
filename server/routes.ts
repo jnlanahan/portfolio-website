@@ -1135,7 +1135,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Read file content
       const fileBuffer = await fs.readFile(req.file.path);
-      const extractedContent = extractTextFromFile(fileBuffer, req.file.mimetype, req.file.originalname);
+      const extractedContent = await extractTextFromFile(fileBuffer, req.file.mimetype, req.file.originalname);
 
       // Create document record
       const document = await storage.createChatbotDocument({
@@ -1448,6 +1448,73 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error in batch evaluation:", error);
       res.status(500).json({ error: "Failed to perform batch evaluation" });
+    }
+  });
+
+  // Re-extract all documents with updated extraction logic
+  app.post("/api/admin/chatbot/documents/re-extract", requireAdmin, async (req, res) => {
+    try {
+      const documents = await storage.getAllChatbotDocuments();
+      console.log(`Starting re-extraction for ${documents.length} documents`);
+      
+      const results = [];
+      
+      for (const document of documents) {
+        try {
+          const filePath = path.join(chatbotUploadsDir, document.filename);
+          
+          // Check if file exists
+          if (!await fs.access(filePath).then(() => true).catch(() => false)) {
+            results.push({
+              documentId: document.id,
+              filename: document.originalName,
+              success: false,
+              error: 'File not found on disk'
+            });
+            continue;
+          }
+          
+          // Re-extract content
+          const fileBuffer = await fs.readFile(filePath);
+          const extractedContent = await extractTextFromFile(fileBuffer, document.fileType, document.originalName);
+          
+          // Update document in database
+          await storage.updateChatbotDocument(document.id, {
+            content: extractedContent
+          });
+          
+          results.push({
+            documentId: document.id,
+            filename: document.originalName,
+            success: true,
+            contentLength: extractedContent.length,
+            preview: extractedContent.substring(0, 100) + '...'
+          });
+          
+          console.log(`Re-extracted content for ${document.originalName}: ${extractedContent.length} characters`);
+        } catch (error) {
+          console.error(`Error re-extracting ${document.originalName}:`, error);
+          results.push({
+            documentId: document.id,
+            filename: document.originalName,
+            success: false,
+            error: error.message
+          });
+        }
+      }
+      
+      const successful = results.filter(r => r.success).length;
+      const failed = results.filter(r => !r.success).length;
+      
+      res.json({
+        totalDocuments: documents.length,
+        successful,
+        failed,
+        results
+      });
+    } catch (error) {
+      console.error("Error in batch re-extraction:", error);
+      res.status(500).json({ error: "Failed to perform batch re-extraction" });
     }
   });
 

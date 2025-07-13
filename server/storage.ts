@@ -971,6 +971,19 @@ export class DatabaseStorage implements IStorage {
     await db.delete(chatbotDocuments).where(eq(chatbotDocuments.id, id));
   }
 
+  async updateChatbotDocument(id: number, updates: Partial<InsertChatbotDocument>): Promise<ChatbotDocument> {
+    const { db } = await import('./db');
+    const { chatbotDocuments } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [document] = await db.update(chatbotDocuments)
+      .set(updates)
+      .where(eq(chatbotDocuments.id, id))
+      .returning();
+    
+    return document;
+  }
+
   async getAllChatbotTrainingSessions(): Promise<ChatbotTrainingSession[]> {
     const { db } = await import('./db');
     const { chatbotTrainingSessions } = await import('@shared/schema');
@@ -1062,7 +1075,9 @@ export class DatabaseStorage implements IStorage {
     const { chatbotDocuments } = await import('@shared/schema');
     const { desc } = await import('drizzle-orm');
     
-    return await db.select().from(chatbotDocuments).orderBy(desc(chatbotDocuments.uploadedAt));
+    const docs = await db.select().from(chatbotDocuments).orderBy(desc(chatbotDocuments.uploadedAt));
+    console.log(`Storage: Retrieved ${docs.length} documents from database`);
+    return docs;
   }
 
   // Chatbot evaluation methods

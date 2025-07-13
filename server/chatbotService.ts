@@ -9,6 +9,7 @@ import {
 } from '@shared/schema';
 import { storage } from './storage';
 import { generateEnhancedSystemPrompt } from './chatbotLearningService';
+// Note: Using dynamic imports to avoid initialization issues
 
 // Initialize OpenAI
 function getOpenAI(): OpenAI {
@@ -45,7 +46,7 @@ export async function generateTrainingQuestion(
   
   // Create context from documents and existing training
   const documentContext = documents.map(doc => 
-    `Document: ${doc.originalName}\nContent: ${doc.content.substring(0, 500)}...`
+    `Document: ${doc.originalName}\nContent: ${doc.content.substring(0, 1500)}...`
   ).join('\n\n');
   
   const trainingContext = trainingSessions.slice(-20).map(session => 
@@ -135,12 +136,19 @@ export async function processRecruiterQuestion(
     const trainingData = await storage.getChatbotTrainingSessions();
     const documents = await storage.getChatbotDocuments();
     
+    console.log(`Retrieved ${documents.length} documents from storage`);
+    console.log(`Retrieved ${trainingData.length} training sessions from storage`);
+    
     // Build context from training data
     let context = "Current profile data about Nick Lanahan:\n\n";
     
-    // Add document context
-    documents.forEach(doc => {
-      context += `From ${doc.originalName}: ${doc.content.substring(0, 500)}...\n\n`;
+    // Add document context - focus on documents with substantial content
+    const substantialDocs = documents.filter(doc => doc.content.length > 1000);
+    console.log(`Using ${substantialDocs.length} substantial documents out of ${documents.length} total`);
+    
+    substantialDocs.forEach(doc => {
+      console.log(`Document: ${doc.originalName}, Content length: ${doc.content.length}`);
+      context += `From ${doc.originalName}: ${doc.content.substring(0, 3000)}...\n\n`;
     });
     
     // Add Q&A context
@@ -148,15 +156,23 @@ export async function processRecruiterQuestion(
       context += `Q: ${session.question}\nA: ${session.answer}\n\n`;
     });
 
-    // Get enhanced system prompt with learning insights
-    const enhancedSystemPrompt = await generateEnhancedSystemPrompt();
-    
-    const systemPrompt = `${enhancedSystemPrompt}
+    const systemPrompt = `You are Nack, a professional AI assistant specifically designed to represent Nick Lanahan to recruiters and hiring managers. Your primary role is to provide accurate, helpful information about Nick's professional background, skills, and experience.
 
-CURRENT CONTEXT FROM TRAINING DATA:
+DETAILED CONTEXT FROM NICK'S DOCUMENTS:
 ${context}
 
-Provide a helpful, direct answer to the user's question about Nick. If you don't have specific information, acknowledge that and offer what context you do have. Be conversational and informative.`;
+INSTRUCTIONS:
+- Use the detailed information provided above to answer questions about Nick's background
+- When specific information is available in the context, provide it directly
+- Be confident and informative when answering questions about information that's clearly documented
+- Maintain a professional, helpful tone suitable for recruiter interactions
+- Focus on Nick's achievements, experience, and qualifications`;
+
+    // Debug logging
+    console.log('Context length:', context.length);
+    console.log('Context contains "South Korea":', context.includes('South Korea'));
+    console.log('Context contains "Seoul":', context.includes('Seoul'));
+    console.log('Context contains "Pyeongtaek":', context.includes('Pyeongtaek'));
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
@@ -165,7 +181,7 @@ Provide a helpful, direct answer to the user's question about Nick. If you don't
         { role: "user", content: question }
       ],
       max_tokens: 500,
-      temperature: 0.7,
+      temperature: 0.9,
     });
 
     const botResponse = response.choices[0].message.content || "I'm sorry, I couldn't process your question. Please try again.";
@@ -334,17 +350,58 @@ Default to acceptable (isOnTopic: true) unless clearly inappropriate.`;
 /**
  * Extract text content from various file types
  */
-export function extractTextFromFile(buffer: Buffer, mimeType: string, filename: string): string {
+export async function extractTextFromFile(buffer: Buffer, mimeType: string, filename: string): Promise<string> {
   try {
-    // For now, handle text files and assume PDF/DOC extraction will be added later
+    // Handle text files
     if (mimeType.startsWith('text/')) {
       return buffer.toString('utf-8');
+    }
+    
+    // Handle PDF files
+    if (mimeType === 'application/pdf') {
+      try {
+        const pdfParse = await import('pdf-parse');
+        const data = await pdfParse.default(buffer);
+        return `Document: ${filename}\nExtracted from PDF:\n\n${data.text}`;
+      } catch (error) {
+        console.error('Error parsing PDF:', error);
+        return `File: ${filename}\nPDF parsing failed: ${error.message}`;
+      }
+    }
+    
+    // Handle Word documents (.docx)
+    if (mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+      try {
+        const mammoth = await import('mammoth');
+        const result = await mammoth.extractRawText({ buffer });
+        return `Document: ${filename}\nExtracted from Word document:\n\n${result.value}`;
+      } catch (error) {
+        console.error('Error parsing Word document:', error);
+        return `File: ${filename}\nWord document parsing failed: ${error.message}`;
+      }
+    }
+    
+    // Handle older Word documents (.doc)
+    if (mimeType === 'application/msword') {
+      try {
+        const mammoth = await import('mammoth');
+        const result = await mammoth.extractRawText({ buffer });
+        return `Document: ${filename}\nExtracted from Word document:\n\n${result.value}`;
+      } catch (error) {
+        console.error('Error parsing Word document:', error);
+        return `File: ${filename}\nWord document parsing failed: ${error.message}`;
+      }
+    }
+    
+    // Handle markdown files
+    if (mimeType === 'text/markdown') {
+      return `Document: ${filename}\nMarkdown content:\n\n${buffer.toString('utf-8')}`;
     }
     
     // For other file types, return basic info
     return `File: ${filename}\nType: ${mimeType}\nSize: ${buffer.length} bytes\n\nContent extraction for this file type is not yet implemented. Please provide the content as a text file or paste the content during training.`;
   } catch (error) {
     console.error('Error extracting text from file:', error);
-    return `Error reading file: ${filename}`;
+    return `Error reading file: ${filename} - ${error.message}`;
   }
 }
