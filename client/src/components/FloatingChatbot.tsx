@@ -269,6 +269,7 @@ export default function FloatingChatbot() {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
+                                if (message.feedback !== null) return; // Don't allow clicking if feedback already given
                                 console.log('=== THUMBS UP CLICKED ===');
                                 console.log('Button clicked for message:', message.id);
                                 console.log('Message object:', message);
@@ -276,8 +277,7 @@ export default function FloatingChatbot() {
                                 console.log('Feedback status:', message.feedback);
                                 handleFeedback(message.id, 'positive');
                               }}
-                              className={`h-8 w-8 p-1 cursor-pointer rounded border-2 transition-all duration-200 hover:scale-110 ${message.feedback === 'positive' ? 'bg-green-100 text-green-700 border-green-300' : message.feedback !== null ? 'bg-gray-100 text-gray-400 border-gray-300 cursor-not-allowed' : 'bg-white text-gray-600 border-gray-300 hover:bg-green-50 hover:text-green-600 hover:border-green-300'}`}
-                              disabled={message.feedback !== null}
+                              className={`h-8 w-8 p-1 rounded border-2 transition-all duration-200 hover:scale-110 ${message.feedback === 'positive' ? 'bg-green-100 text-green-700 border-green-300' : message.feedback !== null ? 'bg-gray-100 text-gray-400 border-gray-300 cursor-not-allowed' : 'bg-white text-gray-600 border-gray-300 hover:bg-green-50 hover:text-green-600 hover:border-green-300 cursor-pointer'}`}
                               title="Rate this response as helpful"
                               style={{ zIndex: 1000, position: 'relative' }}
                             >
@@ -287,6 +287,7 @@ export default function FloatingChatbot() {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
+                                if (message.feedback !== null) return; // Don't allow clicking if feedback already given
                                 console.log('=== THUMBS DOWN CLICKED ===');
                                 console.log('Button clicked for message:', message.id);
                                 console.log('Message object:', message);
@@ -294,8 +295,7 @@ export default function FloatingChatbot() {
                                 console.log('Feedback status:', message.feedback);
                                 handleFeedback(message.id, 'negative');
                               }}
-                              className={`h-8 w-8 p-1 cursor-pointer rounded border-2 transition-all duration-200 hover:scale-110 ${message.feedback === 'negative' ? 'bg-red-100 text-red-700 border-red-300' : message.feedback !== null ? 'bg-gray-100 text-gray-400 border-gray-300 cursor-not-allowed' : 'bg-white text-gray-600 border-gray-300 hover:bg-red-50 hover:text-red-600 hover:border-red-300'}`}
-                              disabled={message.feedback !== null}
+                              className={`h-8 w-8 p-1 rounded border-2 transition-all duration-200 hover:scale-110 ${message.feedback === 'negative' ? 'bg-red-100 text-red-700 border-red-300' : message.feedback !== null ? 'bg-gray-100 text-gray-400 border-gray-300 cursor-not-allowed' : 'bg-white text-gray-600 border-gray-300 hover:bg-red-50 hover:text-red-600 hover:border-red-300 cursor-pointer'}`}
                               title="Rate this response as not helpful"
                               style={{ zIndex: 1000, position: 'relative' }}
                             >
@@ -304,9 +304,11 @@ export default function FloatingChatbot() {
                             <Dialog>
                               <DialogTrigger asChild>
                                 <button
-                                  onClick={() => openCustomFeedbackDialog(message.id, 'positive')}
-                                  className={`h-8 w-8 p-1 cursor-pointer rounded border-2 transition-all duration-200 hover:scale-110 ${message.feedback !== null ? 'bg-gray-100 text-gray-400 border-gray-300 cursor-not-allowed' : 'bg-white text-gray-600 border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300'}`}
-                                  disabled={message.feedback !== null}
+                                  onClick={() => {
+                                    if (message.feedback !== null) return; // Don't allow clicking if feedback already given
+                                    openCustomFeedbackDialog(message.id, 'positive');
+                                  }}
+                                  className={`h-8 w-8 p-1 rounded border-2 transition-all duration-200 hover:scale-110 ${message.feedback !== null ? 'bg-gray-100 text-gray-400 border-gray-300 cursor-not-allowed' : 'bg-white text-gray-600 border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 cursor-pointer'}`}
                                   title="Provide detailed feedback"
                                   style={{ zIndex: 1000, position: 'relative' }}
                                 >
