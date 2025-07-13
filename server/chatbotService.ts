@@ -476,14 +476,58 @@ export async function extractTextFromFile(buffer: Buffer, mimeType: string, file
     
     // Handle PDF files
     if (mimeType === 'application/pdf') {
-      // For now, PDF extraction is not working reliably
-      // The user should be informed that these documents need manual processing
-      return `Document: ${filename}\nPDF document detected - ${buffer.length} bytes\n\nIMPORTANT: PDF text extraction is currently not working properly. To ensure the chatbot can read this document, please:
-1. Convert the PDF to a text file (.txt)
-2. Or extract the text manually and create a new document
-3. Or provide key information during training sessions
-
-This document contains important information but cannot be automatically processed at this time.`;
+      try {
+        // Use pdf2json which is more reliable - dynamic import for ES modules
+        const pdf2jsonModule = await import('pdf2json');
+        const PDFParser = pdf2jsonModule.default;
+        
+        return new Promise((resolve) => {
+          const pdfParser = new PDFParser();
+          
+          pdfParser.on('pdfParser_dataError', (errData) => {
+            console.error('PDF parsing error:', errData);
+            resolve(`Document: ${filename}\nPDF parsing failed: ${errData.parserError}. This document may be corrupted, password-protected, or in an unsupported format.`);
+          });
+          
+          pdfParser.on('pdfParser_dataReady', (pdfData) => {
+            try {
+              // Extract text from all pages
+              let allText = '';
+              if (pdfData.Pages && pdfData.Pages.length > 0) {
+                pdfData.Pages.forEach((page) => {
+                  if (page.Texts) {
+                    page.Texts.forEach((text) => {
+                      if (text.R && text.R.length > 0) {
+                        text.R.forEach((run) => {
+                          if (run.T) {
+                            allText += decodeURIComponent(run.T) + ' ';
+                          }
+                        });
+                      }
+                    });
+                  }
+                  allText += '\n';
+                });
+              }
+              
+              if (allText.trim().length > 0) {
+                resolve(`Document: ${filename}\nExtracted from PDF:\n\n${allText.trim()}`);
+              } else {
+                resolve(`Document: ${filename}\nPDF processed but no readable text found. This PDF may contain primarily images, be password-protected, or have complex formatting that prevents text extraction.`);
+              }
+            } catch (error) {
+              console.error('Error processing PDF data:', error);
+              resolve(`Document: ${filename}\nPDF data processing failed: ${error.message}`);
+            }
+          });
+          
+          // Parse the buffer
+          pdfParser.parseBuffer(buffer);
+        });
+      } catch (error) {
+        console.error('Error initializing PDF parser:', error);
+        return `Document: ${filename}\nPDF parsing initialization failed: ${error.message}. This document may be corrupted, password-protected, or in an unsupported format.`;
+      }
     }
     
     // Handle Word documents (.docx)
