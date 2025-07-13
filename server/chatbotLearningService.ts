@@ -25,7 +25,7 @@ export interface LearningUpdate {
 }
 
 /**
- * Analyzes evaluation results to extract learning insights
+ * Analyzes evaluation results to extract learning insights ONLY for poor evaluations
  */
 export async function extractLearningInsights(evaluationId: number): Promise<ChatbotLearningInsight[]> {
   const openai = getOpenAI();
@@ -36,6 +36,11 @@ export async function extractLearningInsights(evaluationId: number): Promise<Cha
     throw new Error('Evaluation not found');
   }
 
+  // Only process poor evaluations (overall score < 3.5 out of 5)
+  if (evaluation.overallScore >= 3.5) {
+    return [];
+  }
+
   const conversation = await storage.getChatbotConversationById(evaluation.conversationId);
   if (!conversation) {
     throw new Error('Conversation not found');
@@ -43,13 +48,13 @@ export async function extractLearningInsights(evaluationId: number): Promise<Cha
 
   const userFeedback = await storage.getUserFeedbackByConversationId(evaluation.conversationId);
   
-  const prompt = `Analyze this chatbot evaluation and extract specific learning insights that can improve future responses.
+  const prompt = `Analyze this POOR chatbot evaluation and extract specific learning insights that can improve future responses.
 
 CONVERSATION:
 User Question: "${conversation.userQuestion}"
 AI Response: "${conversation.botResponse}"
 
-EVALUATION SCORES:
+EVALUATION SCORES (Poor Performance):
 - Accuracy: ${evaluation.accuracyScore}/10
 - Helpfulness: ${evaluation.helpfulnessScore}/10
 - Relevance: ${evaluation.relevanceScore}/10
@@ -63,11 +68,10 @@ IMPROVEMENTS: ${evaluation.improvements.join(', ')}
 
 USER FEEDBACK: ${userFeedback?.rating || 'None'}
 
-Based on this evaluation, identify specific learning insights that can be applied to improve future responses. Focus on:
+Since this evaluation shows poor performance, identify specific learning insights that can improve future responses. Focus on:
 
-1. **IMPROVEMENT INSIGHTS**: Specific areas where responses can be enhanced
-2. **BEST PRACTICE INSIGHTS**: Patterns that worked well and should be replicated
-3. **AVOID PATTERN INSIGHTS**: Specific patterns or phrases that should be avoided
+1. **IMPROVEMENT INSIGHTS**: Critical areas that need enhancement
+2. **AVOID PATTERN INSIGHTS**: Specific patterns or phrases that caused poor performance
 
 For each insight, provide:
 - A clear, actionable insight
@@ -199,27 +203,31 @@ RESPONSE GUIDELINES:
 }
 
 /**
- * Automatically processes recent evaluations to extract learning insights
+ * Automatically processes recent evaluations to extract learning insights ONLY for poor performance
  */
 export async function processRecentEvaluations(): Promise<LearningUpdate> {
   const recentEvaluations = await storage.getChatbotEvaluations();
   
-  // Process evaluations that don't have associated learning insights yet
-  const unprocessedEvaluations = [];
+  // Only process poor evaluations (overall score < 3.5 out of 5) that don't have insights yet
+  const unprocessedPoorEvaluations = [];
   
-  for (const evaluation of recentEvaluations.slice(0, 10)) { // Process last 10 evaluations
-    const existingInsights = await storage.getChatbotLearningInsightsByEvaluationId(evaluation.id);
-    if (existingInsights.length === 0) {
-      unprocessedEvaluations.push(evaluation);
+  for (const evaluation of recentEvaluations.slice(0, 20)) { // Check last 20 evaluations
+    if (evaluation.overallScore < 3.5) { // Only poor evaluations
+      const existingInsights = await storage.getChatbotLearningInsightsByEvaluationId(evaluation.id);
+      if (existingInsights.length === 0) {
+        unprocessedPoorEvaluations.push(evaluation);
+      }
     }
   }
+
+  console.log(`Processing ${unprocessedPoorEvaluations.length} poor evaluations for learning insights`);
 
   const allInsights: ChatbotLearningInsight[] = [];
   const systemPromptUpdates: string[] = [];
   const responsePatterns: string[] = [];
 
-  // Process each unprocessed evaluation
-  for (const evaluation of unprocessedEvaluations) {
+  // Process each unprocessed poor evaluation
+  for (const evaluation of unprocessedPoorEvaluations) {
     try {
       const insights = await extractLearningInsights(evaluation.id);
       allInsights.push(...insights);
@@ -273,6 +281,47 @@ export async function getLearningInsightsStats(): Promise<{
     avgImportance: Math.round(avgImportance * 10) / 10,
     recentInsights: insights.slice(0, 5)
   };
+}
+
+/**
+ * Process user feedback to create learning insights - ONLY for negative feedback
+ */
+export async function processUserFeedbackForLearning(): Promise<ChatbotLearningInsight[]> {
+  const allFeedback = await storage.getUserFeedback();
+  
+  // Only process negative feedback (thumbs down) with comments
+  const negativeFeedback = allFeedback.filter(fb => 
+    fb.rating === 'thumbs_down' && fb.comment && fb.comment.trim().length > 0
+  );
+  
+  console.log(`Processing ${negativeFeedback.length} negative feedback entries for learning insights`);
+  
+  const insights: ChatbotLearningInsight[] = [];
+  
+  for (const feedback of negativeFeedback) {
+    // Check if we already processed this feedback
+    const existingInsights = await storage.getChatbotLearningInsights();
+    const alreadyProcessed = existingInsights.some(insight => 
+      insight.insight.includes(`User feedback: ${feedback.comment}`)
+    );
+    
+    if (!alreadyProcessed) {
+      // Create a learning insight from the negative feedback
+      const newInsight: InsertChatbotLearningInsight = {
+        category: 'improvement',
+        insight: `FACT: ${feedback.comment}`,
+        examples: [`Conversation #${feedback.conversationId}`],
+        sourceEvaluationId: feedback.conversationId,
+        importance: 8, // High importance for user feedback
+        isActive: true
+      };
+      
+      const savedInsight = await storage.createChatbotLearningInsight(newInsight);
+      insights.push(savedInsight);
+    }
+  }
+  
+  return insights;
 }
 
 /**

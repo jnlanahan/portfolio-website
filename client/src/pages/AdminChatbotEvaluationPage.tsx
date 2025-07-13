@@ -600,6 +600,45 @@ export default function AdminChatbotEvaluationPage() {
                       </div>
                     )}
 
+                    {/* User Feedback */}
+                    {feedback && (() => {
+                      const userFeedback = feedback.find(f => f.conversationId === evaluation.conversationId);
+                      if (userFeedback) {
+                        return (
+                          <div className="mb-6 p-4 bg-gray-700 rounded-lg">
+                            <h4 className="font-medium text-purple-400 mb-3">User Feedback</h4>
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm text-gray-400">Rating:</span>
+                                <div className="flex items-center gap-1">
+                                  {userFeedback.rating === 'thumbs_up' ? (
+                                    <ThumbsUp className="w-4 h-4 text-green-400" />
+                                  ) : (
+                                    <ThumbsDown className="w-4 h-4 text-red-400" />
+                                  )}
+                                  <span className={`text-sm font-medium ${userFeedback.rating === 'thumbs_up' ? 'text-green-400' : 'text-red-400'}`}>
+                                    {userFeedback.rating === 'thumbs_up' ? 'Thumbs Up' : 'Thumbs Down'}
+                                  </span>
+                                </div>
+                              </div>
+                              {userFeedback.comment && (
+                                <div>
+                                  <p className="text-xs text-gray-400 mb-1">Comment:</p>
+                                  <p className="text-sm text-gray-200 bg-gray-800 p-3 rounded italic">
+                                    "{userFeedback.comment}"
+                                  </p>
+                                </div>
+                              )}
+                              <div className="text-xs text-gray-400">
+                                Feedback provided {formatDistanceToNow(new Date(userFeedback.createdAt))} ago
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    })()}
+
                     <div className="space-y-3">
                       <div>
                         <h4 className="font-medium text-green-400 mb-2">Strengths</h4>
@@ -738,42 +777,7 @@ export default function AdminChatbotEvaluationPage() {
               </div>
             </div>
 
-            {/* User Feedback Section */}
-            {feedback && feedback.length > 0 && (
-              <div className="bg-gray-800 rounded-lg p-6">
-                <h3 className="text-xl font-semibold mb-4">Recent User Feedback</h3>
-                <div className="space-y-4 max-h-96 overflow-y-auto">
-                  {feedback.filter(fb => fb.comment).slice(0, 10).map(fb => (
-                    <div key={fb.id} className="p-4 bg-gray-700 rounded-lg">
-                      <div className="flex items-start justify-between mb-2">
-                        <div className="flex items-center gap-3">
-                          <div className={`p-2 rounded-lg ${
-                            fb.rating === 'thumbs_up' ? 'bg-green-600' : 'bg-red-600'
-                          }`}>
-                            {fb.rating === 'thumbs_up' ? (
-                              <ThumbsUp className="w-4 h-4" />
-                            ) : (
-                              <ThumbsDown className="w-4 h-4" />
-                            )}
-                          </div>
-                          <div>
-                            <p className="font-medium">Conversation #{fb.conversationId}</p>
-                            <p className="text-sm text-gray-400">
-                              {formatDistanceToNow(new Date(fb.createdAt))} ago
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      {fb.comment && (
-                        <div className="mt-2 p-3 bg-gray-800 rounded-md">
-                          <p className="text-sm text-gray-300">{fb.comment}</p>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+
 
             {/* Current System Prompt */}
             {systemPromptData && (

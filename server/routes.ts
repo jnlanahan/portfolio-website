@@ -1619,6 +1619,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.post("/api/admin/chatbot/learning/process-user-feedback", requireAdmin, async (req, res) => {
+    try {
+      const { processUserFeedbackForLearning } = await import('./chatbotLearningService');
+      const insights = await processUserFeedbackForLearning();
+      res.json({
+        message: "User feedback processed successfully",
+        insights,
+        insightsCreated: insights.length
+      });
+    } catch (error) {
+      console.error("Error processing user feedback:", error);
+      res.status(500).json({ error: "Failed to process user feedback" });
+    }
+  });
+
   app.post("/api/admin/chatbot/learning/generate-suggestion", requireAdmin, async (req, res) => {
     try {
       // Generate AI suggestion based on current insights and feedback
