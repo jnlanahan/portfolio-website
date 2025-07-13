@@ -288,6 +288,8 @@ export default function AdminChatbotEvaluationPage() {
       apiRequest('/api/admin/chatbot/learning/update-prompt', 'POST', { customPrompt }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/learning/system-prompt'] });
+      setShowEditDialog(false);
+      setManualEditPrompt('');
     }
   });
 
@@ -1038,8 +1040,6 @@ export default function AdminChatbotEvaluationPage() {
               <Button
                 onClick={() => {
                   updateSystemPromptMutation.mutate(manualEditPrompt);
-                  setShowEditDialog(false);
-                  setManualEditPrompt('');
                 }}
                 disabled={updateSystemPromptMutation.isPending}
                 className="bg-green-600 hover:bg-green-700"
