@@ -308,7 +308,12 @@ export default function FloatingChatbot() {
                             >
                               <ThumbsDown className="h-4 w-4" />
                             </button>
-                            <Dialog>
+                            <Dialog open={customFeedbackDialog.isOpen} onOpenChange={(open) => {
+                              if (!open) {
+                                setCustomFeedbackDialog({ isOpen: false, messageId: '', rating: null });
+                                setCustomFeedbackText('');
+                              }
+                            }}>
                               <DialogTrigger asChild>
                                 <button
                                   onClick={() => {
@@ -369,9 +374,14 @@ export default function FloatingChatbot() {
                                       Cancel
                                     </Button>
                                     <Button
-                                      onClick={handleCustomFeedbackSubmit}
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        handleCustomFeedbackSubmit();
+                                      }}
                                       disabled={false}
                                       className={!customFeedbackDialog.rating ? 'opacity-50' : ''}
+                                      type="button"
                                     >
                                       Submit Feedback
                                     </Button>
