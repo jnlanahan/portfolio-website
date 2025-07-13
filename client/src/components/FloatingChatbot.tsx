@@ -208,8 +208,8 @@ export default function FloatingChatbot() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-96 h-[500px] max-w-[calc(100vw-2rem)] max-h-[calc(100vh-2rem)]">
-          <Card className="h-full bg-white border-2 border-gray-200 shadow-2xl flex flex-col">
+        <div className="fixed bottom-6 right-6 w-96 h-[500px] max-w-[calc(100vw-2rem)] max-h-[calc(100vh-2rem)]" style={{ zIndex: 9999 }}>
+          <Card className="h-full bg-white border-2 border-gray-200 shadow-2xl flex flex-col" style={{ zIndex: 9999 }}>
             {/* Header */}
             <div className="bg-slate-600 text-white p-4 rounded-t-lg flex items-center justify-between">
               <div className="flex items-center space-x-2">
@@ -255,10 +255,8 @@ export default function FloatingChatbot() {
                           </Badge>
                         )}
                         {message.sender === 'bot' && message.id !== 'welcome' && (
-                          <div className="flex items-center gap-1">
-                            <Button
-                              size="sm"
-                              variant="ghost"
+                          <div className="flex items-center gap-1 relative z-10">
+                            <button
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
@@ -269,15 +267,14 @@ export default function FloatingChatbot() {
                                 console.log('Feedback status:', message.feedback);
                                 handleFeedback(message.id, 'positive');
                               }}
-                              className={`h-6 w-6 p-0 cursor-pointer ${message.feedback === 'positive' ? 'bg-green-100 text-green-700' : 'hover:bg-green-50 text-gray-500 hover:text-green-600'}`}
+                              className={`h-8 w-8 p-1 cursor-pointer rounded border-2 transition-all duration-200 hover:scale-110 ${message.feedback === 'positive' ? 'bg-green-100 text-green-700 border-green-300' : 'bg-white text-gray-600 border-gray-300 hover:bg-green-50 hover:text-green-600 hover:border-green-300'}`}
                               disabled={message.feedback !== null}
                               title="Rate this response as helpful"
+                              style={{ zIndex: 1000, position: 'relative' }}
                             >
-                              <ThumbsUp className="h-3 w-3" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="ghost"
+                              <ThumbsUp className="h-4 w-4" />
+                            </button>
+                            <button
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
@@ -288,12 +285,13 @@ export default function FloatingChatbot() {
                                 console.log('Feedback status:', message.feedback);
                                 handleFeedback(message.id, 'negative');
                               }}
-                              className={`h-6 w-6 p-0 cursor-pointer ${message.feedback === 'negative' ? 'bg-red-100 text-red-700' : 'hover:bg-red-50 text-gray-500 hover:text-red-600'}`}
+                              className={`h-8 w-8 p-1 cursor-pointer rounded border-2 transition-all duration-200 hover:scale-110 ${message.feedback === 'negative' ? 'bg-red-100 text-red-700 border-red-300' : 'bg-white text-gray-600 border-gray-300 hover:bg-red-50 hover:text-red-600 hover:border-red-300'}`}
                               disabled={message.feedback !== null}
                               title="Rate this response as not helpful"
+                              style={{ zIndex: 1000, position: 'relative' }}
                             >
-                              <ThumbsDown className="h-3 w-3" />
-                            </Button>
+                              <ThumbsDown className="h-4 w-4" />
+                            </button>
                             <Dialog>
                               <DialogTrigger asChild>
                                 <Button
