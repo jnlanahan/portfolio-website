@@ -203,6 +203,7 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - **Fixed critical chatbot functionality**: Resolved API endpoint mismatch in FloatingChatbot component (changed from `/api/chatbot/ask` to `/api/chatbot/chat` with proper `message` parameter), corrected OpenAI API initialization across all services, and fixed database schema parameter mapping for conversation storage
   - **Fixed training mode behavior**: Updated system prompt to ask only ONE question at a time instead of multiple questions, improved progress tracking to only increment on substantial user responses, and reset question counter for accurate tracking
   - **Relaxed off-topic filtering**: Updated visitor chatbot to be much more lenient about what's considered "off-topic" - now only blocks clearly inappropriate or harmful content, allows reasonable questions even when specific information isn't available (responds with "I don't know" + context)
+  - **Fixed chatbot feedback system**: Resolved JavaScript null/undefined comparison bug that prevented feedback dialog from opening (changed `!== null` to truthy check), fixed apiRequest call format issue, and enhanced admin dashboard to display detailed feedback comments alongside ratings for better training insights
 
 - **January 2025**: Created comprehensive test suite for quality assurance
   - Built automated API test suite covering all major functionality

@@ -515,31 +515,41 @@ export default function AdminChatbotEvaluationPage() {
                 <h3 className="text-xl font-semibold mb-4">Recent Feedback</h3>
                 <div className="space-y-4">
                   {feedback.slice(0, 20).map(fb => (
-                    <div key={fb.id} className="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <div className={`p-2 rounded-lg ${
-                          fb.rating === 'thumbs_up' ? 'bg-green-600' : 'bg-red-600'
-                        }`}>
-                          {fb.rating === 'thumbs_up' ? (
-                            <ThumbsUp className="w-4 h-4" />
-                          ) : (
-                            <ThumbsDown className="w-4 h-4" />
-                          )}
+                    <div key={fb.id} className="p-4 bg-gray-700 rounded-lg">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div className={`p-2 rounded-lg ${
+                            fb.rating === 'thumbs_up' ? 'bg-green-600' : 'bg-red-600'
+                          }`}>
+                            {fb.rating === 'thumbs_up' ? (
+                              <ThumbsUp className="w-4 h-4" />
+                            ) : (
+                              <ThumbsDown className="w-4 h-4" />
+                            )}
+                          </div>
+                          <div>
+                            <p className="font-medium">Conversation #{fb.conversationId}</p>
+                            <p className="text-sm text-gray-400">
+                              {formatDistanceToNow(new Date(fb.createdAt))} ago
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="font-medium">Conversation #{fb.conversationId}</p>
-                          <p className="text-sm text-gray-400">
-                            {formatDistanceToNow(new Date(fb.createdAt))} ago
+                        <Badge className={
+                          fb.rating === 'thumbs_up' 
+                            ? 'bg-green-100 text-green-800' 
+                            : 'bg-red-100 text-red-800'
+                        }>
+                          {fb.rating === 'thumbs_up' ? 'positive' : 'negative'}
+                        </Badge>
+                      </div>
+                      {fb.comment && (
+                        <div className="mt-3 p-3 bg-gray-800 rounded-md">
+                          <p className="text-sm text-gray-300">
+                            <span className="font-medium text-gray-400">Feedback: </span>
+                            {fb.comment}
                           </p>
                         </div>
-                      </div>
-                      <Badge className={
-                        fb.rating === 'thumbs_up' 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-red-100 text-red-800'
-                      }>
-                        {fb.rating === 'thumbs_up' ? 'positive' : 'negative'}
-                      </Badge>
+                      )}
                     </div>
                   ))}
                 </div>

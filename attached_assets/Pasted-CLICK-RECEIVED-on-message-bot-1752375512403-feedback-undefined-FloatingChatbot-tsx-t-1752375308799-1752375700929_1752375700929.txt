@@ -1,0 +1,39 @@
+CLICK RECEIVED on message: bot_1752375512403 feedback: undefined
+FloatingChatbot.tsx?t=1752375308799:384 Total clicks: 1
+FloatingChatbot.tsx?t=1752375308799:386 Button disabled - feedback already given
+FloatingChatbot.tsx?t=1752375308799:382 CLICK RECEIVED on message: bot_1752375512403 feedback: undefined
+FloatingChatbot.tsx?t=1752375308799:384 Total clicks: 2
+FloatingChatbot.tsx?t=1752375308799:386 Button disabled - feedback already given
+FloatingChatbot.tsx?t=1752375308799:382 CLICK RECEIVED on message: bot_1752375512403 feedback: undefined
+FloatingChatbot.tsx?t=1752375308799:384 Total clicks: 3
+FloatingChatbot.tsx?t=1752375308799:386 Button disabled - feedback already given
+FloatingChatbot.tsx?t=1752375308799:382 CLICK RECEIVED on message: bot_1752375512403 feedback: undefined
+FloatingChatbot.tsx?t=1752375308799:384 Total clicks: 4
+FloatingChatbot.tsx?t=1752375308799:386 Button disabled - feedback already given
+@radix-ui_react-dialog.js?v=7d884b2d:341 Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+(anonymous) @ @radix-ui_react-dialog.js?v=7d884b2d:341
+commitHookEffectListMount @ chunk-RPCDYKBN.js?v=7d884b2d:16915
+commitPassiveMountOnFiber @ chunk-RPCDYKBN.js?v=7d884b2d:18156
+commitPassiveMountEffects_complete @ chunk-RPCDYKBN.js?v=7d884b2d:18129
+commitPassiveMountEffects_begin @ chunk-RPCDYKBN.js?v=7d884b2d:18119
+commitPassiveMountEffects @ chunk-RPCDYKBN.js?v=7d884b2d:18109
+flushPassiveEffectsImpl @ chunk-RPCDYKBN.js?v=7d884b2d:19490
+flushPassiveEffects @ chunk-RPCDYKBN.js?v=7d884b2d:19447
+commitRootImpl @ chunk-RPCDYKBN.js?v=7d884b2d:19416
+commitRoot @ chunk-RPCDYKBN.js?v=7d884b2d:19277
+performSyncWorkOnRoot @ chunk-RPCDYKBN.js?v=7d884b2d:18895
+flushSyncCallbacks @ chunk-RPCDYKBN.js?v=7d884b2d:9119
+(anonymous) @ chunk-RPCDYKBN.js?v=7d884b2d:18627Understand this warning
+FloatingChatbot.tsx:186 === CUSTOM FEEDBACK SUBMIT ===
+FloatingChatbot.tsx:187 customFeedbackDialog: {isOpen: true, messageId: 'bot_1752375512403', rating: 'negative'}
+FloatingChatbot.tsx:188 customFeedbackText: The chatbot has transcripts. It should know what classes.
+FloatingChatbot.tsx:125 === FEEDBACK DEBUG ===
+FloatingChatbot.tsx:126 messageId: bot_1752375512403
+FloatingChatbot.tsx:127 feedback: negative
+FloatingChatbot.tsx:128 message found: {id: 'bot_1752375512403', text: "There's no specific mention of finance courses in …e took finance courses as part of these programs.", sender: 'bot', timestamp: Sat Jul 12 2025 22:58:32 GMT-0400 (Eastern Daylight Time), isOnTopic: true, …}
+FloatingChatbot.tsx:129 message.conversationId: 84
+FloatingChatbot.tsx:130 messages array: (3) [{…}, {…}, {…}]
+FloatingChatbot.tsx:144 Submitting feedback: {conversationId: 84, sessionId: 'session_1752375349144_hblzyj4ii', rating: 'thumbs_down', comment: 'The chatbot has transcripts. It should know what classes.'}
+FloatingChatbot.tsx:164 Feedback submitted successfully: {id: 5, conversationId: 84, sessionId: 'session_1752375349144_hblzyj4ii', rating: 'thumbs_down', comment: 'The chatbot has transcripts. It should know what classes.', …}
+FloatingChatbot.tsx:165 About to update message state with feedback: negative
+FloatingChatbot.tsx:174 
