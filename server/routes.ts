@@ -1756,7 +1756,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/admin/chatbot/learning/system-prompt", requireAdmin, async (req, res) => {
     try {
-      // Get training data from database to provide context
+      // Check if there's a custom prompt saved first
+      const customPrompt = await storage.getActiveSystemPromptTemplate();
+      
+      if (customPrompt && customPrompt.name === 'custom') {
+        // Return the custom prompt
+        const documents = await storage.getChatbotDocuments();
+        const trainingData = await storage.getChatbotTrainingSessions();
+        const learningInsights = await storage.getChatbotLearningInsights();
+        const factInsights = learningInsights.filter(i => 
+          i.isActive && i.insight.startsWith('FACT:')
+        );
+        
+        res.json({
+          prompt: customPrompt.template,
+          stats: {
+            documents: documents.length,
+            trainingSessions: trainingData.length,
+            learningInsights: learningInsights.length,
+            activeFacts: factInsights.length
+          },
+          isCustom: true
+        });
+        return;
+      }
+      
+      // If no custom prompt, generate the default one
       const trainingData = await storage.getChatbotTrainingSessions();
       const documents = await storage.getChatbotDocuments();
       const learningInsights = await storage.getChatbotLearningInsights();
@@ -1806,7 +1831,8 @@ AVAILABLE DOCUMENT TYPES:
           trainingSessions: trainingData.length,
           learningInsights: learningInsights.length,
           activeFacts: factInsights.length
-        }
+        },
+        isCustom: false
       });
     } catch (error) {
       console.error("Error getting system prompt:", error);
