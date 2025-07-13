@@ -234,6 +234,16 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
     - Implemented Save/Cancel functionality with loading states
     - Manual edits override AI-generated suggestions and are saved immediately
     - System displays "Using custom prompt: true" when manual edits are active
+  - **Integrated LangChain and LangSmith for advanced chatbot management**:
+    - Replaced custom document upload system with LangChain vector store using OpenAI embeddings
+    - Implemented comprehensive LangSmith tracing for all chatbot interactions
+    - Added automatic document retrieval using semantic search across all uploaded documents
+    - Created new admin interface at /admin/langchain for LangChain management
+    - Built evaluation dataset creation and management system
+    - Integrated continuous monitoring with LangSmith dashboard links
+    - Updated FloatingChatbot to use new LangChain RAG pipeline
+    - All conversations now automatically logged to LangSmith for analysis and improvement
+    - Added vector store refresh functionality for document updates
 
 - **January 2025**: Created comprehensive test suite for quality assurance
   - Built automated API test suite covering all major functionality

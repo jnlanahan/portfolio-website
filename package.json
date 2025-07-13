@@ -13,6 +13,8 @@
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
     "@jridgewell/trace-mapping": "^0.3.25",
+    "@langchain/core": "^0.3.62",
+    "@langchain/openai": "^0.5.18",
     "@neondatabase/serverless": "^0.10.4",
     "@playwright/test": "^1.53.2",
     "@radix-ui/react-accordion": "^1.2.4",
@@ -78,6 +80,8 @@
     "gsap": "^3.13.0",
     "husky": "^9.1.7",
     "input-otp": "^1.4.2",
+    "langchain": "^0.3.29",
+    "langsmith": "^0.3.44",
     "lint-staged": "^16.0.0",
     "lowlight": "^3.3.0",
     "lucide-react": "^0.453.0",

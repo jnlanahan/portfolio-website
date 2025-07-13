@@ -24,6 +24,7 @@ import AdminTop5ListEditPage from "@/pages/AdminTop5ListEditPage";
 import AdminBlogSeriesPage from "@/pages/AdminBlogSeriesPage";
 import AdminChatbotPage from "@/pages/AdminChatbotPage";
 import AdminChatbotEvaluationPage from "@/pages/AdminChatbotEvaluationPage";
+import AdminLangChainPage from "@/pages/AdminLangChainPage";
 import BlogSeriesPage from "@/pages/BlogSeriesPage";
 import Layout from "./components/Layout";
 import FloatingChatbot from "./components/FloatingChatbot";
@@ -62,6 +63,7 @@ function Router() {
       <Route path="/admin/top5-lists/:id" component={AdminTop5ListEditPage} />
       <Route path="/admin/chatbot" component={AdminChatbotPage} />
       <Route path="/admin/chatbot/evaluations" component={AdminChatbotEvaluationPage} />
+      <Route path="/admin/langchain" component={AdminLangChainPage} />
       
       {/* Fallback to 404 */}
       <Route component={NotFound} />

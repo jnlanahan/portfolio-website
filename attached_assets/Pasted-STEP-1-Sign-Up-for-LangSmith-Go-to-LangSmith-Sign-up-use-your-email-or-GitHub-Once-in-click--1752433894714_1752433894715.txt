@@ -1,0 +1,117 @@
+STEP 1: Sign Up for LangSmith
+Go to: LangSmith
+
+Sign up (use your email or GitHub).
+
+Once in, click on your profile icon → Settings.
+
+Copy your LANGCHAIN_API_KEY (you’ll need this soon).
+
+STEP 2: Add Your LangSmith Key to Replit
+In your Replit project, click the “Secrets” tab (the lock icon) or use a .env file.
+
+Add your LangSmith API key:
+
+Key: LANGCHAIN_API_KEY
+
+Value: (Paste your API key)
+
+(Keep your OPENAI_API_KEY in there too!)
+
+STEP 3: Install LangSmith (LangChain’s Monitoring Library)
+In your Replit Shell, run:
+
+bash
+Copy
+Edit
+pip install langsmith
+(You should also have langchain-openai, langchain-community, etc. already installed.)
+
+STEP 4: Update Your Python Code to Use LangSmith
+Just a few lines added to your main file (where you build your chain or call the LLM):
+
+python
+Copy
+Edit
+from langsmith import traceable
+
+# If you want, you can set up the project name (optional)
+import os
+os.environ["LANGCHAIN_PROJECT"] = "MyPortfolioBot"  # Optional: custom project name
+
+@traceable  # <-- This decorator traces this function to LangSmith!
+def rag_pipeline(question):
+    # Your retrieval, prompt, and OpenAI call logic here!
+    # Example:
+    results = db.similarity_search(question, k=3)
+    docs = "\n\n".join([doc.page_content for doc in results])
+    prompt = f"Use this info: {docs}\nQuestion: {question}"
+
+    import openai
+    completion = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant. Only answer based on provided info."},
+            {"role": "user", "content": prompt}
+        ]
+    )
+    return completion.choices[0].message.content
+
+# Example: in your FastAPI/Flask endpoint, call rag_pipeline()
+The @traceable decorator tells LangSmith to log every call to that function.
+
+You’ll see each question, retrieval result, and LLM response in the LangSmith dashboard.
+
+STEP 5: Run Your App and See Traces in LangSmith
+Start your backend (FastAPI, Flask, etc.) in Replit.
+
+Ask questions through your chatbot or curl/Postman.
+
+Check LangSmith Projects page – you’ll see a new project (default name or your custom one) with all your chatbot interactions.
+
+Click on any run to inspect: the prompt, context, retrieved docs, LLM output, errors, etc.
+
+STEP 6: (Optional) Advanced – Evaluation, Debugging, Prompt Tuning
+In the LangSmith dashboard, you can:
+
+Mark responses as good/bad.
+
+Add “evals”: Upload test Q&A to benchmark quality.
+
+Compare runs: See which version of your prompt or chunking performs better.
+
+SUMMARY OF WHAT’S HAPPENING
+Your production code runs on Replit as always.
+
+Every time your app handles a user question, the interaction is logged to LangSmith (with context, prompt, answer, etc.).
+
+You can monitor, debug, and improve your RAG chatbot from the LangSmith UI—no need to “export” models or databases.
+
+Your backend still serves user requests; LangSmith just tracks them for you.
+
+Copy/Paste Cheat Sheet
+Install LangSmith:
+
+bash
+Copy
+Edit
+pip install langsmith
+Set your API key (in .env or Replit Secrets):
+
+ini
+Copy
+Edit
+LANGCHAIN_API_KEY=sk-...   # (from LangSmith)
+Add to your Python code:
+
+python
+Copy
+Edit
+from langsmith import traceable
+
+@traceable
+def my_chat_pipeline(...):
+    # your code here!
+Check results at:
+smith.langchain.com/o/projects
+

@@ -31,6 +31,14 @@ import {
   processTrainingConversation,
   extractTextFromFile 
 } from "./chatbotService";
+import { 
+  processMessage as processLangChainMessage,
+  addDocumentToVectorStore,
+  refreshVectorStore,
+  getLangSmithStats,
+  createEvaluationDataset,
+  runEvaluation
+} from "./langchainChatbotService";
 import { evaluateChatbotResponse, batchEvaluateConversations, getEvaluationStats } from "./chatbotEvaluator";
 import { 
   extractLearningInsights, 
@@ -1947,6 +1955,113 @@ AVAILABLE DOCUMENT TYPES:
     } catch (error) {
       console.error("Error processing all feedback:", error);
       res.status(500).json({ error: "Failed to process all feedback" });
+    }
+  });
+
+  // ======================================
+  // LangChain + LangSmith Integration Routes
+  // ======================================
+
+  // LangChain chatbot message processing
+  app.post("/api/langchain/chatbot/chat", async (req, res) => {
+    try {
+      const { message, conversationId } = req.body;
+      
+      if (!message || !conversationId) {
+        return res.status(400).json({ error: "Message and conversationId are required" });
+      }
+      
+      // Process message through LangChain RAG pipeline
+      const response = await processLangChainMessage(message, conversationId);
+      
+      res.json({ response });
+    } catch (error) {
+      console.error("Error in LangChain chatbot:", error);
+      res.status(500).json({ error: "Failed to process message" });
+    }
+  });
+
+  // Add document to LangChain vector store
+  app.post("/api/langchain/documents/add", requireAdmin, async (req, res) => {
+    try {
+      const { content, filename, type, id } = req.body;
+      
+      if (!content || !filename || !type || !id) {
+        return res.status(400).json({ error: "Content, filename, type, and id are required" });
+      }
+      
+      await addDocumentToVectorStore(content, { filename, type, id });
+      
+      res.json({ message: "Document added to vector store successfully" });
+    } catch (error) {
+      console.error("Error adding document to vector store:", error);
+      res.status(500).json({ error: "Failed to add document to vector store" });
+    }
+  });
+
+  // Refresh vector store with all documents
+  app.post("/api/langchain/documents/refresh", requireAdmin, async (req, res) => {
+    try {
+      await refreshVectorStore();
+      res.json({ message: "Vector store refreshed successfully" });
+    } catch (error) {
+      console.error("Error refreshing vector store:", error);
+      res.status(500).json({ error: "Failed to refresh vector store" });
+    }
+  });
+
+  // Get LangSmith dashboard statistics
+  app.get("/api/langchain/stats", requireAdmin, async (req, res) => {
+    try {
+      const stats = await getLangSmithStats();
+      res.json(stats);
+    } catch (error) {
+      console.error("Error getting LangSmith stats:", error);
+      res.status(500).json({ error: "Failed to get LangSmith stats" });
+    }
+  });
+
+  // Create evaluation dataset
+  app.post("/api/langchain/evaluation/dataset", requireAdmin, async (req, res) => {
+    try {
+      const { name, examples } = req.body;
+      
+      if (!name || !examples || !Array.isArray(examples)) {
+        return res.status(400).json({ error: "Name and examples array are required" });
+      }
+      
+      const dataset = await createEvaluationDataset(name, examples);
+      res.json(dataset);
+    } catch (error) {
+      console.error("Error creating evaluation dataset:", error);
+      res.status(500).json({ error: "Failed to create evaluation dataset" });
+    }
+  });
+
+  // Run evaluation on dataset
+  app.post("/api/langchain/evaluation/run/:datasetId", requireAdmin, async (req, res) => {
+    try {
+      const { datasetId } = req.params;
+      const results = await runEvaluation(datasetId);
+      res.json(results);
+    } catch (error) {
+      console.error("Error running evaluation:", error);
+      res.status(500).json({ error: "Failed to run evaluation" });
+    }
+  });
+
+  // Get LangSmith project dashboard URL
+  app.get("/api/langchain/dashboard", requireAdmin, async (req, res) => {
+    try {
+      res.json({
+        projectName: "NickLanahanPortfolioBot",
+        dashboardUrl: "https://smith.langchain.com/o/projects",
+        tracesUrl: "https://smith.langchain.com/o/projects/NickLanahanPortfolioBot/traces",
+        datasetsUrl: "https://smith.langchain.com/o/datasets"
+      });
+    } catch (error) {
+      console.error("Error getting dashboard info:", error);
+      res.status(500).json({ error: "Failed to get dashboard info" });
     }
   });
 

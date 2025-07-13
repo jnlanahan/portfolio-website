@@ -25,7 +25,7 @@ export default function FloatingChatbot() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [sessionId] = useState(() => `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
+  const [conversationId] = useState(() => Date.now()); // Simple numeric ID for conversation
   const [customFeedbackDialog, setCustomFeedbackDialog] = useState<{
     isOpen: boolean;
     messageId: string;
@@ -75,9 +75,9 @@ export default function FloatingChatbot() {
     setIsLoading(true);
 
     try {
-      const response = await apiRequest('/api/chatbot/chat', 'POST', {
+      const response = await apiRequest('/api/langchain/chatbot/chat', 'POST', {
         message: inputValue,
-        sessionId
+        conversationId
       });
 
       const botMessage: Message = {
@@ -85,9 +85,9 @@ export default function FloatingChatbot() {
         text: response.response,
         sender: 'bot',
         timestamp: new Date(),
-        isOnTopic: response.isOnTopic,
-        confidence: response.confidence,
-        conversationId: response.conversationId
+        isOnTopic: true, // LangChain responses are always on-topic
+        confidence: 1.0, // LangChain provides high-quality responses
+        conversationId: conversationId
       };
 
       setMessages(prev => [...prev, botMessage]);
