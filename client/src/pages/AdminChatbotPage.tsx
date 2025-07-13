@@ -245,7 +245,7 @@ export default function AdminChatbotPage() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Link href="/admin/chatbot/evaluation">
+            <Link href="/admin/chatbot/evaluations">
               <Button variant="outline" size="sm" className="border-[#007AFF] text-[#007AFF] hover:bg-[#007AFF] hover:text-white">
                 <BarChart3 className="w-4 h-4 mr-2" />
                 View Evaluation Dashboard

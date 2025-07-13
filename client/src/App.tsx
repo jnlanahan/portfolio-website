@@ -61,7 +61,7 @@ function Router() {
       <Route path="/admin/top5-lists/new" component={AdminTop5ListEditPage} />
       <Route path="/admin/top5-lists/:id" component={AdminTop5ListEditPage} />
       <Route path="/admin/chatbot" component={AdminChatbotPage} />
-      <Route path="/admin/chatbot/evaluation" component={AdminChatbotEvaluationPage} />
+      <Route path="/admin/chatbot/evaluations" component={AdminChatbotEvaluationPage} />
       
       {/* Fallback to 404 */}
       <Route component={NotFound} />
