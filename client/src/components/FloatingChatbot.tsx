@@ -109,16 +109,26 @@ export default function FloatingChatbot() {
     try {
       // Find the message to get conversation ID
       const message = messages.find(m => m.id === messageId);
+      console.log('handleFeedback called with:', { messageId, feedback, message });
+      
       if (!message || !message.conversationId) {
-        console.error('Message or conversation ID not found');
+        console.error('Message or conversation ID not found', { message });
         return;
       }
 
-      await apiRequest('/api/chatbot/feedback', 'POST', {
+      console.log('Submitting feedback:', {
         conversationId: message.conversationId,
         sessionId: sessionId,
         rating: feedback === 'positive' ? 'thumbs_up' : 'thumbs_down'
       });
+
+      const response = await apiRequest('/api/chatbot/feedback', 'POST', {
+        conversationId: message.conversationId,
+        sessionId: sessionId,
+        rating: feedback === 'positive' ? 'thumbs_up' : 'thumbs_down'
+      });
+
+      console.log('Feedback submitted successfully:', response);
 
       // Update the message with feedback
       setMessages(prev => 
@@ -204,10 +214,12 @@ export default function FloatingChatbot() {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
+                                console.log('Thumbs up clicked for message:', message.id, 'conversationId:', message.conversationId);
                                 handleFeedback(message.id, 'positive');
                               }}
-                              className={`h-6 w-6 p-0 ${message.feedback === 'positive' ? 'bg-slate-100 text-slate-700' : 'hover:bg-slate-50 text-gray-500'}`}
+                              className={`h-6 w-6 p-0 cursor-pointer ${message.feedback === 'positive' ? 'bg-green-100 text-green-700' : 'hover:bg-green-50 text-gray-500 hover:text-green-600'}`}
                               disabled={message.feedback !== null}
+                              title="Rate this response as helpful"
                             >
                               <ThumbsUp className="h-3 w-3" />
                             </Button>
@@ -217,10 +229,12 @@ export default function FloatingChatbot() {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
+                                console.log('Thumbs down clicked for message:', message.id, 'conversationId:', message.conversationId);
                                 handleFeedback(message.id, 'negative');
                               }}
-                              className={`h-6 w-6 p-0 ${message.feedback === 'negative' ? 'bg-slate-100 text-slate-700' : 'hover:bg-slate-50 text-gray-500'}`}
+                              className={`h-6 w-6 p-0 cursor-pointer ${message.feedback === 'negative' ? 'bg-red-100 text-red-700' : 'hover:bg-red-50 text-gray-500 hover:text-red-600'}`}
                               disabled={message.feedback !== null}
+                              title="Rate this response as not helpful"
                             >
                               <ThumbsDown className="h-3 w-3" />
                             </Button>
