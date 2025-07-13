@@ -81,8 +81,102 @@ interface LearningStats {
   recentInsights: LearningInsight[];
 }
 
+// PromptDiffPreview Component
+function PromptDiffPreview() {
+  const { data: currentPrompt, isLoading: currentLoading } = useQuery({
+    queryKey: ['/api/admin/chatbot/learning/system-prompt'],
+  });
+
+  const { data: previewData, isLoading: previewLoading } = useQuery({
+    queryKey: ['/api/admin/chatbot/learning/prompt-preview'],
+    enabled: !!currentPrompt,
+  });
+
+  if (currentLoading || previewLoading) {
+    return (
+      <div className="text-center py-8">
+        <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+        <p className="mt-2 text-gray-400">Loading preview...</p>
+      </div>
+    );
+  }
+
+  const currentLines = currentPrompt?.prompt?.split('\n') || [];
+  const newLines = previewData?.prompt?.split('\n') || [];
+  
+  // Simple diff implementation
+  const changes = [];
+  const maxLength = Math.max(currentLines.length, newLines.length);
+  
+  for (let i = 0; i < maxLength; i++) {
+    const currentLine = currentLines[i];
+    const newLine = newLines[i];
+    
+    if (currentLine === undefined && newLine !== undefined) {
+      // Added line
+      changes.push({ type: 'added', line: newLine, index: i });
+    } else if (currentLine !== undefined && newLine === undefined) {
+      // Deleted line
+      changes.push({ type: 'deleted', line: currentLine, index: i });
+    } else if (currentLine !== newLine) {
+      // Modified line
+      if (currentLine) changes.push({ type: 'deleted', line: currentLine, index: i });
+      if (newLine) changes.push({ type: 'added', line: newLine, index: i });
+    } else {
+      // Unchanged line
+      changes.push({ type: 'unchanged', line: currentLine, index: i });
+    }
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center gap-4 text-sm">
+        <span className="flex items-center gap-2">
+          <div className="w-4 h-4 bg-green-600 rounded"></div>
+          <span className="text-gray-400">Added</span>
+        </span>
+        <span className="flex items-center gap-2">
+          <div className="w-4 h-4 bg-red-600 rounded"></div>
+          <span className="text-gray-400">Deleted</span>
+        </span>
+        <span className="flex items-center gap-2">
+          <div className="w-4 h-4 bg-gray-600 rounded"></div>
+          <span className="text-gray-400">Unchanged</span>
+        </span>
+      </div>
+
+      <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
+        <pre className="text-xs">
+          {changes.map((change, idx) => (
+            <div
+              key={idx}
+              className={`${
+                change.type === 'added' ? 'bg-green-900 bg-opacity-30 text-green-400' :
+                change.type === 'deleted' ? 'bg-red-900 bg-opacity-30 text-red-400 line-through' :
+                'text-gray-500'
+              }`}
+            >
+              <span className="select-none mr-2 text-gray-600">
+                {change.type === 'added' ? '+' : change.type === 'deleted' ? '-' : ' '}
+              </span>
+              {change.line || ' '}
+            </div>
+          ))}
+        </pre>
+      </div>
+
+      <div className="text-sm text-gray-400">
+        <p>📌 Review the changes carefully before applying them.</p>
+        <p>📌 New FACTS will be added to the system prompt from user feedback.</p>
+        <p>📌 The chatbot will use this updated prompt for all future conversations.</p>
+      </div>
+    </div>
+  );
+}
+
 export default function AdminChatbotEvaluationPage() {
-  const [selectedTab, setSelectedTab] = useState<'overview' | 'evaluations' | 'feedback' | 'learning'>('overview');
+  const [selectedTab, setSelectedTab] = useState<'overview' | 'evaluations' | 'learning'>('overview');
+  const [showPromptPreview, setShowPromptPreview] = useState(false);
   const queryClient = useQueryClient();
 
   const { data: evaluations, isLoading: evaluationsLoading } = useQuery({
@@ -252,8 +346,7 @@ export default function AdminChatbotEvaluationPage() {
           {[
             { id: 'overview', label: 'Overview', icon: BarChart3 },
             { id: 'evaluations', label: 'Evaluations', icon: MessageSquare },
-            { id: 'feedback', label: 'User Feedback', icon: ThumbsUp },
-            { id: 'learning', label: 'AI Learning', icon: Brain }
+            { id: 'learning', label: 'Learning & Feedback', icon: Brain }
           ].map(tab => (
             <Button
               key={tab.id}
@@ -484,11 +577,14 @@ export default function AdminChatbotEvaluationPage() {
           </div>
         )}
 
-        {/* Feedback Tab */}
-        {selectedTab === 'feedback' && (
+
+
+        {/* Learning & Feedback Tab */}
+        {selectedTab === 'learning' && (
           <div className="space-y-6">
-            {/* Feedback Summary */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Combined Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              {/* Feedback Stats First Row */}
               <div className="bg-gray-800 rounded-lg p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 bg-green-600 rounded-lg">
@@ -524,72 +620,7 @@ export default function AdminChatbotEvaluationPage() {
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Feedback List */}
-            {feedbackLoading ? (
-              <div className="text-center py-8">
-                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-                <p className="mt-2 text-gray-400">Loading feedback...</p>
-              </div>
-            ) : feedback && feedback.length > 0 ? (
-              <div className="bg-gray-800 rounded-lg p-6">
-                <h3 className="text-xl font-semibold mb-4">Recent Feedback</h3>
-                <div className="space-y-4">
-                  {feedback.slice(0, 20).map(fb => (
-                    <div key={fb.id} className="p-4 bg-gray-700 rounded-lg">
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="flex items-center gap-3">
-                          <div className={`p-2 rounded-lg ${
-                            fb.rating === 'thumbs_up' ? 'bg-green-600' : 'bg-red-600'
-                          }`}>
-                            {fb.rating === 'thumbs_up' ? (
-                              <ThumbsUp className="w-4 h-4" />
-                            ) : (
-                              <ThumbsDown className="w-4 h-4" />
-                            )}
-                          </div>
-                          <div>
-                            <p className="font-medium">Conversation #{fb.conversationId}</p>
-                            <p className="text-sm text-gray-400">
-                              {formatDistanceToNow(new Date(fb.createdAt))} ago
-                            </p>
-                          </div>
-                        </div>
-                        <Badge className={
-                          fb.rating === 'thumbs_up' 
-                            ? 'bg-green-100 text-green-800' 
-                            : 'bg-red-100 text-red-800'
-                        }>
-                          {fb.rating === 'thumbs_up' ? 'positive' : 'negative'}
-                        </Badge>
-                      </div>
-                      {fb.comment && (
-                        <div className="mt-3 p-3 bg-gray-800 rounded-md">
-                          <p className="text-sm text-gray-300">
-                            <span className="font-medium text-gray-400">Feedback: </span>
-                            {fb.comment}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <div className="text-center py-8">
-                <ThumbsUp className="w-12 h-12 text-gray-600 mx-auto mb-4" />
-                <p className="text-gray-400">No user feedback yet. Feedback will appear here once users interact with the chatbot.</p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Learning Insights Tab */}
-        {selectedTab === 'learning' && (
-          <div className="space-y-6">
-            {/* Learning Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="bg-gray-800 rounded-lg p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 bg-blue-600 rounded-lg">
@@ -601,7 +632,10 @@ export default function AdminChatbotEvaluationPage() {
                   </div>
                 </div>
               </div>
-              
+            </div>
+
+            {/* Learning Stats Second Row */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-gray-800 rounded-lg p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 bg-green-600 rounded-lg">
@@ -638,6 +672,43 @@ export default function AdminChatbotEvaluationPage() {
                 </div>
               </div>
             </div>
+
+            {/* User Feedback Section */}
+            {feedback && feedback.length > 0 && (
+              <div className="bg-gray-800 rounded-lg p-6">
+                <h3 className="text-xl font-semibold mb-4">Recent User Feedback</h3>
+                <div className="space-y-4 max-h-96 overflow-y-auto">
+                  {feedback.filter(fb => fb.comment).slice(0, 10).map(fb => (
+                    <div key={fb.id} className="p-4 bg-gray-700 rounded-lg">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                          <div className={`p-2 rounded-lg ${
+                            fb.rating === 'thumbs_up' ? 'bg-green-600' : 'bg-red-600'
+                          }`}>
+                            {fb.rating === 'thumbs_up' ? (
+                              <ThumbsUp className="w-4 h-4" />
+                            ) : (
+                              <ThumbsDown className="w-4 h-4" />
+                            )}
+                          </div>
+                          <div>
+                            <p className="font-medium">Conversation #{fb.conversationId}</p>
+                            <p className="text-sm text-gray-400">
+                              {formatDistanceToNow(new Date(fb.createdAt))} ago
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      {fb.comment && (
+                        <div className="mt-2 p-3 bg-gray-800 rounded-md">
+                          <p className="text-sm text-gray-300">{fb.comment}</p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Current System Prompt */}
             {systemPromptData && (
@@ -689,7 +760,7 @@ export default function AdminChatbotEvaluationPage() {
                       {deduplicateInsightsMutation.isPending ? 'Deduplicating...' : 'Deduplicate Insights'}
                     </Button>
                     <Button
-                      onClick={() => updateSystemPromptMutation.mutate()}
+                      onClick={() => setShowPromptPreview(true)}
                       disabled={updateSystemPromptMutation.isPending}
                       className="bg-green-600 hover:bg-green-700"
                     >
@@ -780,6 +851,42 @@ export default function AdminChatbotEvaluationPage() {
           </div>
         )}
       </div>
+
+      {/* System Prompt Preview Dialog */}
+      {showPromptPreview && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-gray-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
+            <div className="p-6 border-b border-gray-700">
+              <h2 className="text-xl font-semibold">System Prompt Preview</h2>
+              <p className="text-sm text-gray-400 mt-1">Review the changes that will be applied to the system prompt</p>
+            </div>
+            
+            <div className="p-6 overflow-y-auto max-h-[60vh]">
+              <PromptDiffPreview />
+            </div>
+
+            <div className="p-6 border-t border-gray-700 flex gap-4 justify-end">
+              <Button
+                variant="outline"
+                onClick={() => setShowPromptPreview(false)}
+                className="text-gray-300 border-gray-600 hover:bg-gray-700"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  updateSystemPromptMutation.mutate();
+                  setShowPromptPreview(false);
+                }}
+                disabled={updateSystemPromptMutation.isPending}
+                className="bg-green-600 hover:bg-green-700"
+              >
+                {updateSystemPromptMutation.isPending ? 'Applying Changes...' : 'Apply Changes'}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
