@@ -261,26 +261,23 @@ ${relevantContext || "No specific documents found for this question. Please prov
       systemPrompt = `You are Nack, a professional AI assistant specifically designed to represent Nick Lanahan to recruiters and hiring managers. Your primary role is to provide accurate, helpful information about Nick's professional background, skills, and experience.
 
 CRITICAL INSTRUCTIONS:
-- Always search available documents before answering questions
-- When asked about specific topics, look for relevant documents:
-  * For coursework or education details → Check for transcripts or academic records
-  * For work experience or duration → Check resume and LinkedIn profile 
-  * For project details → Check portfolio documents or project descriptions
-  * For technical skills → Check resume, LinkedIn, and project documentation
-  * For certifications or achievements → Check resume and professional documents
-- Never assume information is not available without checking all documents
-- If you cannot find specific information after searching, say "I don't have that specific information in the documents available"
-- Be confident when information is found in documents
+- You have access to comprehensive documents about Nick including transcripts, resumes, performance reviews, and professional records
+- When information is provided in the context below, present it confidently and directly
+- For education questions: Use transcript information, course details, and academic records to provide specific answers
+- For work experience: Reference performance reviews, job descriptions, and accomplishments
+- For skills and projects: Draw from resume content, LinkedIn profile, and project documentation
+- Only say "I don't have that specific information" if the context truly contains no relevant details
+- Be confident and specific when information is available in the documents
 - Maintain a professional, helpful tone suitable for recruiter interactions
 - Focus on Nick's achievements, experience, and qualifications
 
-AVAILABLE DOCUMENT TYPES:
-- Resume documents
-- LinkedIn profile
-- Academic transcripts (MBA and MS transcripts)
-- Project documentation
-- Professional certifications
-- Work samples and portfolio pieces${factsSection}
+DOCUMENT SOURCES AVAILABLE:
+- Complete academic transcripts with course details and GPAs
+- Professional resume with detailed experience
+- LinkedIn profile with comprehensive background
+- Performance reviews with specific ratings and feedback
+- Military evaluations and service records
+- Project documentation and accomplishments${factsSection}
 
 RELEVANT CONTEXT FOR THIS QUESTION:
 ${relevantContext || "No specific documents found for this question. Please provide information based on general knowledge about Nick if available."}`;
@@ -290,6 +287,20 @@ ${relevantContext || "No specific documents found for this question. Please prov
     console.log('Using custom prompt:', !!customPromptTemplate);
     console.log('Relevant context length:', relevantContext.length);
     console.log('Documents searched:', documents.map(d => d.originalName).join(', '));
+
+    // Check for document reading issues
+    const unreadableDocuments = documents.filter(doc => 
+      doc.content.includes('parsing failed') || 
+      doc.content.includes('processing failed') ||
+      doc.content.includes('initialization failed') ||
+      doc.content.includes('no readable text found') ||
+      doc.content.length < 200
+    );
+
+    if (unreadableDocuments.length > 0) {
+      console.warn(`Warning: ${unreadableDocuments.length} documents may not be readable:`, 
+        unreadableDocuments.map(d => d.originalName).join(', '));
+    }
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
@@ -301,7 +312,12 @@ ${relevantContext || "No specific documents found for this question. Please prov
       temperature: 0.9,
     });
 
-    const botResponse = response.choices[0].message.content || "I'm sorry, I couldn't process your question. Please try again.";
+    let botResponse = response.choices[0].message.content || "I'm sorry, I couldn't process your question. Please try again.";
+    
+    // Add document reading notification if there are issues
+    if (unreadableDocuments.length > 0) {
+      botResponse += `\n\n*Note: ${unreadableDocuments.length} of ${documents.length} documents could not be fully read due to formatting or encryption issues. This may limit the completeness of my response.*`;
+    }
     
     // Save conversation to database
     const conversation = await storage.saveChatbotConversation({
