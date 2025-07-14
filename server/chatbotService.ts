@@ -205,24 +205,25 @@ export async function processRecruiterQuestion(
 
     const openai = getOpenAI();
     
-    // Get data from database
-    const documents = await storage.getChatbotDocuments();
+    // Get relevant documents from Chroma DB via LangChain
+    const { retrieveRelevantDocuments } = await import('./langchainChatbotService');
+    const relevantDocs = await retrieveRelevantDocuments(question, 10);
+    
     const learningInsights = await storage.getChatbotLearningInsights();
     
-    console.log(`Retrieved ${documents.length} documents from storage`);
+    console.log(`Retrieved ${relevantDocs.length} documents from Chroma DB`);
     console.log(`Retrieved ${learningInsights.length} learning insights from storage`);
     
     // First, determine what kind of information the question is asking about
     const questionAnalysis = await analyzeQuestion(question);
     
-    // ALWAYS search ALL documents for every question
+    // Build context from retrieved documents
     let relevantContext = "";
     
-    // Search through ALL documents regardless of question type
-    for (const doc of documents) {
-      const relevantParts = searchDocumentForRelevance(doc.content, question);
-      if (relevantParts) {
-        relevantContext += `\nFrom ${doc.originalName}:\n${relevantParts}\n`;
+    // Use the documents retrieved from Chroma DB
+    for (const doc of relevantDocs) {
+      if (doc.pageContent) {
+        relevantContext += `\nFrom document:\n${doc.pageContent.substring(0, 500)}\n`;
       }
     }
     

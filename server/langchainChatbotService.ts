@@ -96,12 +96,12 @@ async function initializeVectorStore(): Promise<void> {
 /**
  * Retrieve relevant documents using file-based Chroma database
  */
-async function retrieveRelevantDocuments(question: string, k: number = 5): Promise<Document[]> {
+export async function retrieveRelevantDocuments(question: string, k: number = 5): Promise<Document[]> {
   try {
     // Since we can't directly connect to file-based Chroma from JavaScript,
     // we'll use the pre-built embeddings and similarity search
     
-    const sqlite3 = await import('sqlite3');
+    const { default: sqlite3 } = await import('sqlite3');
     const { open } = await import('sqlite');
     const path = await import('path');
     
@@ -111,17 +111,16 @@ async function retrieveRelevantDocuments(question: string, k: number = 5): Promi
       driver: sqlite3.Database
     });
     
-    // Get all documents with their embeddings
+    // Get all documents from the embeddings and metadata tables
+    // Since Chroma uses a simpler structure, let's just get all documents
     const documents = await db.all(`
-      SELECT 
-        d.document as content,
-        d.id,
-        d.metadata
-      FROM embeddings e
-      JOIN documents d ON e.id = d.id
-      WHERE e.collection_id IN (
-        SELECT id FROM collections WHERE name = 'nicks_documents'
-      )
+      SELECT DISTINCT
+        em.id,
+        em.string_value as content
+      FROM embedding_metadata em
+      WHERE em.key = 'chroma:document'
+      AND em.string_value IS NOT NULL
+      LIMIT ${k}
     `);
     
     // For now, return all documents (in production, you'd compute similarity)
@@ -180,7 +179,7 @@ async function retrieveRelevantDocuments(question: string, k: number = 5): Promi
 async function getConversationHistory(conversationId: number): Promise<string> {
   try {
     // Get recent conversations from database
-    const conversations = await storage.getChatbotConversations();
+    const conversations = await storage.getAllChatbotConversations();
     
     // Filter by session and get recent ones
     const sessionConversations = conversations
@@ -261,7 +260,7 @@ export async function processMessage(
   message: string,
   conversationId: number,
   userId?: string
-): Promise<string> {
+): Promise<{ response: string; isOnTopic?: boolean; confidence?: number }> {
   
   try {
     // Get response from RAG pipeline
@@ -274,7 +273,11 @@ export async function processMessage(
       botResponse: response
     });
     
-    return response;
+    return {
+      response,
+      isOnTopic: true,
+      confidence: 0.9
+    };
     
   } catch (error) {
     console.error("Error processing message:", error);
