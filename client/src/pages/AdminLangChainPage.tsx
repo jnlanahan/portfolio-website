@@ -357,8 +357,9 @@ export default function AdminLangChainPage() {
                     <div className="space-y-2 text-sm text-gray-400">
                       <p>• Click "Open LangSmith" button in the top right</p>
                       <p>• Navigate to your "My Portfolio Chatbot" project</p>
-                      <p>• View traces under the "Traces" tab</p>
-                      <p>• Check evaluations under the "Evaluations" tab</p>
+                      <p>• View conversation traces under the "Runs" tab</p>
+                      <p>• Look for evaluation runs (named "evaluate_chatbot_response") in the runs list</p>
+                      <p>• Click on individual runs to see detailed evaluation scores</p>
                     </div>
                   </div>
                 </div>
@@ -444,8 +445,8 @@ export default function AdminLangChainPage() {
                       <div className="flex items-start gap-2">
                         <div className="w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold mt-0.5">2</div>
                         <div>
-                          <div className="text-gray-300">Review LangSmith dashboard traces</div>
-                          <div className="text-xs">Identify any failed conversations or low-scoring responses</div>
+                          <div className="text-gray-300">Review LangSmith dashboard runs</div>
+                          <div className="text-xs">Identify any failed conversations or low-scoring responses in the Runs tab</div>
                         </div>
                       </div>
                       <div className="flex items-start gap-2">
@@ -466,7 +467,7 @@ export default function AdminLangChainPage() {
                       </div>
                       <div className="flex items-center gap-2">
                         <XCircle className="w-4 h-4 text-red-400" />
-                        <span>High error rates in traces</span>
+                        <span>High error rates in runs</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <XCircle className="w-4 h-4 text-red-400" />
@@ -501,7 +502,7 @@ export default function AdminLangChainPage() {
                     <h4 className="text-white font-medium mb-2">Enhance Document Retrieval</h4>
                     <div className="space-y-2 text-sm text-gray-400">
                       <p>• Refresh vector store after document updates</p>
-                      <p>• Monitor retrieval relevance in traces</p>
+                      <p>• Monitor retrieval relevance in runs</p>
                       <p>• Add more context to document metadata</p>
                       <p>• Optimize embedding search parameters</p>
                     </div>
@@ -579,7 +580,7 @@ export default function AdminLangChainPage() {
                     <h4 className="text-white font-medium mb-2">Quick Actions</h4>
                     <div className="space-y-1 text-sm text-gray-400">
                       <p>• Test Connection → Dashboard tab</p>
-                      <p>• View Traces → LangSmith button</p>
+                      <p>• View Runs → LangSmith button</p>
                       <p>• Update Prompts → Chatbot Training</p>
                       <p>• Refresh Data → Vector Store tab</p>
                     </div>
