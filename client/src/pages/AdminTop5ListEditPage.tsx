@@ -81,8 +81,16 @@ export default function AdminTop5ListEditPage() {
     console.log("Auth check:", authCheck);
     console.log("List data:", list);
     console.log("List error:", listError);
+    console.log("Form values:", {
+      title: watchList("title"),
+      icon: watchList("icon"),
+      description: watchList("description"),
+      color: watchList("color"),
+      mainImage: watchList("mainImage"),
+      position: watchList("position")
+    });
     console.log("=================");
-  }, [list, isEditing, authCheck, listError, id]);
+  }, [list, isEditing, authCheck, listError, id, watchList]);
 
   // Fetch list items
   const { data: items } = useQuery({
@@ -227,7 +235,13 @@ export default function AdminTop5ListEditPage() {
   });
 
   const onSubmitList = (data: any) => {
-    saveListMutation.mutate(data);
+    console.log("Form submitted with:", data);
+    const transformedData = {
+      ...data,
+      position: Number(data.position) || 0,
+    };
+    console.log("Transformed data:", transformedData);
+    saveListMutation.mutate(transformedData);
   };
 
   const onSubmitItem = (data: any) => {
@@ -251,9 +265,12 @@ export default function AdminTop5ListEditPage() {
   // Upload functions
   const handleMainImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (!file) return;
+    if (!file) {
+      console.log("No file selected");
+      return;
+    }
 
-    console.log("Starting upload for file:", file.name);
+    console.log("Starting upload for file:", file.name, "size:", file.size);
     setUploadingMainImage(true);
     const formData = new FormData();
     formData.append('files', file);
@@ -275,11 +292,13 @@ export default function AdminTop5ListEditPage() {
       console.error("Upload error:", error);
       toast({
         title: "Upload failed",
-        description: "An error occurred while uploading the image",
+        description: error?.message || "An error occurred while uploading the image",
         variant: "destructive",
       });
     } finally {
       setUploadingMainImage(false);
+      // Reset the file input
+      event.target.value = '';
     }
   };
 
@@ -560,6 +579,7 @@ export default function AdminTop5ListEditPage() {
                     accept="image/*"
                     onChange={handleMainImageUpload}
                     style={{ display: 'none' }}
+                    key={uploadingMainImage ? 'uploading' : 'idle'}
                   />
                 </div>
 
