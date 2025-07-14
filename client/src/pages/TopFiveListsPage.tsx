@@ -2,17 +2,22 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { getLists } from "@/data/lists";
 import { useState } from "react";
+import { X } from "lucide-react";
 
 const TopFiveListsPage = () => {
-  const [expandedList, setExpandedList] = useState<number | null>(null);
+  const [selectedList, setSelectedList] = useState<number | null>(null);
   
   const { data: lists, isLoading } = useQuery({
     queryKey: ["/api/lists"],
     initialData: getLists(),
   });
 
-  const toggleExpandList = (index: number) => {
-    setExpandedList(expandedList === index ? null : index);
+  const openModal = (index: number) => {
+    setSelectedList(index);
+  };
+
+  const closeModal = () => {
+    setSelectedList(null);
   };
 
   if (isLoading) {
