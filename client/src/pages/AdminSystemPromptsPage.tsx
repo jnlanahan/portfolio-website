@@ -83,6 +83,7 @@ export default function AdminSystemPromptsPage() {
                   <div className="space-y-4">
                     <div className="text-center">
                       <h3 className="text-lg font-semibold text-white mb-4">Training Mode (You)</h3>
+                      <p className="text-xs text-gray-400">processTrainingConversation()</p>
                     </div>
                     
                     <div className="flex flex-col items-center space-y-3">
@@ -91,9 +92,9 @@ export default function AdminSystemPromptsPage() {
                       </div>
                       <div className="text-gray-400">↓</div>
                       <div className="bg-[#2a2a2a] border border-purple-500 px-3 py-2 rounded-lg text-sm text-center">
-                        <strong>Training Prompt</strong>
+                        <strong>Hardcoded Training Prompt</strong>
                         <br />
-                        <span className="text-xs text-gray-400">Single prompt for training sessions</span>
+                        <span className="text-xs text-gray-400">Built into chatbotService.ts</span>
                       </div>
                       <div className="text-gray-400">↓</div>
                       <div className="bg-green-600 text-white px-4 py-2 rounded-lg font-medium">
@@ -110,6 +111,7 @@ export default function AdminSystemPromptsPage() {
                   <div className="space-y-4">
                     <div className="text-center">
                       <h3 className="text-lg font-semibold text-white mb-4">Visitor Mode (Recruiters)</h3>
+                      <p className="text-xs text-gray-400">processRecruiterQuestion()</p>
                     </div>
                     
                     <div className="flex flex-col items-center space-y-3">
@@ -117,16 +119,28 @@ export default function AdminSystemPromptsPage() {
                         Recruiter Asks Question
                       </div>
                       <div className="text-gray-400">↓</div>
+                      <div className="bg-yellow-600 text-white px-3 py-2 rounded-lg text-sm text-center">
+                        <strong>Check Custom Template</strong>
+                        <br />
+                        <span className="text-xs text-gray-400">storage.getActiveSystemPromptTemplate()</span>
+                      </div>
+                      <div className="text-gray-400">↓</div>
                       <div className="bg-[#2a2a2a] border border-orange-500 px-3 py-2 rounded-lg text-sm text-center">
                         <strong>Custom Prompt</strong>
                         <br />
-                        <span className="text-xs text-gray-400">Database-stored (if set)</span>
+                        <span className="text-xs text-gray-400">If found in database</span>
                       </div>
                       <div className="text-gray-400">↓ (or fallback)</div>
-                      <div className="bg-[#2a2a2a] border border-cyan-500 px-3 py-2 rounded-lg text-sm text-center">
-                        <strong>LangChain Prompt</strong>
+                      <div className="bg-[#2a2a2a] border border-gray-500 px-3 py-2 rounded-lg text-sm text-center">
+                        <strong>Default Prompt</strong>
                         <br />
-                        <span className="text-xs text-gray-400">RAG with document retrieval</span>
+                        <span className="text-xs text-gray-400">Hardcoded in chatbotService.ts</span>
+                      </div>
+                      <div className="text-gray-400">↓</div>
+                      <div className="bg-cyan-600 text-white px-3 py-2 rounded-lg text-sm text-center">
+                        <strong>+ Chroma DB Context</strong>
+                        <br />
+                        <span className="text-xs text-gray-400">retrieveRelevantDocuments()</span>
                       </div>
                       <div className="text-gray-400">↓</div>
                       <div className="bg-green-600 text-white px-4 py-2 rounded-lg font-medium">
@@ -145,31 +159,39 @@ export default function AdminSystemPromptsPage() {
               {/* Legend */}
               <div className="grid grid-cols-2 gap-4 mt-6">
                 <div className="space-y-2">
-                  <h3 className="font-semibold text-white">System Prompts:</h3>
+                  <h3 className="font-semibold text-white">System Prompts (Current Implementation):</h3>
                   <div className="space-y-1 text-sm">
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 bg-purple-500 rounded"></div>
-                      <span><strong>Training:</strong> Single prompt for training sessions</span>
+                      <span><strong>Training:</strong> Hardcoded in chatbotService.ts</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 bg-orange-500 rounded"></div>
-                      <span><strong>Custom:</strong> Database-stored prompt for visitors</span>
+                      <span><strong>Custom:</strong> Database template (if exists)</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 bg-gray-500 rounded"></div>
+                      <span><strong>Default:</strong> Hardcoded fallback in chatbotService.ts</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 bg-cyan-500 rounded"></div>
-                      <span><strong>LangChain:</strong> RAG pipeline with document retrieval</span>
+                      <span><strong>LangChain:</strong> Used only for document retrieval</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 bg-green-500 rounded"></div>
+                      <span><strong>Enhanced:</strong> Auto-generated (via learning service)</span>
                     </div>
                   </div>
                 </div>
                 
                 <div className="space-y-2">
-                  <h3 className="font-semibold text-white">Usage Flow:</h3>
+                  <h3 className="font-semibold text-white">Actual Usage Flow:</h3>
                   <div className="space-y-1 text-sm">
-                    <div>• <strong>Training Mode:</strong> You use Training prompt to ask questions</div>
-                    <div>• <strong>Visitor Mode:</strong> Recruiters get Custom prompt (if set) or LangChain prompt</div>
-                    <div>• Q&A pairs from training are stored in database</div>
-                    <div>• Document retrieval happens via Chroma DB for visitor questions</div>
-                    <div>• Token limit: 150 tokens (set in API calls, not prompt)</div>
+                    <div>• <strong>Training Mode:</strong> Uses hardcoded training prompt</div>
+                    <div>• <strong>Visitor Mode:</strong> Checks for custom template, falls back to default</div>
+                    <div>• <strong>Document Context:</strong> Added via Chroma DB retrieval</div>
+                    <div>• <strong>LangChain Prompt:</strong> NOT used in main flow, only for retrieval</div>
+                    <div>• <strong>Enhanced Prompt:</strong> Generated but needs integration</div>
                   </div>
                 </div>
               </div>
@@ -186,13 +208,15 @@ export default function AdminSystemPromptsPage() {
                 </div>
               </div>
 
-              {/* Recommendation Alert */}
-              <Alert className="bg-yellow-900/20 border-yellow-500">
-                <AlertCircle className="h-4 w-4 text-yellow-500" />
-                <AlertDescription className="text-yellow-200">
-                  <strong>Recommendation:</strong> Consider removing the "Enhanced" prompt system as it's becoming too large and complex. 
-                  The good response style guidelines from LangChain should be moved to the Custom prompt instead.
-                  This would simplify the system to just 3 prompts: Training (for you), Custom (for visitors), and LangChain (fallback with RAG).
+              {/* Critical Implementation Warning */}
+              <Alert className="bg-red-900/20 border-red-500">
+                <AlertCircle className="h-4 w-4 text-red-500" />
+                <AlertDescription className="text-red-200">
+                  <strong>CRITICAL:</strong> The system prompts shown in this interface don't match the actual implementation!
+                  <br />
+                  <strong>Problem:</strong> The LangChain prompt is NOT used in the main chat flow - it's only for document retrieval.
+                  <br />
+                  <strong>Solution:</strong> The Enhanced prompt should replace the hardcoded prompts in chatbotService.ts, or the Custom prompt should be used properly.
                 </AlertDescription>
               </Alert>
 
