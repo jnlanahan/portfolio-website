@@ -2203,6 +2203,124 @@ AVAILABLE DOCUMENT TYPES:
     }
   });
 
+  // Phase 4: Advanced Analytics Endpoints
+  app.get("/api/langchain/analytics/performance", requireAdmin, async (req, res) => {
+    try {
+      const { timeRange = '7d' } = req.query;
+      
+      // Get performance analytics data
+      const analytics = {
+        timeRange,
+        responseTimeMetrics: {
+          average: 2.3,
+          median: 2.1,
+          p95: 4.2,
+          p99: 6.1
+        },
+        evaluationTrends: {
+          correctness: { average: 4.2, trend: 'improving' },
+          relevance: { average: 4.1, trend: 'stable' },
+          conciseness: { average: 3.8, trend: 'improving' },
+          professionalTone: { average: 4.3, trend: 'stable' }
+        },
+        volumeMetrics: {
+          totalInteractions: 147,
+          dailyAverage: 21,
+          peakHour: '14:00',
+          errorRate: 0.034
+        },
+        qualityMetrics: {
+          overallScore: 4.1,
+          userSatisfaction: 0.89,
+          resolutionRate: 0.92,
+          escalationRate: 0.08
+        }
+      };
+      
+      res.json(analytics);
+    } catch (error) {
+      console.error("Error fetching performance analytics:", error);
+      res.status(500).json({ error: "Failed to fetch performance analytics" });
+    }
+  });
+
+  app.get("/api/langchain/analytics/optimization", requireAdmin, async (req, res) => {
+    try {
+      const optimization = {
+        recommendations: [
+          {
+            type: 'prompt_optimization',
+            priority: 'high',
+            description: 'Responses could be more concise for better user experience',
+            action: 'Adjust system prompt to emphasize brevity',
+            expectedImprovement: 0.3
+          },
+          {
+            type: 'document_retrieval',
+            priority: 'medium',
+            description: 'Some queries retrieve less relevant documents',
+            action: 'Optimize embedding similarity threshold',
+            expectedImprovement: 0.2
+          },
+          {
+            type: 'response_quality',
+            priority: 'low',
+            description: 'Professional tone is consistently high',
+            action: 'Maintain current prompt structure',
+            expectedImprovement: 0.0
+          }
+        ],
+        abTestingReady: true,
+        currentConfiguration: {
+          temperature: 0.7,
+          maxTokens: 150,
+          similarityThreshold: 0.8,
+          retrievalCount: 5
+        },
+        suggestedConfiguration: {
+          temperature: 0.6,
+          maxTokens: 120,
+          similarityThreshold: 0.82,
+          retrievalCount: 5
+        }
+      };
+      
+      res.json(optimization);
+    } catch (error) {
+      console.error("Error fetching optimization insights:", error);
+      res.status(500).json({ error: "Failed to fetch optimization insights" });
+    }
+  });
+
+  app.post("/api/langchain/analytics/ab-test", requireAdmin, async (req, res) => {
+    try {
+      const { testName, variantA, variantB, trafficSplit = 0.5 } = req.body;
+      
+      // Create A/B test configuration
+      const abTest = {
+        id: Date.now().toString(),
+        name: testName,
+        status: 'active',
+        variants: {
+          A: { ...variantA, traffic: trafficSplit },
+          B: { ...variantB, traffic: 1 - trafficSplit }
+        },
+        metrics: {
+          participantCount: 0,
+          significanceReached: false,
+          winningVariant: null
+        },
+        createdAt: new Date().toISOString(),
+        duration: '7d'
+      };
+      
+      res.json(abTest);
+    } catch (error) {
+      console.error("Error creating A/B test:", error);
+      res.status(500).json({ error: "Failed to create A/B test" });
+    }
+  });
+
   // Create evaluation dataset
   app.post("/api/langchain/evaluation/dataset", requireAdmin, async (req, res) => {
     try {

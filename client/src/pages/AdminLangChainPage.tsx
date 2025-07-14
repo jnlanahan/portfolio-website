@@ -175,10 +175,22 @@ export default function AdminLangChainPage() {
         </div>
 
         <Tabs defaultValue="dashboard" className="w-full">
-          <TabsList className="grid w-full grid-cols-5 bg-[#2a2a2a] border-gray-600">
+          <TabsList className="grid w-full grid-cols-6 bg-[#2a2a2a] border-gray-600">
             <TabsTrigger value="dashboard" className="text-white data-[state=active]:bg-[#007AFF] data-[state=active]:text-white">
               <BarChart3 className="w-4 h-4 mr-2" />
               Dashboard
+            </TabsTrigger>
+            <TabsTrigger value="analytics" className="text-white data-[state=active]:bg-[#AF52DE] data-[state=active]:text-white">
+              <TrendingUp className="w-4 h-4 mr-2" />
+              Analytics
+            </TabsTrigger>
+            <TabsTrigger value="evaluation" className="text-white data-[state=active]:bg-[#34C759] data-[state=active]:text-white">
+              <Play className="w-4 h-4 mr-2" />
+              Evaluation
+            </TabsTrigger>
+            <TabsTrigger value="guide" className="text-white data-[state=active]:bg-[#FF9500] data-[state=active]:text-white">
+              <Eye className="w-4 h-4 mr-2" />
+              How to Use
             </TabsTrigger>
             <TabsTrigger value="architecture" className="text-white data-[state=active]:bg-[#007AFF] data-[state=active]:text-white">
               <Database className="w-4 h-4 mr-2" />
@@ -187,14 +199,6 @@ export default function AdminLangChainPage() {
             <TabsTrigger value="documents" className="text-white data-[state=active]:bg-[#007AFF] data-[state=active]:text-white">
               <Database className="w-4 h-4 mr-2" />
               Vector Store
-            </TabsTrigger>
-            <TabsTrigger value="evaluation" className="text-white data-[state=active]:bg-[#007AFF] data-[state=active]:text-white">
-              <Play className="w-4 h-4 mr-2" />
-              Evaluation
-            </TabsTrigger>
-            <TabsTrigger value="monitoring" className="text-white data-[state=active]:bg-[#007AFF] data-[state=active]:text-white">
-              <Eye className="w-4 h-4 mr-2" />
-              Monitoring
             </TabsTrigger>
           </TabsList>
 
@@ -322,6 +326,269 @@ export default function AdminLangChainPage() {
             )}
           </TabsContent>
 
+          {/* How to Use Guide Tab */}
+          <TabsContent value="guide" className="space-y-6">
+            <Alert className="bg-[#2a2a2a] border-gray-600">
+              <Eye className="h-4 w-4" />
+              <AlertDescription className="text-gray-300">
+                <strong>Complete Guide:</strong> Learn how to maximize your LangSmith integration for optimal chatbot performance monitoring and improvement.
+              </AlertDescription>
+            </Alert>
+
+            <div className="grid grid-cols-1 gap-6">
+              {/* Getting Started */}
+              <Card className="bg-[#2a2a2a] border-gray-600 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Play className="h-5 w-5 text-orange-400" />
+                  Getting Started with LangSmith
+                </h3>
+                <div className="space-y-4">
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">Step 1: Understanding Your Setup</h4>
+                    <div className="space-y-2 text-sm text-gray-400">
+                      <p>• Your chatbot is automatically integrated with LangSmith</p>
+                      <p>• Every conversation is traced and logged in real-time</p>
+                      <p>• All 4 evaluation criteria run automatically in the background</p>
+                      <p>• No manual setup required - it's working right now!</p>
+                    </div>
+                  </div>
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">Step 2: Access Your LangSmith Dashboard</h4>
+                    <div className="space-y-2 text-sm text-gray-400">
+                      <p>• Click "Open LangSmith" button in the top right</p>
+                      <p>• Navigate to your "My Portfolio Chatbot" project</p>
+                      <p>• View traces under the "Traces" tab</p>
+                      <p>• Check evaluations under the "Evaluations" tab</p>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Understanding the Data */}
+              <Card className="bg-[#2a2a2a] border-gray-600 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <BarChart3 className="h-5 w-5 text-orange-400" />
+                  Understanding Your Data
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">What Gets Tracked</h4>
+                    <div className="space-y-2 text-sm text-gray-400">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-3 h-3 text-green-400" />
+                        <span>User questions and chatbot responses</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-3 h-3 text-green-400" />
+                        <span>Document retrieval results</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-3 h-3 text-green-400" />
+                        <span>Response generation time</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-3 h-3 text-green-400" />
+                        <span>Evaluation scores (1-5 scale)</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-3 h-3 text-green-400" />
+                        <span>Error conditions and failures</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">4 Evaluation Criteria</h4>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                        <span className="text-gray-300">Correctness</span>
+                        <span className="text-gray-400 text-xs">- factual accuracy</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                        <span className="text-gray-300">Relevance</span>
+                        <span className="text-gray-400 text-xs">- answers the question</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                        <span className="text-gray-300">Conciseness</span>
+                        <span className="text-gray-400 text-xs">- appropriate length</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                        <span className="text-gray-300">Professional Tone</span>
+                        <span className="text-gray-400 text-xs">- recruiter-appropriate</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+
+              {/* How to Analyze Performance */}
+              <Card className="bg-[#2a2a2a] border-gray-600 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-orange-400" />
+                  How to Analyze Performance
+                </h3>
+                <div className="space-y-4">
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">Daily Monitoring Tasks</h4>
+                    <div className="space-y-3 text-sm text-gray-400">
+                      <div className="flex items-start gap-2">
+                        <div className="w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold mt-0.5">1</div>
+                        <div>
+                          <div className="text-gray-300">Check Analytics tab for trends</div>
+                          <div className="text-xs">Look for evaluation score patterns and recent activity</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <div className="w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold mt-0.5">2</div>
+                        <div>
+                          <div className="text-gray-300">Review LangSmith dashboard traces</div>
+                          <div className="text-xs">Identify any failed conversations or low-scoring responses</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <div className="w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold mt-0.5">3</div>
+                        <div>
+                          <div className="text-gray-300">Monitor document retrieval quality</div>
+                          <div className="text-xs">Ensure relevant documents are being found for questions</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">When to Take Action</h4>
+                    <div className="space-y-2 text-sm text-gray-400">
+                      <div className="flex items-center gap-2">
+                        <XCircle className="w-4 h-4 text-red-400" />
+                        <span>Evaluation scores consistently below 3.0</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <XCircle className="w-4 h-4 text-red-400" />
+                        <span>High error rates in traces</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <XCircle className="w-4 h-4 text-red-400" />
+                        <span>Poor document retrieval relevance</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <XCircle className="w-4 h-4 text-red-400" />
+                        <span>Response times over 5 seconds</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Optimization Strategies */}
+              <Card className="bg-[#2a2a2a] border-gray-600 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-orange-400" />
+                  Optimization Strategies
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">Improve Response Quality</h4>
+                    <div className="space-y-2 text-sm text-gray-400">
+                      <p>• Use System Prompt Manager to refine prompts</p>
+                      <p>• Add more training examples for edge cases</p>
+                      <p>• Review and update document content</p>
+                      <p>• Test different prompt configurations</p>
+                    </div>
+                  </div>
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">Enhance Document Retrieval</h4>
+                    <div className="space-y-2 text-sm text-gray-400">
+                      <p>• Refresh vector store after document updates</p>
+                      <p>• Monitor retrieval relevance in traces</p>
+                      <p>• Add more context to document metadata</p>
+                      <p>• Optimize embedding search parameters</p>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Advanced Features */}
+              <Card className="bg-[#2a2a2a] border-gray-600 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Database className="h-5 w-5 text-orange-400" />
+                  Advanced Features & Best Practices
+                </h3>
+                <div className="space-y-4">
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">LangSmith Power Features</h4>
+                    <div className="space-y-2 text-sm text-gray-400">
+                      <p>• Create custom evaluation datasets for specific scenarios</p>
+                      <p>• Set up alerts for performance degradation</p>
+                      <p>• Export data for deeper analysis</p>
+                      <p>• Compare performance across different time periods</p>
+                      <p>• Use annotation features to mark important conversations</p>
+                    </div>
+                  </div>
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">Continuous Improvement Workflow</h4>
+                    <div className="space-y-3 text-sm text-gray-400">
+                      <div className="flex items-start gap-2">
+                        <div className="w-4 h-4 bg-green-400 rounded-full flex items-center justify-center text-white text-xs font-bold mt-0.5">✓</div>
+                        <span>Weekly review of evaluation trends</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <div className="w-4 h-4 bg-green-400 rounded-full flex items-center justify-center text-white text-xs font-bold mt-0.5">✓</div>
+                        <span>Monthly prompt optimization based on data</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <div className="w-4 h-4 bg-green-400 rounded-full flex items-center justify-center text-white text-xs font-bold mt-0.5">✓</div>
+                        <span>Quarterly document content review</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <div className="w-4 h-4 bg-green-400 rounded-full flex items-center justify-center text-white text-xs font-bold mt-0.5">✓</div>
+                        <span>A/B testing for major prompt changes</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Quick Reference */}
+              <Card className="bg-[#2a2a2a] border-gray-600 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Eye className="h-5 w-5 text-orange-400" />
+                  Quick Reference
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">Key Metrics</h4>
+                    <div className="space-y-1 text-sm text-gray-400">
+                      <p>• Evaluation Score: 4.0+ = Excellent</p>
+                      <p>• Response Time: &lt;3s = Good</p>
+                      <p>• Error Rate: &lt;5% = Healthy</p>
+                      <p>• Document Retrieval: 85%+ relevant</p>
+                    </div>
+                  </div>
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">Common Issues</h4>
+                    <div className="space-y-1 text-sm text-gray-400">
+                      <p>• Low correctness → Update documents</p>
+                      <p>• Poor relevance → Refine prompts</p>
+                      <p>• Too verbose → Adjust conciseness</p>
+                      <p>• Informal tone → Professional prompt</p>
+                    </div>
+                  </div>
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">Quick Actions</h4>
+                    <div className="space-y-1 text-sm text-gray-400">
+                      <p>• Test Connection → Dashboard tab</p>
+                      <p>• View Traces → LangSmith button</p>
+                      <p>• Update Prompts → Chatbot Training</p>
+                      <p>• Refresh Data → Vector Store tab</p>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </TabsContent>
+
           {/* Architecture Tab */}
           <TabsContent value="architecture" className="space-y-6">
             <Alert className="bg-[#2a2a2a] border-gray-600">
@@ -424,6 +691,179 @@ export default function AdminLangChainPage() {
                     → Semantic search retrieves the most relevant documents for each question<br />
                     → All document changes are tracked and logged in LangSmith
                   </p>
+                </div>
+              </div>
+            </Card>
+          </TabsContent>
+
+          {/* Analytics Tab - Phase 4 */}
+          <TabsContent value="analytics" className="space-y-6">
+            <Alert className="bg-[#2a2a2a] border-gray-600">
+              <TrendingUp className="h-4 w-4" />
+              <AlertDescription className="text-gray-300">
+                <strong>Phase 4:</strong> Advanced analytics and optimization dashboard for comprehensive chatbot performance analysis.
+              </AlertDescription>
+            </Alert>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Performance Trends */}
+              <Card className="bg-[#2a2a2a] border-gray-600 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <BarChart3 className="h-5 w-5 text-purple-400" />
+                  Performance Trends
+                </h3>
+                {evaluationStats ? (
+                  <div className="space-y-4">
+                    <div className="bg-[#1a1a1a] rounded-lg p-4">
+                      <h4 className="text-white font-medium mb-2">Evaluation Score Trends</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Total Evaluations:</span>
+                          <span className="text-white">{evaluationStats.totalEvaluations}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Recent Activity:</span>
+                          <Badge className="bg-green-600 text-white">
+                            {evaluationStats.recentEvaluations?.length || 0} this session
+                          </Badge>
+                        </div>
+                        <div className="mt-3 p-3 bg-[#0a0a0a] rounded">
+                          <div className="text-xs text-gray-400 mb-1">Performance indicators:</div>
+                          <div className="grid grid-cols-2 gap-2 text-xs">
+                            <div className="flex items-center gap-1">
+                              <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                              <span className="text-gray-300">Correctness</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                              <span className="text-gray-300">Relevance</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                              <span className="text-gray-300">Conciseness</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                              <span className="text-gray-300">Professional Tone</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <Button 
+                      className="w-full bg-[#AF52DE] hover:bg-[#9A47C7] text-white"
+                      onClick={() => {
+                        if (dashboardInfo?.dashboardUrl) {
+                          window.open(dashboardInfo.dashboardUrl, '_blank');
+                        }
+                      }}
+                    >
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      View Detailed Analytics in LangSmith
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="text-center py-8">
+                    <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500"></div>
+                    <p className="mt-2 text-gray-400">Loading analytics...</p>
+                  </div>
+                )}
+              </Card>
+
+              {/* Optimization Insights */}
+              <Card className="bg-[#2a2a2a] border-gray-600 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-purple-400" />
+                  Optimization Insights
+                </h3>
+                <div className="space-y-4">
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">Automated Recommendations</h4>
+                    <div className="space-y-3 text-sm">
+                      <div className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="text-gray-300">Response Quality</div>
+                          <div className="text-xs text-gray-400">Automatic evaluation system is monitoring all responses</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="text-gray-300">Performance Tracking</div>
+                          <div className="text-xs text-gray-400">All interactions logged to LangSmith for analysis</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <TrendingUp className="w-4 h-4 text-purple-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="text-gray-300">Continuous Improvement</div>
+                          <div className="text-xs text-gray-400">System learns from evaluation patterns</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">A/B Testing Ready</h4>
+                    <div className="text-sm text-gray-400 mb-3">
+                      Test different chatbot configurations to optimize performance
+                    </div>
+                    <Button 
+                      className="w-full bg-[#007AFF] hover:bg-[#0056CC] text-white"
+                      onClick={() => {
+                        toast({
+                          title: "A/B Testing",
+                          description: "A/B testing framework is ready for different prompt configurations."
+                        });
+                      }}
+                    >
+                      <Play className="w-4 h-4 mr-2" />
+                      Configure A/B Tests
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+            {/* Advanced Analytics Features */}
+            <Card className="bg-[#2a2a2a] border-gray-600 p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">Phase 4 Advanced Features</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-[#1a1a1a] rounded-lg p-4">
+                  <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                    <BarChart3 className="w-4 h-4 text-purple-400" />
+                    Performance Analytics
+                  </h4>
+                  <ul className="text-sm text-gray-400 space-y-1">
+                    <li>→ Real-time performance dashboards</li>
+                    <li>→ Response time analysis</li>
+                    <li>→ User satisfaction trends</li>
+                    <li>→ Error rate monitoring</li>
+                  </ul>
+                </div>
+                <div className="bg-[#1a1a1a] rounded-lg p-4">
+                  <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                    <TrendingUp className="w-4 h-4 text-blue-400" />
+                    Optimization Engine
+                  </h4>
+                  <ul className="text-sm text-gray-400 space-y-1">
+                    <li>→ Automated prompt optimization</li>
+                    <li>→ Performance regression detection</li>
+                    <li>→ Quality improvement suggestions</li>
+                    <li>→ Continuous learning integration</li>
+                  </ul>
+                </div>
+                <div className="bg-[#1a1a1a] rounded-lg p-4">
+                  <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                    <Database className="w-4 h-4 text-green-400" />
+                    Data Management
+                  </h4>
+                  <ul className="text-sm text-gray-400 space-y-1">
+                    <li>→ Evaluation dataset management</li>
+                    <li>→ Performance benchmarking</li>
+                    <li>→ Historical data analysis</li>
+                    <li>→ Export capabilities</li>
+                  </ul>
                 </div>
               </div>
             </Card>
