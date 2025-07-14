@@ -1,6 +1,7 @@
 import OpenAI from 'openai';
 import { storage } from './storage';
 import type { ChatbotConversation, InsertChatbotEvaluation } from '@shared/schema';
+import { runComprehensiveEvaluation, type EnhancedEvaluationResult } from './prebuiltEvaluators';
 
 function getOpenAI(): OpenAI {
   if (!process.env.OPENAI_API_KEY) {
@@ -23,7 +24,7 @@ export interface EvaluationResult {
 }
 
 /**
- * Evaluates a chatbot response using AI and saves the evaluation to the database
+ * Evaluates a chatbot response using both custom and prebuilt evaluators
  */
 export async function evaluateChatbotResponse(conversationId: number): Promise<EvaluationResult> {
   try {
@@ -108,26 +109,48 @@ Focus on:
 - The conversational tone and professionalism
 - Any factual errors or misleading information`;
 
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
-      messages: [{ role: "user", content: evaluationPrompt }],
-      response_format: { type: "json_object" },
-      temperature: 0.3,
-      max_tokens: 1000,
-    });
+    // Run both custom AI judge and prebuilt evaluators in parallel
+    const [customEvaluation, prebuiltEvaluation] = await Promise.all([
+      // Custom AI Judge evaluation
+      openai.chat.completions.create({
+        model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+        messages: [{ role: "user", content: evaluationPrompt }],
+        response_format: { type: "json_object" },
+        temperature: 0.3,
+        max_tokens: 1000,
+      }),
+      
+      // Prebuilt evaluators
+      runComprehensiveEvaluation(
+        conversation.userQuestion,
+        conversation.botResponse,
+        context.substring(0, 2000) // Limit context for performance
+      )
+    ]);
 
-    const evaluationResult = JSON.parse(response.choices[0].message.content || '{}');
+    const customResult = JSON.parse(customEvaluation.choices[0].message.content || '{}');
     
-    // Validate and sanitize scores
+    // Combine both evaluation results
     const evaluation: EvaluationResult = {
-      accuracyScore: Math.max(1, Math.min(10, evaluationResult.accuracyScore || 5)),
-      helpfulnessScore: Math.max(1, Math.min(10, evaluationResult.helpfulnessScore || 5)),
-      relevanceScore: Math.max(1, Math.min(10, evaluationResult.relevanceScore || 5)),
-      clarityScore: Math.max(1, Math.min(10, evaluationResult.clarityScore || 5)),
-      overallScore: Math.max(1, Math.min(10, evaluationResult.overallScore || 5)),
-      feedback: evaluationResult.feedback || 'No feedback provided',
-      strengths: Array.isArray(evaluationResult.strengths) ? evaluationResult.strengths : [],
-      improvements: Array.isArray(evaluationResult.improvements) ? evaluationResult.improvements : [],
+      // Use average of custom and prebuilt scores for better accuracy
+      accuracyScore: Math.max(1, Math.min(10, Math.round(((customResult.accuracyScore || 5) + (prebuiltEvaluation.correctnessScore || 5)) / 2))),
+      helpfulnessScore: Math.max(1, Math.min(10, Math.round(((customResult.helpfulnessScore || 5) + (prebuiltEvaluation.helpfulnessScore || 5)) / 2))),
+      relevanceScore: Math.max(1, Math.min(10, Math.round(((customResult.relevanceScore || 5) + (prebuiltEvaluation.relevanceScore || 5)) / 2))),
+      clarityScore: Math.max(1, Math.min(10, Math.round(((customResult.clarityScore || 5) + (prebuiltEvaluation.clarityScore || 5)) / 2))),
+      overallScore: Math.max(1, Math.min(10, Math.round(((customResult.overallScore || 5) + (prebuiltEvaluation.overallScore || 5)) / 2))),
+      
+      // Combine feedback from both sources
+      feedback: `Custom AI Judge: ${customResult.feedback || 'No feedback provided'}\n\nPrebuilt Evaluators: ${prebuiltEvaluation.feedback}`,
+      
+      // Merge strengths and improvements from both evaluations
+      strengths: [
+        ...(Array.isArray(customResult.strengths) ? customResult.strengths : []),
+        ...prebuiltEvaluation.strengths
+      ],
+      improvements: [
+        ...(Array.isArray(customResult.improvements) ? customResult.improvements : []),
+        ...prebuiltEvaluation.improvements
+      ],
     };
     
     // Save evaluation to database

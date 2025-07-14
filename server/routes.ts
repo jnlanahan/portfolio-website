@@ -40,6 +40,7 @@ import {
   runEvaluation
 } from "./langchainChatbotService";
 import { evaluateChatbotResponse, batchEvaluateConversations, getEvaluationStats } from "./chatbotEvaluator";
+import { testPrebuiltEvaluators, runComprehensiveEvaluation } from "./prebuiltEvaluators";
 import { 
   extractLearningInsights, 
   processRecentEvaluations, 
@@ -1463,6 +1464,93 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error in batch evaluation:", error);
       res.status(500).json({ error: "Failed to perform batch evaluation" });
+    }
+  });
+
+  // Test prebuilt evaluators
+  app.get("/api/admin/chatbot/test-prebuilt-evaluators", requireAdmin, async (req, res) => {
+    try {
+      console.log("Testing prebuilt evaluators...");
+      
+      const testResult = await testPrebuiltEvaluators();
+      
+      if (testResult) {
+        res.json({
+          success: true,
+          message: "Prebuilt evaluators are working correctly",
+          evaluatorsAvailable: [
+            "Correctness",
+            "Conciseness", 
+            "Comprehensiveness",
+            "Coherence"
+          ]
+        });
+      } else {
+        res.json({
+          success: false,
+          message: "Prebuilt evaluators test failed"
+        });
+      }
+    } catch (error) {
+      console.error("Error testing prebuilt evaluators:", error);
+      res.status(500).json({ 
+        success: false,
+        error: "Failed to test prebuilt evaluators",
+        details: error.message 
+      });
+    }
+  });
+
+  // Run comprehensive evaluation on a specific conversation
+  app.post("/api/admin/chatbot/evaluate-comprehensive/:conversationId", requireAdmin, async (req, res) => {
+    try {
+      const conversationId = parseInt(req.params.conversationId);
+      
+      const conversation = await storage.getChatbotConversation(conversationId);
+      if (!conversation) {
+        return res.status(404).json({ error: "Conversation not found" });
+      }
+      
+      // Get context for evaluation
+      const documents = await storage.getChatbotDocuments();
+      const trainingData = await storage.getChatbotTrainingSessions();
+      
+      let context = "Available knowledge about Nick Lanahan:\n\n";
+      documents.forEach(doc => {
+        context += `From ${doc.originalName}: ${doc.content.substring(0, 400)}...\n\n`;
+      });
+      trainingData.forEach(session => {
+        context += `Q: ${session.question}\nA: ${session.answer}\n\n`;
+      });
+      
+      const evaluation = await runComprehensiveEvaluation(
+        conversation.userQuestion,
+        conversation.botResponse,
+        context.substring(0, 2000)
+      );
+      
+      res.json({
+        success: true,
+        conversation: {
+          id: conversationId,
+          userQuestion: conversation.userQuestion,
+          botResponse: conversation.botResponse.substring(0, 200) + "..."
+        },
+        evaluation: {
+          overall: evaluation.overallScore,
+          correctness: evaluation.correctnessScore,
+          conciseness: evaluation.concisenessScore,
+          comprehensiveness: evaluation.comprehensivenessScore,
+          coherence: evaluation.coherenceScore,
+          feedback: evaluation.feedback,
+          strengths: evaluation.strengths,
+          improvements: evaluation.improvements,
+          evaluatorInsights: evaluation.evaluatorInsights
+        }
+      });
+    } catch (error) {
+      console.error("Error in comprehensive evaluation:", error);
+      res.status(500).json({ error: "Failed to perform comprehensive evaluation" });
     }
   });
 
