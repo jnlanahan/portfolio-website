@@ -1,9 +1,5 @@
-import { Client } from 'langsmith';
-
-// Initialize LangSmith client
-const langsmithClient = new Client({
-  apiKey: process.env.LANGCHAIN_API_KEY,
-});
+import { evaluate } from 'langsmith/evaluation';
+import { createLLMAsJudge, CONCISENESS_PROMPT, CORRECTNESS_PROMPT } from 'openevals';
 
 /**
  * Enhanced evaluation interface combining custom and prebuilt evaluators
@@ -43,46 +39,30 @@ export async function evaluateCorrectness(
   expectedAnswer?: string
 ): Promise<{ score: number; feedback: string }> {
   try {
-    // Use direct OpenAI evaluation instead of langsmith.evaluate
-    const { ChatOpenAI } = await import('@langchain/openai');
-    const evaluator = new ChatOpenAI({
-      model: 'gpt-4o',
-      temperature: 0.1,
-      apiKey: process.env.OPENAI_API_KEY,
+    // Use proper LangSmith evaluation with openevals
+    const correctnessEvaluator = createLLMAsJudge({
+      prompt: CORRECTNESS_PROMPT,
+      feedbackKey: "correctness",
+      model: "openai:gpt-4o",
     });
     
-    const evaluationPrompt = `You are an expert evaluator assessing the correctness of AI responses.
-
-EVALUATION CRITERIA:
-Rate the factual accuracy of the response on a scale of 1-10:
-- 10: Completely accurate, all facts verified
-- 8-9: Mostly accurate with minor details that could be improved
-- 6-7: Generally accurate but some questionable claims
-- 4-5: Mix of accurate and inaccurate information
-- 1-3: Mostly inaccurate or misleading
-
-QUESTION: ${question}
-RESPONSE: ${response}
-
-Provide your score (1-10) and detailed feedback explaining your reasoning.
-
-Format your response as:
-Score: [number]
-Feedback: [detailed explanation]`;
-
-    const result = await evaluator.invoke(evaluationPrompt);
-    const content = result.content as string;
+    const results = await evaluate((inputs) => response, {
+      data: [{
+        inputs: { question },
+        outputs: { response },
+        expected_outputs: expectedAnswer ? { response: expectedAnswer } : undefined
+      }],
+      evaluators: [correctnessEvaluator],
+    });
     
-    // Parse score and feedback
-    const scoreMatch = content.match(/Score:\s*(\d+)/i);
-    const feedbackMatch = content.match(/Feedback:\s*(.+)/is);
-    
-    const score = scoreMatch ? parseInt(scoreMatch[1]) : 5;
-    const feedback = feedbackMatch ? feedbackMatch[1].trim() : content;
+    // Extract score and feedback from results
+    const feedbackData = results.results[0]?.evaluation_results?.correctness;
+    const score = feedbackData?.score || 5;
+    const feedback = feedbackData?.comment || "No feedback available";
     
     return {
       score: Math.max(1, Math.min(10, score)),
-      feedback: feedback || "No feedback available"
+      feedback: feedback
     };
   } catch (error) {
     console.error("Error in correctness evaluation:", error);
@@ -102,48 +82,29 @@ export async function evaluateConciseness(
   response: string
 ): Promise<{ score: number; feedback: string }> {
   try {
-    const { ChatOpenAI } = await import('@langchain/openai');
-    const evaluator = new ChatOpenAI({
-      model: 'gpt-4o',
-      temperature: 0.1,
-      apiKey: process.env.OPENAI_API_KEY,
+    // Use proper LangSmith evaluation with openevals
+    const concisenessEvaluator = createLLMAsJudge({
+      prompt: CONCISENESS_PROMPT,
+      feedbackKey: "conciseness", 
+      model: "openai:gpt-4o",
     });
     
-    const evaluationPrompt = `You are an expert evaluator assessing the conciseness of AI responses.
-
-EVALUATION CRITERIA:
-Rate how concise and well-structured the response is on a scale of 1-10:
-- 10: Perfectly concise, no unnecessary words, clear and direct
-- 8-9: Very concise with excellent structure
-- 6-7: Generally concise but could be tighter
-- 4-5: Some unnecessary verbosity or poor structure
-- 1-3: Very verbose, poor structure, hard to follow
-
-QUESTION: ${question}
-RESPONSE: ${response}
-
-Consider:
-- Is the response direct and to the point?
-- Does it avoid unnecessary repetition?
-- Is the information well-organized?
-- Are sentences clear and purposeful?
-
-Format your response as:
-Score: [number]
-Feedback: [detailed explanation]`;
-
-    const result = await evaluator.invoke(evaluationPrompt);
-    const content = result.content as string;
+    const results = await evaluate((inputs) => response, {
+      data: [{
+        inputs: { question },
+        outputs: { response }
+      }],
+      evaluators: [concisenessEvaluator],
+    });
     
-    const scoreMatch = content.match(/Score:\s*(\d+)/i);
-    const feedbackMatch = content.match(/Feedback:\s*(.+)/is);
-    
-    const score = scoreMatch ? parseInt(scoreMatch[1]) : 5;
-    const feedback = feedbackMatch ? feedbackMatch[1].trim() : content;
+    // Extract score and feedback from results
+    const feedbackData = results.results[0]?.evaluation_results?.conciseness;
+    const score = feedbackData?.score || 5;
+    const feedback = feedbackData?.comment || "No feedback available";
     
     return {
       score: Math.max(1, Math.min(10, score)),
-      feedback: feedback || "No feedback available"
+      feedback: feedback
     };
   } catch (error) {
     console.error("Error in conciseness evaluation:", error);
