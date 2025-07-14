@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import { 
   ArrowLeft, 
@@ -16,10 +16,13 @@ import {
   MessageSquare,
   Brain,
   Sparkles,
-  BarChart3
+  BarChart3,
+  Settings,
+  FileText
 } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 import { Link } from 'wouter';
+import SystemPromptManager from '@/components/SystemPromptManager';
 
 interface ChatMessage {
   id: string;
@@ -202,9 +205,20 @@ export default function AdminChatbotPage() {
           </Card>
         </div>
 
-        {/* Main Content - Only Chat Training */}
+        {/* Main Content - Training & System Prompts */}
+        <Tabs defaultValue="training" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 bg-[#2a2a2a] mb-6">
+            <TabsTrigger value="training" className="flex items-center space-x-2 data-[state=active]:bg-[#007AFF] data-[state=active]:text-white">
+              <Brain className="w-4 h-4" />
+              <span>Training</span>
+            </TabsTrigger>
+            <TabsTrigger value="prompts" className="flex items-center space-x-2 data-[state=active]:bg-[#007AFF] data-[state=active]:text-white">
+              <FileText className="w-4 h-4" />
+              <span>System Prompts</span>
+            </TabsTrigger>
+          </TabsList>
 
-        <div className="space-y-6">
+          <TabsContent value="training" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Training Instructions */}
               <div className="lg:col-span-1">
@@ -353,7 +367,12 @@ export default function AdminChatbotPage() {
                 </Card>
               </div>
             </div>
-        </div>
+          </TabsContent>
+
+          <TabsContent value="prompts">
+            <SystemPromptManager />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );

@@ -1803,89 +1803,63 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // System Prompt Management Routes
+  app.get("/api/admin/chatbot/system-prompts", requireAdmin, async (req, res) => {
+    try {
+      const fs = await import('fs').then(m => m.promises);
+      const path = await import('path');
+      
+      // Read all 4 system prompts
+      const prompts = {
+        // 1. Default System Prompt (from chatbotService.ts)
+        default: await getDefaultSystemPrompt(),
+        
+        // 2. Enhanced System Prompt (generated from learning service)
+        enhanced: await getEnhancedSystemPrompt(),
+        
+        // 3. Custom System Prompt (from database)
+        custom: await getCustomSystemPrompt(),
+        
+        // 4. LangChain System Prompt (from langchainChatbotService.ts)
+        langchain: await getLangChainSystemPrompt()
+      };
+      
+      res.json(prompts);
+    } catch (error) {
+      console.error("Error fetching system prompts:", error);
+      res.status(500).json({ error: "Failed to fetch system prompts" });
+    }
+  });
+
+  app.post("/api/admin/chatbot/system-prompts/:type", requireAdmin, async (req, res) => {
+    try {
+      const { type } = req.params;
+      const { prompt } = req.body;
+      
+      if (!prompt || typeof prompt !== 'string') {
+        return res.status(400).json({ error: "Prompt text is required" });
+      }
+      
+      const result = await updateSystemPrompt(type, prompt);
+      res.json({ success: true, message: result.message });
+    } catch (error) {
+      console.error("Error updating system prompt:", error);
+      res.status(500).json({ error: "Failed to update system prompt" });
+    }
+  });
+
+  // Legacy route for backward compatibility
   app.get("/api/admin/chatbot/learning/system-prompt", requireAdmin, async (req, res) => {
     try {
-      // Check if there's a custom prompt saved first
-      const customPrompt = await storage.getActiveSystemPromptTemplate();
-      
-      if (customPrompt && customPrompt.name === 'custom') {
-        // Return the custom prompt
-        const documents = await storage.getChatbotDocuments();
-        const trainingData = await storage.getChatbotTrainingSessions();
-        const learningInsights = await storage.getChatbotLearningInsights();
-        const factInsights = learningInsights.filter(i => 
-          i.isActive && i.insight.startsWith('FACT:')
-        );
-        
-        res.json({
-          prompt: customPrompt.template,
-          stats: {
-            documents: documents.length,
-            trainingSessions: trainingData.length,
-            learningInsights: learningInsights.length,
-            activeFacts: factInsights.length
-          },
-          isCustom: true
-        });
-        return;
-      }
-      
-      // If no custom prompt, generate the default one
-      const trainingData = await storage.getChatbotTrainingSessions();
-      const documents = await storage.getChatbotDocuments();
-      const learningInsights = await storage.getChatbotLearningInsights();
-      
-      // Build a list of important facts from learning insights
-      const factInsights = learningInsights.filter(i => 
-        i.isActive && i.insight.startsWith('FACT:')
-      );
-      
-      let factsSection = "";
-      if (factInsights.length > 0) {
-        factsSection = "\n\nIMPORTANT FACTS (from user feedback):\n";
-        factInsights.forEach(fact => {
-          const factText = fact.insight.replace('FACT: ', '');
-          factsSection += `• ${factText}\n`;
-        });
-      }
-
-      const systemPrompt = `You are Nack, a professional AI assistant specifically designed to represent Nick Lanahan to recruiters and hiring managers. Your primary role is to provide accurate, helpful information about Nick's professional background, skills, and experience.
-
-CRITICAL INSTRUCTIONS:
-- Always search available documents before answering questions
-- When asked about specific topics, look for relevant documents:
-  * For coursework or education details → Check for transcripts or academic records
-  * For work experience or duration → Check resume and LinkedIn profile 
-  * For project details → Check portfolio documents or project descriptions
-  * For technical skills → Check resume, LinkedIn, and project documentation
-  * For certifications or achievements → Check resume and professional documents
-- Never assume information is not available without checking all documents
-- If you cannot find specific information after searching, say "I don't have that specific information in the documents available"
-- Be confident when information is found in documents
-- Maintain a professional, helpful tone suitable for recruiter interactions
-- Focus on Nick's achievements, experience, and qualifications
-
-AVAILABLE DOCUMENT TYPES:
-- Resume documents
-- LinkedIn profile
-- Academic transcripts (MBA and MS transcripts)
-- Project documentation
-- Professional certifications
-- Work samples and portfolio pieces${factsSection}`;
-      
+      const customPrompt = await getCustomSystemPrompt();
       res.json({
-        prompt: systemPrompt,
-        stats: {
-          documents: documents.length,
-          trainingSessions: trainingData.length,
-          learningInsights: learningInsights.length,
-          activeFacts: factInsights.length
-        },
-        isCustom: false
+        prompt: customPrompt.prompt,
+        stats: customPrompt.stats,
+        isCustom: customPrompt.isActive
       });
     } catch (error) {
-      console.error("Error getting system prompt:", error);
-      res.status(500).json({ error: "Failed to get system prompt" });
+      console.error("Error fetching system prompt:", error);
+      res.status(500).json({ error: "Failed to fetch system prompt" });
     }
   });
 
@@ -2109,4 +2083,165 @@ AVAILABLE DOCUMENT TYPES:
 
   const httpServer = createServer(app);
   return httpServer;
+}
+
+// ======================================
+// System Prompt Management Helper Functions
+// ======================================
+
+async function getDefaultSystemPrompt() {
+  const fs = await import('fs').then(m => m.promises);
+  const path = await import('path');
+  
+  try {
+    const filePath = path.join(process.cwd(), 'server', 'chatbotService.ts');
+    const content = await fs.readFile(filePath, 'utf-8');
+    
+    // Extract the default system prompt from the else block
+    const elseBlockMatch = content.match(/} else {[\s\S]*?systemPrompt = `([\s\S]*?)`;/);
+    const prompt = elseBlockMatch ? elseBlockMatch[1] : 'System prompt not found in chatbotService.ts';
+    
+    return {
+      prompt,
+      isActive: true,
+      lastModified: new Date().toISOString(),
+      description: "Default system prompt used when no custom prompt is saved"
+    };
+  } catch (error) {
+    console.error("Error reading default system prompt:", error);
+    return {
+      prompt: "Error reading default system prompt",
+      isActive: false,
+      lastModified: new Date().toISOString(),
+      description: "Default system prompt from chatbotService.ts"
+    };
+  }
+}
+
+async function getEnhancedSystemPrompt() {
+  try {
+    const { generateEnhancedSystemPrompt } = await import('./chatbotLearningService');
+    const prompt = await generateEnhancedSystemPrompt();
+    
+    return {
+      prompt,
+      isActive: true,
+      lastModified: new Date().toISOString(),
+      description: "AI-enhanced system prompt incorporating learning insights and user feedback"
+    };
+  } catch (error) {
+    console.error("Error generating enhanced system prompt:", error);
+    return {
+      prompt: "Error generating enhanced system prompt",
+      isActive: false,
+      lastModified: new Date().toISOString(),
+      description: "Enhanced system prompt from chatbotLearningService.ts"
+    };
+  }
+}
+
+async function getCustomSystemPrompt() {
+  try {
+    const customPrompt = await storage.getActiveSystemPromptTemplate();
+    const trainingData = await storage.getChatbotTrainingSessions();
+    const learningInsights = await storage.getChatbotLearningInsights();
+    
+    return {
+      prompt: customPrompt?.template || "No custom prompt saved",
+      isActive: !!customPrompt,
+      lastModified: customPrompt?.updatedAt || new Date().toISOString(),
+      description: "Custom system prompt saved by admin (overrides default when active)",
+      stats: {
+        trainingSessions: trainingData.length,
+        learningInsights: learningInsights.length,
+        activeFacts: learningInsights.filter(i => i.isActive && i.insight.startsWith('FACT:')).length
+      }
+    };
+  } catch (error) {
+    console.error("Error fetching custom system prompt:", error);
+    return {
+      prompt: "Error fetching custom system prompt",
+      isActive: false,
+      lastModified: new Date().toISOString(),
+      description: "Custom system prompt stored in database",
+      stats: {
+        trainingSessions: 0,
+        learningInsights: 0,
+        activeFacts: 0
+      }
+    };
+  }
+}
+
+async function getLangChainSystemPrompt() {
+  const fs = await import('fs').then(m => m.promises);
+  const path = await import('path');
+  
+  try {
+    const filePath = path.join(process.cwd(), 'server', 'langchainChatbotService.ts');
+    const content = await fs.readFile(filePath, 'utf-8');
+    
+    // Extract the LangChain system prompt from the file
+    const promptMatch = content.match(/const SYSTEM_PROMPT = `([\s\S]*?)`;/);
+    const prompt = promptMatch ? promptMatch[1] : 'LangChain system prompt not found';
+    
+    return {
+      prompt,
+      isActive: true,
+      lastModified: new Date().toISOString(),
+      description: "System prompt used for LangChain RAG pipeline with document retrieval"
+    };
+  } catch (error) {
+    console.error("Error reading LangChain system prompt:", error);
+    return {
+      prompt: "Error reading LangChain system prompt",
+      isActive: false,
+      lastModified: new Date().toISOString(),
+      description: "LangChain system prompt from langchainChatbotService.ts"
+    };
+  }
+}
+
+async function updateSystemPrompt(type: string, prompt: string) {
+  const fs = await import('fs').then(m => m.promises);
+  const path = await import('path');
+  
+  switch (type) {
+    case 'default':
+      // Update chatbotService.ts - Update the else block system prompt
+      const chatbotServicePath = path.join(process.cwd(), 'server', 'chatbotService.ts');
+      const chatbotContent = await fs.readFile(chatbotServicePath, 'utf-8');
+      const updatedChatbotContent = chatbotContent.replace(
+        /(} else {[\s\S]*?systemPrompt = `)([\s\S]*?)`;/,
+        `$1${prompt}\`;`
+      );
+      await fs.writeFile(chatbotServicePath, updatedChatbotContent);
+      return { message: "Default system prompt updated in chatbotService.ts" };
+      
+    case 'enhanced':
+      return { message: "Enhanced system prompt is auto-generated and cannot be directly edited" };
+      
+    case 'custom':
+      // Save to database
+      await storage.saveSystemPromptTemplate({
+        name: 'custom',
+        template: prompt,
+        isActive: true
+      });
+      return { message: "Custom system prompt saved to database" };
+      
+    case 'langchain':
+      // Update langchainChatbotService.ts
+      const langchainServicePath = path.join(process.cwd(), 'server', 'langchainChatbotService.ts');
+      const langchainContent = await fs.readFile(langchainServicePath, 'utf-8');
+      const updatedLangchainContent = langchainContent.replace(
+        /const SYSTEM_PROMPT = `([\s\S]*?)`;/,
+        `const SYSTEM_PROMPT = \`${prompt}\`;`
+      );
+      await fs.writeFile(langchainServicePath, updatedLangchainContent);
+      return { message: "LangChain system prompt updated in langchainChatbotService.ts" };
+      
+    default:
+      throw new Error(`Invalid system prompt type: ${type}`);
+  }
 }
