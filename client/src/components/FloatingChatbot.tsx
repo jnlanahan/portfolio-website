@@ -386,7 +386,7 @@ export default function FloatingChatbot() {
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Ask me about Nick's experience..."
-                  className="flex-1"
+                  className="flex-1 bg-white border-gray-300 text-gray-800 placeholder:text-gray-500 focus:border-slate-400 focus:ring-slate-400"
                   disabled={isLoading}
                 />
                 <Button
