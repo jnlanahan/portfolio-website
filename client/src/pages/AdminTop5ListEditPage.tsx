@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Save, Plus, Trash2, Upload } from "lucide-react";
+import { ArrowLeft, Save, Plus, Trash2, Upload, Edit2 } from "lucide-react";
 
 // Schemas
 const listSchema = z.object({
@@ -43,6 +43,7 @@ export default function AdminTop5ListEditPage() {
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
   const [showAddItem, setShowAddItem] = useState(false);
+  const [editingItem, setEditingItem] = useState<any>(null);
   const [uploadingMainImage, setUploadingMainImage] = useState(false);
   const [uploadingItemImage, setUploadingItemImage] = useState(false);
   
@@ -163,6 +164,30 @@ export default function AdminTop5ListEditPage() {
     },
   });
 
+  // Update item mutation
+  const updateItemMutation = useMutation({
+    mutationFn: async (data: ItemFormData & { id: number }) => {
+      const { id: itemId, ...updateData } = data;
+      return await apiRequest(`/api/admin/top5-list-items/${itemId}`, "PUT", updateData);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`/api/admin/top5-lists/${id}/items`] });
+      toast({
+        title: "Item updated",
+        description: "The item has been updated successfully",
+      });
+      itemForm.reset();
+      setEditingItem(null);
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to update item",
+        variant: "destructive",
+      });
+    },
+  });
+
   // Delete item mutation
   const deleteItemMutation = useMutation({
     mutationFn: async (itemId: number) => {
@@ -245,13 +270,37 @@ export default function AdminTop5ListEditPage() {
     }
   };
 
+  // Edit item handler
+  const startEditItem = (item: any) => {
+    setEditingItem(item);
+    setShowAddItem(false);
+    itemForm.reset({
+      title: item.title || "",
+      description: item.description || "",
+      link: item.link || "",
+      linkText: item.linkText || "",
+      image: item.image || "",
+      highlight: item.highlight || false,
+      position: item.position || 1,
+    });
+  };
+
+  const cancelEdit = () => {
+    setEditingItem(null);
+    itemForm.reset();
+  };
+
   // Form submit handlers
   const onSubmitList = (data: ListFormData) => {
     saveListMutation.mutate(data);
   };
 
   const onSubmitItem = (data: ItemFormData) => {
-    addItemMutation.mutate(data);
+    if (editingItem) {
+      updateItemMutation.mutate({ ...data, id: editingItem.id });
+    } else {
+      addItemMutation.mutate(data);
+    }
   };
 
   if (listLoading || itemsLoading) {
@@ -455,7 +504,11 @@ export default function AdminTop5ListEditPage() {
                   <CardTitle>Top 5 Items</CardTitle>
                   <Button
                     size="sm"
-                    onClick={() => setShowAddItem(!showAddItem)}
+                    onClick={() => {
+                      setShowAddItem(!showAddItem);
+                      setEditingItem(null);
+                      itemForm.reset();
+                    }}
                     className="flex items-center gap-2"
                   >
                     <Plus size={16} />
@@ -464,11 +517,13 @@ export default function AdminTop5ListEditPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                {/* Add Item Form */}
-                {showAddItem && (
+                {/* Add/Edit Item Form */}
+                {(showAddItem || editingItem) && (
                   <Card className="mb-4">
                     <CardHeader>
-                      <CardTitle className="text-lg">Add New Item</CardTitle>
+                      <CardTitle className="text-lg">
+                        {editingItem ? "Edit Item" : "Add New Item"}
+                      </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <form onSubmit={itemForm.handleSubmit(onSubmitItem)} className="space-y-4">
@@ -569,16 +624,25 @@ export default function AdminTop5ListEditPage() {
                         <div className="flex gap-2">
                           <Button
                             type="submit"
-                            disabled={addItemMutation.isPending}
+                            disabled={addItemMutation.isPending || updateItemMutation.isPending}
                             className="flex items-center gap-2"
                           >
-                            <Plus size={16} />
-                            {addItemMutation.isPending ? "Adding..." : "Add Item"}
+                            {editingItem ? <Save size={16} /> : <Plus size={16} />}
+                            {editingItem 
+                              ? (updateItemMutation.isPending ? "Updating..." : "Update Item")
+                              : (addItemMutation.isPending ? "Adding..." : "Add Item")
+                            }
                           </Button>
                           <Button
                             type="button"
                             variant="outline"
-                            onClick={() => setShowAddItem(false)}
+                            onClick={() => {
+                              if (editingItem) {
+                                cancelEdit();
+                              } else {
+                                setShowAddItem(false);
+                              }
+                            }}
                           >
                             Cancel
                           </Button>
@@ -630,6 +694,15 @@ export default function AdminTop5ListEditPage() {
                           {item.highlight && (
                             <Badge variant="secondary">Highlight</Badge>
                           )}
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => startEditItem(item)}
+                            disabled={editingItem?.id === item.id}
+                            className="text-blue-600 hover:text-blue-700"
+                          >
+                            <Edit2 size={14} />
+                          </Button>
                           <Button
                             size="sm"
                             variant="outline"
