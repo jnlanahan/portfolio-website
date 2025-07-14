@@ -234,7 +234,7 @@ export const ragPipeline = traceable(
     try {
       await langsmithClient.createRun({
         name: "rag_metadata",
-        runType: "tool",
+        run_type: "tool",
         inputs: { 
           question,
           conversationId,
@@ -244,7 +244,7 @@ export const ragPipeline = traceable(
         },
         outputs: { 
           response_length: response.length,
-          documents_used: relevantDocs.map(doc => doc.metadata.filename)
+          documents_used: relevantDocs.map(doc => doc.metadata?.filename || 'unknown')
         }
       });
     } catch (langsmithError) {
@@ -285,7 +285,7 @@ export async function processMessage(
     try {
       await langsmithClient.createRun({
         name: "message_processing_error",
-        runType: "tool",
+        run_type: "tool",
         inputs: { message, conversationId, userId },
         outputs: { error: error.message }
       });
@@ -326,7 +326,7 @@ export async function addDocumentToVectorStore(
   // Track document addition in LangSmith
   await langsmithClient.createRun({
     name: "document_addition",
-    runType: "tool",
+    run_type: "tool",
     inputs: { 
       filename: metadata.filename,
       type: metadata.type,

@@ -327,6 +327,23 @@ ${relevantContext || "No specific documents found for this question. Please prov
       botResponse: botResponse
     });
 
+    // Log successful response to LangSmith
+    try {
+      const langsmithClient = new (await import("langsmith")).Client({
+        apiKey: process.env.LANGCHAIN_API_KEY,
+      });
+      
+      await langsmithClient.createRun({
+        name: "recruiter_conversation",
+        run_type: "chain",
+        inputs: { question, sessionId, documents_count: documents.length },
+        outputs: { response: botResponse, conversation_id: conversation.id },
+        project_name: "My Portfolio Chatbot"
+      });
+    } catch (langsmithError) {
+      console.warn("LangSmith logging failed:", langsmithError.message);
+    }
+
     return {
       response: botResponse,
       isOnTopic: true,
