@@ -1,15 +1,13 @@
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { getLists } from "@/data/lists";
 import { useState } from "react";
 import { X } from "lucide-react";
 
 const TopFiveListsPage = () => {
   const [selectedList, setSelectedList] = useState<number | null>(null);
   
-  const { data: lists, isLoading } = useQuery({
+  const { data: lists = [], isLoading } = useQuery({
     queryKey: ["/api/lists"],
-    initialData: getLists(),
   });
 
   const openModal = (index: number) => {
@@ -53,57 +51,75 @@ const TopFiveListsPage = () => {
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {lists.map((list, listIndex) => (
-          <motion.div
-            key={listIndex}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: listIndex * 0.1 }}
-            className="flex flex-col"
-          >
-            <div 
-              className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:border-blue-200 transition-all duration-300 h-full cursor-pointer"
-              onClick={() => openModal(listIndex)}
+      {lists.length === 0 ? (
+        <div className="text-center py-12">
+          <div className="text-gray-400 mb-4">
+            <i className="ri-list-check-3 text-6xl"></i>
+          </div>
+          <h3 className="text-lg font-medium text-gray-900 mb-2" style={{ 
+            fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif'
+          }}>
+            No Top 5 Lists Yet
+          </h3>
+          <p className="text-gray-600" style={{ 
+            fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif'
+          }}>
+            Check back soon for curated lists of favorite tools, resources, and inspirations.
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {lists.map((list, listIndex) => (
+            <motion.div
+              key={listIndex}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: listIndex * 0.1 }}
+              className="flex flex-col"
             >
-              {/* Main Image */}
-              {list.mainImage && (
-                <div className="relative h-24 w-full overflow-hidden">
-                  <img 
-                    src={list.mainImage} 
-                    alt={list.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-                </div>
-              )}
-              
-              <div className="p-3">
-                <div className="flex items-center mb-1">
-                  <span className="w-6 h-6 rounded-full flex items-center justify-center mr-2 bg-blue-50">
-                    <i className={`${list.icon} text-sm text-blue-600`}></i>
-                  </span>
-                  <h3 className="text-base font-semibold text-gray-900" style={{ 
-                    fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
-                    fontSize: '16px'
-                  }}>
-                    {list.title}
-                  </h3>
-                </div>
-                
-                {list.description && (
-                  <p className="text-gray-600 ml-8 text-sm" style={{ 
-                    fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
-                    fontSize: '13px'
-                  }}>
-                    {list.description}
-                  </p>
+              <div 
+                className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:border-blue-200 transition-all duration-300 h-full cursor-pointer"
+                onClick={() => openModal(listIndex)}
+              >
+                {/* Main Image */}
+                {list.mainImage && (
+                  <div className="relative h-24 w-full overflow-hidden">
+                    <img 
+                      src={list.mainImage} 
+                      alt={list.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+                  </div>
                 )}
+                
+                <div className="p-3">
+                  <div className="flex items-center mb-1">
+                    <span className="w-6 h-6 rounded-full flex items-center justify-center mr-2 bg-blue-50">
+                      <i className={`${list.icon} text-sm text-blue-600`}></i>
+                    </span>
+                    <h3 className="text-base font-semibold text-gray-900" style={{ 
+                      fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+                      fontSize: '16px'
+                    }}>
+                      {list.title}
+                    </h3>
+                  </div>
+                  
+                  {list.description && (
+                    <p className="text-gray-600 ml-8 text-sm" style={{ 
+                      fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+                      fontSize: '13px'
+                    }}>
+                      {list.description}
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
+            </motion.div>
+          ))}
+        </div>
+      )}
 
       {/* Modal */}
       {selectedList !== null && (
