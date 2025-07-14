@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { 
@@ -374,12 +375,143 @@ export default function AdminTop5ListEditPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="icon">Icon *</Label>
-                  <Input
-                    id="icon"
-                    {...registerList("icon")}
-                    placeholder="e.g., ri-code-line"
-                    className={listErrors.icon ? "border-red-500" : ""}
-                  />
+                  <Select
+                    value={watchList("icon")}
+                    onValueChange={(value) => setListValue("icon", value)}
+                  >
+                    <SelectTrigger className={listErrors.icon ? "border-red-500" : ""}>
+                      <SelectValue placeholder="Select an icon">
+                        {watchList("icon") && (
+                          <div className="flex items-center gap-2">
+                            <i className={watchList("icon")}></i>
+                            {watchList("icon")}
+                          </div>
+                        )}
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="ri-list-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-list-line"></i>
+                          List
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-code-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-code-line"></i>
+                          Code
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-book-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-book-line"></i>
+                          Book
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-star-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-star-line"></i>
+                          Star
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-heart-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-heart-line"></i>
+                          Heart
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-trophy-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-trophy-line"></i>
+                          Trophy
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-lightbulb-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-lightbulb-line"></i>
+                          Lightbulb
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-fire-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-fire-line"></i>
+                          Fire
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-rocket-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-rocket-line"></i>
+                          Rocket
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-tools-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-tools-line"></i>
+                          Tools
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-magic-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-magic-line"></i>
+                          Magic
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-palette-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-palette-line"></i>
+                          Palette
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-music-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-music-line"></i>
+                          Music
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-camera-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-camera-line"></i>
+                          Camera
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-game-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-game-line"></i>
+                          Game
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-flight-takeoff-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-flight-takeoff-line"></i>
+                          Travel
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-movie-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-movie-line"></i>
+                          Movie
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-smartphone-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-smartphone-line"></i>
+                          Apps
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-restaurant-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-restaurant-line"></i>
+                          Food
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="ri-car-line">
+                        <div className="flex items-center gap-2">
+                          <i className="ri-car-line"></i>
+                          Car
+                        </div>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
                   {listErrors.icon && (
                     <p className="text-sm text-red-500">{listErrors.icon.message}</p>
                   )}
