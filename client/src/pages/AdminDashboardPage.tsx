@@ -18,7 +18,8 @@ import {
   Plus,
   Eye,
   Upload,
-  Bot
+  Bot,
+  Settings
 } from "lucide-react";
 
 export default function AdminDashboardPage() {
@@ -151,7 +152,7 @@ export default function AdminDashboardPage() {
         <div className="mb-8">
           <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
             <h2 className="text-xl font-semibold text-white mb-4">Quick Actions</h2>
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
               <Button
                 onClick={() => setLocation("/admin/resume/upload")}
                 className="flex items-center gap-2 bg-[#007AFF] hover:bg-[#0056CC] text-white px-4 py-3 rounded-xl font-medium transition-all duration-200"
@@ -165,6 +166,13 @@ export default function AdminDashboardPage() {
               >
                 <Edit size={16} />
                 Write Blog Post
+              </Button>
+              <Button
+                onClick={() => setLocation("/admin/system-prompts")}
+                className="flex items-center gap-2 bg-[#AF52DE] hover:bg-[#8A2BE2] text-white px-4 py-3 rounded-xl font-medium transition-all duration-200"
+              >
+                <Settings size={16} />
+                System Prompts
               </Button>
               <Button
                 onClick={() => setLocation("/admin/chatbot")}

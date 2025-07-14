@@ -25,6 +25,7 @@ import AdminBlogSeriesPage from "@/pages/AdminBlogSeriesPage";
 import AdminChatbotPage from "@/pages/AdminChatbotPage";
 import AdminChatbotEvaluationPage from "@/pages/AdminChatbotEvaluationPage";
 import AdminLangChainPage from "@/pages/AdminLangChainPage";
+import AdminSystemPromptsPage from "@/pages/AdminSystemPromptsPage";
 import BlogSeriesPage from "@/pages/BlogSeriesPage";
 import Layout from "./components/Layout";
 import FloatingChatbot from "./components/FloatingChatbot";
@@ -64,6 +65,7 @@ function Router() {
       <Route path="/admin/chatbot" component={AdminChatbotPage} />
       <Route path="/admin/chatbot/evaluations" component={AdminChatbotEvaluationPage} />
       <Route path="/admin/langchain" component={AdminLangChainPage} />
+      <Route path="/admin/system-prompts" component={AdminSystemPromptsPage} />
       
       {/* Fallback to 404 */}
       <Route component={NotFound} />
