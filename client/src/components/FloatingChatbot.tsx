@@ -75,7 +75,7 @@ export default function FloatingChatbot() {
     setIsLoading(true);
 
     try {
-      const response = await apiRequest('/api/langchain/chatbot/chat', 'POST', {
+      const response = await apiRequest('/api/chatbot/chat', 'POST', {
         message: inputValue,
         conversationId
       });
@@ -225,8 +225,8 @@ export default function FloatingChatbot() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 w-96 h-[500px] max-w-[calc(100vw-2rem)] max-h-[calc(100vh-2rem)]" style={{ zIndex: 9999 }}>
-          <Card className="h-full bg-white border-2 border-gray-200 shadow-2xl flex flex-col" style={{ zIndex: 9999 }}>
+        <div className={`fixed bottom-6 right-6 w-96 h-[500px] max-w-[calc(100vw-2rem)] max-h-[calc(100vh-2rem)] transition-opacity duration-300 ${customFeedbackDialog.isOpen ? 'opacity-50' : 'opacity-100'}`} style={{ zIndex: customFeedbackDialog.isOpen ? 9000 : 9999 }}>
+          <Card className="h-full bg-white border-2 border-gray-200 shadow-2xl flex flex-col">
             {/* Header */}
             <div className="bg-slate-600 text-white p-4 rounded-t-lg flex items-center justify-between">
               <div className="flex items-center space-x-2">
@@ -329,7 +329,7 @@ export default function FloatingChatbot() {
                                 setCustomFeedbackText('');
                               }
                             }}>
-                              <DialogContent className="sm:max-w-[425px]">
+                              <DialogContent className="sm:max-w-[425px]" style={{ zIndex: 10000 }}>
                                 <DialogHeader>
                                   <DialogTitle>Provide Detailed Feedback</DialogTitle>
                                 </DialogHeader>
