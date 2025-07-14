@@ -1087,7 +1087,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: 'Missing message or conversationId' });
       }
 
-      // Use the existing recruiter chatbot service for compatibility
+      // Use the existing recruiter chatbot service (it's working well)
       const response = await processRecruiterQuestion(message, conversationId.toString());
       
       res.json({

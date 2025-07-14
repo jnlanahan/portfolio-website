@@ -76,14 +76,32 @@ async function initializeVectorStore(): Promise<void> {
     if (fs.existsSync(chromaDbPath)) {
       console.log("Found existing Chroma database at:", chromaDbPath);
       
-      // Use file-based Chroma access (no server needed)
-      // For file-based, we'll use direct file reading approach
-      console.log("Using file-based Chroma database access");
+      // For file-based Chroma database, we need to use a different approach
+      // Let's fall back to the database storage with semantic search
+      console.log("Using database storage with semantic search as fallback");
       
-      // Don't initialize chromaClient - use file-based approach instead
-      chromaClient = null;
+      // Create a memory vector store as fallback
+      vectorStore = new MemoryVectorStore(embeddings);
       
-      console.log("Chroma file-based access configured");
+      // Load documents from database into vector store
+      const documents = await storage.getChatbotDocuments();
+      console.log(`Loading ${documents.length} documents into vector store`);
+      
+      const langchainDocs = documents.map(doc => new Document({
+        pageContent: doc.content,
+        metadata: {
+          filename: doc.originalName,
+          type: doc.type,
+          id: doc.id
+        }
+      }));
+      
+      if (langchainDocs.length > 0) {
+        await vectorStore.addDocuments(langchainDocs);
+        console.log("Documents loaded into vector store successfully");
+      }
+      
+      console.log("Vector store initialized with database documents");
     } else {
       console.log("No existing Chroma database found. Please copy your chroma_db folder to the project root.");
     }
@@ -134,45 +152,14 @@ async function retrieveRelevantDocuments(question: string, k: number = 5): Promi
     await initializeVectorStore();
   }
   
-  // Try to use Chroma database first
-  if (chromaClient) {
+  // Use the vector store for semantic search
+  if (vectorStore) {
     try {
-      // Get all collections from your Chroma database
-      const collections = await chromaClient.listCollections();
-      
-      if (collections.length > 0) {
-        // Use the first collection (or specify your collection name)
-        const collection = await chromaClient.getCollection({
-          name: collections[0].name
-        });
-        
-        // Query the collection using your existing embeddings
-        const results = await collection.query({
-          queryTexts: [question],
-          nResults: k
-        });
-        
-        // Convert Chroma results to LangChain Document format
-        const documents: Document[] = [];
-        if (results.documents && results.documents[0]) {
-          for (let i = 0; i < results.documents[0].length; i++) {
-            documents.push(new Document({
-              pageContent: results.documents[0][i] || "",
-              metadata: {
-                id: results.ids?.[0]?.[i],
-                distance: results.distances?.[0]?.[i],
-                source: "chroma_db"
-              }
-            }));
-          }
-        }
-        
-        console.log(`Retrieved ${documents.length} relevant documents from Chroma for question: "${question}"`);
-        return documents;
-      }
+      const results = await vectorStore.similaritySearch(question, k);
+      console.log(`Retrieved ${results.length} relevant documents from vector store for question: "${question}"`);
+      return results;
     } catch (error) {
-      console.error("Error retrieving documents from Chroma:", error);
-      console.log("Falling back to database storage...");
+      console.error("Error retrieving documents from vector store:", error);
     }
   }
   
@@ -186,15 +173,20 @@ async function retrieveRelevantDocuments(question: string, k: number = 5): Promi
  */
 async function getConversationHistory(conversationId: number): Promise<string> {
   try {
-    const messages = await storage.getChatbotMessages(conversationId);
+    // Get recent conversations from database
+    const conversations = await storage.getChatbotConversations();
     
-    return messages.map(msg => {
-      const role = msg.isUser ? "User" : "Assistant";
-      return `${role}: ${msg.message}`;
-    }).join("\n");
+    // Filter by session and get recent ones
+    const sessionConversations = conversations
+      .filter(conv => conv.sessionId === conversationId.toString())
+      .slice(-5); // Get last 5 conversations
     
+    // Format as conversation history
+    return sessionConversations.map(conv => 
+      `User: ${conv.userQuestion}\nAssistant: ${conv.botResponse}`
+    ).join('\n\n');
   } catch (error) {
-    console.error("Error getting conversation history:", error);
+    console.error('Error getting conversation history:', error);
     return "";
   }
 }
