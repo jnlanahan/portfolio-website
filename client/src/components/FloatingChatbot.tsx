@@ -51,7 +51,7 @@ export default function FloatingChatbot() {
     if (isOpen && messages.length === 0) {
       setMessages([{
         id: 'welcome',
-        text: "Hi! I'm Nick's AI assistant, trained specifically on his professional background and experience. I can answer questions about his skills, career, projects, and qualifications. What would you like to know about Nick?",
+        text: "👋 Hi! I'm Nick's dedicated AI assistant with comprehensive training on his entire professional background. I know his skills, experience, projects, achievements, and career journey inside and out. Ask me anything about Nick - from technical expertise to leadership experience!",
         sender: 'bot',
         timestamp: new Date(),
         isOnTopic: true,
@@ -215,13 +215,26 @@ export default function FloatingChatbot() {
       {/* Floating Chat Button */}
       <div className="fixed bottom-6 right-6 z-50">
         {!isOpen && (
-          <Button
-            onClick={() => setIsOpen(true)}
-            className="h-14 w-14 rounded-full bg-slate-600 hover:bg-slate-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
-            aria-label="Open chat with Nick's AI assistant"
-          >
-            <MessageCircle className="h-6 w-6" />
-          </Button>
+          <div className="relative">
+            {/* Pulsing ring animation */}
+            <div className="absolute inset-0 h-14 w-14 rounded-full bg-blue-400 animate-ping opacity-75"></div>
+            <div className="absolute inset-0 h-14 w-14 rounded-full bg-blue-500 animate-pulse opacity-50"></div>
+            
+            {/* Main button */}
+            <Button
+              onClick={() => setIsOpen(true)}
+              className="relative h-14 w-14 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 border-2 border-white/20"
+              aria-label="Chat with Nick's AI - Trained specifically on his background & experience"
+            >
+              <MessageCircle className="h-6 w-6" />
+            </Button>
+            
+            {/* Floating tooltip */}
+            <div className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg shadow-lg whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+              💬 Ask me about Nick!
+              <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+            </div>
+          </div>
         )}
       </div>
 
@@ -230,12 +243,15 @@ export default function FloatingChatbot() {
         <div className={`fixed bottom-6 right-6 w-96 h-[500px] max-w-[calc(100vw-2rem)] max-h-[calc(100vh-2rem)] transition-opacity duration-300 ${customFeedbackDialog.isOpen ? 'opacity-50' : 'opacity-100'}`} style={{ zIndex: customFeedbackDialog.isOpen ? 9000 : 9999 }}>
           <Card className="h-full bg-white border-2 border-gray-200 shadow-2xl flex flex-col">
             {/* Header */}
-            <div className="bg-slate-600 text-white p-4 rounded-t-lg flex items-center justify-between">
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-t-lg flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <MessageCircle className="h-5 w-5" />
+                <div className="relative">
+                  <MessageCircle className="h-5 w-5" />
+                  <div className="absolute -top-1 -right-1 h-2 w-2 bg-green-400 rounded-full animate-pulse"></div>
+                </div>
                 <div>
-                  <h3 className="font-semibold text-sm">Nick's AI Assistant</h3>
-                  <p className="text-xs text-slate-200">Ask me about Nick's background!</p>
+                  <h3 className="font-semibold text-sm">🧠 Nick's AI Assistant</h3>
+                  <p className="text-xs text-blue-100">Trained exclusively on Nick's experience & skills</p>
                 </div>
               </div>
               <Button
@@ -398,7 +414,7 @@ export default function FloatingChatbot() {
                 </Button>
               </div>
               <p className="text-xs text-gray-500 mt-2">
-                I'm trained specifically on Nick's professional background and experience.
+                💡 <strong>I know Nick extensively</strong> - trained on his complete professional background, skills, and experience.
               </p>
             </div>
           </Card>
