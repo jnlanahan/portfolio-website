@@ -354,28 +354,72 @@ export const processMessage = traceable(
         botResponse: response
       });
 
-      // Run automatic evaluation in background (Phase 3)
+      // Run automatic evaluation in background (Phase 3) with retry logic
       setImmediate(async () => {
-        try {
-          // Get context for evaluation
-          const relevantDocs = await retrieveRelevantDocuments(message);
-          const context = relevantDocs.map(doc => doc.pageContent).join("\n\n");
-          
-          // Run comprehensive evaluation
-          const evaluationResults = await evaluateChatbotResponse(
-            message,
-            response,
-            context,
-            conversationId
-          );
-          
-          console.log(`Evaluation completed for conversation ${conversationId}:`, {
-            averageScore: evaluationResults.reduce((sum, r) => sum + r.score, 0) / evaluationResults.length,
-            totalEvaluators: evaluationResults.length
-          });
-          
-        } catch (evalError) {
-          console.error(`Background evaluation failed for conversation ${conversationId}:`, evalError);
+        let retryCount = 0;
+        const maxRetries = 3;
+        
+        while (retryCount < maxRetries) {
+          try {
+            // Get context for evaluation
+            const relevantDocs = await retrieveRelevantDocuments(message);
+            const context = relevantDocs.map(doc => doc.pageContent).join("\n\n");
+            
+            // Run comprehensive evaluation
+            const evaluationResults = await evaluateChatbotResponse(
+              message,
+              response,
+              context,
+              conversationId
+            );
+            
+            console.log(`✓ Evaluation completed for conversation ${conversationId}:`, {
+              averageScore: evaluationResults.reduce((sum, r) => sum + r.score, 0) / evaluationResults.length,
+              totalEvaluators: evaluationResults.length,
+              retryAttempt: retryCount + 1
+            });
+            
+            // Success - break out of retry loop
+            break;
+            
+          } catch (evalError) {
+            retryCount++;
+            console.error(`⚠ Background evaluation failed for conversation ${conversationId} (attempt ${retryCount}/${maxRetries}):`, evalError.message);
+            
+            if (retryCount >= maxRetries) {
+              console.error(`✗ Final evaluation failure for conversation ${conversationId} after ${maxRetries} attempts`);
+              
+              // Log to LangSmith for debugging
+              try {
+                await langsmithClient.createRun({
+                  name: "evaluation_failure",
+                  run_type: "tool",
+                  inputs: { 
+                    conversationId,
+                    message: message.substring(0, 100) + "...",
+                    response: response.substring(0, 100) + "...",
+                    errorMessage: evalError.message,
+                    retryCount: maxRetries
+                  },
+                  outputs: { 
+                    success: false,
+                    finalError: evalError.message
+                  },
+                  extra: {
+                    metadata: {
+                      timestamp: new Date().toISOString(),
+                      errorType: evalError.constructor.name
+                    }
+                  }
+                });
+              } catch (langsmithError) {
+                console.warn("LangSmith evaluation failure logging failed:", langsmithError.message);
+              }
+            } else {
+              // Wait before retrying (exponential backoff)
+              await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, retryCount - 1)));
+            }
+          }
         }
       });
 
