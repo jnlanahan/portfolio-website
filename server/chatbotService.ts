@@ -43,18 +43,18 @@ export async function generateTrainingQuestion(
   progress: ChatbotTrainingProgress | null
 ): Promise<TrainingQuestion> {
   const totalQuestions = progress?.totalQuestions || 0;
-  
+
   // Create context from documents and existing training
   const documentContext = documents.map(doc => 
     `Document: ${doc.originalName}\nContent: ${doc.content.substring(0, 1500)}...`
   ).join('\n\n');
-  
+
   const trainingContext = trainingSessions.slice(-20).map(session => 
     `Q: ${session.question}\nA: ${session.answer}`
   ).join('\n\n');
 
   const prompt = `You are helping to train a personal chatbot about Nick Lanahan for recruiters. 
-  
+
 Based on the following context, generate a specific training question that would help the chatbot better understand Nick's background:
 
 DOCUMENTS CONTEXT:
@@ -91,7 +91,7 @@ Return response in JSON format:
     });
 
     const result = JSON.parse(response.choices[0].message.content || '{}');
-    
+
     return {
       question: result.question || "Tell me about a significant achievement in your career.",
       category: result.category || "career",
@@ -107,7 +107,7 @@ Return response in JSON format:
       { question: "Tell me about your educational background.", category: "education", context: "Understanding educational foundation" },
       { question: "What's your biggest professional accomplishment?", category: "achievements", context: "Highlighting key achievements" }
     ];
-    
+
     return fallbackQuestions[Math.floor(Math.random() * fallbackQuestions.length)];
   }
 }
@@ -118,7 +118,7 @@ Return response in JSON format:
 async function analyzeQuestion(question: string): Promise<{isAskingAbout: string[]}> {
   const questionLower = question.toLowerCase();
   const topics = [];
-  
+
   // Education-related keywords
   if (questionLower.includes('course') || questionLower.includes('class') || 
       questionLower.includes('education') || questionLower.includes('school') ||
@@ -127,7 +127,7 @@ async function analyzeQuestion(question: string): Promise<{isAskingAbout: string
       questionLower.includes('mba') || questionLower.includes('master')) {
     topics.push('education');
   }
-  
+
   // Work experience keywords
   if (questionLower.includes('work') || questionLower.includes('job') ||
       questionLower.includes('experience') || questionLower.includes('career') ||
@@ -135,19 +135,19 @@ async function analyzeQuestion(question: string): Promise<{isAskingAbout: string
       questionLower.includes('company') || questionLower.includes('employer')) {
     topics.push('work', 'experience', 'career');
   }
-  
+
   // Project keywords
   if (questionLower.includes('project') || questionLower.includes('built') ||
       questionLower.includes('developed') || questionLower.includes('created')) {
     topics.push('projects');
   }
-  
+
   // Skills keywords
   if (questionLower.includes('skill') || questionLower.includes('technology') ||
       questionLower.includes('programming') || questionLower.includes('language')) {
     topics.push('skills');
   }
-  
+
   return { isAskingAbout: topics };
 }
 
@@ -158,20 +158,20 @@ function searchDocumentForRelevance(content: string, question: string): string {
   const questionWords = question.toLowerCase().split(/\s+/).filter(word => word.length > 3);
   const lines = content.split('\n');
   const relevantLines = [];
-  
+
   // Look for lines that contain question keywords
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     const lineLower = line.toLowerCase();
-    
+
     // Check if line contains any of the question words
     const hasRelevance = questionWords.some(word => lineLower.includes(word));
-    
+
     if (hasRelevance) {
       // Include context: 2 lines before and after
       const startIdx = Math.max(0, i - 2);
       const endIdx = Math.min(lines.length - 1, i + 2);
-      
+
       for (let j = startIdx; j <= endIdx; j++) {
         if (lines[j].trim() && !relevantLines.includes(lines[j])) {
           relevantLines.push(lines[j]);
@@ -179,7 +179,7 @@ function searchDocumentForRelevance(content: string, question: string): string {
       }
     }
   }
-  
+
   // Return up to 1500 characters of relevant content
   const result = relevantLines.join('\n').substring(0, 1500);
   return result || "";
@@ -194,7 +194,7 @@ export async function processRecruiterQuestion(
 ): Promise<ChatbotResponse> {
   try {
     const isOnTopicResult = await checkIfOnTopic(question);
-    
+
     if (!isOnTopicResult.isOnTopic) {
       return {
         response: "Hi! I'm Nack, Nick's AI assistant, specifically trained to discuss his professional background and experience. I'd be happy to answer questions about his skills, career, projects, or qualifications. What would you like to know about Nick?",
@@ -204,34 +204,34 @@ export async function processRecruiterQuestion(
     }
 
     const openai = getOpenAI();
-    
+
     // Get relevant documents from Chroma DB via LangChain
     const { retrieveRelevantDocuments } = await import('./langchainChatbotService');
     const relevantDocs = await retrieveRelevantDocuments(question, 10);
-    
+
     const learningInsights = await storage.getChatbotLearningInsights();
-    
+
     console.log(`Retrieved ${relevantDocs.length} documents from Chroma DB`);
     console.log(`Retrieved ${learningInsights.length} learning insights from storage`);
-    
+
     // First, determine what kind of information the question is asking about
     const questionAnalysis = await analyzeQuestion(question);
-    
+
     // Build context from retrieved documents
     let relevantContext = "";
-    
+
     // Use the documents retrieved from Chroma DB
     for (const doc of relevantDocs) {
       if (doc.pageContent) {
         relevantContext += `\nFrom document:\n${doc.pageContent.substring(0, 500)}\n`;
       }
     }
-    
+
     // Add important facts from learning insights
     const factInsights = learningInsights.filter(i => 
       i.isActive && i.insight.startsWith('FACT:')
     );
-    
+
     let factsSection = "";
     if (factInsights.length > 0) {
       factsSection = "\n\nIMPORTANT FACTS (from user feedback):\n";
@@ -244,16 +244,16 @@ export async function processRecruiterQuestion(
     // Check if there's a custom system prompt template
     let systemPrompt = "";
     const customPromptTemplate = await storage.getActiveSystemPromptTemplate();
-    
+
     if (customPromptTemplate) {
       // Use the custom prompt and append facts and context
       systemPrompt = customPromptTemplate.template;
-      
+
       // Append facts if not already included
       if (!systemPrompt.includes('IMPORTANT FACTS') && factsSection) {
         systemPrompt += factsSection;
       }
-      
+
       // Append context for this specific question
       systemPrompt += `\n\nRELEVANT CONTEXT FOR THIS QUESTION:
 ${relevantContext || "No specific documents found for this question. Please provide information based on general knowledge about Nick if available."}`;
@@ -271,6 +271,15 @@ CRITICAL INSTRUCTIONS:
 - Be confident and specific when information is available in the documents
 - Maintain a professional, helpful tone suitable for recruiter interactions
 - Focus on Nick's achievements, experience, and qualifications
+
+FORMATTING REQUIREMENTS:
+- Keep responses concise and scannable (max 200 words)
+- Use bullet points for lists and multiple items
+- Structure information clearly with headings when appropriate
+- Start with a brief summary, then provide details
+- Use line breaks between different topics
+- Format dates consistently (Month Year format)
+- Bold key achievements or titles when relevant
 
 DOCUMENT SOURCES AVAILABLE:
 - Complete academic transcripts with course details and GPAs
@@ -314,13 +323,13 @@ ${relevantContext || "No specific documents found for this question. Please prov
     });
 
     let botResponse = response.choices[0].message.content || "I'm sorry, I couldn't process your question. Please try again.";
-    
+
     // Add document reading notification if there are issues
     if (unreadableDocuments.length > 0) {
       // Log unreadable documents for admin tracking but don't show to users
       console.log(`Note: ${unreadableDocuments.length} of ${documents.length} documents could not be fully read due to formatting or encryption issues.`);
     }
-    
+
     // Save conversation to database
     const conversation = await storage.saveChatbotConversation({
       sessionId,
@@ -333,7 +342,7 @@ ${relevantContext || "No specific documents found for this question. Please prov
       const langsmithClient = new (await import("langsmith")).Client({
         apiKey: process.env.LANGCHAIN_API_KEY,
       });
-      
+
       await langsmithClient.createRun({
         name: "recruiter_conversation",
         run_type: "chain",
@@ -370,18 +379,18 @@ export async function processTrainingConversation(
 ): Promise<ChatbotResponse> {
   try {
     const openai = getOpenAI();
-    
+
     // Get existing training data for context
     const trainingData = await storage.getChatbotTrainingSessions();
     const documents = await storage.getChatbotDocuments();
-    
+
     // Build existing profile context
     let profileContext = "Current profile data about Nick Lanahan:\n\n";
-    
+
     documents.forEach(doc => {
       profileContext += `From ${doc.originalName}: ${doc.content.substring(0, 300)}...\n\n`;
     });
-    
+
     trainingData.forEach(session => {
       profileContext += `Q: ${session.question}\nA: ${session.answer}\n\n`;
     });
@@ -418,7 +427,7 @@ Now respond with acknowledgment + ONE question only.`;
     });
 
     const botResponse = response.choices[0].message.content || "I'm sorry, I couldn't process your message. Please try again.";
-    
+
     // Save training conversation to database
     const conversation = await storage.saveChatbotConversation({
       sessionId,
@@ -487,7 +496,7 @@ Default to acceptable (isOnTopic: true) unless clearly inappropriate.`;
     });
 
     const result = JSON.parse(response.choices[0].message.content || '{}');
-    
+
     return {
       isOnTopic: result.isOnTopic || false,
       confidence: result.confidence || 0.5
@@ -508,22 +517,22 @@ export async function extractTextFromFile(buffer: Buffer, mimeType: string, file
     if (mimeType.startsWith('text/')) {
       return buffer.toString('utf-8');
     }
-    
+
     // Handle PDF files
     if (mimeType === 'application/pdf') {
       try {
         // Use pdf2json which is more reliable - dynamic import for ES modules
         const pdf2jsonModule = await import('pdf2json');
         const PDFParser = pdf2jsonModule.default;
-        
+
         return new Promise((resolve) => {
           const pdfParser = new PDFParser();
-          
+
           pdfParser.on('pdfParser_dataError', (errData) => {
             console.error('PDF parsing error:', errData);
             resolve(`Document: ${filename}\nPDF parsing failed: ${errData.parserError}. This document may be corrupted, password-protected, or in an unsupported format.`);
           });
-          
+
           pdfParser.on('pdfParser_dataReady', (pdfData) => {
             try {
               // Extract text from all pages
@@ -544,7 +553,7 @@ export async function extractTextFromFile(buffer: Buffer, mimeType: string, file
                   allText += '\n';
                 });
               }
-              
+
               if (allText.trim().length > 0) {
                 resolve(`Document: ${filename}\nExtracted from PDF:\n\n${allText.trim()}`);
               } else {
@@ -555,7 +564,7 @@ export async function extractTextFromFile(buffer: Buffer, mimeType: string, file
               resolve(`Document: ${filename}\nPDF data processing failed: ${error.message}`);
             }
           });
-          
+
           // Parse the buffer
           pdfParser.parseBuffer(buffer);
         });
@@ -564,7 +573,7 @@ export async function extractTextFromFile(buffer: Buffer, mimeType: string, file
         return `Document: ${filename}\nPDF parsing initialization failed: ${error.message}. This document may be corrupted, password-protected, or in an unsupported format.`;
       }
     }
-    
+
     // Handle Word documents (.docx)
     if (mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
       try {
@@ -576,7 +585,7 @@ export async function extractTextFromFile(buffer: Buffer, mimeType: string, file
         return `File: ${filename}\nWord document parsing failed: ${error.message}`;
       }
     }
-    
+
     // Handle older Word documents (.doc)
     if (mimeType === 'application/msword') {
       try {
@@ -588,12 +597,12 @@ export async function extractTextFromFile(buffer: Buffer, mimeType: string, file
         return `File: ${filename}\nWord document parsing failed: ${error.message}`;
       }
     }
-    
+
     // Handle markdown files
     if (mimeType === 'text/markdown') {
       return `Document: ${filename}\nMarkdown content:\n\n${buffer.toString('utf-8')}`;
     }
-    
+
     // For other file types, return basic info
     return `File: ${filename}\nType: ${mimeType}\nSize: ${buffer.length} bytes\n\nContent extraction for this file type is not yet implemented. Please provide the content as a text file or paste the content during training.`;
   } catch (error) {

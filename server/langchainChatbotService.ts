@@ -52,6 +52,15 @@ CRITICAL INSTRUCTIONS:
 - Maintain a professional, helpful tone suitable for recruiter interactions
 - Focus on Nick's achievements, experience, and qualifications
 
+FORMATTING REQUIREMENTS:
+- Keep responses concise and scannable (max 200 words)
+- Use bullet points for lists and multiple items
+- Structure information clearly with headings when appropriate
+- Start with a brief summary, then provide details
+- Use line breaks between different topics
+- Format dates consistently (Month Year format)
+- Bold key achievements or titles when relevant
+
 CONTEXT FROM DOCUMENTS:
 {context}
 
@@ -68,25 +77,25 @@ const promptTemplate = PromptTemplate.fromTemplate(SYSTEM_PROMPT);
 async function initializeVectorStore(): Promise<void> {
   try {
     console.log("Initializing file-based Chroma DB connection...");
-    
+
     // Check if chroma_db folder exists
     const fs = await import('fs');
     const path = await import('path');
     const chromaDbPath = path.join(process.cwd(), 'chroma_db');
-    
+
     if (!fs.existsSync(chromaDbPath)) {
       throw new Error("chroma_db folder not found. Please ensure your Chroma database is in the project root.");
     }
-    
+
     console.log("Found Chroma database at:", chromaDbPath);
-    
+
     // For file-based Chroma, we'll use a different approach
     // Since ChromaClient expects a server, we'll use the database directly
     // by reading the SQLite file and using our own embeddings
-    
+
     // Note: File-based Chroma access is handled differently
     console.log("File-based Chroma database configured");
-    
+
   } catch (error) {
     console.error("Error initializing Chroma DB:", error);
     throw error;
@@ -99,17 +108,17 @@ async function initializeVectorStore(): Promise<void> {
 export async function retrieveRelevantDocuments(question: string, k: number = 5): Promise<Document[]> {
   try {
     // Requirement #1: Always retrieve ALL documents from Chroma DB for every question
-    
+
     const { default: sqlite3 } = await import('sqlite3');
     const { open } = await import('sqlite');
     const path = await import('path');
-    
+
     // Open the Chroma SQLite database
     const db = await open({
       filename: path.join(process.cwd(), 'chroma_db', 'chroma.sqlite3'),
       driver: sqlite3.Database
     });
-    
+
     // Get ALL documents from the embeddings and metadata tables
     // No LIMIT - we want all documents per requirement #1
     const documents = await db.all(`
@@ -122,7 +131,7 @@ export async function retrieveRelevantDocuments(question: string, k: number = 5)
       WHERE em.key = 'chroma:document'
       AND em.string_value IS NOT NULL
     `);
-    
+
     // Return ALL documents
     const results: Document[] = documents.map(doc => new Document({
       pageContent: doc.content || "",
@@ -131,35 +140,35 @@ export async function retrieveRelevantDocuments(question: string, k: number = 5)
         source: doc.source || 'unknown'
       }
     }));
-    
+
     console.log(`Retrieved ${results.length} documents from Chroma database (ALL documents)`);
-    
+
     // Debug: Log first 200 chars of each document
     results.forEach((doc, index) => {
       console.log(`Document ${index + 1} source: ${doc.metadata.source}`);
       console.log(`Content preview: ${doc.pageContent.substring(0, 200)}...`);
     });
-    
+
     await db.close();
-    
+
     return results;
-    
+
   } catch (error) {
     console.error("Error retrieving documents from file-based Chroma:", error);
     console.log("Attempting to use direct file access...");
-    
+
     // Fallback: Read from the attached_assets if Chroma fails
     try {
       const fs = await import('fs').then(m => m.promises);
       const path = await import('path');
       const attachedAssetsPath = path.join(process.cwd(), 'attached_assets');
-      
+
       // Get list of document files
       const files = await fs.readdir(attachedAssetsPath);
       const textFiles = files.filter(f => 
         f.endsWith('.txt') || f.endsWith('.docx') || f.endsWith('.pdf')
       );
-      
+
       // Read a few relevant files
       const documents: Document[] = [];
       for (const file of textFiles.slice(0, k)) {
@@ -173,7 +182,7 @@ export async function retrieveRelevantDocuments(question: string, k: number = 5)
           // Skip files that can't be read
         }
       }
-      
+
       console.log(`Retrieved ${documents.length} documents from attached assets`);
       return documents;
     } catch (fallbackError) {
@@ -190,20 +199,20 @@ async function getConversationHistory(conversationId: number): Promise<string> {
   try {
     // Get recent conversations from database for this session
     const conversations = await storage.getAllChatbotConversations();
-    
+
     // Filter by sessionId and get recent ones (last 10 for better context)
     const sessionConversations = conversations
       .filter(conv => conv.sessionId === conversationId.toString())
       .slice(-10) // Get last 10 conversations for better follow-up context
       .reverse(); // Most recent first for better context building
-    
+
     console.log(`Found ${sessionConversations.length} previous conversations for session ${conversationId}`);
-    
+
     // Format as conversation history
     const historyText = sessionConversations.map(conv => 
       `User: ${conv.userQuestion}\nAssistant: ${conv.botResponse}`
     ).join('\n\n');
-    
+
     return historyText;
   } catch (error) {
     console.error('Error getting conversation history:', error);
@@ -220,28 +229,28 @@ export const ragPipeline = traceable(
     conversationId: number,
     userId?: string
   ): Promise<string> {
-    
+
     // Retrieve relevant documents
     const relevantDocs = await retrieveRelevantDocuments(question);
     const context = relevantDocs.map(doc => doc.pageContent).join("\n\n");
-    
+
     // Get conversation history
     const history = await getConversationHistory(conversationId);
-    
+
     // Create the RAG chain
     const ragChain = RunnableSequence.from([
       promptTemplate,
       llm,
       new StringOutputParser(),
     ]);
-    
+
     // Execute the chain
     const response = await ragChain.invoke({
       context,
       history,
       question
     });
-    
+
     // Log additional metadata to LangSmith
     try {
       await langsmithClient.createRun({
@@ -262,7 +271,7 @@ export const ragPipeline = traceable(
     } catch (langsmithError) {
       console.warn("LangSmith metadata logging failed:", langsmithError.message);
     }
-    
+
     return response;
   },
   { name: "rag_pipeline" }
@@ -276,27 +285,27 @@ export async function processMessage(
   conversationId: number,
   userId?: string
 ): Promise<{ response: string; isOnTopic?: boolean; confidence?: number }> {
-  
+
   try {
     // Get response from RAG pipeline
     const response = await ragPipeline(message, conversationId, userId);
-    
+
     // Store conversation in database
     await storage.saveChatbotConversation({
       sessionId: conversationId.toString(),
       userQuestion: message,
       botResponse: response
     });
-    
+
     return {
       response,
       isOnTopic: true,
       confidence: 0.9
     };
-    
+
   } catch (error) {
     console.error("Error processing message:", error);
-    
+
     // Log error to LangSmith
     try {
       await langsmithClient.createRun({
@@ -308,7 +317,7 @@ export async function processMessage(
     } catch (langsmithError) {
       console.warn("LangSmith error logging failed:", langsmithError.message);
     }
-    
+
     throw error;
   }
 }
@@ -320,15 +329,15 @@ export async function addDocumentToVectorStore(
   content: string,
   metadata: { filename: string; type: string; id: number }
 ): Promise<void> {
-  
+
   if (!vectorStore) {
     await initializeVectorStore();
   }
-  
+
   if (!vectorStore) {
     throw new Error("Vector store not initialized");
   }
-  
+
   const doc = new Document({
     pageContent: content,
     metadata: {
@@ -336,9 +345,9 @@ export async function addDocumentToVectorStore(
       addedAt: new Date().toISOString()
     }
   });
-  
+
   await vectorStore.addDocuments([doc]);
-  
+
   // Track document addition in LangSmith
   await langsmithClient.createRun({
     name: "document_addition",
@@ -371,19 +380,19 @@ export async function getLangSmithStats(): Promise<any> {
       projectId: process.env.LANGCHAIN_PROJECT_ID,
       limit: 100
     });
-    
+
     const runList = [];
     for await (const run of runs) {
       runList.push(run);
     }
-    
+
     return {
       totalRuns: runList.length,
       recentRuns: runList.slice(0, 10),
       projectName: "My Portfolio Chatbot",
       dashboardUrl: `https://smith.langchain.com/o/projects`
     };
-    
+
   } catch (error) {
     console.error("Error getting LangSmith stats:", error);
     return {
@@ -402,13 +411,13 @@ export async function createEvaluationDataset(
   name: string,
   examples: Array<{ inputs: any; outputs: any }>
 ): Promise<any> {
-  
+
   try {
     const dataset = await langsmithClient.createDataset({
       name,
       description: `Evaluation dataset for Nick Lanahan's chatbot - ${name}`,
     });
-    
+
     // Add examples to dataset
     for (const example of examples) {
       await langsmithClient.createExample({
@@ -417,14 +426,14 @@ export async function createEvaluationDataset(
         outputs: example.outputs
       });
     }
-    
+
     return {
       id: dataset.id,
       name: dataset.name,
       exampleCount: examples.length,
       dashboardUrl: `https://smith.langchain.com/o/datasets/${dataset.id}`
     };
-    
+
   } catch (error) {
     console.error("Error creating evaluation dataset:", error);
     throw error;
@@ -438,7 +447,7 @@ export async function runEvaluation(datasetId: string): Promise<any> {
   try {
     // This would typically use LangSmith's evaluation framework
     // For now, we'll return a placeholder that shows the concept
-    
+
     return {
       datasetId,
       status: "completed",
@@ -449,7 +458,7 @@ export async function runEvaluation(datasetId: string): Promise<any> {
       },
       dashboardUrl: `https://smith.langchain.com/o/datasets/${datasetId}/experiments`
     };
-    
+
   } catch (error) {
     console.error("Error running evaluation:", error);
     throw error;
