@@ -13,7 +13,8 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Plus, Edit, Trash2, ExternalLink, Upload, X, Star } from "lucide-react";
+import { ArrowLeft, Plus, Edit, Trash2, ExternalLink, Upload, X, Star, Palette } from "lucide-react";
+import RichTextEditor from "@/components/RichTextEditor";
 import { Switch } from "@/components/ui/switch";
 
 const projectSchema = z.object({
@@ -34,6 +35,7 @@ const projectSchema = z.object({
   featured: z.boolean().default(false),
   date: z.string().optional(),
   lessonsLearned: z.string().optional(),
+  customColor: z.string().default("#007AFF"),
 });
 
 type ProjectFormData = z.infer<typeof projectSchema>;
@@ -64,6 +66,7 @@ export default function AdminProjectsPage() {
     defaultValues: {
       featured: false,
       date: new Date().toISOString().split('T')[0],
+      customColor: "#007AFF",
     },
   });
 
@@ -358,12 +361,11 @@ export default function AdminProjectsPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="description">Description</Label>
-                    <Textarea
-                      id="description"
-                      {...register("description")}
-                      className={errors.description ? "border-red-500" : ""}
-                      rows={4}
+                    <Label htmlFor="description">Description (Rich Text)</Label>
+                    <RichTextEditor
+                      content={watch("description") || ""}
+                      onChange={(content) => setValue("description", content)}
+                      placeholder="Enter a detailed description of your project..."
                     />
                     {errors.description && (
                       <p className="text-sm text-red-500">{errors.description.message}</p>
@@ -490,6 +492,28 @@ export default function AdminProjectsPage() {
                     {errors.technologies && (
                       <p className="text-sm text-red-500">{errors.technologies.message}</p>
                     )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="customColor">Custom Theme Color</Label>
+                    <div className="flex items-center gap-3">
+                      <Input
+                        id="customColor"
+                        type="color"
+                        {...register("customColor")}
+                        className="w-16 h-10 p-1 border rounded cursor-pointer"
+                      />
+                      <div className="flex-1 flex items-center gap-2">
+                        <Input
+                          type="text"
+                          value={watch("customColor") || "#007AFF"}
+                          onChange={(e) => setValue("customColor", e.target.value)}
+                          placeholder="#007AFF"
+                          className="max-w-24"
+                        />
+                        <span className="text-sm text-gray-500">This color will be used for the project tile theme</span>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -4,9 +4,17 @@ import { ProjectCategory, projectCategories } from "@/data/portfolio";
 import { useState, useMemo, useRef } from "react";
 import { Link } from "wouter";
 
-// Tech badge component
-const TechBadge = ({ tech }: { tech: string }) => (
-  <span className="px-3 py-1 bg-blue-50 text-blue-600 text-xs rounded-full transition-all duration-300 hover:scale-105" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+// Tech badge component with enhanced visual appeal
+const TechBadge = ({ tech, customColor = "#007AFF" }: { tech: string; customColor?: string }) => (
+  <span 
+    className="px-3 py-1 text-xs rounded-full font-medium transition-all duration-300 hover:scale-105 hover:shadow-md"
+    style={{ 
+      fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+      backgroundColor: `${customColor}15`,
+      color: customColor,
+      border: `1px solid ${customColor}30`
+    }}
+  >
     {tech}
   </span>
 );
@@ -133,87 +141,119 @@ const ScrollableImageContainer = ({ project }: { project: any }) => {
   );
 };
 
-// Project card component
-const ProjectCard = ({ project, index }: { project: any; index: number }) => (
-  <motion.div
-    key={project.id}
-    className="group relative rounded-xl overflow-hidden border border-gray-200 hover:border-blue-600 transition-all duration-300 bg-white"
-    initial={{ opacity: 0, y: 30 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay: index * 0.1 }}
-    whileHover={{ y: -5 }}
-  >
-    <ScrollableImageContainer project={project} />
-
-    <div className="p-6">
-      {/* Project date */}
-      <div className="text-xs text-gray-500 mb-2" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
-        {new Date(project.date).toLocaleDateString('en-US', { 
-          year: 'numeric', 
-          month: 'long'
-        })}
-      </div>
-      
-      {/* Project title */}
-      <h3 className="text-xl font-semibold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
-        <Link href={`/portfolio/${project.slug}`} className="block text-gray-900 hover:text-blue-600">
-          {project.title}
-        </Link>
-      </h3>
-      
-      {/* Description */}
-      <p className="text-gray-600 text-sm mb-4 line-clamp-2" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
-        {project.shortDescription}
-      </p>
-      
-      {/* Technologies */}
-      <div className="flex flex-wrap gap-2 mb-4">
-        {project.technologies.slice(0, 3).map((tech: string, techIndex: number) => (
-          <TechBadge key={techIndex} tech={tech} />
-        ))}
-        {project.technologies.length > 3 && (
-          <span className="px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full">
-            +{project.technologies.length - 3} more
-          </span>
-        )}
-      </div>
-      
-      {/* Action buttons */}
-      <div className="flex justify-between items-center mt-4 pt-4 border-t border-border">
-        <Link 
-          href={`/portfolio/${project.slug}`} 
-          className="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors flex items-center"
+// Project card component with enhanced design
+const ProjectCard = ({ project, index }: { project: any; index: number }) => {
+  const customColor = project.customColor || "#007AFF";
+  
+  return (
+    <motion.div
+      key={project.id}
+      className="group relative rounded-xl overflow-hidden transition-all duration-300 bg-white shadow-lg hover:shadow-xl"
+      style={{ 
+        border: `2px solid ${customColor}20`,
+        backgroundColor: '#ffffff'
+      }}
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      whileHover={{ y: -8, scale: 1.02 }}
+    >
+      {/* Project title at the top */}
+      <div className="p-6 pb-4" style={{ borderBottom: `1px solid ${customColor}10` }}>
+        <h3 
+          className="text-xl font-bold mb-2 transition-colors line-clamp-2" 
+          style={{ 
+            fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+            color: customColor
+          }}
         >
-          View Details <i className="ri-arrow-right-line ml-1"></i>
-        </Link>
-        <div className="flex space-x-3">
-          {project.demoUrl && (
-            <a
-              href={project.demoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 bg-secondary/10 rounded-full text-secondary hover:bg-secondary/20 transition-colors"
-              aria-label="View Live Demo"
-            >
-              <i className="ri-eye-line"></i>
-            </a>
-          )}
-          {project.codeUrl && (
-            <a
-              href={project.codeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 bg-background/60 border border-border rounded-full text-foreground hover:border-secondary transition-colors"
-              aria-label="View Code"
-            >
-              <i className="ri-github-line"></i>
-            </a>
-          )}
+          <Link href={`/portfolio/${project.slug}`} className="hover:opacity-80">
+            {project.title}
+          </Link>
+        </h3>
+        
+        {/* Project date */}
+        <div className="text-xs text-gray-500" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+          {new Date(project.date).toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long'
+          })}
         </div>
       </div>
-    </div>
-  </motion.div>
-);
+
+      <ScrollableImageContainer project={project} />
+
+      <div className="p-6">
+        {/* Technologies with enhanced styling */}
+        <div className="flex flex-wrap gap-2 mb-4">
+          {project.technologies.slice(0, 4).map((tech: string, techIndex: number) => (
+            <TechBadge key={techIndex} tech={tech} customColor={customColor} />
+          ))}
+          {project.technologies.length > 4 && (
+            <span 
+              className="px-3 py-1 text-xs rounded-full font-medium"
+              style={{ 
+                backgroundColor: `${customColor}08`,
+                color: `${customColor}80`,
+                border: `1px solid ${customColor}20`
+              }}
+            >
+              +{project.technologies.length - 4} more
+            </span>
+          )}
+        </div>
+        
+        {/* Description */}
+        <p className="text-gray-600 text-sm mb-4 line-clamp-3" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+          {project.shortDescription}
+        </p>
+        
+        {/* Action buttons */}
+        <div className="flex justify-between items-center mt-4 pt-4" style={{ borderTop: `1px solid ${customColor}10` }}>
+          <Link 
+            href={`/portfolio/${project.slug}`} 
+            className="text-sm font-medium transition-colors flex items-center hover:opacity-80"
+            style={{ color: customColor }}
+          >
+            View Details <i className="ri-arrow-right-line ml-1"></i>
+          </Link>
+          <div className="flex space-x-3">
+            {project.demoUrl && (
+              <a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full transition-all duration-300 hover:scale-110"
+                style={{ 
+                  backgroundColor: `${customColor}10`,
+                  color: customColor
+                }}
+                aria-label="View Live Demo"
+              >
+                <i className="ri-eye-line"></i>
+              </a>
+            )}
+            {project.codeUrl && (
+              <a
+                href={project.codeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full transition-all duration-300 hover:scale-110"
+                style={{ 
+                  backgroundColor: `${customColor}10`,
+                  color: customColor
+                }}
+                aria-label="View Code"
+              >
+                <i className="ri-github-line"></i>
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 const PortfolioPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);

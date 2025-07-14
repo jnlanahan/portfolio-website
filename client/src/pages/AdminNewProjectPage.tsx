@@ -12,7 +12,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Upload, X, Star } from "lucide-react";
+import { ArrowLeft, Upload, X, Star, Palette } from "lucide-react";
+import RichTextEditor from "@/components/RichTextEditor";
 
 const projectSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -32,6 +33,7 @@ const projectSchema = z.object({
   featured: z.boolean().default(false),
   date: z.string().optional(),
   lessonsLearned: z.string().optional(),
+  customColor: z.string().default("#007AFF"),
 });
 
 type ProjectFormData = z.infer<typeof projectSchema>;
@@ -66,6 +68,7 @@ export default function AdminNewProjectPage() {
       lessonsLearned: "",
       mediaFiles: [],
       thumbnailIndex: 0,
+      customColor: "#007AFF",
     },
   });
 
@@ -258,12 +261,11 @@ export default function AdminNewProjectPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
-                <Textarea
-                  id="description"
-                  {...register("description")}
-                  className={errors.description ? "border-red-500" : ""}
-                  rows={4}
+                <Label htmlFor="description">Description (Rich Text)</Label>
+                <RichTextEditor
+                  content={watch("description") || ""}
+                  onChange={(content) => setValue("description", content)}
+                  placeholder="Enter a detailed description of your project..."
                 />
                 {errors.description && (
                   <p className="text-sm text-red-500">{errors.description.message}</p>
@@ -391,6 +393,28 @@ export default function AdminNewProjectPage() {
                 {errors.technologies && (
                   <p className="text-sm text-red-500">{errors.technologies.message}</p>
                 )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="customColor">Custom Theme Color</Label>
+                <div className="flex items-center gap-3">
+                  <Input
+                    id="customColor"
+                    type="color"
+                    {...register("customColor")}
+                    className="w-16 h-10 p-1 border rounded cursor-pointer"
+                  />
+                  <div className="flex-1 flex items-center gap-2">
+                    <Input
+                      type="text"
+                      value={watch("customColor") || "#007AFF"}
+                      onChange={(e) => setValue("customColor", e.target.value)}
+                      placeholder="#007AFF"
+                      className="max-w-24"
+                    />
+                    <span className="text-sm text-gray-500">This color will be used for the project tile theme</span>
+                  </div>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

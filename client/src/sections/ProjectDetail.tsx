@@ -6,9 +6,17 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 
-// Tech badge component
-const TechBadge = ({ tech }: { tech: string }) => (
-  <span className="px-3 py-1 bg-blue-50 text-blue-600 text-sm rounded-full transition-all duration-300 hover:scale-105" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+// Tech badge component with custom color theming
+const TechBadge = ({ tech, customColor = "#007AFF" }: { tech: string; customColor?: string }) => (
+  <span 
+    className="px-3 py-1 text-sm rounded-full font-medium transition-all duration-300 hover:scale-105"
+    style={{ 
+      fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+      backgroundColor: `${customColor}15`,
+      color: customColor,
+      border: `1px solid ${customColor}30`
+    }}
+  >
     {tech}
   </span>
 );
@@ -135,7 +143,11 @@ export const ProjectDetail: React.FC = () => {
           </div>
 
           <div className="mb-8">
-            <p className="text-lg leading-relaxed text-gray-700" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>{project.description}</p>
+            <div 
+              className="text-lg leading-relaxed text-gray-700 prose prose-lg max-w-none"
+              style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
+              dangerouslySetInnerHTML={{ __html: project.description }}
+            />
           </div>
 
           {/* Technologies */}
@@ -143,7 +155,7 @@ export const ProjectDetail: React.FC = () => {
             <h3 className="text-lg font-semibold mb-4 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>Technologies Used</h3>
             <div className="flex flex-wrap gap-2">
               {project.technologies.map((tech: string, index: number) => (
-                <TechBadge key={index} tech={tech} />
+                <TechBadge key={index} tech={tech} customColor={project.customColor} />
               ))}
             </div>
           </div>
@@ -151,7 +163,15 @@ export const ProjectDetail: React.FC = () => {
           {/* Action Buttons */}
           <div className="flex gap-4 mb-8">
             {project.demoUrl && (
-              <Button asChild className="flex-1 bg-blue-600 hover:bg-blue-700 text-white" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+              <Button 
+                asChild 
+                className="flex-1 text-white transition-all duration-300 hover:scale-105" 
+                style={{ 
+                  fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+                  backgroundColor: project.customColor || "#007AFF",
+                  borderColor: project.customColor || "#007AFF"
+                }}
+              >
                 <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
                   <i className="ri-eye-line mr-2"></i>
                   Live Demo
@@ -159,8 +179,17 @@ export const ProjectDetail: React.FC = () => {
               </Button>
             )}
             {project.codeUrl && (
-              <Button variant="outline" asChild className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50 hover:text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
-                <a href={project.codeUrl} target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-gray-900">
+              <Button 
+                variant="outline" 
+                asChild 
+                className="flex-1 transition-all duration-300 hover:scale-105" 
+                style={{ 
+                  fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+                  borderColor: project.customColor || "#007AFF",
+                  color: project.customColor || "#007AFF"
+                }}
+              >
+                <a href={project.codeUrl} target="_blank" rel="noopener noreferrer">
                   <i className="ri-github-line mr-2"></i>
                   View Code
                 </a>
