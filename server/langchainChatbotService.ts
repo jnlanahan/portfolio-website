@@ -621,51 +621,15 @@ Provide your score (1-5) and brief explanation.`;
         }
       }
 
-      // Log evaluation results to LangSmith - skip logging for now to avoid API errors
-      try {
-        await langsmithClient.createRun({
-          name: "chatbot_evaluation",
-          run_type: "tool",
-          inputs: {
-            question,
-            response,
-            conversationId,
-            contextLength: context.length
-          },
-          outputs: {
-            evaluationResults: results,
-            averageScore: results.reduce((sum, r) => sum + r.score, 0) / results.length,
-            totalEvaluators: results.length
-          },
-          extra: {
-            metadata: {
-              evaluation_timestamp: new Date().toISOString(),
-              evaluation_version: "1.0",
-              model_evaluated: "gpt-4o"
-            }
-          }
-        });
-      } catch (langsmithError) {
-        console.warn("LangSmith evaluation logging failed:", langsmithError.message);
-        // Continue with evaluation even if logging fails
-      }
+      // LangSmith logging handled automatically by traceable() wrapper
+      // No manual run creation needed
 
       return results;
       
     } catch (error) {
       console.error("Error in chatbot evaluation:", error);
       
-      // Log evaluation error to LangSmith - skip logging for now to avoid API errors
-      try {
-        await langsmithClient.createRun({
-          name: "chatbot_evaluation_error",
-          run_type: "tool",
-          inputs: { question, response, conversationId },
-          outputs: { error: error.message }
-        });
-      } catch (langsmithError) {
-        console.warn("LangSmith error logging failed:", langsmithError.message);
-      }
+      // Error logging handled automatically by traceable() wrapper
       
       return [{
         key: "evaluation_error",
