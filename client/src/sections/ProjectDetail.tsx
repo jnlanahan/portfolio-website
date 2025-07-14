@@ -85,7 +85,7 @@ export const ProjectDetail: React.FC = () => {
         {/* Project Images */}
         <div className="space-y-4">
           <div className="aspect-video bg-muted rounded-lg overflow-hidden" style={{
-            border: `2px solid ${project.customColor || "#007AFF"}30`,
+            border: `1px solid ${project.customColor || "#007AFF"}08`,
             boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
           }}>
             <img
@@ -105,15 +105,15 @@ export const ProjectDetail: React.FC = () => {
                 <button
                   key={index}
                   onClick={() => setSelectedImageIndex(index)}
-                  className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
+                  className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border transition-all ${
                     index === selectedImageIndex 
-                      ? `border-[${project.customColor || "#007AFF"}] shadow-md` 
-                      : 'border-gray-300 hover:border-gray-400 shadow-sm'
+                      ? 'border-gray-400 shadow-md' 
+                      : 'border-gray-200 hover:border-gray-300 shadow-sm'
                   }`}
                   style={{
                     boxShadow: index === selectedImageIndex 
-                      ? `0 0 0 2px ${project.customColor || "#007AFF"}40` 
-                      : '0 2px 4px rgba(0, 0, 0, 0.1)'
+                      ? `0 0 0 1px ${project.customColor || "#007AFF"}20` 
+                      : '0 2px 4px rgba(0, 0, 0, 0.05)'
                   }}
                 >
                   <img

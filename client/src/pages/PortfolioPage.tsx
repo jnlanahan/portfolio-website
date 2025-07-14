@@ -49,7 +49,7 @@ const ScrollableImageContainer = ({ project }: { project: any }) => {
 
   return (
     <div className="relative overflow-hidden" style={{ 
-      border: `1px solid ${project.customColor || "#007AFF"}30`,
+      border: `1px solid ${project.customColor || "#007AFF"}08`,
       borderRadius: '8px',
       backgroundColor: '#f8f9fa'
     }}>
@@ -158,7 +158,7 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
       key={project.id}
       className="group relative rounded-xl overflow-hidden transition-all duration-300 bg-white shadow-lg hover:shadow-xl"
       style={{ 
-        border: `2px solid ${customColor}20`,
+        border: `1px solid ${customColor}08`,
         backgroundColor: '#ffffff'
       }}
       initial={{ opacity: 0, y: 30 }}
