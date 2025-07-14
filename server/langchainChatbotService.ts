@@ -293,7 +293,7 @@ export const ragPipeline = traceable(
       question
     });
 
-    // Log additional metadata to LangSmith
+    // Log detailed metadata to LangSmith for comprehensive tracing
     try {
       await langsmithClient.createRun({
         name: "rag_metadata",
@@ -301,13 +301,25 @@ export const ragPipeline = traceable(
         inputs: { 
           question,
           conversationId,
-          userId,
+          userId: userId || "anonymous",
           documents_retrieved: relevantDocs.length,
-          context_length: context.length
+          context_length: context.length,
+          has_conversation_history: history.length > 0,
+          timestamp: new Date().toISOString()
         },
         outputs: { 
           response_length: response.length,
-          documents_used: relevantDocs.map(doc => doc.metadata?.filename || 'unknown')
+          documents_used: relevantDocs.map(doc => doc.metadata?.filename || 'unknown'),
+          context_used: context.substring(0, 200) + "...", // First 200 chars for debugging
+          session_id: conversationId.toString()
+        },
+        extra: {
+          metadata: {
+            pipeline_version: "2.0",
+            model_used: "gpt-4o",
+            retrieval_method: "chroma_vector_search",
+            response_style: "conversational_short"
+          }
         }
       });
     } catch (langsmithError) {
@@ -322,47 +334,56 @@ export const ragPipeline = traceable(
 /**
  * Process a chatbot message with full LangSmith tracing
  */
-export async function processMessage(
-  message: string,
-  conversationId: number,
-  userId?: string
-): Promise<{ response: string; isOnTopic?: boolean; confidence?: number }> {
+export const processMessage = traceable(
+  async function processMessage(
+    message: string,
+    conversationId: number,
+    userId?: string
+  ): Promise<{ response: string; isOnTopic?: boolean; confidence?: number }> {
 
-  try {
-    // Get response from RAG pipeline
-    const response = await ragPipeline(message, conversationId, userId);
-
-    // Store conversation in database
-    await storage.saveChatbotConversation({
-      sessionId: conversationId.toString(),
-      userQuestion: message,
-      botResponse: response
-    });
-
-    return {
-      response,
-      isOnTopic: true,
-      confidence: 0.9
-    };
-
-  } catch (error) {
-    console.error("Error processing message:", error);
-
-    // Log error to LangSmith
     try {
-      await langsmithClient.createRun({
-        name: "message_processing_error",
-        run_type: "tool",
-        inputs: { message, conversationId, userId },
-        outputs: { error: error.message }
-      });
-    } catch (langsmithError) {
-      console.warn("LangSmith error logging failed:", langsmithError.message);
-    }
+      // Get response from RAG pipeline
+      const response = await ragPipeline(message, conversationId, userId);
 
-    throw error;
-  }
-}
+      // Store conversation in database
+      await storage.saveChatbotConversation({
+        sessionId: conversationId.toString(),
+        userQuestion: message,
+        botResponse: response
+      });
+
+      return {
+        response,
+        isOnTopic: true,
+        confidence: 0.9
+      };
+
+    } catch (error) {
+      console.error("Error processing message:", error);
+
+      // Log error to LangSmith
+      try {
+        await langsmithClient.createRun({
+          name: "message_processing_error",
+          run_type: "tool",
+          inputs: { message, conversationId, userId },
+          outputs: { error: error.message },
+          extra: {
+            metadata: {
+              error_type: error.constructor.name,
+              timestamp: new Date().toISOString()
+            }
+          }
+        });
+      } catch (langsmithError) {
+        console.warn("LangSmith error logging failed:", langsmithError.message);
+      }
+
+      throw error;
+    }
+  },
+  { name: "process_message" }
+);
 
 /**
  * Add a new document to the vector store
