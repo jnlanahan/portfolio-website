@@ -1818,7 +1818,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const trainingPrompt = trainingPromptMatch ? trainingPromptMatch[1] : "Training prompt not found";
       
       // Extract default visitor prompt (processRecruiterQuestion function)
-      const visitorPromptRegex = /else \{\s*\/\/ Use default system prompt\s*systemPrompt = `([^`]+)`/s;
+      const visitorPromptRegex = /else \{\s*\/\/ Use default system prompt[\s\S]*?systemPrompt = `([^`]+)`/;
       const visitorPromptMatch = chatbotServiceContent.match(visitorPromptRegex);
       const visitorPrompt = visitorPromptMatch ? visitorPromptMatch[1] : "Visitor prompt not found";
       
