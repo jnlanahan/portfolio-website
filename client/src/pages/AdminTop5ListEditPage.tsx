@@ -67,10 +67,21 @@ export default function AdminTop5ListEditPage() {
   }, [authError, authLoading, setLocation]);
 
   // Fetch list data if editing
-  const { data: list, isLoading } = useQuery({
+  const { data: list, isLoading, error: listError } = useQuery({
     queryKey: ["/api/admin/top5-lists", id],
     enabled: isEditing && !!authCheck?.authenticated,
   });
+
+  // Debug logging
+  useEffect(() => {
+    console.log("=== DEBUG INFO ===");
+    console.log("URL ID:", id);
+    console.log("Is editing:", isEditing);
+    console.log("Auth check:", authCheck);
+    console.log("List data:", list);
+    console.log("List error:", listError);
+    console.log("=================");
+  }, [list, isEditing, authCheck, listError, id]);
 
   // Fetch list items
   const { data: items } = useQuery({
@@ -241,21 +252,26 @@ export default function AdminTop5ListEditPage() {
     const file = event.target.files?.[0];
     if (!file) return;
 
+    console.log("Starting upload for file:", file.name);
     setUploadingMainImage(true);
     const formData = new FormData();
     formData.append('files', file);
 
     try {
+      console.log("Sending upload request...");
       const response = await apiRequest('/api/admin/upload', 'POST', formData);
-      const uploadedFile = response.files[0];
-      if (uploadedFile) {
-        setListValue('mainImage', uploadedFile.url);
+      console.log("Upload response:", response);
+      const uploadedUrl = response.files[0]; // files is now an array of URLs
+      if (uploadedUrl) {
+        console.log("Setting main image URL:", uploadedUrl);
+        setListValue('mainImage', uploadedUrl);
         toast({
           title: "Image uploaded successfully",
           description: "Main image has been updated",
         });
       }
     } catch (error) {
+      console.error("Upload error:", error);
       toast({
         title: "Upload failed",
         description: "An error occurred while uploading the image",
@@ -276,9 +292,9 @@ export default function AdminTop5ListEditPage() {
 
     try {
       const response = await apiRequest('/api/admin/upload', 'POST', formData);
-      const uploadedFile = response.files[0];
-      if (uploadedFile) {
-        setItemValue('image', uploadedFile.url);
+      const uploadedUrl = response.files[0]; // files is now an array of URLs
+      if (uploadedUrl) {
+        setItemValue('image', uploadedUrl);
         toast({
           title: "Image uploaded successfully",
           description: "Item image has been updated",
