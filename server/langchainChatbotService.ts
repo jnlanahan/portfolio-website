@@ -17,7 +17,7 @@ const langsmithClient = new Client({
 });
 
 // Set up LangChain project name
-process.env.LANGCHAIN_PROJECT = "NickLanahanPortfolioBot";
+process.env.LANGCHAIN_PROJECT = "My Portfolio Chatbot";
 
 // Initialize OpenAI models
 const llm = new ChatOpenAI({
@@ -389,7 +389,7 @@ export async function getLangSmithStats(): Promise<any> {
   try {
     // Get project runs from LangSmith
     const runs = await langsmithClient.listRuns({
-      projectName: "NickLanahanPortfolioBot",
+      projectName: "My Portfolio Chatbot",
       limit: 100
     });
     
@@ -401,7 +401,7 @@ export async function getLangSmithStats(): Promise<any> {
     return {
       totalRuns: runList.length,
       recentRuns: runList.slice(0, 10),
-      projectName: "NickLanahanPortfolioBot",
+      projectName: "My Portfolio Chatbot",
       dashboardUrl: `https://smith.langchain.com/o/projects`
     };
     
@@ -410,7 +410,7 @@ export async function getLangSmithStats(): Promise<any> {
     return {
       totalRuns: 0,
       recentRuns: [],
-      projectName: "NickLanahanPortfolioBot",
+      projectName: "My Portfolio Chatbot",
       error: error.message
     };
   }

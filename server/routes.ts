@@ -2054,9 +2054,9 @@ AVAILABLE DOCUMENT TYPES:
   app.get("/api/langchain/dashboard", requireAdmin, async (req, res) => {
     try {
       res.json({
-        projectName: "NickLanahanPortfolioBot",
+        projectName: "My Portfolio Chatbot",
         dashboardUrl: "https://smith.langchain.com/o/projects",
-        tracesUrl: "https://smith.langchain.com/o/projects/NickLanahanPortfolioBot/traces",
+        tracesUrl: "https://smith.langchain.com/o/projects/My%20Portfolio%20Chatbot/traces",
         datasetsUrl: "https://smith.langchain.com/o/datasets"
       });
     } catch (error) {

@@ -50,7 +50,7 @@ This guide explains how to integrate your existing Chroma vector database with t
 ```env
 OPENAI_API_KEY=your_openai_api_key
 LANGCHAIN_API_KEY=your_langchain_api_key
-LANGCHAIN_PROJECT=NickLanahanPortfolioBot
+LANGCHAIN_PROJECT=My Portfolio Chatbot
 ```
 
 ### Collection Names
