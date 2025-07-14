@@ -1852,8 +1852,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         },
         langchain: {
           prompt: langchainPrompt,
-          editable: false,
-          description: "Used only for document retrieval via LangChain - NOT for main chat responses",
+          editable: true,
+          description: "ACTUAL prompt used by visitors via /api/chatbot/chat endpoint (LangChain RAG system)",
           lastModified: new Date().toISOString()
         }
       });
@@ -1910,8 +1910,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         res.json({ success: true, message: "Custom prompt updated in database" });
         
       } else if (type === 'langchain') {
-        // LangChain prompt is read-only
-        res.status(400).json({ error: "LangChain prompt cannot be edited - it's used only for document retrieval" });
+        // Update LangChain prompt in langchainChatbotService.ts
+        const langchainServicePath = path.join(process.cwd(), 'server', 'langchainChatbotService.ts');
+        let content = fs.readFileSync(langchainServicePath, 'utf-8');
+        
+        // Replace the LangChain prompt
+        const langchainPromptRegex = /(const SYSTEM_PROMPT = `)[^`]+(`)/s;
+        content = content.replace(langchainPromptRegex, `$1${prompt}$2`);
+        
+        fs.writeFileSync(langchainServicePath, content);
+        res.json({ success: true, message: "LangChain prompt updated in langchainChatbotService.ts" });
         
       } else {
         res.status(400).json({ error: "Invalid prompt type" });

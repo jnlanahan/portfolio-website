@@ -111,7 +111,7 @@ export default function AdminSystemPromptsPage() {
                   <div className="space-y-4">
                     <div className="text-center">
                       <h3 className="text-lg font-semibold text-white mb-4">Visitor Mode (Recruiters)</h3>
-                      <p className="text-xs text-gray-400">processRecruiterQuestion()</p>
+                      <p className="text-xs text-gray-400">TWO DIFFERENT ENDPOINTS!</p>
                     </div>
                     
                     <div className="flex flex-col items-center space-y-3">
@@ -120,25 +120,35 @@ export default function AdminSystemPromptsPage() {
                       </div>
                       <div className="text-gray-400">↓</div>
                       <div className="bg-yellow-600 text-white px-3 py-2 rounded-lg text-sm text-center">
-                        <strong>Check Custom Template</strong>
+                        <strong>Route Decision</strong>
                         <br />
-                        <span className="text-xs text-gray-400">storage.getActiveSystemPromptTemplate()</span>
+                        <span className="text-xs text-gray-400">FloatingChatbot component</span>
                       </div>
                       <div className="text-gray-400">↓</div>
-                      <div className="bg-[#2a2a2a] border border-orange-500 px-3 py-2 rounded-lg text-sm text-center">
-                        <strong>Custom Prompt</strong>
-                        <br />
-                        <span className="text-xs text-gray-400">If found in database</span>
+                      
+                      {/* Split into two paths */}
+                      <div className="grid grid-cols-2 gap-2 w-full">
+                        <div className="bg-[#2a2a2a] border border-red-500 px-2 py-1 rounded text-xs text-center">
+                          <strong>/api/chatbot/ask</strong>
+                          <br />
+                          <span className="text-gray-400">OLD: Custom/Visitor prompts</span>
+                        </div>
+                        <div className="bg-[#2a2a2a] border border-green-500 px-2 py-1 rounded text-xs text-center">
+                          <strong>/api/chatbot/chat</strong>
+                          <br />
+                          <span className="text-gray-400">NEW: LangChain prompt</span>
+                        </div>
                       </div>
-                      <div className="text-gray-400">↓ (or fallback)</div>
-                      <div className="bg-[#2a2a2a] border border-gray-500 px-3 py-2 rounded-lg text-sm text-center">
-                        <strong>Default Prompt</strong>
+                      
+                      <div className="text-gray-400">↓</div>
+                      <div className="bg-[#2a2a2a] border border-green-500 px-3 py-2 rounded-lg text-sm text-center">
+                        <strong>LangChain RAG System</strong>
                         <br />
-                        <span className="text-xs text-gray-400">Hardcoded in chatbotService.ts</span>
+                        <span className="text-xs text-gray-400">langchainChatbotService.ts</span>
                       </div>
                       <div className="text-gray-400">↓</div>
                       <div className="bg-cyan-600 text-white px-3 py-2 rounded-lg text-sm text-center">
-                        <strong>+ Chroma DB Context</strong>
+                        <strong>Chroma DB Context</strong>
                         <br />
                         <span className="text-xs text-gray-400">retrieveRelevantDocuments()</span>
                       </div>
@@ -185,9 +195,9 @@ export default function AdminSystemPromptsPage() {
                   <h3 className="font-semibold text-white">Actual Usage Flow:</h3>
                   <div className="space-y-1 text-sm">
                     <div>• <strong>Training Mode:</strong> Uses hardcoded training prompt</div>
-                    <div>• <strong>Visitor Mode:</strong> Checks for custom template, falls back to default</div>
-                    <div>• <strong>Document Context:</strong> Added via Chroma DB retrieval</div>
-                    <div>• <strong>LangChain Prompt:</strong> NOT used in main flow, only for retrieval</div>
+                    <div>• <strong>Visitor Mode:</strong> FloatingChatbot uses LangChain prompt (/api/chatbot/chat)</div>
+                    <div>• <strong>Old Visitor Mode:</strong> Custom/Visitor prompts (/api/chatbot/ask) - legacy</div>
+                    <div>• <strong>LangChain Prompt:</strong> ACTUAL prompt used by visitors on site</div>
 
                   </div>
                 </div>
