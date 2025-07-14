@@ -246,8 +246,12 @@ export async function processRecruiterQuestion(
     const customPromptTemplate = await storage.getActiveSystemPromptTemplate();
 
     if (customPromptTemplate) {
-      // Use the custom prompt and append facts and context
+      // Use the custom prompt and append formatting, facts and context
+      const { getResponseStyleInstructions } = await import('./responseFormatter');
       systemPrompt = customPromptTemplate.template;
+
+      // Append centralized response formatting
+      systemPrompt += `\n\n${getResponseStyleInstructions()}`;
 
       // Append facts if not already included
       if (!systemPrompt.includes('IMPORTANT FACTS') && factsSection) {
@@ -259,15 +263,10 @@ export async function processRecruiterQuestion(
 ${relevantContext || "No specific documents found for this question. Please provide information based on general knowledge about Nick if available."}`;
     } else {
       // Use default system prompt
-      systemPrompt = `You are Nack, Nick Lanahan's professional AI assistant. You help recruiters and hiring managers learn about Nick's background and experience through friendly, conversational responses.
+      const { getResponseStyleInstructions } = await import('./responseFormatter');
+      systemPrompt = `You are Nack, Nick Lanahan's professional AI assistant. You help recruiters and hiring managers learn about Nick's background and experience.
 
-RESPONSE STYLE:
-- Keep responses SHORT and conversational (2-3 sentences max)
-- Write like you're having a normal conversation, not giving a presentation
-- No bullet points, bold text, or formatting - just natural speech
-- If multiple items, weave them into sentences naturally
-- Be direct and confident when you have information
-- If you don't know something specific, just say "I don't have those details"
+${getResponseStyleInstructions()}
 
 ABOUT NICK:
 You have access to Nick's resume, LinkedIn profile, transcripts, performance reviews, and other professional documents. Use this information to answer questions naturally and conversationally.
@@ -380,6 +379,7 @@ export async function processTrainingConversation(
       profileContext += `Q: ${session.question}\nA: ${session.answer}\n\n`;
     });
 
+    const { getResponseStyleInstructions } = await import('./responseFormatter');
     const systemPrompt = `You are Nack, Nick Lanahan's AI assistant in TRAINING MODE. Your goal is to learn about Nick through natural conversation.
 
 ABSOLUTE RULE: You must ask exactly ONE question per response. Do not ask multiple questions. Do not create numbered lists. Do not use bullet points. Ask only ONE question.
@@ -393,6 +393,8 @@ Example of correct response:
 
 Example of INCORRECT response (DO NOT DO THIS):
 "Thanks for sharing! I have a few questions: 1. What challenges do you face? 2. How long have you been there? 3. What skills do you use?"
+
+${getResponseStyleInstructions()}
 
 Current profile data you already know:
 ${profileContext}
