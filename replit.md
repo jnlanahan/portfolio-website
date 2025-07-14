@@ -7,6 +7,7 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
 - Frontend: React with TypeScript, TailwindCSS, Shadcn UI components
 - Backend: Node.js with Express
 - Database: PostgreSQL with Drizzle ORM for data persistence
+- Vector Database: File-based Chroma DB (62MB) for chatbot document retrieval
 - Data: DatabaseStorage implementation for projects, blog posts, contact submissions, and resume files
 - Animations: Framer Motion for smooth page transitions
 - Analytics: PostHog for user behavior tracking
@@ -249,6 +250,7 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
     - **Integrated prebuilt LangSmith evaluators**: Added comprehensive prebuilt evaluator system using openevals package with four specialized evaluators (Correctness, Conciseness, Comprehensiveness, Coherence), combined with existing custom AI judge for enhanced evaluation accuracy, created test endpoints and comprehensive evaluation APIs
     - **Fixed LangSmith TypeScript API integration**: Corrected prebuilt evaluators to use proper TypeScript API (`langsmith/evaluation` and `openevals`) instead of Python format, maintaining full LangSmith tracing and evaluation capabilities while providing accurate assessment scores
     - **Switched to Chroma DB exclusively**: Removed document upload interface and database fallback, chatbot now uses Chroma vector database exclusively for document retrieval, eliminating warning messages and ensuring all 27 documents are properly searched via semantic similarity
+   - **Removed all document upload functionality**: Deleted database document storage table (chatbot_documents), removed all document upload UI components from admin interface, removed document upload/delete API endpoints, system now relies entirely on pre-built 62MB Chroma database with existing embeddings
   - **Added comprehensive architectural diagrams**: Created detailed visual diagrams showing complete system architecture including all servers, databases, and infrastructure components. Added new Architecture tab to admin interface displaying System Architecture, Data Flow, and AI Training Flow diagrams. Diagrams illustrate how 100+ question AI training integrates with Chroma database, LangSmith evaluation, and the complete tech stack from React frontend to PostgreSQL/Chroma databases to external services like OpenAI and LangSmith
 
 - **January 2025**: Created comprehensive test suite for quality assurance

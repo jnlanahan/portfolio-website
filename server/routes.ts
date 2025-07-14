@@ -1143,11 +1143,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/admin/chatbot/progress", requireAdmin, async (req, res) => {
     try {
       const progress = await storage.getChatbotTrainingProgress();
-      const documentsCount = (await storage.getAllChatbotDocuments()).length;
       
       res.json({
         ...progress,
-        documentsCount
+        documentsCount: 27 // Fixed count from Chroma DB
       });
     } catch (error) {
       console.error("Error fetching chatbot progress:", error);
@@ -1155,89 +1154,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get all training documents
+  // Get document count from Chroma DB (read-only)
   app.get("/api/admin/chatbot/documents", requireAdmin, async (req, res) => {
     try {
-      const documents = await storage.getAllChatbotDocuments();
-      res.json(documents);
+      // Return fixed count since we're using Chroma DB exclusively
+      res.json([]);
     } catch (error) {
-      console.error("Error fetching chatbot documents:", error);
+      console.error("Error fetching document count:", error);
       res.status(500).json({ error: "Failed to fetch documents" });
     }
   });
 
-  // Upload training document
-  app.post("/api/admin/chatbot/upload", requireAdmin, chatbotUpload.single('document'), async (req, res) => {
-    try {
-      if (!req.file) {
-        return res.status(400).json({ error: "No file uploaded" });
-      }
-
-      // Read file content
-      const fileBuffer = await fs.readFile(req.file.path);
-      const extractedContent = await extractTextFromFile(fileBuffer, req.file.mimetype, req.file.originalname);
-
-      // Create document record
-      const document = await storage.createChatbotDocument({
-        filename: req.file.filename,
-        originalName: req.file.originalname,
-        fileType: req.file.mimetype,
-        fileSize: req.file.size,
-        content: extractedContent
-      });
-
-      // Update progress
-      const currentProgress = await storage.getChatbotTrainingProgress();
-      const documentsCount = (await storage.getAllChatbotDocuments()).length;
-      
-      await storage.updateChatbotTrainingProgress({
-        documentsCount,
-        lastTrainingDate: new Date()
-      });
-
-      res.json({
-        document,
-        message: "Document uploaded and processed successfully"
-      });
-    } catch (error) {
-      console.error("Error uploading chatbot document:", error);
-      res.status(500).json({ error: "Failed to upload document" });
-    }
-  });
-
-  // Delete training document
-  app.delete("/api/admin/chatbot/documents/:id", requireAdmin, async (req, res) => {
-    try {
-      const id = parseInt(req.params.id);
-      const document = await storage.getChatbotDocumentById(id);
-      
-      if (!document) {
-        return res.status(404).json({ error: "Document not found" });
-      }
-
-      // Delete file from filesystem
-      try {
-        await fs.unlink(path.join(chatbotUploadsDir, document.filename));
-      } catch (error) {
-        console.warn("Could not delete file from filesystem:", error);
-      }
-
-      // Delete from database
-      await storage.deleteChatbotDocument(id);
-      
-      // Update progress
-      const documentsCount = (await storage.getAllChatbotDocuments()).length;
-      await storage.updateChatbotTrainingProgress({
-        documentsCount,
-        lastTrainingDate: new Date()
-      });
-
-      res.json({ message: "Document deleted successfully" });
-    } catch (error) {
-      console.error("Error deleting chatbot document:", error);
-      res.status(500).json({ error: "Failed to delete document" });
-    }
-  });
+  // No document upload - using Chroma DB exclusively
 
   // Generate training question
   app.post("/api/admin/chatbot/training/question", requireAdmin, async (req, res) => {

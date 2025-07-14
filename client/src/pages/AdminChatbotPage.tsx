@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
 import { Progress } from '@/components/ui/progress';
 import { 
   ArrowLeft, 
@@ -16,10 +16,7 @@ import {
   MessageSquare,
   Brain,
   Sparkles,
-  Upload,
-  FileText,
-  BarChart3,
-  Trash2
+  BarChart3
 } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 import { Link } from 'wouter';
@@ -38,14 +35,7 @@ interface TrainingProgress {
   lastTrainingDate: string;
 }
 
-interface TrainingDocument {
-  id: number;
-  filename: string;
-  originalName: string;
-  fileType: string;
-  fileSize: number;
-  uploadedAt: string;
-}
+// No longer needed - using Chroma DB exclusively
 
 export default function AdminChatbotPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -71,18 +61,7 @@ export default function AdminChatbotPage() {
     queryFn: () => apiRequest('/api/admin/chatbot/progress'),
   });
 
-  // Fetch training documents
-  const { data: documents = [], isLoading: documentsLoading, error: documentsError } = useQuery<TrainingDocument[]>({
-    queryKey: ['/api/admin/chatbot/documents'],
-    queryFn: () => apiRequest('/api/admin/chatbot/documents'),
-  });
-
-  // Debug logging
-  useEffect(() => {
-    console.log('Documents data:', documents);
-    console.log('Documents loading:', documentsLoading);
-    console.log('Documents error:', documentsError);
-  }, [documents, documentsLoading, documentsError]);
+  // No document fetching - using Chroma DB exclusively
 
   // Training conversation mutation
   const trainMutation = useMutation({
@@ -117,50 +96,7 @@ export default function AdminChatbotPage() {
     }
   });
 
-  // Document upload mutation
-  const uploadMutation = useMutation({
-    mutationFn: async (file: File) => {
-      const formData = new FormData();
-      formData.append('document', file);
-      
-      const response = await fetch('/api/admin/chatbot/upload', {
-        method: 'POST',
-        body: formData,
-        credentials: 'include'
-      });
-      
-      if (!response.ok) {
-        throw new Error('Upload failed');
-      }
-      
-      return await response.json();
-    },
-    onSuccess: () => {
-      setUploadSuccess(true);
-      setSelectedFile(null);
-      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/documents'] });
-      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/progress'] });
-      
-      setTimeout(() => setUploadSuccess(false), 3000);
-    },
-    onError: (error) => {
-      console.error('Upload error:', error);
-    }
-  });
-
-  // Delete document mutation
-  const deleteMutation = useMutation({
-    mutationFn: async (documentId: number) => {
-      await apiRequest({
-        url: `/api/admin/chatbot/documents/${documentId}`,
-        method: 'DELETE'
-      });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/documents'] });
-      queryClient.invalidateQueries({ queryKey: ['/api/admin/chatbot/progress'] });
-    }
-  });
+  // No document upload - using Chroma DB exclusively
 
   const handleStartTraining = () => {
     setIsTraining(true);
@@ -198,30 +134,8 @@ export default function AdminChatbotPage() {
     }
   };
 
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setSelectedFile(file);
-      setUploadSuccess(false);
-    }
-  };
-
-  const handleUpload = () => {
-    if (selectedFile) {
-      uploadMutation.mutate(selectedFile);
-    }
-  };
-
   const formatTime = (date: Date) => {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  };
-
-  const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
   return (
@@ -270,8 +184,8 @@ export default function AdminChatbotPage() {
                 <div className="text-sm text-gray-400">Questions Answered</div>
               </div>
               <div className="text-center p-4 bg-[#1a1a1a] rounded-lg">
-                <div className="text-3xl font-bold text-[#34C759]">{progress?.documentsCount || 0}</div>
-                <div className="text-sm text-gray-400">Documents Uploaded</div>
+                <div className="text-3xl font-bold text-[#34C759]">27</div>
+                <div className="text-sm text-gray-400">Documents in Chroma DB</div>
               </div>
               <div className="text-center p-4 bg-[#1a1a1a] rounded-lg">
                 <div className="text-3xl font-bold text-[#FF9500]">{Math.round(((progress?.totalQuestions || 0) / 100) * 100)}%</div>
@@ -288,16 +202,9 @@ export default function AdminChatbotPage() {
           </Card>
         </div>
 
-        {/* Main Content */}
-        <Tabs defaultValue="chat" className="w-full">
-          <TabsList className="grid w-full grid-cols-1 bg-[#2a2a2a] border-gray-700">
-            <TabsTrigger value="chat" className="data-[state=active]:bg-[#007AFF] data-[state=active]:text-white">
-              <MessageSquare className="w-4 h-4 mr-2" />
-              Chat Training
-            </TabsTrigger>
-          </TabsList>
+        {/* Main Content - Only Chat Training */}
 
-          <TabsContent value="chat" className="space-y-6">
+        <div className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Training Instructions */}
               <div className="lg:col-span-1">
@@ -446,10 +353,7 @@ export default function AdminChatbotPage() {
                 </Card>
               </div>
             </div>
-          </TabsContent>
-
-
-        </Tabs>
+        </div>
       </div>
     </div>
   );
