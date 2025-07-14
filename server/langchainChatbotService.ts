@@ -98,8 +98,7 @@ async function initializeVectorStore(): Promise<void> {
  */
 export async function retrieveRelevantDocuments(question: string, k: number = 5): Promise<Document[]> {
   try {
-    // Since we can't directly connect to file-based Chroma from JavaScript,
-    // we'll use the pre-built embeddings and similarity search
+    // Requirement #1: Always retrieve ALL documents from Chroma DB for every question
     
     const { default: sqlite3 } = await import('sqlite3');
     const { open } = await import('sqlite');
@@ -111,25 +110,36 @@ export async function retrieveRelevantDocuments(question: string, k: number = 5)
       driver: sqlite3.Database
     });
     
-    // Get all documents from the embeddings and metadata tables
-    // Since Chroma uses a simpler structure, let's just get all documents
+    // Get ALL documents from the embeddings and metadata tables
+    // No LIMIT - we want all documents per requirement #1
     const documents = await db.all(`
       SELECT DISTINCT
         em.id,
-        em.string_value as content
+        em.string_value as content,
+        em2.string_value as source
       FROM embedding_metadata em
+      LEFT JOIN embedding_metadata em2 ON em.id = em2.id AND em2.key = 'source'
       WHERE em.key = 'chroma:document'
       AND em.string_value IS NOT NULL
-      LIMIT ${k}
     `);
     
-    // For now, return all documents (in production, you'd compute similarity)
-    const results: Document[] = documents.slice(0, k).map(doc => new Document({
+    // Return ALL documents
+    const results: Document[] = documents.map(doc => new Document({
       pageContent: doc.content || "",
-      metadata: doc.metadata ? JSON.parse(doc.metadata) : {}
+      metadata: { 
+        id: doc.id,
+        source: doc.source || 'unknown'
+      }
     }));
     
-    console.log(`Retrieved ${results.length} documents from Chroma database`);
+    console.log(`Retrieved ${results.length} documents from Chroma database (ALL documents)`);
+    
+    // Debug: Log first 200 chars of each document
+    results.forEach((doc, index) => {
+      console.log(`Document ${index + 1} source: ${doc.metadata.source}`);
+      console.log(`Content preview: ${doc.pageContent.substring(0, 200)}...`);
+    });
+    
     await db.close();
     
     return results;
