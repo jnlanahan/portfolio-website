@@ -309,6 +309,16 @@ const PortfolioPage = () => {
           A showcase of my recent projects, experiments, and collaborations.
         </p>
 
+        {/* Subtle disclaimer */}
+        <p className="text-gray-500 text-sm max-w-2xl mx-auto mb-8 italic" style={{ 
+          fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+          fontSize: '14px',
+          lineHeight: '1.4'
+        }}>
+          Note: These applications showcase product strategy and problem-solving rather than traditional development skills. 
+          Built using modern AI development tools, IDEs, and LLMs to rapidly prototype and validate product concepts.
+        </p>
+
         {/* Category filters */}
         <div className="flex flex-wrap justify-center gap-2 mt-8">
           <button
