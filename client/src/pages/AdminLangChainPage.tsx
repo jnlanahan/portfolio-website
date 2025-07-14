@@ -433,49 +433,121 @@ export default function AdminLangChainPage() {
                 </h3>
                 <div className="space-y-4">
                   <div className="bg-[#1a1a1a] rounded-lg p-4">
-                    <h4 className="text-white font-medium mb-2">Daily Monitoring Tasks</h4>
-                    <div className="space-y-3 text-sm text-gray-400">
-                      <div className="flex items-start gap-2">
-                        <div className="w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold mt-0.5">1</div>
-                        <div>
-                          <div className="text-gray-300">Check Analytics tab for trends</div>
-                          <div className="text-xs">Look for evaluation score patterns and recent activity</div>
-                        </div>
+                    <h4 className="text-white font-medium mb-2">🟢 Automated Monitoring (Available Now)</h4>
+                    <div className="space-y-2 text-sm text-gray-400">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400" />
+                        <span>Performance trends tracked over time</span>
                       </div>
-                      <div className="flex items-start gap-2">
-                        <div className="w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold mt-0.5">2</div>
-                        <div>
-                          <div className="text-gray-300">Review LangSmith dashboard runs</div>
-                          <div className="text-xs">Identify any failed conversations or low-scoring responses in the Runs tab</div>
-                        </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400" />
+                        <span>Evaluation scores logged automatically (4 criteria)</span>
                       </div>
-                      <div className="flex items-start gap-2">
-                        <div className="w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold mt-0.5">3</div>
-                        <div>
-                          <div className="text-gray-300">Monitor document retrieval quality</div>
-                          <div className="text-xs">Ensure relevant documents are being found for questions</div>
-                        </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400" />
+                        <span>Response time monitoring built-in</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400" />
+                        <span>Error rate tracking in LangSmith</span>
                       </div>
                     </div>
                   </div>
                   <div className="bg-[#1a1a1a] rounded-lg p-4">
-                    <h4 className="text-white font-medium mb-2">When to Take Action</h4>
+                    <h4 className="text-white font-medium mb-2">🟡 Configure LangSmith Alerts</h4>
+                    <div className="space-y-2 text-sm text-gray-400">
+                      <p className="text-gray-300 mb-2">Set up in LangSmith Dashboard → Settings → Monitoring:</p>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                        <span>Alert when Correctness scores drop below 0.6</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                        <span>Weekly performance summary reports</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                        <span>Response time alerts over 5 seconds</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                        <span>Custom dashboards for key metrics</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">🔴 Manual Analysis Required</h4>
                     <div className="space-y-2 text-sm text-gray-400">
                       <div className="flex items-center gap-2">
                         <XCircle className="w-4 h-4 text-red-400" />
-                        <span>Evaluation scores consistently below 3.0</span>
+                        <span>Root cause analysis of failing evaluations</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <XCircle className="w-4 h-4 text-red-400" />
-                        <span>High error rates in runs</span>
+                        <span>System prompt optimization based on patterns</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <XCircle className="w-4 h-4 text-red-400" />
-                        <span>Poor document retrieval relevance</span>
+                        <span>Strategic improvement decisions</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <XCircle className="w-4 h-4 text-red-400" />
-                        <span>Response times over 5 seconds</span>
+                        <span>A/B testing new prompt configurations</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Practical Example */}
+              <Card className="bg-[#2a2a2a] border-gray-600 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Eye className="h-5 w-5 text-blue-400" />
+                  Example: Improving Low Correctness Scores
+                </h3>
+                <div className="space-y-4">
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">Step 1: Automated Detection</h4>
+                    <div className="text-sm text-gray-400">
+                      <p className="mb-2">LangSmith automatically identifies pattern:</p>
+                      <div className="bg-[#0d1117] rounded p-2 font-mono text-xs">
+                        <div className="text-red-400">Correctness: 0.4-0.6 (LOW)</div>
+                        <div className="text-green-400">Relevance: 0.8-0.9 (GOOD)</div>
+                        <div className="text-yellow-400">Conciseness: 0.3-0.8 (MIXED)</div>
+                        <div className="text-blue-400">Professional: 0.7-0.9 (GOOD)</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">Step 2: Manual Analysis</h4>
+                    <div className="text-sm text-gray-400">
+                      <p className="mb-2">Click into failing evaluations to find:</p>
+                      <div className="bg-[#0d1117] rounded p-2 text-xs">
+                        <p className="text-red-300">"Response mentions 'engineering degree' but context shows 'Civil Engineering' - lacks specificity"</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">Step 3: System Improvement</h4>
+                    <div className="text-sm text-gray-400">
+                      <p className="mb-2">Update system prompt via System Prompt Manager:</p>
+                      <div className="bg-[#0d1117] rounded p-2 text-xs">
+                        <p className="text-green-300">+ "Be precise: Use exact degree names, job titles, company names"</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-2">Step 4: Automated Verification</h4>
+                    <div className="text-sm text-gray-400">
+                      <p className="mb-2">LangSmith tracks improvement automatically:</p>
+                      <div className="bg-[#0d1117] rounded p-2 font-mono text-xs">
+                        <div className="text-green-400">Correctness: 0.8-0.9 (IMPROVED ✓)</div>
+                        <div className="text-green-400">Relevance: 0.8-0.9 (MAINTAINED ✓)</div>
+                        <div className="text-yellow-400">Conciseness: 0.3-0.5 (NEEDS WORK)</div>
+                        <div className="text-blue-400">Professional: 0.7-0.9 (MAINTAINED ✓)</div>
                       </div>
                     </div>
                   </div>
