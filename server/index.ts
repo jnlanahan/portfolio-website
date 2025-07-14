@@ -10,6 +10,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Serve static files from uploads directory
+app.use('/uploads', express.static('uploads'));
+
 // Session configuration
 app.use(session({
   secret: process.env.SESSION_SECRET || 'admin-session-secret-key',

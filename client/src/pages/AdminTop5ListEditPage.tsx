@@ -219,8 +219,19 @@ export default function AdminTop5ListEditPage() {
     formData.append('files', file);
 
     try {
-      const response = await apiRequest('/api/admin/upload', 'POST', formData);
-      const uploadedUrl = response.files[0];
+      const response = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+        credentials: 'include',
+      });
+      
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.error || 'Upload failed');
+      }
+      
+      const uploadedUrl = result.files[0];
       if (uploadedUrl) {
         listForm.setValue('mainImage', uploadedUrl);
         toast({
@@ -229,9 +240,10 @@ export default function AdminTop5ListEditPage() {
         });
       }
     } catch (error) {
+      console.error('Upload error:', error);
       toast({
         title: "Upload failed",
-        description: "An error occurred while uploading the image",
+        description: error instanceof Error ? error.message : "An error occurred while uploading the image",
         variant: "destructive",
       });
     } finally {
@@ -249,8 +261,19 @@ export default function AdminTop5ListEditPage() {
     formData.append('files', file);
 
     try {
-      const response = await apiRequest('/api/admin/upload', 'POST', formData);
-      const uploadedUrl = response.files[0];
+      const response = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+        credentials: 'include',
+      });
+      
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.error || 'Upload failed');
+      }
+      
+      const uploadedUrl = result.files[0];
       if (uploadedUrl) {
         itemForm.setValue('image', uploadedUrl);
         toast({
@@ -259,9 +282,10 @@ export default function AdminTop5ListEditPage() {
         });
       }
     } catch (error) {
+      console.error('Upload error:', error);
       toast({
         title: "Upload failed",
-        description: "An error occurred while uploading the image",
+        description: error instanceof Error ? error.message : "An error occurred while uploading the image",
         variant: "destructive",
       });
     } finally {
