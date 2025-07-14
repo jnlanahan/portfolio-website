@@ -84,11 +84,17 @@ export const ProjectDetail: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Project Images */}
         <div className="space-y-4">
-          <div className="aspect-video bg-muted rounded-lg overflow-hidden">
+          <div className="aspect-video bg-muted rounded-lg overflow-hidden" style={{
+            border: `2px solid ${project.customColor || "#007AFF"}30`,
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
+          }}>
             <img
               src={images[selectedImageIndex]}
               alt={project.title}
               className="w-full h-full object-cover"
+              style={{ 
+                filter: 'brightness(1.02) contrast(1.05)'
+              }}
             />
           </div>
           
@@ -101,9 +107,14 @@ export const ProjectDetail: React.FC = () => {
                   onClick={() => setSelectedImageIndex(index)}
                   className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
                     index === selectedImageIndex 
-                      ? 'border-secondary' 
-                      : 'border-transparent hover:border-muted-foreground'
+                      ? `border-[${project.customColor || "#007AFF"}] shadow-md` 
+                      : 'border-gray-300 hover:border-gray-400 shadow-sm'
                   }`}
+                  style={{
+                    boxShadow: index === selectedImageIndex 
+                      ? `0 0 0 2px ${project.customColor || "#007AFF"}40` 
+                      : '0 2px 4px rgba(0, 0, 0, 0.1)'
+                  }}
                 >
                   <img
                     src={image}

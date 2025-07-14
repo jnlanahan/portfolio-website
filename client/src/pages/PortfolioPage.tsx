@@ -23,11 +23,11 @@ const TechBadge = ({ tech, customColor = "#007AFF" }: { tech: string; customColo
 const ScrollableImageContainer = ({ project }: { project: any }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
-  
+
   const images = project.mediaFiles && project.mediaFiles.length > 0 
     ? project.mediaFiles 
     : [project.image];
-  
+
   const scrollToImage = (index: number) => {
     if (scrollRef.current) {
       const scrollWidth = scrollRef.current.scrollWidth;
@@ -48,7 +48,11 @@ const ScrollableImageContainer = ({ project }: { project: any }) => {
   };
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-hidden" style={{ 
+      border: `1px solid ${project.customColor || "#007AFF"}30`,
+      borderRadius: '8px',
+      backgroundColor: '#f8f9fa'
+    }}>
       <div 
         ref={scrollRef}
         className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
@@ -61,11 +65,15 @@ const ScrollableImageContainer = ({ project }: { project: any }) => {
               src={image}
               alt={`${project.title} - Image ${index + 1}`}
               className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+              style={{ 
+                filter: 'brightness(1.02) contrast(1.05)',
+                border: `1px solid rgba(0, 0, 0, 0.1)`
+              }}
             />
           </div>
         ))}
       </div>
-      
+
       {/* Image indicators */}
       {images.length > 1 && (
         <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2">
@@ -86,7 +94,7 @@ const ScrollableImageContainer = ({ project }: { project: any }) => {
           ))}
         </div>
       )}
-      
+
       {/* Navigation arrows */}
       {images.length > 1 && (
         <>
@@ -114,21 +122,21 @@ const ScrollableImageContainer = ({ project }: { project: any }) => {
           </button>
         </>
       )}
-      
+
       {/* Category badge */}
       {project.category && (
         <div className="absolute top-3 left-3 bg-background/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs">
           {project.category.name}
         </div>
       )}
-      
+
       {/* Featured badge */}
       {project.featured && (
         <div className="absolute top-3 right-3 bg-secondary px-3 py-1 rounded-full text-xs font-medium text-secondary-foreground">
           Featured
         </div>
       )}
-      
+
       {/* Image counter */}
       {images.length > 1 && (
         <div className={`absolute top-3 bg-black/50 text-white px-2 py-1 rounded-full text-xs ${
@@ -144,7 +152,7 @@ const ScrollableImageContainer = ({ project }: { project: any }) => {
 // Project card component with enhanced design
 const ProjectCard = ({ project, index }: { project: any; index: number }) => {
   const customColor = project.customColor || "#007AFF";
-  
+
   return (
     <motion.div
       key={project.id}
@@ -171,7 +179,7 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
             {project.title}
           </Link>
         </h3>
-        
+
         {/* Project date */}
         <div className="text-xs text-gray-500" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
           {new Date(project.date).toLocaleDateString('en-US', { 
@@ -202,12 +210,12 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
             </span>
           )}
         </div>
-        
+
         {/* Description */}
         <p className="text-gray-600 text-sm mb-4 line-clamp-3" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
           {project.shortDescription}
         </p>
-        
+
         {/* Action buttons */}
         <div className="flex justify-between items-center mt-4 pt-4" style={{ borderTop: `1px solid ${customColor}10` }}>
           <Link 
@@ -257,7 +265,7 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
 
 const PortfolioPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  
+
   const { data: projects, isLoading } = useQuery({
     queryKey: ["/api/portfolio"],
   });
@@ -370,7 +378,7 @@ const PortfolioPage = () => {
             {projectCategories.find(c => c.id === selectedCategory)?.name || 'Projects'}
           </h2>
         )}
-        
+
         {!selectedCategory && featuredProjects.length > 0 && (
           <h2 className="text-2xl font-bold mb-6 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>All Projects</h2>
         )}
