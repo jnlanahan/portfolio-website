@@ -15,6 +15,7 @@ import { ExternalLink, RefreshCw, BarChart3, Database, Play, Plus, Eye } from 'l
 import { apiRequest } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
 import { Link } from 'wouter';
+import { SystemArchitectureDiagram, DataFlowDiagram, TrainingFlowDiagram } from '@/components/ArchitecturalDiagrams';
 
 export default function AdminLangChainPage() {
   const { toast } = useToast();
@@ -149,10 +150,14 @@ export default function AdminLangChainPage() {
         </div>
 
         <Tabs defaultValue="dashboard" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 bg-[#2a2a2a] border-gray-600">
+          <TabsList className="grid w-full grid-cols-5 bg-[#2a2a2a] border-gray-600">
             <TabsTrigger value="dashboard" className="text-white data-[state=active]:bg-[#007AFF] data-[state=active]:text-white">
               <BarChart3 className="w-4 h-4 mr-2" />
               Dashboard
+            </TabsTrigger>
+            <TabsTrigger value="architecture" className="text-white data-[state=active]:bg-[#007AFF] data-[state=active]:text-white">
+              <Database className="w-4 h-4 mr-2" />
+              Architecture
             </TabsTrigger>
             <TabsTrigger value="documents" className="text-white data-[state=active]:bg-[#007AFF] data-[state=active]:text-white">
               <Database className="w-4 h-4 mr-2" />
@@ -272,6 +277,61 @@ export default function AdminLangChainPage() {
                 </div>
               </Card>
             )}
+          </TabsContent>
+
+          {/* Architecture Tab */}
+          <TabsContent value="architecture" className="space-y-6">
+            <Alert className="bg-[#2a2a2a] border-gray-600">
+              <Database className="h-4 w-4" />
+              <AlertDescription className="text-gray-300">
+                These diagrams show the complete system architecture including your Chroma database integration, 
+                AI training flow, and how all components work together to create a powerful chatbot system.
+              </AlertDescription>
+            </Alert>
+
+            <div className="space-y-8">
+              <SystemArchitectureDiagram />
+              <DataFlowDiagram />
+              <TrainingFlowDiagram />
+            </div>
+
+            {/* AI Training Integration Explanation */}
+            <Card className="bg-[#2a2a2a] border-gray-600 p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">AI Training Integration with Chroma DB</h3>
+              <div className="space-y-4 text-gray-300">
+                <div>
+                  <h4 className="text-white font-medium mb-2">How the 100+ Question Training Works:</h4>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li>AI Training Engine analyzes your uploaded documents in the database</li>
+                    <li>Generates 100+ strategic questions based on your actual experience and background</li>
+                    <li>You review and approve questions before training begins</li>
+                    <li>System automatically asks your chatbot each question using your Chroma database</li>
+                    <li>Each Q&A pair is stored in PostgreSQL for future reference</li>
+                    <li>LangSmith evaluates response quality and provides improvement suggestions</li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 className="text-white font-medium mb-2">Benefits of This Integration:</h4>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li><strong>Comprehensive Coverage:</strong> Training questions cover all aspects of your background</li>
+                    <li><strong>Authentic Responses:</strong> All answers are based on your actual documents</li>
+                    <li><strong>Continuous Learning:</strong> System learns from each interaction and improves over time</li>
+                    <li><strong>Quality Assurance:</strong> LangSmith provides real-time evaluation and suggestions</li>
+                    <li><strong>Scalable:</strong> Can handle unlimited training questions as your profile grows</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="text-white font-medium mb-2">Your Chroma Database Role:</h4>
+                  <p className="text-gray-400">
+                    Your Chroma database acts as the knowledge foundation. When training questions are asked, 
+                    the system searches through ALL your documents to find the most relevant information. 
+                    This ensures every training response is grounded in your actual experience, not generic AI responses.
+                  </p>
+                </div>
+              </div>
+            </Card>
           </TabsContent>
 
           {/* Vector Store Tab */}

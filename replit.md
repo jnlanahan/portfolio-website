@@ -245,6 +245,7 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
     - All conversations now automatically logged to LangSmith for analysis and improvement
     - Added vector store refresh functionality for document updates
     - **Integrated with existing Chroma database**: Modified LangChain service to connect to user's pre-built Chroma vector database (./chroma_db) instead of creating new vector store, enabling immediate access to all processed documents and embeddings
+  - **Added comprehensive architectural diagrams**: Created detailed visual diagrams showing complete system architecture including all servers, databases, and infrastructure components. Added new Architecture tab to admin interface displaying System Architecture, Data Flow, and AI Training Flow diagrams. Diagrams illustrate how 100+ question AI training integrates with Chroma database, LangSmith evaluation, and the complete tech stack from React frontend to PostgreSQL/Chroma databases to external services like OpenAI and LangSmith
 
 - **January 2025**: Created comprehensive test suite for quality assurance
   - Built automated API test suite covering all major functionality
