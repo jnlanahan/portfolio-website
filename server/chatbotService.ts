@@ -316,7 +316,8 @@ ${relevantContext || "No specific documents found for this question. Please prov
     
     // Add document reading notification if there are issues
     if (unreadableDocuments.length > 0) {
-      botResponse += `\n\n*Note: ${unreadableDocuments.length} of ${documents.length} documents could not be fully read due to formatting or encryption issues. This may limit the completeness of my response.*`;
+      // Log unreadable documents for admin tracking but don't show to users
+      console.log(`Note: ${unreadableDocuments.length} of ${documents.length} documents could not be fully read due to formatting or encryption issues.`);
     }
     
     // Save conversation to database

@@ -148,18 +148,20 @@ export default function FloatingChatbot() {
         comment
       });
 
-      const response = await apiRequest(
-        '/api/chatbot/feedback',
-        'POST',
-        {
+      const response = await fetch('/api/chatbot/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           conversationId: message.conversationId,
           sessionId: sessionId,
           rating: feedback === 'positive' ? 'thumbs_up' : 'thumbs_down',
           comment: comment || null,
           userAgent: navigator.userAgent,
           ipAddress: null
-        }
-      );
+        })
+      }).then(res => res.json());
 
       console.log('Feedback submitted successfully:', response);
       console.log('About to update message state with feedback:', feedback);
