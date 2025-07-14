@@ -86,26 +86,30 @@ export default function SystemPromptManager() {
     const info = {
       training: {
         icon: <Database className="w-4 h-4" />,
-        title: "Training Mode",
-        color: "bg-blue-500",
+        title: "Training",
+        color: "bg-purple-500",
+        tabColor: "data-[state=active]:bg-purple-500",
         description: "Used when training the chatbot"
       },
       visitor: {
         icon: <FileText className="w-4 h-4" />,
-        title: "Visitor Mode",
-        color: "bg-green-500",
+        title: "Visitor Fallback",
+        color: "bg-gray-500",
+        tabColor: "data-[state=active]:bg-gray-500",
         description: "Default prompt for visitors"
       },
       custom: {
         icon: <Settings className="w-4 h-4" />,
         title: "Custom Template",
         color: "bg-purple-500",
+        tabColor: "data-[state=active]:bg-purple-500",
         description: "Database-stored custom template"
       },
       langchain: {
         icon: <Link className="w-4 h-4" />,
         title: "LangChain",
         color: "bg-orange-500",
+        tabColor: "data-[state=active]:bg-orange-500",
         description: "Actual visitor prompt via /api/chatbot/chat"
       }
     };
@@ -161,10 +165,10 @@ export default function SystemPromptManager() {
               <TabsTrigger
                 key={type}
                 value={type}
-                className="flex items-center space-x-2 data-[state=active]:bg-[#007AFF] data-[state=active]:text-white"
+                className={`flex items-center space-x-2 ${info.tabColor} data-[state=active]:text-white`}
               >
                 {info.icon}
-                <span className="hidden sm:inline">{info.title.split(' ')[0]}</span>
+                <span className="hidden sm:inline text-xs font-medium">{info.title}</span>
               </TabsTrigger>
             );
           })}
