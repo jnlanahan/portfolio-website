@@ -48,7 +48,7 @@ const TopFiveListsPage = () => {
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
         {lists.map((list, listIndex) => {
           const isExpanded = expandedList === listIndex;
           
@@ -60,13 +60,13 @@ const TopFiveListsPage = () => {
               transition={{ duration: 0.4, delay: listIndex * 0.1 }}
               className="flex flex-col"
             >
-              <div className={`bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden 
+              <div className={`bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden 
                           ${isExpanded ? 'border-blue-200' : 'border-gray-200'} 
                           hover:border-blue-200 transition-all duration-300 h-full`}>
                 
                 {/* Main Image */}
                 {list.mainImage && (
-                  <div className="relative h-32 w-full overflow-hidden">
+                  <div className="relative h-24 w-full overflow-hidden">
                     <img 
                       src={list.mainImage} 
                       alt={list.title}
@@ -76,19 +76,19 @@ const TopFiveListsPage = () => {
                   </div>
                 )}
                 
-                <div className={`p-4 ${isExpanded ? 'pb-3' : 'pb-4'}`}>
+                <div className={`p-3 ${isExpanded ? 'pb-2' : 'pb-3'}`}>
                   <div 
-                    className={`flex items-center justify-between cursor-pointer mb-2`}
+                    className={`flex items-center justify-between cursor-pointer mb-1`}
                     onClick={() => toggleExpandList(listIndex)}
                   >
-                    <h3 className={`text-lg font-semibold flex items-center text-gray-900`} style={{ 
+                    <h3 className={`text-base font-semibold flex items-center text-gray-900`} style={{ 
                       fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
-                      fontSize: '18px'
+                      fontSize: '16px'
                     }}>
                       <span 
-                        className="w-7 h-7 rounded-full flex items-center justify-center mr-2 bg-blue-50" 
+                        className="w-6 h-6 rounded-full flex items-center justify-center mr-2 bg-blue-50" 
                       >
-                        <i className={`${list.icon} text-base text-blue-600`}></i>
+                        <i className={`${list.icon} text-sm text-blue-600`}></i>
                       </span>
                       {list.title}
                     </h3>
@@ -96,22 +96,22 @@ const TopFiveListsPage = () => {
                       className={`text-gray-600 hover:text-blue-600 transition-colors`}
                       aria-label={isExpanded ? "Collapse list" : "Expand list"}
                     >
-                      <i className={`ri-${isExpanded ? 'subtract-line' : 'add-line'} text-lg`}></i>
+                      <i className={`ri-${isExpanded ? 'subtract-line' : 'add-line'} text-base`}></i>
                     </button>
                   </div>
                   
                   {list.description && (
-                    <p className="text-gray-600 ml-9 mb-3" style={{ 
+                    <p className="text-gray-600 ml-8 mb-2" style={{ 
                       fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
-                      fontSize: '14px'
+                      fontSize: '13px'
                     }}>{list.description}</p>
                   )}
 
-                  <ol className="space-y-3 mt-3">
+                  <ol className="space-y-2 mt-2">
                     {list.items.map((item, itemIndex) => (
                       <motion.li 
                         key={itemIndex} 
-                        className={`flex items-start p-2 rounded-lg transition-all duration-300
+                        className={`flex items-start p-1.5 rounded-md transition-all duration-300
                                   ${item.highlight ? 'bg-blue-50 border border-blue-200' : 'hover:bg-gray-50'}
                                   ${isExpanded ? 'opacity-100' : itemIndex > 2 && !isExpanded ? 'hidden' : 'opacity-100'}`}
                         initial={{ opacity: 0, y: 10 }}
@@ -119,7 +119,7 @@ const TopFiveListsPage = () => {
                         transition={{ delay: 0.1 * itemIndex, duration: 0.3 }}
                       >
                         <div 
-                          className="rounded-full w-6 h-6 flex items-center justify-center font-bold mr-3 flex-shrink-0 bg-blue-100 text-blue-600 text-xs"
+                          className="rounded-full w-5 h-5 flex items-center justify-center font-bold mr-2 flex-shrink-0 bg-blue-100 text-blue-600 text-xs"
                           style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
                         >
                           {itemIndex + 1}
@@ -128,7 +128,7 @@ const TopFiveListsPage = () => {
                           <div className="flex flex-wrap justify-between items-start">
                             <h4 className={`font-medium ${item.highlight ? 'text-blue-600' : 'text-gray-900'}`} style={{ 
                               fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
-                              fontSize: '15px'
+                              fontSize: '14px'
                             }}>
                               {item.title}
                             </h4>
@@ -145,16 +145,16 @@ const TopFiveListsPage = () => {
                               </a>
                             )}
                           </div>
-                          <p className="text-gray-600 text-xs mt-1" style={{ 
+                          <p className="text-gray-600 text-xs mt-0.5" style={{ 
                             fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
-                            fontSize: '13px'
+                            fontSize: '12px'
                           }}>{item.description}</p>
                           
                           {item.image && (
                             <img 
                               src={item.image} 
                               alt={item.title} 
-                              className="mt-2 rounded-lg w-24 h-16 object-cover border border-gray-200"
+                              className="mt-1 rounded-md w-20 h-12 object-cover border border-gray-200"
                             />
                           )}
                         </div>
@@ -163,10 +163,10 @@ const TopFiveListsPage = () => {
                   </ol>
                   
                   {!isExpanded && list.items.length > 3 && (
-                    <div className="text-center mt-3">
+                    <div className="text-center mt-2">
                       <button
                         onClick={() => toggleExpandList(listIndex)}
-                        className="text-gray-600 hover:text-blue-600 font-medium transition-colors text-sm"
+                        className="text-gray-600 hover:text-blue-600 font-medium transition-colors text-xs"
                         style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
                       >
                         Show all {list.items.length} items <i className="ri-arrow-down-s-line ml-1"></i>
