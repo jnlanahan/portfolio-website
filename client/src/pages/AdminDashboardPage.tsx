@@ -148,245 +148,200 @@ export default function AdminDashboardPage() {
 
       {/* Dashboard Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Quick Actions */}
-        <div className="mb-8">
-          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
-            <h2 className="text-xl font-semibold text-white mb-4">Quick Actions</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
-              <Button
-                onClick={() => setLocation("/admin/resume/upload")}
-                className="flex items-center gap-2 bg-[#007AFF] hover:bg-[#0056CC] text-white px-4 py-3 rounded-xl font-medium transition-all duration-200"
-              >
-                <Upload size={16} />
-                Upload Resume
-              </Button>
-              <Button
-                onClick={() => setLocation("/admin/blog/new")}
-                className="flex items-center gap-2 bg-[#007AFF] hover:bg-[#0056CC] text-white px-4 py-3 rounded-xl font-medium transition-all duration-200"
-              >
-                <Edit size={16} />
-                Write Blog Post
-              </Button>
-              <Button
-                onClick={() => setLocation("/admin/system-prompts")}
-                className="flex items-center gap-2 bg-[#AF52DE] hover:bg-[#8A2BE2] text-white px-4 py-3 rounded-xl font-medium transition-all duration-200"
-              >
-                <Settings size={16} />
-                System Prompts
-              </Button>
-              <Button
-                onClick={() => setLocation("/admin/chatbot")}
-                className="flex items-center gap-2 bg-[#007AFF] hover:bg-[#0056CC] text-white px-4 py-3 rounded-xl font-medium transition-all duration-200"
-              >
-                <Bot size={16} />
-                Train Chatbot
-              </Button>
-              <Button
-                onClick={() => setLocation("/admin/langchain")}
-                className="flex items-center gap-2 bg-[#34C759] hover:bg-[#28A745] text-white px-4 py-3 rounded-xl font-medium transition-all duration-200"
-              >
-                <Bot size={16} />
-                LangChain AI
-              </Button>
-              <Button
-                onClick={() => setLocation("/")}
-                className="flex items-center gap-2 bg-[#007AFF] hover:bg-[#0056CC] text-white px-4 py-3 rounded-xl font-medium transition-all duration-200"
-              >
-                <Eye size={16} />
-                View Live Site
-              </Button>
+        {/* Main Action Tiles */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {/* Resume Upload Tile */}
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#007AFF] transition-all duration-200">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold text-white">Resume</h3>
+                <p className="text-sm text-gray-300">Upload & manage resume</p>
+              </div>
+              <Upload className="h-8 w-8 text-[#007AFF]" />
             </div>
+            <Button
+              onClick={() => setLocation("/admin/resume/upload")}
+              className="w-full bg-[#007AFF] hover:bg-[#0056CC] text-white font-medium rounded-xl"
+            >
+              Upload Resume
+            </Button>
+          </div>
+
+          {/* Blog Post Creation Tile */}
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#007AFF] transition-all duration-200">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold text-white">New Blog Post</h3>
+                <p className="text-sm text-gray-300">Write & publish content</p>
+              </div>
+              <Edit className="h-8 w-8 text-[#007AFF]" />
+            </div>
+            <Button
+              onClick={() => setLocation("/admin/blog/new")}
+              className="w-full bg-[#007AFF] hover:bg-[#0056CC] text-white font-medium rounded-xl"
+            >
+              Write Blog Post
+            </Button>
+          </div>
+
+          {/* System Prompts Tile */}
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#AF52DE] transition-all duration-200">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold text-white">System Prompts</h3>
+                <p className="text-sm text-gray-300">Configure AI responses</p>
+              </div>
+              <Settings className="h-8 w-8 text-[#AF52DE]" />
+            </div>
+            <Button
+              onClick={() => setLocation("/admin/system-prompts")}
+              className="w-full bg-[#AF52DE] hover:bg-[#8A2BE2] text-white font-medium rounded-xl"
+            >
+              System Prompts
+            </Button>
+          </div>
+
+          {/* Chatbot Training Tile */}
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#007AFF] transition-all duration-200">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold text-white">Train Chatbot</h3>
+                <p className="text-sm text-gray-300">Improve AI responses</p>
+              </div>
+              <Bot className="h-8 w-8 text-[#007AFF]" />
+            </div>
+            <Button
+              onClick={() => setLocation("/admin/chatbot")}
+              className="w-full bg-[#007AFF] hover:bg-[#0056CC] text-white font-medium rounded-xl"
+            >
+              Train Chatbot
+            </Button>
+          </div>
+
+          {/* LangChain AI Tile */}
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#34C759] transition-all duration-200">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold text-white">LangChain AI</h3>
+                <p className="text-sm text-gray-300">Advanced AI management</p>
+              </div>
+              <Bot className="h-8 w-8 text-[#34C759]" />
+            </div>
+            <Button
+              onClick={() => setLocation("/admin/langchain")}
+              className="w-full bg-[#34C759] hover:bg-[#28A745] text-white font-medium rounded-xl"
+            >
+              LangChain AI
+            </Button>
+          </div>
+
+          {/* View Live Site Tile */}
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#007AFF] transition-all duration-200">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold text-white">Live Site</h3>
+                <p className="text-sm text-gray-300">View public website</p>
+              </div>
+              <Eye className="h-8 w-8 text-[#007AFF]" />
+            </div>
+            <Button
+              onClick={() => setLocation("/")}
+              className="w-full bg-[#007AFF] hover:bg-[#0056CC] text-white font-medium rounded-xl"
+            >
+              View Live Site
+            </Button>
           </div>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-300">
-                  Projects
-                </p>
-                <p className="text-2xl font-bold text-white">
-                  {projects?.length || 0}
-                </p>
-              </div>
-              <Folder className="h-8 w-8 text-[#007AFF]" />
-            </div>
-          </div>
-
-          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-300">
-                  Blog Posts
-                </p>
-                <p className="text-2xl font-bold text-white">
-                  {blogPosts?.length || 0}
-                </p>
-              </div>
-              <FileText className="h-8 w-8 text-[#34C759]" />
-            </div>
-          </div>
-
-          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-300">
-                  Contact Messages
-                </p>
-                <p className="text-2xl font-bold text-white">
-                  {contactSubmissions?.length || 0}
-                </p>
-              </div>
-              <Mail className="h-8 w-8 text-[#AF52DE]" />
-            </div>
-          </div>
-
-          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-300">
-                  Top 5 Lists
-                </p>
-                <p className="text-2xl font-bold text-white">
-                  {topFiveLists?.length || 0}
-                </p>
-              </div>
-              <Users className="h-8 w-8 text-[#FF9500]" />
-            </div>
-          </div>
-        </div>
-
-        {/* Management Sections */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Content Management Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {/* Project Management */}
           <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-semibold text-white">Project Management</h3>
+              <div>
+                <h3 className="text-lg font-semibold text-white">Project Management</h3>
+                <p className="text-sm text-gray-300">{projects?.length || 0} projects</p>
+              </div>
+              <Folder className="h-8 w-8 text-[#007AFF]" />
             </div>
-            
-            {/* Action Buttons */}
-            <div className="flex gap-3 mb-6">
-              <Button 
+            <div className="flex gap-2 mb-4">
+              <Button
                 onClick={() => setLocation("/admin/projects/new")}
-                className="flex-1 bg-[#007AFF] hover:bg-[#0056CC] text-white py-2 px-4 rounded-xl font-medium transition-all duration-200"
+                className="flex-1 bg-[#007AFF] hover:bg-[#0056CC] text-white text-sm rounded-xl"
               >
-                <Plus size={16} className="mr-2" />
+                <Plus size={16} className="mr-1" />
                 Add New
               </Button>
-              <Button 
+              <Button
                 onClick={() => setLocation("/admin/projects")}
-                className="flex-1 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white py-2 px-4 rounded-xl font-medium transition-all duration-200"
+                variant="outline"
+                className="flex-1 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white text-sm rounded-xl"
               >
-                <Edit size={16} className="mr-2" />
+                <Edit size={16} className="mr-1" />
                 Manage
               </Button>
             </div>
-
-            {/* Project List */}
-            <div className="space-y-3">
-              {projects?.slice(0, 3).map((project: any) => (
-                <div key={project.id} className="flex items-center justify-between p-4 bg-[#1a1a1a] rounded-xl border border-[#3a3a3a]">
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-white truncate">
-                      {project.title}
-                    </p>
-                    <p className="text-sm text-gray-300 truncate">
-                      {project.shortDescription}
-                    </p>
+            {projects && projects.length > 0 && (
+              <div className="space-y-2">
+                {projects.slice(0, 2).map((project: any) => (
+                  <div key={project.id} className="flex items-center justify-between p-3 bg-[#1a1a1a] rounded-lg">
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-white truncate">{project.title}</p>
+                      <p className="text-xs text-gray-400">{project.shortDescription?.substring(0, 50)}...</p>
+                    </div>
+                    {project.featured && (
+                      <Badge className="bg-yellow-500 text-white text-xs">Featured</Badge>
+                    )}
                   </div>
-                  <div className="ml-3 flex-shrink-0">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      project.featured 
-                        ? 'bg-[#007AFF] text-white' 
-                        : 'bg-[#3a3a3a] text-gray-300'
-                    }`}>
-                      {project.featured ? "Featured" : "Standard"}
-                    </span>
-                  </div>
-                </div>
-              ))}
-              {projects?.length === 0 && (
-                <p className="text-gray-400 text-center py-4">
-                  No projects found
-                </p>
-              )}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Blog Management */}
           <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-semibold text-white">Blog Management</h3>
+              <div>
+                <h3 className="text-lg font-semibold text-white">Blog Management</h3>
+                <p className="text-sm text-gray-300">{blogPosts?.length || 0} posts</p>
+              </div>
+              <FileText className="h-8 w-8 text-[#34C759]" />
             </div>
-            
-            {/* Action Buttons */}
-            <div className="flex gap-3 mb-6">
-              <Button 
+            <div className="flex gap-2 mb-4">
+              <Button
                 onClick={() => setLocation("/admin/blog/new")}
-                className="flex-1 bg-[#007AFF] hover:bg-[#0056CC] text-white py-2 px-4 rounded-xl font-medium transition-all duration-200"
+                className="flex-1 bg-[#34C759] hover:bg-[#28A745] text-white text-sm rounded-xl"
               >
-                <Plus size={16} className="mr-2" />
+                <Plus size={16} className="mr-1" />
                 Add New
               </Button>
-              <Button 
+              <Button
                 onClick={() => setLocation("/admin/blog")}
-                className="flex-1 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white py-2 px-4 rounded-xl font-medium transition-all duration-200"
+                variant="outline"
+                className="flex-1 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white text-sm rounded-xl"
               >
-                <Edit size={16} className="mr-2" />
+                <Edit size={16} className="mr-1" />
                 Manage
               </Button>
             </div>
-
-            {/* Blog Series Management */}
-            <div className="p-4 bg-[#007AFF]/10 rounded-xl border border-[#007AFF]/20 mb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-medium text-[#007AFF]">
-                    Blog Series Management
-                  </p>
-                  <p className="text-sm text-[#007AFF]/80">
-                    Organize posts into series
-                  </p>
+            <div className="space-y-2">
+              <div className="p-3 bg-[#007AFF] rounded-lg">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-white">Blog Series Management</span>
+                  <Button
+                    onClick={() => setLocation("/admin/blog/series")}
+                    size="sm"
+                    variant="outline"
+                    className="border-white/20 text-white hover:bg-white/10 text-xs"
+                  >
+                    <Edit size={14} className="mr-1" />
+                    Manage Series
+                  </Button>
                 </div>
-                <Button 
-                  onClick={() => setLocation("/admin/blog/series")}
-                  className="bg-[#007AFF] hover:bg-[#0056CC] text-white px-4 py-2 rounded-xl font-medium transition-all duration-200"
-                >
-                  <Edit size={16} className="mr-2" />
-                  Manage Series
-                </Button>
+                <p className="text-xs text-blue-100 mt-1">Organize posts into series</p>
               </div>
-            </div>
-            
-            {/* Recent Blog Posts */}
-            <div className="space-y-3">
-              {blogPosts?.slice(0, 2).map((post: any) => (
-                <div key={post.id} className="flex items-center justify-between p-4 bg-[#1a1a1a] rounded-xl border border-[#3a3a3a]">
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-white truncate">
-                      {post.title}
-                    </p>
-                    <p className="text-sm text-gray-300 truncate">
-                      {post.excerpt}
-                    </p>
-                  </div>
-                  <div className="ml-3 flex-shrink-0">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      post.featured 
-                        ? 'bg-[#34C759] text-white' 
-                        : 'bg-[#3a3a3a] text-gray-300'
-                    }`}>
-                      {post.featured ? "Featured" : "Standard"}
-                    </span>
-                  </div>
-                </div>
-              ))}
-              {blogPosts?.length === 0 && (
-                <p className="text-gray-400 text-center py-4">
-                  No blog posts found
-                </p>
+              {blogPosts && blogPosts.length === 0 && (
+                <p className="text-sm text-gray-400">No blog posts found</p>
               )}
             </div>
           </div>
@@ -394,103 +349,75 @@ export default function AdminDashboardPage() {
           {/* Top 5 Lists Management */}
           <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-semibold text-white">Top 5 Lists Management</h3>
+              <div>
+                <h3 className="text-lg font-semibold text-white">Top 5 Lists Management</h3>
+                <p className="text-sm text-gray-300">{topFiveLists?.length || 0} lists</p>
+              </div>
+              <Users className="h-8 w-8 text-[#FF9500]" />
             </div>
-            
-            {/* Action Buttons */}
-            <div className="flex gap-3 mb-6">
-              <Button 
+            <div className="flex gap-2 mb-4">
+              <Button
                 onClick={() => setLocation("/admin/top5-lists/new")}
-                className="flex-1 bg-[#007AFF] hover:bg-[#0056CC] text-white py-2 px-4 rounded-xl font-medium transition-all duration-200"
+                className="flex-1 bg-[#FF9500] hover:bg-[#E6850E] text-white text-sm rounded-xl"
               >
-                <Plus size={16} className="mr-2" />
+                <Plus size={16} className="mr-1" />
                 Add New
               </Button>
-              <Button 
+              <Button
                 onClick={() => setLocation("/admin/top5-lists")}
-                className="flex-1 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white py-2 px-4 rounded-xl font-medium transition-all duration-200"
+                variant="outline"
+                className="flex-1 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white text-sm rounded-xl"
               >
-                <Edit size={16} className="mr-2" />
+                <Edit size={16} className="mr-1" />
                 Manage
               </Button>
             </div>
-
-            {/* Top 5 Lists */}
-            <div className="space-y-3">
-              {topFiveLists?.slice(0, 3).map((list: any) => (
-                <div key={list.id} className="flex items-center justify-between p-4 bg-[#1a1a1a] rounded-xl border border-[#3a3a3a]">
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-white truncate">
-                      {list.title}
-                    </p>
-                    <p className="text-sm text-gray-300 truncate">
-                      {list.description}
-                    </p>
-                  </div>
-                  <div className="ml-3 flex-shrink-0">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#FF9500] text-white">
-                      List {list.position}
-                    </span>
-                  </div>
-                </div>
-              ))}
-              {topFiveLists?.length === 0 && (
-                <p className="text-gray-400 text-center py-4">
-                  No top 5 lists found
-                </p>
-              )}
-            </div>
-          </div>
-
-          {/* Contact Messages */}
-          <div className="lg:col-span-3 bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-semibold text-white">Recent Contact Messages</h3>
-            </div>
-            
-            <div className="space-y-4">
-              {contactSubmissions?.slice(0, 5).map((submission: any) => (
-                <div key={submission.id} className="flex items-start justify-between p-4 bg-[#1a1a1a] rounded-xl border border-[#3a3a3a]">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3 mb-2">
-                      <p className="font-medium text-white">
-                        {submission.name}
-                      </p>
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#AF52DE] text-white">
-                        {submission.email}
-                      </span>
-                    </div>
-                    <p className="text-sm text-gray-300 font-medium mb-1">
-                      {submission.subject}
-                    </p>
-                    <p className="text-sm text-gray-400 mb-2">
-                      {submission.message.substring(0, 100)}...
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      {new Date(submission.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2 ml-4">
-                    <Button
-                      onClick={() => deleteContactMutation.mutate(submission.id)}
-                      disabled={deleteContactMutation.isPending}
-                      className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-xl font-medium transition-all duration-200"
-                    >
-                      <Trash2 size={16} />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-              {contactSubmissions?.length === 0 && (
-                <p className="text-gray-400 text-center py-8">
-                  No contact messages found
-                </p>
-              )}
-            </div>
+            {topFiveLists && topFiveLists.length === 0 && (
+              <p className="text-sm text-gray-400">No top 5 lists found</p>
+            )}
           </div>
         </div>
 
-
+        {/* Contact Messages Overview */}
+        <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-lg font-semibold text-white">Recent Contact Messages</h3>
+              <p className="text-sm text-gray-300">{contactSubmissions?.length || 0} messages</p>
+            </div>
+            <Mail className="h-8 w-8 text-[#007AFF]" />
+          </div>
+          <div className="space-y-3">
+            {contactSubmissions?.slice(0, 3).map((submission: any) => (
+              <div key={submission.id} className="flex items-start justify-between p-4 bg-[#1a1a1a] rounded-lg border border-[#3a3a3a]">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <p className="text-sm font-medium text-white">{submission.name}</p>
+                    <Badge className="bg-[#007AFF] text-white text-xs">
+                      {new Date(submission.createdAt).toLocaleDateString()}
+                    </Badge>
+                  </div>
+                  <p className="text-xs text-gray-300 mb-1">{submission.email}</p>
+                  <p className="text-xs text-gray-400 line-clamp-2">{submission.message}</p>
+                </div>
+                <div className="flex items-center gap-2 ml-4">
+                  <Button
+                    onClick={() => deleteContactMutation.mutate(submission.id)}
+                    disabled={deleteContactMutation.isPending}
+                    size="sm"
+                    variant="outline"
+                    className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
+                  >
+                    <Trash2 size={14} />
+                  </Button>
+                </div>
+              </div>
+            ))}
+            {contactSubmissions?.length === 0 && (
+              <p className="text-sm text-gray-400 text-center py-8">No contact messages found</p>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
