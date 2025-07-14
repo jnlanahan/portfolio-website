@@ -81,12 +81,15 @@ export default function AdminTop5ListEditPage() {
     console.log("Auth check:", authCheck);
     console.log("List data:", list);
     console.log("List error:", listError);
+    console.log("Items data:", items);
+    console.log("Items loading:", itemsLoading);
+    console.log("Items error:", itemsError);
     console.log("=================");
-  }, [list, isEditing, authCheck, listError, id]);
+  }, [list, isEditing, authCheck, listError, id, items, itemsLoading, itemsError]);
 
   // Fetch list items
-  const { data: items } = useQuery({
-    queryKey: ["/api/admin/top5-lists", id, "items"],
+  const { data: items, isLoading: itemsLoading, error: itemsError } = useQuery({
+    queryKey: [`/api/admin/top5-lists/${id}/items`],
     enabled: isEditing && !!authCheck?.authenticated,
   });
 
@@ -199,7 +202,7 @@ export default function AdminTop5ListEditPage() {
       return await apiRequest(`/api/admin/top5-lists/${id}/items`, "POST", data);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/top5-lists", id, "items"] });
+      queryClient.invalidateQueries({ queryKey: [`/api/admin/top5-lists/${id}/items`] });
       toast({
         title: "Item added successfully",
         description: "New item has been added to the list",
@@ -223,7 +226,7 @@ export default function AdminTop5ListEditPage() {
       return await apiRequest(`/api/admin/top5-list-items/${itemId}`, "DELETE");
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/top5-lists", id, "items"] });
+      queryClient.invalidateQueries({ queryKey: [`/api/admin/top5-lists/${id}/items`] });
       toast({
         title: "Item deleted successfully",
         description: "The item has been removed from the list",
