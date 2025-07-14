@@ -73,7 +73,7 @@ export default function AdminTop5ListEditPage() {
     enabled: isEditing && !!authCheck?.authenticated,
   });
 
-  // Debug logging
+  // Debug logging (moved after form initialization)
   useEffect(() => {
     console.log("=== DEBUG INFO ===");
     console.log("URL ID:", id);
@@ -81,16 +81,8 @@ export default function AdminTop5ListEditPage() {
     console.log("Auth check:", authCheck);
     console.log("List data:", list);
     console.log("List error:", listError);
-    console.log("Form values:", {
-      title: watchList("title"),
-      icon: watchList("icon"),
-      description: watchList("description"),
-      color: watchList("color"),
-      mainImage: watchList("mainImage"),
-      position: watchList("position")
-    });
     console.log("=================");
-  }, [list, isEditing, authCheck, listError, id, watchList]);
+  }, [list, isEditing, authCheck, listError, id]);
 
   // Fetch list items
   const { data: items } = useQuery({
@@ -152,6 +144,18 @@ export default function AdminTop5ListEditPage() {
       });
     }
   }, [list, resetList]);
+
+  // Debug form values after form is initialized
+  useEffect(() => {
+    console.log("Form values:", {
+      title: watchList("title"),
+      icon: watchList("icon"),
+      description: watchList("description"),
+      color: watchList("color"),
+      mainImage: watchList("mainImage"),
+      position: watchList("position")
+    });
+  }, [watchList, list]);
 
   // Save/Update list mutation
   const saveListMutation = useMutation({
