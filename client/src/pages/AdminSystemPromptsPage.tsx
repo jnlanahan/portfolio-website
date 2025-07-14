@@ -4,7 +4,7 @@ import { useLocation } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ArrowLeft, Settings, Bot, Database, Zap } from "lucide-react";
+import { ArrowLeft, Settings, Bot, Database, Zap, AlertCircle } from "lucide-react";
 import SystemPromptManager from "@/components/SystemPromptManager";
 
 export default function AdminSystemPromptsPage() {
@@ -77,95 +77,66 @@ export default function AdminSystemPromptsPage() {
             <div className="space-y-6">
               {/* Flow Diagram */}
               <div className="bg-[#1a1a1a] p-6 rounded-lg border border-[#3a3a3a]">
-                <div className="flex flex-col space-y-4">
+                <div className="grid grid-cols-2 gap-8">
                   
-                  {/* User Question Input */}
-                  <div className="flex items-center justify-center">
-                    <div className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium">
-                      User Question Received
-                    </div>
-                  </div>
-                  
-                  {/* Decision Diamond */}
-                  <div className="flex items-center justify-center">
-                    <div className="text-gray-400">↓</div>
-                  </div>
-                  
-                  <div className="flex items-center justify-center">
-                    <div className="bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium transform rotate-45 w-32 h-32 flex items-center justify-center text-sm">
-                      <div className="transform -rotate-45">Which Service?</div>
-                    </div>
-                  </div>
-                  
-                  {/* Two Paths */}
-                  <div className="flex justify-around items-start">
-                    
-                    {/* Training Mode Path */}
-                    <div className="flex flex-col items-center space-y-3 w-1/2">
-                      <div className="text-gray-400">↙</div>
-                      <div className="bg-purple-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
-                        Training Mode
-                      </div>
-                      <div className="text-gray-400">↓</div>
-                      <div className="bg-[#2a2a2a] border border-purple-500 px-3 py-2 rounded-lg text-sm">
-                        <strong>Default Prompt</strong>
-                        <br />
-                        <span className="text-xs text-gray-400">Base training behavior</span>
-                      </div>
-                      <div className="text-gray-400">↓</div>
-                      <div className="bg-[#2a2a2a] border border-green-500 px-3 py-2 rounded-lg text-sm">
-                        <strong>Enhanced Prompt</strong>
-                        <br />
-                        <span className="text-xs text-gray-400">Auto-generated from learning insights</span>
-                      </div>
+                  {/* Training Mode (Left Side) */}
+                  <div className="space-y-4">
+                    <div className="text-center">
+                      <h3 className="text-lg font-semibold text-white mb-4">Training Mode (You)</h3>
                     </div>
                     
-                    {/* Visitor Mode Path */}
-                    <div className="flex flex-col items-center space-y-3 w-1/2">
-                      <div className="text-gray-400">↘</div>
-                      <div className="bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-medium">
-                        Visitor Mode
+                    <div className="flex flex-col items-center space-y-3">
+                      <div className="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium">
+                        Nick Asks Training Question
                       </div>
                       <div className="text-gray-400">↓</div>
-                      <div className="bg-[#2a2a2a] border border-orange-500 px-3 py-2 rounded-lg text-sm">
+                      <div className="bg-[#2a2a2a] border border-purple-500 px-3 py-2 rounded-lg text-sm text-center">
+                        <strong>Training Prompt</strong>
+                        <br />
+                        <span className="text-xs text-gray-400">Single prompt for training sessions</span>
+                      </div>
+                      <div className="text-gray-400">↓</div>
+                      <div className="bg-green-600 text-white px-4 py-2 rounded-lg font-medium">
+                        AI Generates Response
+                      </div>
+                      <div className="text-gray-400">↓</div>
+                      <div className="bg-orange-600 text-white px-4 py-2 rounded-lg font-medium">
+                        Q&A Stored in Database
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Visitor Mode (Right Side) */}
+                  <div className="space-y-4">
+                    <div className="text-center">
+                      <h3 className="text-lg font-semibold text-white mb-4">Visitor Mode (Recruiters)</h3>
+                    </div>
+                    
+                    <div className="flex flex-col items-center space-y-3">
+                      <div className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium">
+                        Recruiter Asks Question
+                      </div>
+                      <div className="text-gray-400">↓</div>
+                      <div className="bg-[#2a2a2a] border border-orange-500 px-3 py-2 rounded-lg text-sm text-center">
                         <strong>Custom Prompt</strong>
                         <br />
-                        <span className="text-xs text-gray-400">Database-stored override</span>
+                        <span className="text-xs text-gray-400">Database-stored (if set)</span>
                       </div>
-                      <div className="text-gray-400">↓</div>
-                      <div className="bg-[#2a2a2a] border border-cyan-500 px-3 py-2 rounded-lg text-sm">
+                      <div className="text-gray-400">↓ (or fallback)</div>
+                      <div className="bg-[#2a2a2a] border border-cyan-500 px-3 py-2 rounded-lg text-sm text-center">
                         <strong>LangChain Prompt</strong>
                         <br />
                         <span className="text-xs text-gray-400">RAG with document retrieval</span>
                       </div>
+                      <div className="text-gray-400">↓</div>
+                      <div className="bg-green-600 text-white px-4 py-2 rounded-lg font-medium">
+                        AI Generates Response
+                      </div>
+                      <div className="text-gray-400">↓</div>
+                      <div className="bg-red-600 text-white px-4 py-2 rounded-lg font-medium">
+                        Evaluation & Feedback
+                      </div>
                     </div>
-                  </div>
-                  
-                  {/* Response Generation */}
-                  <div className="flex items-center justify-center mt-4">
-                    <div className="text-gray-400">↓</div>
-                  </div>
-                  
-                  <div className="flex items-center justify-center">
-                    <div className="bg-green-600 text-white px-4 py-2 rounded-lg font-medium">
-                      Response Generated
-                    </div>
-                  </div>
-                  
-                  {/* Feedback Loop */}
-                  <div className="flex items-center justify-center">
-                    <div className="text-gray-400">↓</div>
-                  </div>
-                  
-                  <div className="flex items-center justify-center">
-                    <div className="bg-red-600 text-white px-4 py-2 rounded-lg font-medium">
-                      Evaluation & Feedback
-                    </div>
-                  </div>
-                  
-                  {/* Learning Loop */}
-                  <div className="flex items-center justify-center">
-                    <div className="text-gray-400">↑ (Learning Loop)</div>
                   </div>
                   
                 </div>
@@ -178,15 +149,11 @@ export default function AdminSystemPromptsPage() {
                   <div className="space-y-1 text-sm">
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 bg-purple-500 rounded"></div>
-                      <span><strong>Default:</strong> Base training prompt in code</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 bg-green-500 rounded"></div>
-                      <span><strong>Enhanced:</strong> Auto-generated with learning insights</span>
+                      <span><strong>Training:</strong> Single prompt for training sessions</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 bg-orange-500 rounded"></div>
-                      <span><strong>Custom:</strong> Database-stored override</span>
+                      <span><strong>Custom:</strong> Database-stored prompt for visitors</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 bg-cyan-500 rounded"></div>
@@ -198,26 +165,36 @@ export default function AdminSystemPromptsPage() {
                 <div className="space-y-2">
                   <h3 className="font-semibold text-white">Usage Flow:</h3>
                   <div className="space-y-1 text-sm">
-                    <div>• Training mode generates Enhanced prompt from Default + insights</div>
-                    <div>• Visitor mode uses Custom prompt (if set) or LangChain prompt</div>
-                    <div>• Poor evaluations create learning insights</div>
-                    <div>• Insights automatically improve Enhanced prompt</div>
-                    <div>• All responses are evaluated and create feedback loop</div>
+                    <div>• <strong>Training Mode:</strong> You use Training prompt to ask questions</div>
+                    <div>• <strong>Visitor Mode:</strong> Recruiters get Custom prompt (if set) or LangChain prompt</div>
+                    <div>• Q&A pairs from training are stored in database</div>
+                    <div>• Document retrieval happens via Chroma DB for visitor questions</div>
+                    <div>• Token limit: 150 tokens (set in API calls, not prompt)</div>
                   </div>
                 </div>
               </div>
 
-              {/* Enhanced Prompt Generation Details */}
+              {/* Technical Details */}
               <div className="bg-[#1a1a1a] p-4 rounded-lg border border-[#3a3a3a]">
-                <h3 className="font-semibold text-white mb-2">Enhanced Prompt Generation Process:</h3>
+                <h3 className="font-semibold text-white mb-2">Technical Implementation:</h3>
                 <div className="text-sm space-y-1">
-                  <div>1. <strong>Base:</strong> Starts with Default prompt</div>
-                  <div>2. <strong>Learning Insights:</strong> Adds best practices from evaluations (score ≥ 7/10)</div>
-                  <div>3. <strong>Improvement Areas:</strong> Adds areas that need enhancement (score &lt; 7/10)</div>
-                  <div>4. <strong>Avoid Patterns:</strong> Adds patterns to avoid from poor evaluations (score &lt; 3.5/10)</div>
-                  <div>5. <strong>Auto-Update:</strong> Regenerates automatically when new insights are created</div>
+                  <div>• <strong>Token Limits:</strong> Set to 150 tokens in API calls (both chatbotService.ts and langchainChatbotService.ts)</div>
+                  <div>• <strong>Temperature:</strong> 0.7 for natural conversation flow</div>
+                  <div>• <strong>Model:</strong> GPT-4o for all interactions</div>
+                  <div>• <strong>Document Retrieval:</strong> Chroma DB with semantic search via LangChain</div>
+                  <div>• <strong>Response Style:</strong> Conversational, 2-3 sentences max, no formatting</div>
                 </div>
               </div>
+
+              {/* Recommendation Alert */}
+              <Alert className="bg-yellow-900/20 border-yellow-500">
+                <AlertCircle className="h-4 w-4 text-yellow-500" />
+                <AlertDescription className="text-yellow-200">
+                  <strong>Recommendation:</strong> Consider removing the "Enhanced" prompt system as it's becoming too large and complex. 
+                  The good response style guidelines from LangChain should be moved to the Custom prompt instead.
+                  This would simplify the system to just 3 prompts: Training (for you), Custom (for visitors), and LangChain (fallback with RAG).
+                </AlertDescription>
+              </Alert>
 
             </div>
           </CardContent>
