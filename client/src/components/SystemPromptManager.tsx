@@ -104,9 +104,9 @@ export default function SystemPromptManager() {
       },
       langchain: {
         icon: <Link className="w-4 h-4" />,
-        title: "LangChain (Read-only)",
+        title: "LangChain",
         color: "bg-orange-500",
-        description: "Document retrieval only"
+        description: "Actual visitor prompt via /api/chatbot/chat"
       }
     };
     return info[type] || info.training;
@@ -140,7 +140,7 @@ export default function SystemPromptManager() {
         <div>
           <h2 className="text-xl font-semibold text-white">System Prompt Manager</h2>
           <p className="text-gray-400 text-sm mt-1">
-            Edit and manage the 3 system prompts used by the chatbot
+            Edit and manage the 4 system prompts used by the chatbot
           </p>
         </div>
         <Button

@@ -111,7 +111,7 @@ export default function AdminSystemPromptsPage() {
                   <div className="space-y-4">
                     <div className="text-center">
                       <h3 className="text-lg font-semibold text-white mb-4">Visitor Mode (Recruiters)</h3>
-                      <p className="text-xs text-gray-400">TWO DIFFERENT ENDPOINTS!</p>
+                      <p className="text-xs text-gray-400">TWO DIFFERENT SYSTEMS!</p>
                     </div>
                     
                     <div className="flex flex-col items-center space-y-3">
@@ -119,39 +119,48 @@ export default function AdminSystemPromptsPage() {
                         Recruiter Asks Question
                       </div>
                       <div className="text-gray-400">↓</div>
-                      <div className="bg-yellow-600 text-white px-3 py-2 rounded-lg text-sm text-center">
-                        <strong>Route Decision</strong>
-                        <br />
-                        <span className="text-xs text-gray-400">FloatingChatbot component</span>
-                      </div>
-                      <div className="text-gray-400">↓</div>
                       
-                      {/* Split into two paths */}
-                      <div className="grid grid-cols-2 gap-2 w-full">
-                        <div className="bg-[#2a2a2a] border border-red-500 px-2 py-1 rounded text-xs text-center">
-                          <strong>/api/chatbot/ask</strong>
-                          <br />
-                          <span className="text-gray-400">OLD: Custom/Visitor prompts</span>
+                      {/* Split into two parallel systems */}
+                      <div className="grid grid-cols-2 gap-4 w-full">
+                        
+                        {/* Left: Legacy /api/chatbot/ask System */}
+                        <div className="bg-[#2a2a2a] border border-red-500 p-3 rounded-lg">
+                          <div className="text-center text-sm font-semibold text-white mb-2">/api/chatbot/ask</div>
+                          <div className="space-y-2">
+                            <div className="bg-purple-600 text-white px-2 py-1 rounded text-xs text-center">
+                              <strong>Custom Template</strong>
+                            </div>
+                            <div className="text-gray-400 text-xs text-center">↓ (if none)</div>
+                            <div className="bg-gray-600 text-white px-2 py-1 rounded text-xs text-center">
+                              <strong>Visitor Fallback</strong>
+                            </div>
+                            <div className="text-gray-400 text-xs text-center">↓</div>
+                            <div className="bg-cyan-600 text-white px-2 py-1 rounded text-xs text-center">
+                              <strong>+ Chroma Context</strong>
+                            </div>
+                          </div>
                         </div>
-                        <div className="bg-[#2a2a2a] border border-green-500 px-2 py-1 rounded text-xs text-center">
-                          <strong>/api/chatbot/chat</strong>
-                          <br />
-                          <span className="text-gray-400">NEW: LangChain prompt</span>
+                        
+                        {/* Right: LangChain /api/chatbot/chat System */}
+                        <div className="bg-[#2a2a2a] border border-green-500 p-3 rounded-lg">
+                          <div className="text-center text-sm font-semibold text-white mb-2">/api/chatbot/chat</div>
+                          <div className="space-y-2">
+                            <div className="bg-orange-600 text-white px-2 py-1 rounded text-xs text-center">
+                              <strong>LangChain Prompt</strong>
+                            </div>
+                            <div className="text-gray-400 text-xs text-center">↓</div>
+                            <div className="bg-cyan-600 text-white px-2 py-1 rounded text-xs text-center">
+                              <strong>Chroma RAG</strong>
+                            </div>
+                            <div className="text-gray-400 text-xs text-center">↓</div>
+                            <div className="bg-green-600 text-white px-2 py-1 rounded text-xs text-center">
+                              <strong>LangSmith</strong>
+                            </div>
+                          </div>
                         </div>
+                        
                       </div>
                       
-                      <div className="text-gray-400">↓</div>
-                      <div className="bg-[#2a2a2a] border border-green-500 px-3 py-2 rounded-lg text-sm text-center">
-                        <strong>LangChain RAG System</strong>
-                        <br />
-                        <span className="text-xs text-gray-400">langchainChatbotService.ts</span>
-                      </div>
-                      <div className="text-gray-400">↓</div>
-                      <div className="bg-cyan-600 text-white px-3 py-2 rounded-lg text-sm text-center">
-                        <strong>Chroma DB Context</strong>
-                        <br />
-                        <span className="text-xs text-gray-400">retrieveRelevantDocuments()</span>
-                      </div>
                       <div className="text-gray-400">↓</div>
                       <div className="bg-green-600 text-white px-4 py-2 rounded-lg font-medium">
                         AI Generates Response
@@ -173,19 +182,19 @@ export default function AdminSystemPromptsPage() {
                   <div className="space-y-1 text-sm">
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 bg-purple-500 rounded"></div>
-                      <span><strong>Training:</strong> Hardcoded in chatbotService.ts</span>
+                      <span><strong>Training:</strong> Hardcoded in chatbotService.ts (training mode)</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 bg-orange-500 rounded"></div>
-                      <span><strong>Custom:</strong> Database template (if exists)</span>
+                      <div className="w-3 h-3 bg-purple-500 rounded"></div>
+                      <span><strong>Custom:</strong> Database template (priority in /api/chatbot/ask)</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 bg-gray-500 rounded"></div>
-                      <span><strong>Default:</strong> Hardcoded fallback in chatbotService.ts</span>
+                      <span><strong>Visitor:</strong> Hardcoded fallback in chatbotService.ts</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 bg-cyan-500 rounded"></div>
-                      <span><strong>LangChain:</strong> Used only for document retrieval</span>
+                      <div className="w-3 h-3 bg-orange-500 rounded"></div>
+                      <span><strong>LangChain:</strong> Full conversation prompt (langchainChatbotService.ts)</span>
                     </div>
 
                   </div>
