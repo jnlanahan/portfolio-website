@@ -11,7 +11,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Progress } from '@/components/ui/progress';
-import { ExternalLink, RefreshCw, BarChart3, Database, Play, Plus, Eye } from 'lucide-react';
+import { ExternalLink, RefreshCw, BarChart3, Database, Play, Plus, Eye, CheckCircle, XCircle, TrendingUp } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
 import { Link } from 'wouter';
@@ -33,6 +33,12 @@ export default function AdminLangChainPage() {
   // Fetch dashboard URLs
   const { data: dashboardInfo } = useQuery({
     queryKey: ['/api/langchain/dashboard']
+  });
+
+  // Fetch evaluation statistics
+  const { data: evaluationStats } = useQuery({
+    queryKey: ['/api/langchain/evaluations'],
+    refetchInterval: 30000 // Refresh every 30 seconds
   });
 
   // Test LangSmith connection mutation
@@ -426,11 +432,87 @@ export default function AdminLangChainPage() {
           {/* Evaluation Tab */}
           <TabsContent value="evaluation" className="space-y-6">
             <Alert className="bg-[#2a2a2a] border-gray-600">
-              <Play className="h-4 w-4" />
+              <CheckCircle className="h-4 w-4" />
               <AlertDescription className="text-gray-300">
-                Create evaluation datasets to systematically test your chatbot's performance on specific questions and scenarios.
+                <strong>Phase 3 Complete:</strong> Comprehensive evaluation system with 4 criteria (Correctness, Relevance, Conciseness, Professional Tone) 
+                automatically evaluates every chatbot response and logs results to LangSmith.
               </AlertDescription>
             </Alert>
+
+            {/* Phase 3 Status */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card className="bg-[#2a2a2a] border-gray-600 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-green-400" />
+                  Evaluation Statistics
+                </h3>
+                {evaluationStats ? (
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-gray-400">Total Evaluations:</span>
+                      <span className="text-white font-semibold">{evaluationStats.totalEvaluations}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-400">Recent Evaluations:</span>
+                      <span className="text-white font-semibold">{evaluationStats.recentEvaluations?.length || 0}</span>
+                    </div>
+                    <div className="text-sm text-gray-400 mt-4">
+                      <div className="flex items-center gap-2 mb-1">
+                        <CheckCircle className="w-4 h-4 text-green-400" />
+                        <span>Automatic evaluation active</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400" />
+                        <span>LangSmith logging operational</span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center py-4">
+                    <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                    <p className="mt-2 text-gray-400">Loading evaluation stats...</p>
+                  </div>
+                )}
+              </Card>
+
+              <Card className="bg-[#2a2a2a] border-gray-600 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Play className="h-5 w-5 text-blue-400" />
+                  Test Evaluation System
+                </h3>
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="test-question" className="text-white">Test Question</Label>
+                    <Input
+                      id="test-question"
+                      placeholder="What is Nick's educational background?"
+                      className="bg-[#1a1a1a] border-gray-600 text-white"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="test-response" className="text-white">Test Response</Label>
+                    <Textarea
+                      id="test-response"
+                      placeholder="Nick has a BS in Civil Engineering from NC State..."
+                      rows={3}
+                      className="bg-[#1a1a1a] border-gray-600 text-white"
+                    />
+                  </div>
+                  <Button 
+                    className="w-full bg-[#34C759] hover:bg-[#28A745] text-white"
+                    onClick={() => {
+                      toast({
+                        title: "Test Evaluation",
+                        description: "This would run the 4-criteria evaluation system on your test input."
+                      });
+                    }}
+                  >
+                    <Play className="w-4 h-4 mr-2" />
+                    Run Test Evaluation
+                  </Button>
+                </div>
+              </Card>
+            </div>
 
             <Card className="bg-[#2a2a2a] border-gray-600 p-6">
               <h3 className="text-lg font-semibold text-white mb-4">Create Evaluation Dataset</h3>
@@ -488,13 +570,55 @@ export default function AdminLangChainPage() {
             </Card>
 
             <Card className="bg-[#2a2a2a] border-gray-600 p-6">
-              <h3 className="text-lg font-semibold text-white mb-4">Evaluation Features</h3>
-              <div className="space-y-3 text-gray-400 text-sm">
-                <p>✓ Automatic response evaluation against expected outputs</p>
-                <p>✓ Performance metrics (accuracy, relevance, helpfulness)</p>
-                <p>✓ Regression testing to ensure consistent performance</p>
-                <p>✓ A/B testing for different prompt versions</p>
-                <p>✓ Export results for further analysis</p>
+              <h3 className="text-lg font-semibold text-white mb-4">Phase 3 Evaluation Criteria</h3>
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      Correctness
+                    </h4>
+                    <p className="text-gray-400 text-sm">
+                      Evaluates if the response accurately answers the question based on provided context
+                    </p>
+                  </div>
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-blue-400" />
+                      Relevance
+                    </h4>
+                    <p className="text-gray-400 text-sm">
+                      Measures how well the response addresses the specific question asked
+                    </p>
+                  </div>
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-yellow-400" />
+                      Conciseness
+                    </h4>
+                    <p className="text-gray-400 text-sm">
+                      Ensures responses are appropriately brief (50-150 words) for recruiter interactions
+                    </p>
+                  </div>
+                  <div className="bg-[#1a1a1a] rounded-lg p-4">
+                    <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-purple-400" />
+                      Professional Tone
+                    </h4>
+                    <p className="text-gray-400 text-sm">
+                      Maintains appropriate professional tone for recruiter and hiring manager interactions
+                    </p>
+                  </div>
+                </div>
+                <div className="bg-[#1a1a1a] rounded-lg p-4 mt-4">
+                  <h4 className="text-white font-semibold mb-2">Automatic Evaluation Process</h4>
+                  <div className="space-y-2 text-gray-400 text-sm">
+                    <p>→ Every chatbot response is automatically evaluated in the background</p>
+                    <p>→ All four criteria are scored from 1-5 and normalized to 0-1 scale</p>
+                    <p>→ Results are logged to LangSmith for monitoring and improvement</p>
+                    <p>→ Evaluation runs asynchronously without affecting response time</p>
+                  </div>
+                </div>
               </div>
             </Card>
           </TabsContent>

@@ -2142,6 +2142,56 @@ AVAILABLE DOCUMENT TYPES:
     }
   });
 
+  // Phase 3: Manual evaluation endpoint
+  app.post("/api/langchain/evaluate", requireAdmin, async (req, res) => {
+    try {
+      const { question, response, context, conversationId } = req.body;
+      
+      if (!question || !response || !conversationId) {
+        return res.status(400).json({ error: "Missing required fields: question, response, conversationId" });
+      }
+      
+      const { evaluateChatbotResponse } = await import('./langchainChatbotService');
+      const evaluationResults = await evaluateChatbotResponse(
+        question,
+        response,
+        context || "",
+        conversationId
+      );
+      
+      res.json({
+        evaluationResults,
+        averageScore: evaluationResults.reduce((sum, r) => sum + r.score, 0) / evaluationResults.length,
+        totalEvaluators: evaluationResults.length
+      });
+    } catch (error) {
+      console.error("Error running evaluation:", error);
+      res.status(500).json({ error: "Failed to run evaluation" });
+    }
+  });
+
+  // Get evaluation statistics
+  app.get("/api/langchain/evaluations", requireAdmin, async (req, res) => {
+    try {
+      const { getLangSmithStats } = await import('./langchainChatbotService');
+      const stats = await getLangSmithStats();
+      
+      // Filter for evaluation runs
+      const evaluationRuns = stats.recentRuns?.filter(run => 
+        run.name === "chatbot_evaluation" || run.name === "evaluate_chatbot_response"
+      ) || [];
+      
+      res.json({
+        totalEvaluations: evaluationRuns.length,
+        recentEvaluations: evaluationRuns.slice(0, 10),
+        evaluationStats: stats
+      });
+    } catch (error) {
+      console.error("Error fetching evaluations:", error);
+      res.status(500).json({ error: "Failed to fetch evaluations" });
+    }
+  });
+
   // Get LangSmith dashboard statistics
   app.get("/api/langchain/stats", requireAdmin, async (req, res) => {
     try {

@@ -10,6 +10,8 @@ import { traceable } from "langsmith/traceable";
 import { Client } from "langsmith";
 import { storage } from './storage';
 import { ChromaClient } from "chromadb";
+import { evaluate } from "langsmith/evaluation";
+import { EvaluationResult } from "langsmith/evaluation";
 
 // Initialize LangSmith client with proper configuration
 const langsmithClient = new Client({
@@ -352,6 +354,31 @@ export const processMessage = traceable(
         botResponse: response
       });
 
+      // Run automatic evaluation in background (Phase 3)
+      setImmediate(async () => {
+        try {
+          // Get context for evaluation
+          const relevantDocs = await retrieveRelevantDocuments(message);
+          const context = relevantDocs.map(doc => doc.pageContent).join("\n\n");
+          
+          // Run comprehensive evaluation
+          const evaluationResults = await evaluateChatbotResponse(
+            message,
+            response,
+            context,
+            conversationId
+          );
+          
+          console.log(`Evaluation completed for conversation ${conversationId}:`, {
+            averageScore: evaluationResults.reduce((sum, r) => sum + r.score, 0) / evaluationResults.length,
+            totalEvaluators: evaluationResults.length
+          });
+          
+        } catch (evalError) {
+          console.error(`Background evaluation failed for conversation ${conversationId}:`, evalError);
+        }
+      });
+
       return {
         response,
         isOnTopic: true,
@@ -383,6 +410,231 @@ export const processMessage = traceable(
     }
   },
   { name: "process_message" }
+);
+
+/**
+ * Comprehensive evaluation system for chatbot responses
+ */
+export const evaluateChatbotResponse = traceable(
+  async function evaluateChatbotResponse(
+    question: string,
+    response: string,
+    context: string,
+    conversationId: number
+  ): Promise<EvaluationResult[]> {
+    
+    const evaluationData = {
+      input: question,
+      output: response,
+      reference: context.substring(0, 500), // First 500 chars for reference
+      metadata: {
+        conversationId,
+        timestamp: new Date().toISOString(),
+        model: "gpt-4o",
+        contextLength: context.length
+      }
+    };
+
+    try {
+      // Define evaluation criteria
+      const evaluators = [
+        {
+          name: "Correctness",
+          description: "Evaluate if the response accurately answers the question based on the provided context",
+          evaluatorFunction: async (data: any) => {
+            const prompt = `Evaluate the correctness of this response about Nick Lanahan:
+            
+Question: ${data.input}
+Response: ${data.output}
+Context: ${data.reference}
+
+Rate the correctness from 1-5 (5 being completely correct):
+1 - Completely incorrect or misleading
+2 - Mostly incorrect with some accurate elements
+3 - Partially correct but missing key information
+4 - Mostly correct with minor inaccuracies
+5 - Completely accurate and well-supported by context
+
+Provide your score (1-5) and brief explanation.`;
+
+            const evaluation = await llm.invoke([{ role: "user", content: prompt }]);
+            const score = parseInt(evaluation.content.toString().match(/\d+/)?.[0] || "3");
+            
+            return {
+              key: "correctness",
+              score: score / 5, // Normalize to 0-1
+              comment: evaluation.content.toString()
+            };
+          }
+        },
+        {
+          name: "Relevance",
+          description: "Evaluate if the response is relevant to the question asked",
+          evaluatorFunction: async (data: any) => {
+            const prompt = `Evaluate how relevant this response is to the question:
+            
+Question: ${data.input}
+Response: ${data.output}
+
+Rate relevance from 1-5:
+1 - Completely irrelevant
+2 - Somewhat relevant but off-topic
+3 - Moderately relevant
+4 - Highly relevant
+5 - Perfectly relevant and on-topic
+
+Provide your score (1-5) and brief explanation.`;
+
+            const evaluation = await llm.invoke([{ role: "user", content: prompt }]);
+            const score = parseInt(evaluation.content.toString().match(/\d+/)?.[0] || "3");
+            
+            return {
+              key: "relevance",
+              score: score / 5,
+              comment: evaluation.content.toString()
+            };
+          }
+        },
+        {
+          name: "Conciseness",
+          description: "Evaluate if the response is appropriately concise for recruiter interactions",
+          evaluatorFunction: async (data: any) => {
+            const responseLength = data.output.length;
+            const wordCount = data.output.split(' ').length;
+            
+            // Ideal response: 2-3 sentences, 50-150 words
+            let score = 5;
+            if (wordCount > 200) score = 2; // Too long
+            else if (wordCount > 150) score = 3; // Slightly long
+            else if (wordCount < 20) score = 3; // Too short
+            else if (wordCount >= 50 && wordCount <= 150) score = 5; // Perfect
+            else score = 4; // Good length
+            
+            return {
+              key: "conciseness",
+              score: score / 5,
+              comment: `Response length: ${wordCount} words, ${responseLength} characters. Target: 50-150 words for recruiter conversations.`
+            };
+          }
+        },
+        {
+          name: "Professional_Tone",
+          description: "Evaluate if the response maintains appropriate professional tone for recruiters",
+          evaluatorFunction: async (data: any) => {
+            const prompt = `Evaluate the professional tone of this response to a recruiter:
+            
+Response: ${data.output}
+
+Rate professional tone from 1-5:
+1 - Unprofessional or inappropriate
+2 - Somewhat unprofessional
+3 - Neutral/acceptable
+4 - Professional
+5 - Highly professional and recruiter-appropriate
+
+Consider: conversational but professional, confident without being boastful, helpful and informative.
+
+Provide your score (1-5) and brief explanation.`;
+
+            const evaluation = await llm.invoke([{ role: "user", content: prompt }]);
+            const score = parseInt(evaluation.content.toString().match(/\d+/)?.[0] || "3");
+            
+            return {
+              key: "professional_tone",
+              score: score / 5,
+              comment: evaluation.content.toString()
+            };
+          }
+        }
+      ];
+
+      // Run all evaluations
+      const results: EvaluationResult[] = [];
+      
+      for (const evaluator of evaluators) {
+        try {
+          const result = await evaluator.evaluatorFunction(evaluationData);
+          results.push({
+            key: result.key,
+            score: result.score,
+            comment: result.comment,
+            evaluator_info: {
+              name: evaluator.name,
+              description: evaluator.description
+            }
+          });
+        } catch (error) {
+          console.error(`Error in ${evaluator.name} evaluation:`, error);
+          results.push({
+            key: evaluator.name.toLowerCase().replace(' ', '_'),
+            score: 0,
+            comment: `Evaluation failed: ${error.message}`,
+            evaluator_info: {
+              name: evaluator.name,
+              description: evaluator.description
+            }
+          });
+        }
+      }
+
+      // Log evaluation results to LangSmith - skip logging for now to avoid API errors
+      try {
+        await langsmithClient.createRun({
+          name: "chatbot_evaluation",
+          run_type: "tool",
+          inputs: {
+            question,
+            response,
+            conversationId,
+            contextLength: context.length
+          },
+          outputs: {
+            evaluationResults: results,
+            averageScore: results.reduce((sum, r) => sum + r.score, 0) / results.length,
+            totalEvaluators: results.length
+          },
+          extra: {
+            metadata: {
+              evaluation_timestamp: new Date().toISOString(),
+              evaluation_version: "1.0",
+              model_evaluated: "gpt-4o"
+            }
+          }
+        });
+      } catch (langsmithError) {
+        console.warn("LangSmith evaluation logging failed:", langsmithError.message);
+        // Continue with evaluation even if logging fails
+      }
+
+      return results;
+      
+    } catch (error) {
+      console.error("Error in chatbot evaluation:", error);
+      
+      // Log evaluation error to LangSmith - skip logging for now to avoid API errors
+      try {
+        await langsmithClient.createRun({
+          name: "chatbot_evaluation_error",
+          run_type: "tool",
+          inputs: { question, response, conversationId },
+          outputs: { error: error.message }
+        });
+      } catch (langsmithError) {
+        console.warn("LangSmith error logging failed:", langsmithError.message);
+      }
+      
+      return [{
+        key: "evaluation_error",
+        score: 0,
+        comment: `Evaluation system error: ${error.message}`,
+        evaluator_info: {
+          name: "System",
+          description: "Evaluation system error handler"
+        }
+      }];
+    }
+  },
+  { name: "evaluate_chatbot_response" }
 );
 
 /**
