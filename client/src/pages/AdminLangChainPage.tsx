@@ -35,6 +35,25 @@ export default function AdminLangChainPage() {
     queryKey: ['/api/langchain/dashboard']
   });
 
+  // Test LangSmith connection mutation
+  const testConnection = useMutation({
+    mutationFn: () => apiRequest('/api/langchain/test-connection'),
+    onSuccess: (result) => {
+      toast({
+        title: result.success ? "Connection Success" : "Connection Failed",
+        description: result.message,
+        variant: result.success ? "default" : "destructive"
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Connection Test Failed",
+        description: error.message || "Failed to test connection.",
+        variant: "destructive"
+      });
+    }
+  });
+
   // Refresh vector store mutation
   const refreshVectorStore = useMutation({
     mutationFn: () => apiRequest('/api/langchain/documents/refresh', {
@@ -219,6 +238,24 @@ export default function AdminLangChainPage() {
               <Card className="bg-[#2a2a2a] border-gray-600 p-6">
                 <h3 className="text-lg font-semibold text-white mb-3">Quick Actions</h3>
                 <div className="space-y-3">
+                  <Button 
+                    onClick={() => testConnection.mutate()}
+                    disabled={testConnection.isPending}
+                    className="w-full bg-green-600 hover:bg-green-700 text-white"
+                  >
+                    {testConnection.isPending ? (
+                      <>
+                        <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                        Testing...
+                      </>
+                    ) : (
+                      <>
+                        <Play className="w-4 h-4 mr-2" />
+                        Test LangSmith Connection
+                      </>
+                    )}
+                  </Button>
+                  
                   <Button 
                     onClick={handleRefreshVectorStore}
                     disabled={isRefreshing}

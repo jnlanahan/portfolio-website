@@ -11,13 +11,16 @@ import { Client } from "langsmith";
 import { storage } from './storage';
 import { ChromaClient } from "chromadb";
 
-// Initialize LangSmith client
+// Initialize LangSmith client with proper configuration
 const langsmithClient = new Client({
   apiKey: process.env.LANGCHAIN_API_KEY,
+  apiUrl: process.env.LANGCHAIN_ENDPOINT || "https://api.smith.langchain.com",
 });
 
-// Set up LangChain project name
-process.env.LANGCHAIN_PROJECT = "My Portfolio Chatbot";
+// Set up LangChain environment variables for tracing
+process.env.LANGCHAIN_TRACING_V2 = process.env.LANGCHAIN_TRACING_V2 || "true";
+process.env.LANGCHAIN_PROJECT = process.env.LANGCHAIN_PROJECT || "My Portfolio Chatbot";
+process.env.LANGCHAIN_ENDPOINT = process.env.LANGCHAIN_ENDPOINT || "https://api.smith.langchain.com";
 
 // Initialize OpenAI models
 const llm = new ChatOpenAI({
@@ -179,6 +182,49 @@ export async function retrieveRelevantDocuments(question: string, k: number = 5)
       console.error("Fallback retrieval also failed:", fallbackError);
       return [];
     }
+  }
+}
+
+/**
+ * Test LangSmith connection and configuration
+ */
+export async function testLangSmithConnection(): Promise<{
+  success: boolean;
+  message: string;
+  config: any;
+}> {
+  try {
+    // Test basic client connection
+    const testRun = await langsmithClient.createRun({
+      name: "connection_test",
+      run_type: "tool",
+      inputs: { test: "LangSmith connection test" },
+      outputs: { status: "connected" },
+      project_name: process.env.LANGCHAIN_PROJECT || "My Portfolio Chatbot"
+    });
+
+    return {
+      success: true,
+      message: "LangSmith connection successful",
+      config: {
+        apiUrl: process.env.LANGCHAIN_ENDPOINT || "https://api.smith.langchain.com",
+        project: process.env.LANGCHAIN_PROJECT || "My Portfolio Chatbot",
+        tracing: process.env.LANGCHAIN_TRACING_V2 || "true",
+        runId: testRun.id
+      }
+    };
+  } catch (error) {
+    console.error("LangSmith connection test failed:", error);
+    return {
+      success: false,
+      message: `LangSmith connection failed: ${error.message}`,
+      config: {
+        apiUrl: process.env.LANGCHAIN_ENDPOINT,
+        project: process.env.LANGCHAIN_PROJECT,
+        tracing: process.env.LANGCHAIN_TRACING_V2,
+        hasApiKey: !!process.env.LANGCHAIN_API_KEY
+      }
+    };
   }
 }
 

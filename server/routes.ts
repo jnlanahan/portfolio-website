@@ -2130,6 +2130,18 @@ AVAILABLE DOCUMENT TYPES:
     }
   });
 
+  // Test LangSmith connection
+  app.get("/api/langchain/test-connection", requireAdmin, async (req, res) => {
+    try {
+      const { testLangSmithConnection } = await import('./langchainChatbotService');
+      const result = await testLangSmithConnection();
+      res.json(result);
+    } catch (error) {
+      console.error("Error testing LangSmith connection:", error);
+      res.status(500).json({ error: "Failed to test LangSmith connection" });
+    }
+  });
+
   // Get LangSmith dashboard statistics
   app.get("/api/langchain/stats", requireAdmin, async (req, res) => {
     try {
