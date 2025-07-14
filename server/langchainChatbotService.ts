@@ -300,7 +300,7 @@ export async function processMessage(
   
   try {
     // Store user message
-    await storage.saveChatbotMessage({
+    await storage.saveChatbotConversation({
       conversationId,
       message,
       isUser: true,
@@ -311,7 +311,7 @@ export async function processMessage(
     const response = await ragPipeline(message, conversationId, userId);
     
     // Store assistant response
-    await storage.saveChatbotMessage({
+    await storage.saveChatbotConversation({
       conversationId,
       message: response,
       isUser: false,
@@ -390,6 +390,7 @@ export async function getLangSmithStats(): Promise<any> {
     // Get project runs from LangSmith
     const runs = await langsmithClient.listRuns({
       projectName: "My Portfolio Chatbot",
+      projectId: process.env.LANGCHAIN_PROJECT_ID,
       limit: 100
     });
     

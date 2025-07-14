@@ -2055,8 +2055,9 @@ AVAILABLE DOCUMENT TYPES:
     try {
       res.json({
         projectName: "My Portfolio Chatbot",
-        dashboardUrl: "https://smith.langchain.com/o/projects",
-        tracesUrl: "https://smith.langchain.com/o/projects/My%20Portfolio%20Chatbot/traces",
+        projectId: process.env.LANGCHAIN_PROJECT_ID,
+        dashboardUrl: `https://smith.langchain.com/o/projects/${process.env.LANGCHAIN_PROJECT_ID}`,
+        tracesUrl: `https://smith.langchain.com/o/projects/${process.env.LANGCHAIN_PROJECT_ID}/traces`,
         datasetsUrl: "https://smith.langchain.com/o/datasets"
       });
     } catch (error) {
