@@ -194,14 +194,18 @@ export async function testLangSmithConnection(): Promise<{
   config: any;
 }> {
   try {
-    // Test basic client connection
-    const testRun = await langsmithClient.createRun({
-      name: "connection_test",
-      run_type: "tool",
-      inputs: { test: "LangSmith connection test" },
-      outputs: { status: "connected" },
-      project_name: process.env.LANGCHAIN_PROJECT || "My Portfolio Chatbot"
+    // Test basic client connection by listing runs (simpler API call)
+    const runs = await langsmithClient.listRuns({
+      projectName: process.env.LANGCHAIN_PROJECT || "My Portfolio Chatbot",
+      limit: 1
     });
+
+    // Convert async iterator to array to check if we can access runs
+    const runArray = [];
+    for await (const run of runs) {
+      runArray.push(run);
+      break; // Just need one to test connection
+    }
 
     return {
       success: true,
@@ -210,7 +214,8 @@ export async function testLangSmithConnection(): Promise<{
         apiUrl: process.env.LANGCHAIN_ENDPOINT || "https://api.smith.langchain.com",
         project: process.env.LANGCHAIN_PROJECT || "My Portfolio Chatbot",
         tracing: process.env.LANGCHAIN_TRACING_V2 || "true",
-        runId: testRun.id
+        runsFound: runArray.length,
+        hasApiKey: !!process.env.LANGCHAIN_API_KEY
       }
     };
   } catch (error) {
@@ -222,7 +227,8 @@ export async function testLangSmithConnection(): Promise<{
         apiUrl: process.env.LANGCHAIN_ENDPOINT,
         project: process.env.LANGCHAIN_PROJECT,
         tracing: process.env.LANGCHAIN_TRACING_V2,
-        hasApiKey: !!process.env.LANGCHAIN_API_KEY
+        hasApiKey: !!process.env.LANGCHAIN_API_KEY,
+        errorDetails: error.toString()
       }
     };
   }
