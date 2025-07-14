@@ -31,24 +31,63 @@ export interface EnhancedEvaluationResult {
 
 /**
  * LLM-as-a-Judge Correctness Evaluator
- * Evaluates how factually correct the response is
+ * Evaluates how factually correct the response is using source documents
  */
 export async function evaluateCorrectness(
   question: string,
   response: string,
+  sourceDocuments?: string,
   expectedAnswer?: string
 ): Promise<{ score: number; feedback: string }> {
   try {
-    // Use proper LangSmith evaluation with openevals
+    // Enhanced correctness prompt that includes source documents
+    const enhancedCorrectnessPrompt = `
+You are an expert evaluator assessing the factual correctness of a chatbot response about Nick Lanahan's professional background.
+
+TASK: Evaluate if the response is factually accurate based on the provided source documents.
+
+QUESTION: {question}
+RESPONSE: {response}
+
+${sourceDocuments ? `SOURCE DOCUMENTS (Use these to verify factual accuracy):
+${sourceDocuments}
+
+IMPORTANT: You now have access to the actual source documents. Use them to verify specific facts like:
+- Educational background and degrees
+- Work experience and positions
+- Skills and certifications
+- Personal details and achievements
+- Military service details
+- Any other factual claims
+
+If the response contains information that contradicts the source documents, score it lower.
+If the response is factually consistent with the source documents, score it higher.` : 'Note: No source documents provided for verification.'}
+
+SCORING CRITERIA:
+- 10: Completely accurate, fully supported by source documents
+- 8-9: Mostly accurate with minor gaps or unsupported details  
+- 6-7: Generally accurate but some unverified or potentially incorrect information
+- 4-5: Mixed accuracy, some correct information but notable inaccuracies
+- 1-3: Largely inaccurate or unsupported by source documents
+
+Provide your evaluation as a JSON object with:
+- score: number (1-10)
+- reasoning: string explaining your assessment and what you verified against the source documents
+`;
+
     const correctnessEvaluator = createLLMAsJudge({
-      prompt: CORRECTNESS_PROMPT,
+      prompt: enhancedCorrectnessPrompt,
       feedbackKey: "correctness",
       model: "openai:gpt-4o",
     });
     
     const results = await evaluate((inputs) => response, {
       data: [{
-        inputs: { question },
+        inputs: { 
+          question,
+          response,
+          sourceDocuments: sourceDocuments || "No source documents provided"
+        },
         outputs: { response },
         expected_outputs: expectedAnswer ? { response: expectedAnswer } : undefined
       }],
@@ -79,7 +118,8 @@ export async function evaluateCorrectness(
  */
 export async function evaluateConciseness(
   question: string,
-  response: string
+  response: string,
+  sourceDocuments?: string
 ): Promise<{ score: number; feedback: string }> {
   try {
     // Use proper LangSmith evaluation with openevals
@@ -138,7 +178,7 @@ export async function evaluateComprehensiveness(
             model: "gpt-4o",
             temperature: 0.1
           },
-          prompt: `You are an expert evaluator assessing the comprehensiveness of AI responses.
+          prompt: `You are an expert evaluator assessing the comprehensiveness of AI responses about Nick Lanahan's professional background.
 
 EVALUATION CRITERIA:
 Rate how thoroughly the response addresses the question on a scale of 1-10:
@@ -149,18 +189,26 @@ Rate how thoroughly the response addresses the question on a scale of 1-10:
 - 1-3: Poor coverage, major aspects ignored
 
 QUESTION: {question}
-${context ? 'AVAILABLE CONTEXT: {context}' : ''}
+${context ? `SOURCE DOCUMENTS (Use these to assess comprehensiveness):
+${context}
+
+IMPORTANT: You now have access to the actual source documents. Use them to evaluate whether the response is comprehensive by checking:
+- Are all relevant details from the source documents included?
+- Does the response miss important information that's available in the documents?
+- Are there key aspects of the question that could be better answered using the source material?` : 'Note: No source documents provided for comprehensiveness assessment.'}
+
 RESPONSE: {response}
 
 Consider:
 - Does the response fully answer the question?
 - Are all relevant aspects covered?
-- Is important information missing?
-- Does it provide sufficient detail?
+- Is important information missing that's available in the source documents?
+- Does it provide sufficient detail given the available information?
+- Are there missed opportunities to provide more comprehensive information?
 
 Format your response as:
 Score: [number]
-Feedback: [detailed explanation]`,
+Feedback: [detailed explanation including what information from source documents was missed or well-utilized]`,
           feedback_key: "comprehensiveness"
         }]
       }
@@ -188,14 +236,18 @@ Feedback: [detailed explanation]`,
  */
 export async function evaluateCoherence(
   question: string,
-  response: string
+  response: string,
+  sourceDocuments?: string
 ): Promise<{ score: number; feedback: string }> {
   try {
     const response_eval = await langsmithClient.evaluate(
       async (inputs: any) => response,
       {
         data: [{
-          inputs: { question },
+          inputs: { 
+            question,
+            sourceDocuments: sourceDocuments || "No source documents provided" 
+          },
           outputs: { answer: response }
         }],
         evaluators: [{
@@ -204,7 +256,7 @@ export async function evaluateCoherence(
             model: "gpt-4o",
             temperature: 0.1
           },
-          prompt: `You are an expert evaluator assessing the coherence of AI responses.
+          prompt: `You are an expert evaluator assessing the coherence of AI responses about Nick Lanahan's professional background.
 
 EVALUATION CRITERIA:
 Rate how coherent and logically structured the response is on a scale of 1-10:
@@ -217,11 +269,17 @@ Rate how coherent and logically structured the response is on a scale of 1-10:
 QUESTION: {question}
 RESPONSE: {response}
 
+${sourceDocuments ? `SOURCE DOCUMENTS (Available for context):
+${sourceDocuments}
+
+Note: While evaluating coherence, you can reference the source documents to understand the context better and assess whether the response flows logically given the available information.` : 'Note: No source documents provided for additional context.'}
+
 Consider:
 - Does the response flow logically from point to point?
 - Are ideas clearly connected?
 - Is the structure easy to follow?
 - Are transitions smooth?
+- Does the response present information in a logical order?
 
 Format your response as:
 Score: [number]
@@ -263,13 +321,18 @@ export async function runComprehensiveEvaluation(
     correctness,
     conciseness
   ] = await Promise.all([
-    evaluateCorrectness(question, response, expectedAnswer),
-    evaluateConciseness(question, response)
+    evaluateCorrectness(question, response, context, expectedAnswer),
+    evaluateConciseness(question, response, context)
   ]);
   
-  // For now, use simplified scoring for comprehensiveness and coherence
-  const comprehensiveness = { score: 7, feedback: "Comprehensive evaluation pending" };
-  const coherence = { score: 8, feedback: "Response has good logical flow" };
+  // Run comprehensiveness and coherence evaluators with source documents
+  const [
+    comprehensiveness,
+    coherence
+  ] = await Promise.all([
+    evaluateComprehensiveness(question, response, context),
+    evaluateCoherence(question, response, context)
+  ]);
   
   const evaluatorInsights = [
     {
