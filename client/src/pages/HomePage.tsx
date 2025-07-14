@@ -204,7 +204,7 @@ const ActionButton = ({ title, linkTo, delay }: { title: string; linkTo: string;
     if (title.includes('Contact')) return <img src={gmailLogo} alt="Gmail" className="w-6 h-6" />;
     if (title.includes('Resume')) return <Download size={24} className="text-gray-900 group-hover:text-slate-600 transition-colors" />;
     if (title.includes('LinkedIn')) return (
-      <div className="w-6 h-6 bg-slate-600 rounded-sm flex items-center justify-center group-hover:bg-slate-700 transition-colors">
+      <div className="w-6 h-6 bg-blue-600 rounded-sm flex items-center justify-center group-hover:bg-blue-700 transition-colors">
         <span className="text-white font-bold text-sm">in</span>
       </div>
     );
