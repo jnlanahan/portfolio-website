@@ -1,36 +1,28 @@
 import { useState, useEffect } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLocation, useParams } from "wouter";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { toast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { apiRequest } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
-import { 
-  ArrowLeft, 
-  Save, 
-  Plus, 
-  Edit, 
-  Trash2, 
-  List,
-  AlertCircle
-} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, Save, Plus, Trash2, Upload } from "lucide-react";
 
+// Schemas
 const listSchema = z.object({
   title: z.string().min(1, "Title is required"),
   icon: z.string().min(1, "Icon is required"),
-  color: z.string().optional(),
+  color: z.string().min(1, "Color is required"),
   description: z.string().optional(),
   mainImage: z.string().optional(),
-  position: z.number().min(0).optional(),
+  position: z.number().min(0),
 });
 
 const itemSchema = z.object({
@@ -39,69 +31,50 @@ const itemSchema = z.object({
   link: z.string().optional(),
   linkText: z.string().optional(),
   image: z.string().optional(),
-  highlight: z.boolean().optional(),
-  position: z.number().min(0).optional(),
+  highlight: z.boolean().default(false),
+  position: z.number().min(1).max(5),
 });
 
+type ListFormData = z.infer<typeof listSchema>;
+type ItemFormData = z.infer<typeof itemSchema>;
+
 export default function AdminTop5ListEditPage() {
+  const { id } = useParams<{ id: string }>();
   const [, setLocation] = useLocation();
-  const { id } = useParams();
-  const { toast } = useToast();
   const queryClient = useQueryClient();
   const [showAddItem, setShowAddItem] = useState(false);
   const [uploadingMainImage, setUploadingMainImage] = useState(false);
   const [uploadingItemImage, setUploadingItemImage] = useState(false);
-
+  
   const isEditing = id !== "new";
 
-  // Check authentication first
-  const { data: authCheck, isLoading: authLoading, error: authError } = useQuery({
+  // Auth check
+  const { data: authCheck } = useQuery({
     queryKey: ["/api/admin/check-auth"],
     retry: false,
   });
 
   // Redirect to login if not authenticated
   useEffect(() => {
-    if (authError && !authLoading) {
+    if (authCheck === null) {
       setLocation("/admin/login");
     }
-  }, [authError, authLoading, setLocation]);
+  }, [authCheck, setLocation]);
 
-  // Fetch list data if editing
-  const { data: list, isLoading, error: listError } = useQuery({
-    queryKey: ["/api/admin/top5-lists", id],
+  // Fetch list data
+  const { data: list, isLoading: listLoading } = useQuery({
+    queryKey: [`/api/admin/top5-lists/${id}`],
     enabled: isEditing && !!authCheck?.authenticated,
   });
 
-  // Debug logging (moved after form initialization)
-  useEffect(() => {
-    console.log("=== DEBUG INFO ===");
-    console.log("URL ID:", id);
-    console.log("Is editing:", isEditing);
-    console.log("Auth check:", authCheck);
-    console.log("List data:", list);
-    console.log("List error:", listError);
-    console.log("Items data:", items);
-    console.log("Items loading:", itemsLoading);
-    console.log("Items error:", itemsError);
-    console.log("=================");
-  }, [list, isEditing, authCheck, listError, id, items, itemsLoading, itemsError]);
-
-  // Fetch list items
-  const { data: items, isLoading: itemsLoading, error: itemsError } = useQuery({
+  // Fetch items
+  const { data: items = [], isLoading: itemsLoading } = useQuery({
     queryKey: [`/api/admin/top5-lists/${id}/items`],
     enabled: isEditing && !!authCheck?.authenticated,
   });
 
-  // Form for list
-  const {
-    register: registerList,
-    handleSubmit: handleSubmitList,
-    formState: { errors: listErrors },
-    reset: resetList,
-    setValue: setListValue,
-    watch: watchList,
-  } = useForm({
+  // List form
+  const listForm = useForm<ListFormData>({
     resolver: zodResolver(listSchema),
     defaultValues: {
       title: "",
@@ -113,15 +86,8 @@ export default function AdminTop5ListEditPage() {
     },
   });
 
-  // Form for new item
-  const {
-    register: registerItem,
-    handleSubmit: handleSubmitItem,
-    formState: { errors: itemErrors },
-    reset: resetItem,
-    setValue: setItemValue,
-    watch: watchItem,
-  } = useForm({
+  // Item form
+  const itemForm = useForm<ItemFormData>({
     resolver: zodResolver(itemSchema),
     defaultValues: {
       title: "",
@@ -134,55 +100,41 @@ export default function AdminTop5ListEditPage() {
     },
   });
 
-  // Reset form when data loads
+  // Reset list form when data loads
   useEffect(() => {
     if (list) {
-      resetList({
-        title: list.title,
-        icon: list.icon,
+      listForm.reset({
+        title: list.title || "",
+        icon: list.icon || "ri-list-line",
         color: list.color || "#22c55e",
         description: list.description || "",
         mainImage: list.mainImage || "",
         position: list.position || 0,
       });
     }
-  }, [list, resetList]);
+  }, [list, listForm]);
 
-  // Debug form values after form is initialized
-  useEffect(() => {
-    console.log("Form values:", {
-      title: watchList("title"),
-      icon: watchList("icon"),
-      description: watchList("description"),
-      color: watchList("color"),
-      mainImage: watchList("mainImage"),
-      position: watchList("position")
-    });
-  }, [watchList, list]);
-
-  // Save/Update list mutation
+  // Save list mutation
   const saveListMutation = useMutation({
-    mutationFn: async (data: any) => {
-      if (isEditing && id && id !== "new") {
-        return await apiRequest(`/api/admin/top5-lists/${id}`, "PUT", data);
-      } else {
-        return await apiRequest("/api/admin/top5-lists", "POST", data);
-      }
+    mutationFn: async (data: ListFormData) => {
+      const url = isEditing ? `/api/admin/top5-lists/${id}` : "/api/admin/top5-lists";
+      const method = isEditing ? "PUT" : "POST";
+      return await apiRequest(url, method, data);
     },
     onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/top5-lists"] });
       toast({
-        title: isEditing ? "List updated successfully" : "List created successfully",
+        title: isEditing ? "List updated" : "List created",
         description: isEditing ? "Your changes have been saved" : "New list has been created",
       });
       if (!isEditing && response.id) {
         setLocation(`/admin/top5-lists/${response.id}`);
       }
     },
-    onError: (error: any) => {
+    onError: () => {
       toast({
-        title: "Save failed",
-        description: error.message || "An error occurred while saving the list",
+        title: "Error",
+        description: "Failed to save list",
         variant: "destructive",
       });
     },
@@ -190,31 +142,22 @@ export default function AdminTop5ListEditPage() {
 
   // Add item mutation
   const addItemMutation = useMutation({
-    mutationFn: async (data: any) => {
-      if (!id || id === "new") {
-        toast({
-          title: "Save list first",
-          description: "Please save the list before adding items",
-          variant: "destructive",
-        });
-        throw new Error("Must save list first before adding items");
-      }
+    mutationFn: async (data: ItemFormData) => {
       return await apiRequest(`/api/admin/top5-lists/${id}/items`, "POST", data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`/api/admin/top5-lists/${id}/items`] });
       toast({
-        title: "Item added successfully",
+        title: "Item added",
         description: "New item has been added to the list",
       });
-      resetItem();
+      itemForm.reset();
       setShowAddItem(false);
     },
-    onError: (error: any) => {
-      console.error("Add item error:", error);
+    onError: () => {
       toast({
-        title: "Add failed",
-        description: error.message || "An error occurred while adding the item",
+        title: "Error",
+        description: "Failed to add item",
         variant: "destructive",
       });
     },
@@ -228,83 +171,46 @@ export default function AdminTop5ListEditPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`/api/admin/top5-lists/${id}/items`] });
       toast({
-        title: "Item deleted successfully",
+        title: "Item deleted",
         description: "The item has been removed from the list",
       });
     },
     onError: () => {
       toast({
-        title: "Delete failed",
-        description: "An error occurred while deleting the item",
+        title: "Error",
+        description: "Failed to delete item",
         variant: "destructive",
       });
     },
   });
 
-  const onSubmitList = (data: any) => {
-    console.log("Form submitted with:", data);
-    const transformedData = {
-      ...data,
-      position: Number(data.position) || 0,
-    };
-    console.log("Transformed data:", transformedData);
-    saveListMutation.mutate(transformedData);
-  };
-
-  const onSubmitItem = (data: any) => {
-    // Transform the data to match API expectations
-    const transformedData = {
-      ...data,
-      // Convert empty strings to null for optional fields
-      description: data.description || null,
-      link: data.link || null,
-      linkText: data.linkText || null,
-      image: data.image || null,
-      // Ensure position is a number and defaults to 1 if not provided
-      position: data.position || 1,
-      // Ensure highlight is a boolean
-      highlight: Boolean(data.highlight),
-    };
-    
-    addItemMutation.mutate(transformedData);
-  };
-
-  // Upload functions
+  // Image upload handlers
   const handleMainImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (!file) {
-      console.log("No file selected");
-      return;
-    }
+    if (!file) return;
 
-    console.log("Starting upload for file:", file.name, "size:", file.size);
     setUploadingMainImage(true);
     const formData = new FormData();
     formData.append('files', file);
 
     try {
-      console.log("Sending upload request...");
       const response = await apiRequest('/api/admin/upload', 'POST', formData);
-      console.log("Upload response:", response);
-      const uploadedUrl = response.files[0]; // files is now an array of URLs
+      const uploadedUrl = response.files[0];
       if (uploadedUrl) {
-        console.log("Setting main image URL:", uploadedUrl);
-        setListValue('mainImage', uploadedUrl);
+        listForm.setValue('mainImage', uploadedUrl);
         toast({
-          title: "Image uploaded successfully",
+          title: "Image uploaded",
           description: "Main image has been updated",
         });
       }
     } catch (error) {
-      console.error("Upload error:", error);
       toast({
         title: "Upload failed",
-        description: error?.message || "An error occurred while uploading the image",
+        description: "An error occurred while uploading the image",
         variant: "destructive",
       });
     } finally {
       setUploadingMainImage(false);
-      // Reset the file input
       event.target.value = '';
     }
   };
@@ -319,11 +225,11 @@ export default function AdminTop5ListEditPage() {
 
     try {
       const response = await apiRequest('/api/admin/upload', 'POST', formData);
-      const uploadedUrl = response.files[0]; // files is now an array of URLs
+      const uploadedUrl = response.files[0];
       if (uploadedUrl) {
-        setItemValue('image', uploadedUrl);
+        itemForm.setValue('image', uploadedUrl);
         toast({
-          title: "Image uploaded successfully",
+          title: "Image uploaded",
           description: "Item image has been updated",
         });
       }
@@ -335,15 +241,25 @@ export default function AdminTop5ListEditPage() {
       });
     } finally {
       setUploadingItemImage(false);
+      event.target.value = '';
     }
   };
 
-  if (isLoading) {
+  // Form submit handlers
+  const onSubmitList = (data: ListFormData) => {
+    saveListMutation.mutate(data);
+  };
+
+  const onSubmitItem = (data: ItemFormData) => {
+    addItemMutation.mutate(data);
+  };
+
+  if (listLoading || itemsLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p>Loading list...</p>
+          <p>Loading...</p>
         </div>
       </div>
     );
@@ -377,43 +293,37 @@ export default function AdminTop5ListEditPage() {
         </div>
       </div>
 
+      {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* List Details */}
+          {/* Left Side - List Details */}
           <Card>
             <CardHeader>
               <CardTitle>List Details</CardTitle>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmitList(onSubmitList)} className="space-y-4">
+              <form onSubmit={listForm.handleSubmit(onSubmitList)} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="title">Title *</Label>
                   <Input
                     id="title"
-                    {...registerList("title")}
+                    {...listForm.register("title")}
                     placeholder="e.g., Top 5 Dev Tools"
-                    className={listErrors.title ? "border-red-500" : ""}
+                    className={listForm.formState.errors.title ? "border-red-500" : ""}
                   />
-                  {listErrors.title && (
-                    <p className="text-sm text-red-500">{listErrors.title.message}</p>
+                  {listForm.formState.errors.title && (
+                    <p className="text-sm text-red-500">{listForm.formState.errors.title.message}</p>
                   )}
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="icon">Icon *</Label>
                   <Select
-                    value={watchList("icon")}
-                    onValueChange={(value) => setListValue("icon", value)}
+                    value={listForm.watch("icon")}
+                    onValueChange={(value) => listForm.setValue("icon", value)}
                   >
-                    <SelectTrigger className={listErrors.icon ? "border-red-500" : ""}>
-                      <SelectValue placeholder="Select an icon">
-                        {watchList("icon") && (
-                          <div className="flex items-center gap-2">
-                            <i className={watchList("icon")}></i>
-                            {watchList("icon")}
-                          </div>
-                        )}
-                      </SelectValue>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select an icon" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="ri-list-line">
@@ -458,108 +368,27 @@ export default function AdminTop5ListEditPage() {
                           Lightbulb
                         </div>
                       </SelectItem>
-                      <SelectItem value="ri-fire-line">
-                        <div className="flex items-center gap-2">
-                          <i className="ri-fire-line"></i>
-                          Fire
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="ri-rocket-line">
-                        <div className="flex items-center gap-2">
-                          <i className="ri-rocket-line"></i>
-                          Rocket
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="ri-tools-line">
-                        <div className="flex items-center gap-2">
-                          <i className="ri-tools-line"></i>
-                          Tools
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="ri-magic-line">
-                        <div className="flex items-center gap-2">
-                          <i className="ri-magic-line"></i>
-                          Magic
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="ri-palette-line">
-                        <div className="flex items-center gap-2">
-                          <i className="ri-palette-line"></i>
-                          Palette
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="ri-music-line">
-                        <div className="flex items-center gap-2">
-                          <i className="ri-music-line"></i>
-                          Music
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="ri-camera-line">
-                        <div className="flex items-center gap-2">
-                          <i className="ri-camera-line"></i>
-                          Camera
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="ri-game-line">
-                        <div className="flex items-center gap-2">
-                          <i className="ri-game-line"></i>
-                          Game
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="ri-flight-takeoff-line">
-                        <div className="flex items-center gap-2">
-                          <i className="ri-flight-takeoff-line"></i>
-                          Travel
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="ri-movie-line">
-                        <div className="flex items-center gap-2">
-                          <i className="ri-movie-line"></i>
-                          Movie
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="ri-smartphone-line">
-                        <div className="flex items-center gap-2">
-                          <i className="ri-smartphone-line"></i>
-                          Apps
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="ri-restaurant-line">
-                        <div className="flex items-center gap-2">
-                          <i className="ri-restaurant-line"></i>
-                          Food
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="ri-car-line">
-                        <div className="flex items-center gap-2">
-                          <i className="ri-car-line"></i>
-                          Car
-                        </div>
-                      </SelectItem>
                     </SelectContent>
                   </Select>
-                  {listErrors.icon && (
-                    <p className="text-sm text-red-500">{listErrors.icon.message}</p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
-                  <Textarea
-                    id="description"
-                    {...registerList("description")}
-                    placeholder="Brief description of the list (optional)"
-                    rows={3}
-                  />
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="color">Color</Label>
                   <Input
                     id="color"
-                    {...registerList("color")}
-                    placeholder="#22c55e"
+                    {...listForm.register("color")}
                     type="color"
+                    className="h-10"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="description">Description</Label>
+                  <Textarea
+                    id="description"
+                    {...listForm.register("description")}
+                    placeholder="Brief description of the list"
+                    className="min-h-[80px]"
                   />
                 </div>
 
@@ -568,7 +397,7 @@ export default function AdminTop5ListEditPage() {
                   <div className="flex gap-2">
                     <Input
                       id="mainImage"
-                      {...registerList("mainImage")}
+                      {...listForm.register("mainImage")}
                       placeholder="https://example.com/image.jpg"
                     />
                     <Button
@@ -577,6 +406,7 @@ export default function AdminTop5ListEditPage() {
                       disabled={uploadingMainImage}
                       onClick={() => document.getElementById('mainImageUpload')?.click()}
                     >
+                      <Upload size={16} className="mr-2" />
                       {uploadingMainImage ? "Uploading..." : "Upload"}
                     </Button>
                   </div>
@@ -586,7 +416,6 @@ export default function AdminTop5ListEditPage() {
                     accept="image/*"
                     onChange={handleMainImageUpload}
                     style={{ display: 'none' }}
-                    key={uploadingMainImage ? 'uploading' : 'idle'}
                   />
                 </div>
 
@@ -594,7 +423,7 @@ export default function AdminTop5ListEditPage() {
                   <Label htmlFor="position">Position</Label>
                   <Input
                     id="position"
-                    {...registerList("position", { valueAsNumber: true })}
+                    {...listForm.register("position", { valueAsNumber: true })}
                     type="number"
                     min="0"
                     placeholder="0"
@@ -618,7 +447,7 @@ export default function AdminTop5ListEditPage() {
             </CardContent>
           </Card>
 
-          {/* Items Management */}
+          {/* Right Side - Items Management */}
           {isEditing && (
             <Card>
               <CardHeader>
@@ -640,28 +469,27 @@ export default function AdminTop5ListEditPage() {
                   <Card className="mb-4">
                     <CardHeader>
                       <CardTitle className="text-lg">Add New Item</CardTitle>
-                      <p className="text-sm text-gray-600">Add items to your Top 5 list. Only title is required.</p>
                     </CardHeader>
                     <CardContent>
-                      <form onSubmit={handleSubmitItem(onSubmitItem)} className="space-y-4">
+                      <form onSubmit={itemForm.handleSubmit(onSubmitItem)} className="space-y-4">
                         <div className="grid grid-cols-2 gap-4">
                           <div className="space-y-2">
                             <Label htmlFor="itemTitle">Title *</Label>
                             <Input
                               id="itemTitle"
-                              {...registerItem("title")}
+                              {...itemForm.register("title")}
                               placeholder="Item title"
-                              className={itemErrors.title ? "border-red-500" : ""}
+                              className={itemForm.formState.errors.title ? "border-red-500" : ""}
                             />
-                            {itemErrors.title && (
-                              <p className="text-sm text-red-500">{itemErrors.title.message}</p>
+                            {itemForm.formState.errors.title && (
+                              <p className="text-sm text-red-500">{itemForm.formState.errors.title.message}</p>
                             )}
                           </div>
                           <div className="space-y-2">
                             <Label htmlFor="itemPosition">Position (1-5)</Label>
                             <Input
                               id="itemPosition"
-                              {...registerItem("position", { valueAsNumber: true })}
+                              {...itemForm.register("position", { valueAsNumber: true })}
                               type="number"
                               min="1"
                               max="5"
@@ -671,10 +499,10 @@ export default function AdminTop5ListEditPage() {
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="itemDescription">Description (Optional)</Label>
+                          <Label htmlFor="itemDescription">Description</Label>
                           <Textarea
                             id="itemDescription"
-                            {...registerItem("description")}
+                            {...itemForm.register("description")}
                             placeholder="Brief description (optional)"
                             className="min-h-[60px]"
                           />
@@ -685,7 +513,7 @@ export default function AdminTop5ListEditPage() {
                             <Label htmlFor="itemLink">Link</Label>
                             <Input
                               id="itemLink"
-                              {...registerItem("link")}
+                              {...itemForm.register("link")}
                               placeholder="https://example.com"
                             />
                           </div>
@@ -693,7 +521,7 @@ export default function AdminTop5ListEditPage() {
                             <Label htmlFor="itemLinkText">Link Text</Label>
                             <Input
                               id="itemLinkText"
-                              {...registerItem("linkText")}
+                              {...itemForm.register("linkText")}
                               placeholder="Visit Site"
                             />
                           </div>
@@ -704,7 +532,7 @@ export default function AdminTop5ListEditPage() {
                           <div className="flex gap-2">
                             <Input
                               id="itemImage"
-                              {...registerItem("image")}
+                              {...itemForm.register("image")}
                               placeholder="https://example.com/image.jpg"
                             />
                             <Button
@@ -713,6 +541,7 @@ export default function AdminTop5ListEditPage() {
                               disabled={uploadingItemImage}
                               onClick={() => document.getElementById('itemImageUpload')?.click()}
                             >
+                              <Upload size={16} className="mr-2" />
                               {uploadingItemImage ? "Uploading..." : "Upload"}
                             </Button>
                           </div>
@@ -729,7 +558,7 @@ export default function AdminTop5ListEditPage() {
                           <input
                             id="itemHighlight"
                             type="checkbox"
-                            {...registerItem("highlight")}
+                            {...itemForm.register("highlight")}
                             className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                           />
                           <Label htmlFor="itemHighlight" className="text-sm font-medium">
@@ -761,17 +590,15 @@ export default function AdminTop5ListEditPage() {
 
                 {/* Existing Items */}
                 <div className="space-y-3">
-                  {items?.sort((a: any, b: any) => a.position - b.position).map((item: any) => (
+                  {items.sort((a: any, b: any) => a.position - b.position).map((item: any) => (
                     <Card key={item.id} className="p-4">
                       <div className="flex items-start gap-4">
-                        {/* Position Number */}
                         <div className="flex-shrink-0 w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
                           <span className="text-sm font-bold text-blue-700 dark:text-blue-300">
                             {item.position}
                           </span>
                         </div>
                         
-                        {/* Item Image */}
                         {item.image && (
                           <div className="flex-shrink-0">
                             <img
@@ -782,7 +609,6 @@ export default function AdminTop5ListEditPage() {
                           </div>
                         )}
                         
-                        {/* Item Content */}
                         <div className="flex-1">
                           <h4 className="font-medium text-lg">{item.title}</h4>
                           {item.description && (
@@ -800,7 +626,6 @@ export default function AdminTop5ListEditPage() {
                           )}
                         </div>
                         
-                        {/* Actions */}
                         <div className="flex items-center gap-2">
                           {item.highlight && (
                             <Badge variant="secondary">Highlight</Badge>
@@ -818,9 +643,8 @@ export default function AdminTop5ListEditPage() {
                       </div>
                     </Card>
                   ))}
-                  {items?.length === 0 && (
+                  {items.length === 0 && (
                     <div className="text-center py-8 text-gray-500">
-                      <List className="h-8 w-8 mx-auto mb-2" />
                       <p>No items yet. Add your first item above.</p>
                     </div>
                   )}
