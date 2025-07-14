@@ -290,14 +290,10 @@ export default function AdminChatbotPage() {
 
         {/* Main Content */}
         <Tabs defaultValue="chat" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 bg-[#2a2a2a] border-gray-700">
+          <TabsList className="grid w-full grid-cols-1 bg-[#2a2a2a] border-gray-700">
             <TabsTrigger value="chat" className="data-[state=active]:bg-[#007AFF] data-[state=active]:text-white">
               <MessageSquare className="w-4 h-4 mr-2" />
               Chat Training
-            </TabsTrigger>
-            <TabsTrigger value="documents" className="data-[state=active]:bg-[#007AFF] data-[state=active]:text-white">
-              <Upload className="w-4 h-4 mr-2" />
-              Document Upload
             </TabsTrigger>
           </TabsList>
 
@@ -452,114 +448,7 @@ export default function AdminChatbotPage() {
             </div>
           </TabsContent>
 
-          <TabsContent value="documents" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Document Upload */}
-              <Card className="bg-[#2a2a2a] border-gray-700 p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <Upload className="w-6 h-6 text-[#007AFF]" />
-                  <h2 className="text-xl font-semibold">Upload Documents</h2>
-                </div>
-                
-                <div className="space-y-4">
-                  <div className="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center">
-                    <FileText className="w-12 h-12 text-gray-500 mx-auto mb-4" />
-                    <p className="text-gray-300 mb-4">
-                      Upload documents to help train Nack about Nick's background
-                    </p>
-                    <input
-                      type="file"
-                      accept=".pdf,.doc,.docx,.txt,.md"
-                      onChange={handleFileSelect}
-                      className="hidden"
-                      id="file-upload"
-                    />
-                    <label
-                      htmlFor="file-upload"
-                      className="cursor-pointer bg-[#007AFF] hover:bg-[#0056CC] text-white px-4 py-2 rounded-lg inline-block transition-colors"
-                    >
-                      Choose File
-                    </label>
-                  </div>
 
-                  {selectedFile && (
-                    <div className="bg-[#1a1a1a] p-4 rounded-lg">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="font-medium text-white">{selectedFile.name}</p>
-                          <p className="text-sm text-gray-400">{formatFileSize(selectedFile.size)}</p>
-                        </div>
-                        <Button
-                          onClick={handleUpload}
-                          disabled={uploadMutation.isPending}
-                          className="bg-[#34C759] hover:bg-[#2A9D4A] text-white"
-                        >
-                          {uploadMutation.isPending ? 'Uploading...' : 'Upload'}
-                        </Button>
-                      </div>
-                    </div>
-                  )}
-
-                  {uploadSuccess && (
-                    <Alert className="bg-[#1a1a1a] border-[#34C759]">
-                      <AlertDescription className="text-green-400">
-                        Document uploaded successfully! Nack now has access to this information.
-                      </AlertDescription>
-                    </Alert>
-                  )}
-                </div>
-              </Card>
-
-              {/* Document List */}
-              <Card className="bg-[#2a2a2a] border-gray-700 p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <FileText className="w-6 h-6 text-[#007AFF]" />
-                  <h2 className="text-xl font-semibold">Training Documents</h2>
-                </div>
-                
-                <ScrollArea className="h-[400px]">
-                  {documentsLoading ? (
-                    <p className="text-gray-500 text-center py-8">Loading documents...</p>
-                  ) : documentsError ? (
-                    <p className="text-red-400 text-center py-8">Error loading documents: {documentsError.message}</p>
-                  ) : documents.length === 0 ? (
-                    <p className="text-gray-500 text-center py-8">No documents uploaded yet</p>
-                  ) : (
-                    <div className="space-y-3">
-                      {documents.map((doc) => (
-                        <div key={doc.id} className="bg-[#1a1a1a] p-4 rounded-lg hover:bg-[#2a2a2a] transition-colors cursor-pointer">
-                          <div className="flex items-center justify-between">
-                            <div className="flex-1" onClick={() => {
-                              alert(`Document: ${doc.originalName}\nType: ${doc.fileType}\nSize: ${formatFileSize(doc.fileSize)}\nUploaded: ${new Date(doc.uploadedAt).toLocaleString()}\n\nThis document has been processed and is now part of Nack's training data.`);
-                            }}>
-                              <p className="font-medium text-white">{doc.originalName}</p>
-                              <p className="text-sm text-gray-400">
-                                {formatFileSize(doc.fileSize)} • {new Date(doc.uploadedAt).toLocaleDateString()}
-                              </p>
-                            </div>
-                            <Button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                if (confirm(`Are you sure you want to delete "${doc.originalName}"?`)) {
-                                  deleteMutation.mutate(doc.id);
-                                }
-                              }}
-                              variant="ghost"
-                              size="sm"
-                              className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
-                              disabled={deleteMutation.isPending}
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </Button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </ScrollArea>
-              </Card>
-            </div>
-          </TabsContent>
         </Tabs>
       </div>
     </div>

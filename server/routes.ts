@@ -1078,6 +1078,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Modern chatbot endpoint using LangChain (RECRUITER MODE)
+  app.post("/api/chatbot/chat", async (req, res) => {
+    try {
+      const { message, conversationId } = req.body;
+      
+      if (!message || !conversationId) {
+        return res.status(400).json({ error: 'Missing message or conversationId' });
+      }
+
+      // Use the existing recruiter chatbot service for compatibility
+      const response = await processRecruiterQuestion(message, conversationId.toString());
+      
+      res.json({
+        response: response.response,
+        isOnTopic: response.isOnTopic,
+        confidence: response.confidence,
+        conversationId
+      });
+    } catch (error) {
+      console.error('Error in chatbot chat:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
   // Training chatbot endpoint for admin (TRAINING MODE)
   app.post("/api/admin/chatbot/train", requireAdmin, async (req, res) => {
     try {

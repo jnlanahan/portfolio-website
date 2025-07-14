@@ -76,14 +76,14 @@ async function initializeVectorStore(): Promise<void> {
     if (fs.existsSync(chromaDbPath)) {
       console.log("Found existing Chroma database at:", chromaDbPath);
       
-      // Initialize Chroma client for file-based database
-      chromaClient = new ChromaClient({
-        host: "localhost",
-        port: 8000,
-        ssl: false
-      });
+      // Use file-based Chroma access (no server needed)
+      // For file-based, we'll use direct file reading approach
+      console.log("Using file-based Chroma database access");
       
-      console.log("Chroma client initialized for future use");
+      // Don't initialize chromaClient - use file-based approach instead
+      chromaClient = null;
+      
+      console.log("Chroma file-based access configured");
     } else {
       console.log("No existing Chroma database found. Please copy your chroma_db folder to the project root.");
     }
@@ -176,46 +176,9 @@ async function retrieveRelevantDocuments(question: string, k: number = 5): Promi
     }
   }
   
-  // Fallback to database storage
-  try {
-    const documents = await storage.getChatbotDocuments();
-    
-    if (documents.length === 0) {
-      console.log("No documents found in database storage");
-      return [];
-    }
-    
-    // Convert database documents to LangChain Document format
-    const langchainDocs = documents.map(doc => new Document({
-      pageContent: doc.content || "",
-      metadata: {
-        id: doc.id,
-        filename: doc.filename,
-        type: doc.type,
-        uploadedAt: doc.uploadedAt,
-        source: "database"
-      }
-    }));
-    
-    // Simple keyword matching as fallback (you can improve this with proper similarity search)
-    const questionWords = question.toLowerCase().split(/\s+/);
-    const scoredDocs = langchainDocs.map(doc => {
-      const content = doc.pageContent.toLowerCase();
-      const score = questionWords.reduce((acc, word) => {
-        return acc + (content.includes(word) ? 1 : 0);
-      }, 0);
-      return { doc, score };
-    }).sort((a, b) => b.score - a.score);
-    
-    const results = scoredDocs.slice(0, k).map(item => item.doc);
-    
-    console.log(`Retrieved ${results.length} relevant documents from database storage for question: "${question}"`);
-    return results;
-    
-  } catch (error) {
-    console.error("Error retrieving documents from database:", error);
-    return [];
-  }
+  // No fallback to database storage - if Chroma is not available, return empty
+  console.log("Chroma database not available and no fallback configured");
+  return [];
 }
 
 /**
@@ -268,21 +231,25 @@ export const ragPipeline = traceable(
     });
     
     // Log additional metadata to LangSmith
-    await langsmithClient.createRun({
-      name: "rag_metadata",
-      runType: "tool",
-      inputs: { 
-        question,
-        conversationId,
-        userId,
-        documents_retrieved: relevantDocs.length,
-        context_length: context.length
-      },
-      outputs: { 
-        response_length: response.length,
-        documents_used: relevantDocs.map(doc => doc.metadata.filename)
-      }
-    });
+    try {
+      await langsmithClient.createRun({
+        name: "rag_metadata",
+        runType: "tool",
+        inputs: { 
+          question,
+          conversationId,
+          userId,
+          documents_retrieved: relevantDocs.length,
+          context_length: context.length
+        },
+        outputs: { 
+          response_length: response.length,
+          documents_used: relevantDocs.map(doc => doc.metadata.filename)
+        }
+      });
+    } catch (langsmithError) {
+      console.warn("LangSmith metadata logging failed:", langsmithError.message);
+    }
     
     return response;
   },
@@ -299,23 +266,14 @@ export async function processMessage(
 ): Promise<string> {
   
   try {
-    // Store user message
-    await storage.saveChatbotConversation({
-      conversationId,
-      message,
-      isUser: true,
-      timestamp: new Date()
-    });
-    
     // Get response from RAG pipeline
     const response = await ragPipeline(message, conversationId, userId);
     
-    // Store assistant response
+    // Store conversation in database
     await storage.saveChatbotConversation({
-      conversationId,
-      message: response,
-      isUser: false,
-      timestamp: new Date()
+      sessionId: conversationId.toString(),
+      userQuestion: message,
+      botResponse: response
     });
     
     return response;
@@ -324,12 +282,16 @@ export async function processMessage(
     console.error("Error processing message:", error);
     
     // Log error to LangSmith
-    await langsmithClient.createRun({
-      name: "message_processing_error",
-      runType: "tool",
-      inputs: { message, conversationId, userId },
-      outputs: { error: error.message }
-    });
+    try {
+      await langsmithClient.createRun({
+        name: "message_processing_error",
+        runType: "tool",
+        inputs: { message, conversationId, userId },
+        outputs: { error: error.message }
+      });
+    } catch (langsmithError) {
+      console.warn("LangSmith error logging failed:", langsmithError.message);
+    }
     
     throw error;
   }
