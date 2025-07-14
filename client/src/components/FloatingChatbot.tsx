@@ -216,9 +216,9 @@ export default function FloatingChatbot() {
       <div className="fixed bottom-6 right-6 z-50">
         {!isOpen && (
           <div className="relative">
-            {/* Pulsing ring animation positioned for expanded button */}
-            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 h-14 w-14 rounded-full bg-blue-400 animate-ping opacity-75"></div>
-            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 h-14 w-14 rounded-full bg-blue-500 animate-pulse opacity-50"></div>
+            {/* Pulsing ring animation for full button */}
+            <div className="absolute inset-0 rounded-full bg-blue-400 animate-ping opacity-30"></div>
+            <div className="absolute inset-0 rounded-full bg-blue-500 animate-pulse opacity-20"></div>
             
             {/* Expanded button with text */}
             <Button
