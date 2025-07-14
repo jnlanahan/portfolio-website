@@ -1831,6 +1831,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const langchainPromptMatch = langchainServiceContent.match(/const SYSTEM_PROMPT = `([^`]+)`/s);
       const langchainPrompt = langchainPromptMatch ? langchainPromptMatch[1] : "LangChain prompt not found";
 
+      // Get response formatting rules
+      const formattingRules = await storage.getActiveResponseFormattingRules();
+      
       res.json({
         training: {
           prompt: trainingPrompt,
@@ -1855,6 +1858,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
           editable: false,
           description: "ACTUAL prompt used by visitors via /api/chatbot/chat endpoint (LangChain RAG system)",
           lastModified: new Date().toISOString()
+        },
+        formatting: {
+          prompt: formattingRules ? formattingRules.instructions : "No formatting rules configured",
+          editable: true,
+          description: "Response formatting rules applied to all chatbot responses for consistent style",
+          lastModified: formattingRules ? formattingRules.updatedAt : new Date().toISOString()
         }
       });
     } catch (error) {
@@ -1912,6 +1921,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } else if (type === 'langchain') {
         // LangChain prompt is read-only - prevent editing
         res.status(403).json({ error: "LangChain prompt is read-only and cannot be edited" });
+        
+      } else if (type === 'formatting') {
+        // Update response formatting rules in database
+        await storage.saveResponseFormattingRules({
+          name: 'default',
+          instructions: prompt,
+          isActive: true
+        });
+        res.json({ success: true, message: "Response formatting rules updated in database" });
         
       } else {
         res.status(400).json({ error: "Invalid prompt type" });

@@ -32,7 +32,9 @@ import {
   type ChatbotLearningInsight,
   type InsertChatbotLearningInsight,
   type SystemPromptTemplate,
-  type InsertSystemPromptTemplate
+  type InsertSystemPromptTemplate,
+  type ResponseFormattingRules,
+  type InsertResponseFormattingRules
 } from "@shared/schema";
 import { getBlogPosts, getBlogPostById } from "../client/src/data/blog";
 import { getPortfolio } from "../client/src/data/portfolio";
@@ -142,6 +144,10 @@ export interface IStorage {
   // System prompt template methods
   getActiveSystemPromptTemplate(): Promise<SystemPromptTemplate | undefined>;
   saveSystemPromptTemplate(template: InsertSystemPromptTemplate): Promise<SystemPromptTemplate>;
+  
+  // Response formatting rules methods
+  getActiveResponseFormattingRules(): Promise<ResponseFormattingRules | undefined>;
+  saveResponseFormattingRules(rules: InsertResponseFormattingRules): Promise<ResponseFormattingRules>;
 }
 
 export class MemStorage implements IStorage {
@@ -563,6 +569,22 @@ export class MemStorage implements IStorage {
 
   async updateChatbotTrainingProgress(progress: Partial<InsertChatbotTrainingProgress>): Promise<ChatbotTrainingProgress> {
     throw new Error("Chatbot features not implemented for MemStorage");
+  }
+
+  async getActiveSystemPromptTemplate(): Promise<SystemPromptTemplate | undefined> {
+    return undefined;
+  }
+
+  async saveSystemPromptTemplate(template: InsertSystemPromptTemplate): Promise<SystemPromptTemplate> {
+    throw new Error("System prompt templates not implemented for MemStorage");
+  }
+
+  async getActiveResponseFormattingRules(): Promise<ResponseFormattingRules | undefined> {
+    return undefined;
+  }
+
+  async saveResponseFormattingRules(rules: InsertResponseFormattingRules): Promise<ResponseFormattingRules> {
+    throw new Error("Response formatting rules not implemented for MemStorage");
   }
 }
 
@@ -1256,6 +1278,39 @@ export class DatabaseStorage implements IStorage {
       .returning();
     
     return newTemplate;
+  }
+
+  async getActiveResponseFormattingRules(): Promise<ResponseFormattingRules | undefined> {
+    const { db } = await import('./db');
+    const { responseFormattingRules } = await import('@shared/schema');
+    const { eq, desc } = await import('drizzle-orm');
+    
+    const rules = await db.select()
+      .from(responseFormattingRules)
+      .where(eq(responseFormattingRules.isActive, true))
+      .orderBy(desc(responseFormattingRules.createdAt))
+      .limit(1);
+    
+    return rules[0];
+  }
+
+  async saveResponseFormattingRules(rules: InsertResponseFormattingRules): Promise<ResponseFormattingRules> {
+    const { db } = await import('./db');
+    const { responseFormattingRules } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    // Deactivate all existing rules if this one is active
+    if (rules.isActive) {
+      await db.update(responseFormattingRules)
+        .set({ isActive: false })
+        .where(eq(responseFormattingRules.isActive, true));
+    }
+    
+    const [newRules] = await db.insert(responseFormattingRules)
+      .values(rules)
+      .returning();
+    
+    return newRules;
   }
 }
 

@@ -349,3 +349,22 @@ export const insertSystemPromptTemplateSchema = createInsertSchema(systemPromptT
 
 export type InsertSystemPromptTemplate = z.infer<typeof insertSystemPromptTemplateSchema>;
 export type SystemPromptTemplate = typeof systemPromptTemplate.$inferSelect;
+
+// Response Formatting Rules model
+export const responseFormattingRules = pgTable("response_formatting_rules", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull().unique().default("default"),
+  instructions: text("instructions").notNull(),
+  isActive: boolean("is_active").default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const insertResponseFormattingRulesSchema = createInsertSchema(responseFormattingRules).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type InsertResponseFormattingRules = z.infer<typeof insertResponseFormattingRulesSchema>;
+export type ResponseFormattingRules = typeof responseFormattingRules.$inferSelect;

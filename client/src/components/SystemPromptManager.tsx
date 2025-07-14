@@ -34,6 +34,7 @@ interface SystemPrompts {
   visitor: SystemPrompt;
   custom: SystemPrompt;
   langchain: SystemPrompt;
+  formatting: SystemPrompt;
 }
 
 export default function SystemPromptManager() {
@@ -111,6 +112,13 @@ export default function SystemPromptManager() {
         color: "bg-orange-500",
         tabColor: "data-[state=active]:bg-orange-500",
         description: "Actual visitor prompt via /api/chatbot/chat"
+      },
+      formatting: {
+        icon: <CheckCircle className="w-4 h-4" />,
+        title: "Formatting",
+        color: "bg-green-500",
+        tabColor: "data-[state=active]:bg-green-500",
+        description: "Response formatting rules for all chatbot responses"
       }
     };
     return info[type] || info.training;
@@ -144,7 +152,7 @@ export default function SystemPromptManager() {
         <div>
           <h2 className="text-xl font-semibold text-white">System Prompt Manager</h2>
           <p className="text-gray-400 text-sm mt-1">
-            Edit and manage the 4 system prompts used by the chatbot
+            Edit and manage the 5 system prompts and formatting rules used by the chatbot
           </p>
         </div>
         <Button
@@ -158,7 +166,7 @@ export default function SystemPromptManager() {
       </div>
 
       <Tabs defaultValue="training" className="w-full">
-        <TabsList className="grid w-full grid-cols-4 bg-[#2a2a2a]">
+        <TabsList className="grid w-full grid-cols-5 bg-[#2a2a2a]">
           {prompts && Object.entries(prompts).map(([type, prompt]) => {
             const info = getPromptTypeInfo(type);
             return (
