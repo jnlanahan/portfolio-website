@@ -216,23 +216,6 @@ export default function FloatingChatbot() {
       <div className="fixed bottom-6 right-6 z-50">
         {!isOpen && (
           <div className="relative">
-            {/* Encouraging text callout */}
-            <div className="absolute bottom-16 right-0 mb-2 group">
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 pointer-events-none">
-                <div className="text-sm font-semibold">Ask about Nick's background!</div>
-                <div className="text-xs opacity-90">I know everything about his experience 🧠</div>
-                {/* Arrow pointing to button */}
-                <div className="absolute top-full right-6 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-blue-600"></div>
-              </div>
-            </div>
-
-            {/* Side text */}
-            <div className="absolute right-16 top-1/2 transform -translate-y-1/2 pointer-events-none">
-              <div className="bg-white/95 backdrop-blur-sm border border-gray-200 px-3 py-1 rounded-full shadow-md">
-                <span className="text-sm font-medium text-gray-700">👋 Chat with Nick's AI</span>
-              </div>
-            </div>
-            
             {/* Pulsing ring animation */}
             <div className="absolute inset-0 h-14 w-14 rounded-full bg-blue-400 animate-ping opacity-75"></div>
             <div className="absolute inset-0 h-14 w-14 rounded-full bg-blue-500 animate-pulse opacity-50"></div>
