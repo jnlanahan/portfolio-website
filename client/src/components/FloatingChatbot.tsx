@@ -216,22 +216,23 @@ export default function FloatingChatbot() {
       <div className="fixed bottom-6 right-6 z-50">
         {!isOpen && (
           <div className="relative">
-            {/* Pulsing ring animation */}
-            <div className="absolute inset-0 h-14 w-14 rounded-full bg-blue-400 animate-ping opacity-75"></div>
-            <div className="absolute inset-0 h-14 w-14 rounded-full bg-blue-500 animate-pulse opacity-50"></div>
+            {/* Pulsing ring animation positioned for expanded button */}
+            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 h-14 w-14 rounded-full bg-blue-400 animate-ping opacity-75"></div>
+            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 h-14 w-14 rounded-full bg-blue-500 animate-pulse opacity-50"></div>
             
-            {/* Main button */}
+            {/* Expanded button with text */}
             <Button
               onClick={() => setIsOpen(true)}
-              className="relative h-14 w-14 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 border-2 border-white/20"
+              className="relative flex items-center gap-3 h-14 pl-6 pr-4 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 border-2 border-white/20"
               aria-label="Chat with Nick's AI - Trained specifically on his background & experience"
             >
+              <span className="font-semibold text-sm whitespace-nowrap">Ask AI about Nick</span>
               <MessageCircle className="h-6 w-6" />
             </Button>
             
             {/* Floating tooltip */}
             <div className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg shadow-lg whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-              💬 Ask me about Nick!
+              💬 I know everything about his background!
               <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
             </div>
           </div>
