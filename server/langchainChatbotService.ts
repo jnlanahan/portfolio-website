@@ -184,22 +184,27 @@ export async function retrieveRelevantDocuments(question: string, k: number = 5)
 }
 
 /**
- * Get conversation history for context
+ * Get conversation history for context (Requirement #2: Store and retrieve training Q&A sessions)
  */
 async function getConversationHistory(conversationId: number): Promise<string> {
   try {
-    // Get recent conversations from database
+    // Get recent conversations from database for this session
     const conversations = await storage.getAllChatbotConversations();
     
-    // Filter by session and get recent ones
+    // Filter by sessionId and get recent ones (last 10 for better context)
     const sessionConversations = conversations
       .filter(conv => conv.sessionId === conversationId.toString())
-      .slice(-5); // Get last 5 conversations
+      .slice(-10) // Get last 10 conversations for better follow-up context
+      .reverse(); // Most recent first for better context building
+    
+    console.log(`Found ${sessionConversations.length} previous conversations for session ${conversationId}`);
     
     // Format as conversation history
-    return sessionConversations.map(conv => 
+    const historyText = sessionConversations.map(conv => 
       `User: ${conv.userQuestion}\nAssistant: ${conv.botResponse}`
     ).join('\n\n');
+    
+    return historyText;
   } catch (error) {
     console.error('Error getting conversation history:', error);
     return "";
