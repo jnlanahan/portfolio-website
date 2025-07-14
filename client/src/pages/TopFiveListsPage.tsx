@@ -5,13 +5,26 @@ import { X } from "lucide-react";
 
 const TopFiveListsPage = () => {
   const [selectedList, setSelectedList] = useState<number | null>(null);
+  const [selectedListItems, setSelectedListItems] = useState<any[]>([]);
   
   const { data: lists = [], isLoading } = useQuery({
     queryKey: ["/api/lists"],
   });
 
+  // Fetch items for the selected list
+  const { data: items = [] } = useQuery({
+    queryKey: ["/api/lists", selectedList, "items"],
+    enabled: selectedList !== null,
+    onSuccess: (data) => {
+      setSelectedListItems(data || []);
+    },
+  });
+
   const openModal = (index: number) => {
-    setSelectedList(index);
+    const listId = lists[index]?.id;
+    if (listId) {
+      setSelectedList(listId);
+    }
   };
 
   const closeModal = () => {
@@ -127,14 +140,21 @@ const TopFiveListsPage = () => {
           <div className="bg-white rounded-xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
             <div className="flex justify-between items-center p-6 border-b border-gray-200">
               <div className="flex items-center">
-                <span className="w-8 h-8 rounded-full flex items-center justify-center mr-3 bg-blue-50">
-                  <i className={`${lists[selectedList].icon} text-lg text-blue-600`}></i>
-                </span>
-                <h2 className="text-2xl font-bold text-gray-900" style={{ 
-                  fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif'
-                }}>
-                  {lists[selectedList].title}
-                </h2>
+                {(() => {
+                  const currentList = lists.find(list => list.id === selectedList);
+                  return (
+                    <>
+                      <span className="w-8 h-8 rounded-full flex items-center justify-center mr-3 bg-blue-50">
+                        <i className={`${currentList?.icon || 'ri-list-line'} text-lg text-blue-600`}></i>
+                      </span>
+                      <h2 className="text-2xl font-bold text-gray-900" style={{ 
+                        fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif'
+                      }}>
+                        {currentList?.title || 'List'}
+                      </h2>
+                    </>
+                  );
+                })()}
               </div>
               <button
                 onClick={closeModal}
@@ -145,17 +165,20 @@ const TopFiveListsPage = () => {
             </div>
             
             <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
-              {lists[selectedList].description && (
-                <p className="text-gray-600 mb-6" style={{ 
-                  fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
-                  fontSize: '16px'
-                }}>
-                  {lists[selectedList].description}
-                </p>
-              )}
+              {(() => {
+                const currentList = lists.find(list => list.id === selectedList);
+                return currentList?.description && (
+                  <p className="text-gray-600 mb-6" style={{ 
+                    fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
+                    fontSize: '16px'
+                  }}>
+                    {currentList.description}
+                  </p>
+                );
+              })()}
               
               <ol className="space-y-4">
-                {lists[selectedList].items.map((item, itemIndex) => (
+                {selectedListItems.map((item, itemIndex) => (
                   <li key={itemIndex} className="flex items-start p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-all duration-300">
                     <div className="rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0 bg-blue-100 text-blue-600">
                       {itemIndex + 1}

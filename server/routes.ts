@@ -500,11 +500,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get top 5 lists
   app.get("/api/lists", async (req, res) => {
     try {
-      const lists = await storage.getLists();
+      const lists = await storage.getAllTopFiveLists();
       res.json(lists);
     } catch (error) {
       console.error("Error fetching lists:", error);
       res.status(500).json({ message: "Failed to fetch lists" });
+    }
+  });
+
+  // Get items for a specific list (public endpoint)
+  app.get("/api/lists/:listId/items", async (req, res) => {
+    try {
+      const listId = parseInt(req.params.listId);
+      const items = await storage.getTopFiveListItems(listId);
+      res.json(items);
+    } catch (error) {
+      console.error("Error fetching list items:", error);
+      res.status(500).json({ message: "Failed to fetch list items" });
     }
   });
 
