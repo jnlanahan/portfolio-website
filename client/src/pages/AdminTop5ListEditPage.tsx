@@ -27,6 +27,7 @@ const listSchema = z.object({
   title: z.string().min(1, "Title is required"),
   icon: z.string().min(1, "Icon is required"),
   color: z.string().optional(),
+  description: z.string().optional(),
   mainImage: z.string().optional(),
   position: z.number().min(0).optional(),
 });
@@ -83,12 +84,15 @@ export default function AdminTop5ListEditPage() {
     handleSubmit: handleSubmitList,
     formState: { errors: listErrors },
     reset: resetList,
+    setValue: setListValue,
+    watch: watchList,
   } = useForm({
     resolver: zodResolver(listSchema),
     defaultValues: {
       title: "",
       icon: "ri-list-line",
       color: "#22c55e",
+      description: "",
       mainImage: "",
       position: 0,
     },
@@ -100,6 +104,8 @@ export default function AdminTop5ListEditPage() {
     handleSubmit: handleSubmitItem,
     formState: { errors: itemErrors },
     reset: resetItem,
+    setValue: setItemValue,
+    watch: watchItem,
   } = useForm({
     resolver: zodResolver(itemSchema),
     defaultValues: {
@@ -120,6 +126,7 @@ export default function AdminTop5ListEditPage() {
         title: list.title,
         icon: list.icon,
         color: list.color || "#22c55e",
+        description: list.description || "",
         mainImage: list.mainImage || "",
         position: list.position || 0,
       });
@@ -242,7 +249,7 @@ export default function AdminTop5ListEditPage() {
       const response = await apiRequest('/api/admin/upload', 'POST', formData);
       const uploadedFile = response.files[0];
       if (uploadedFile) {
-        registerList('mainImage', { value: uploadedFile.url });
+        setListValue('mainImage', uploadedFile.url);
         toast({
           title: "Image uploaded successfully",
           description: "Main image has been updated",
@@ -271,7 +278,7 @@ export default function AdminTop5ListEditPage() {
       const response = await apiRequest('/api/admin/upload', 'POST', formData);
       const uploadedFile = response.files[0];
       if (uploadedFile) {
-        registerItem('image', { value: uploadedFile.url });
+        setItemValue('image', uploadedFile.url);
         toast({
           title: "Image uploaded successfully",
           description: "Item image has been updated",
@@ -360,6 +367,16 @@ export default function AdminTop5ListEditPage() {
                   {listErrors.icon && (
                     <p className="text-sm text-red-500">{listErrors.icon.message}</p>
                   )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="description">Description</Label>
+                  <Textarea
+                    id="description"
+                    {...registerList("description")}
+                    placeholder="Brief description of the list (optional)"
+                    rows={3}
+                  />
                 </div>
 
                 <div className="space-y-2">
