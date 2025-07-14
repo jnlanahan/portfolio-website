@@ -5,7 +5,6 @@ import { X } from "lucide-react";
 
 const TopFiveListsPage = () => {
   const [selectedList, setSelectedList] = useState<number | null>(null);
-  const [selectedListItems, setSelectedListItems] = useState<any[]>([]);
   
   const { data: lists = [], isLoading } = useQuery({
     queryKey: ["/api/lists"],
@@ -13,11 +12,8 @@ const TopFiveListsPage = () => {
 
   // Fetch items for the selected list
   const { data: items = [] } = useQuery({
-    queryKey: ["/api/lists", selectedList, "items"],
+    queryKey: [`/api/lists/${selectedList}/items`],
     enabled: selectedList !== null,
-    onSuccess: (data) => {
-      setSelectedListItems(data || []);
-    },
   });
 
   const openModal = (index: number) => {
@@ -178,7 +174,7 @@ const TopFiveListsPage = () => {
               })()}
               
               <ol className="space-y-4">
-                {selectedListItems.map((item, itemIndex) => (
+                {items.map((item, itemIndex) => (
                   <li key={itemIndex} className="flex items-start p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-all duration-300">
                     <div className="rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0 bg-blue-100 text-blue-600">
                       {itemIndex + 1}
