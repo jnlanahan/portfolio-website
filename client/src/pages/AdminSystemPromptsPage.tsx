@@ -224,17 +224,7 @@ export default function AdminSystemPromptsPage() {
                 </div>
               </div>
 
-              {/* Critical Implementation Warning */}
-              <Alert className="bg-red-900/20 border-red-500">
-                <AlertCircle className="h-4 w-4 text-red-500" />
-                <AlertDescription className="text-red-200">
-                  <strong>CRITICAL:</strong> The system prompts shown in this interface don't match the actual implementation!
-                  <br />
-                  <strong>Problem:</strong> The LangChain prompt is NOT used in the main chat flow - it's only for document retrieval.
-                  <br />
-                  <strong>Solution:</strong> The Enhanced prompt should replace the hardcoded prompts in chatbotService.ts, or the Custom prompt should be used properly.
-                </AlertDescription>
-              </Alert>
+
 
             </div>
           </CardContent>
