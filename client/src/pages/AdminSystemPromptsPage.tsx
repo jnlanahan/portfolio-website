@@ -177,10 +177,7 @@ export default function AdminSystemPromptsPage() {
                       <div className="w-3 h-3 bg-cyan-500 rounded"></div>
                       <span><strong>LangChain:</strong> Used only for document retrieval</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 bg-green-500 rounded"></div>
-                      <span><strong>Enhanced:</strong> Auto-generated (via learning service)</span>
-                    </div>
+
                   </div>
                 </div>
                 
@@ -191,7 +188,7 @@ export default function AdminSystemPromptsPage() {
                     <div>• <strong>Visitor Mode:</strong> Checks for custom template, falls back to default</div>
                     <div>• <strong>Document Context:</strong> Added via Chroma DB retrieval</div>
                     <div>• <strong>LangChain Prompt:</strong> NOT used in main flow, only for retrieval</div>
-                    <div>• <strong>Enhanced Prompt:</strong> Generated but needs integration</div>
+
                   </div>
                 </div>
               </div>

@@ -24,19 +24,14 @@ import { format } from 'date-fns';
 
 interface SystemPrompt {
   prompt: string;
-  isActive: boolean;
-  lastModified: string;
+  editable: boolean;
   description: string;
-  stats?: {
-    trainingSessions?: number;
-    learningInsights?: number;
-    activeFacts?: number;
-  };
+  lastModified: string;
 }
 
 interface SystemPrompts {
-  default: SystemPrompt;
-  enhanced: SystemPrompt;
+  training: SystemPrompt;
+  visitor: SystemPrompt;
   custom: SystemPrompt;
   langchain: SystemPrompt;
 }
@@ -87,42 +82,34 @@ export default function SystemPromptManager() {
     navigator.clipboard.writeText(text);
   };
 
-  const getStatusIcon = (prompt: SystemPrompt) => {
-    if (prompt.isActive) {
-      return <CheckCircle className="w-4 h-4 text-green-500" />;
-    } else {
-      return <XCircle className="w-4 h-4 text-red-500" />;
-    }
-  };
-
   const getPromptTypeInfo = (type: string) => {
     const info = {
-      default: {
-        icon: <FileText className="w-4 h-4" />,
-        title: "Default System Prompt",
+      training: {
+        icon: <Database className="w-4 h-4" />,
+        title: "Training Mode",
         color: "bg-blue-500",
-        editable: true
+        description: "Used when training the chatbot"
       },
-      enhanced: {
-        icon: <RefreshCw className="w-4 h-4" />,
-        title: "Enhanced System Prompt",
-        color: "bg-purple-500",
-        editable: false
+      visitor: {
+        icon: <FileText className="w-4 h-4" />,
+        title: "Visitor Mode",
+        color: "bg-green-500",
+        description: "Default prompt for visitors"
       },
       custom: {
         icon: <Settings className="w-4 h-4" />,
-        title: "Custom System Prompt",
-        color: "bg-green-500",
-        editable: true
+        title: "Custom Template",
+        color: "bg-purple-500",
+        description: "Database-stored custom template"
       },
       langchain: {
         icon: <Link className="w-4 h-4" />,
-        title: "LangChain System Prompt",
+        title: "LangChain (Read-only)",
         color: "bg-orange-500",
-        editable: true
+        description: "Document retrieval only"
       }
     };
-    return info[type] || info.default;
+    return info[type] || info.training;
   };
 
   if (isLoading) {
@@ -153,7 +140,7 @@ export default function SystemPromptManager() {
         <div>
           <h2 className="text-xl font-semibold text-white">System Prompt Manager</h2>
           <p className="text-gray-400 text-sm mt-1">
-            Edit and manage all 4 system prompts used by the chatbot
+            Edit and manage the 3 system prompts used by the chatbot
           </p>
         </div>
         <Button
@@ -166,7 +153,7 @@ export default function SystemPromptManager() {
         </Button>
       </div>
 
-      <Tabs defaultValue="default" className="w-full">
+      <Tabs defaultValue="training" className="w-full">
         <TabsList className="grid w-full grid-cols-4 bg-[#2a2a2a]">
           {prompts && Object.entries(prompts).map(([type, prompt]) => {
             const info = getPromptTypeInfo(type);
@@ -202,33 +189,14 @@ export default function SystemPromptManager() {
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
-                      {getStatusIcon(prompt)}
-                      <Badge variant={prompt.isActive ? "default" : "secondary"}>
-                        {prompt.isActive ? "Active" : "Inactive"}
+                      <Badge variant={prompt.editable ? "default" : "secondary"}>
+                        {prompt.editable ? "Editable" : "Read-only"}
                       </Badge>
                     </div>
                   </div>
                 </CardHeader>
                 
                 <CardContent className="space-y-4">
-                  {/* Stats for custom prompt */}
-                  {type === 'custom' && prompt.stats && (
-                    <div className="grid grid-cols-3 gap-4 p-3 bg-[#1a1a1a] rounded-lg">
-                      <div className="text-center">
-                        <div className="text-lg font-semibold text-white">{prompt.stats.trainingSessions}</div>
-                        <div className="text-xs text-gray-400">Training Sessions</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-lg font-semibold text-white">{prompt.stats.learningInsights}</div>
-                        <div className="text-xs text-gray-400">Learning Insights</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-lg font-semibold text-white">{prompt.stats.activeFacts}</div>
-                        <div className="text-xs text-gray-400">Active Facts</div>
-                      </div>
-                    </div>
-                  )}
-
                   {/* Last Modified */}
                   <div className="flex items-center space-x-2 text-sm text-gray-400">
                     <Clock className="w-4 h-4" />
@@ -247,7 +215,7 @@ export default function SystemPromptManager() {
                         >
                           <Copy className="w-4 h-4" />
                         </Button>
-                        {info.editable && !isEditing && (
+                        {prompt.editable && !isEditing && (
                           <Button
                             onClick={() => handleEdit(type, prompt.prompt)}
                             variant="outline"
@@ -256,9 +224,9 @@ export default function SystemPromptManager() {
                             Edit
                           </Button>
                         )}
-                        {!info.editable && (
+                        {!prompt.editable && (
                           <Badge variant="secondary" className="text-xs">
-                            Auto-generated
+                            Read-only
                           </Badge>
                         )}
                       </div>

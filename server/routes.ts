@@ -1803,28 +1803,60 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // System Prompt Management Routes
+  // System Prompt Management Routes - Updated to match actual implementation
   app.get("/api/admin/chatbot/system-prompts", requireAdmin, async (req, res) => {
     try {
-      const fs = await import('fs').then(m => m.promises);
+      const fs = await import('fs');
       const path = await import('path');
       
-      // Read all 4 system prompts
-      const prompts = {
-        // 1. Default System Prompt (from chatbotService.ts)
-        default: await getDefaultSystemPrompt(),
-        
-        // 2. Enhanced System Prompt (generated from learning service)
-        enhanced: await getEnhancedSystemPrompt(),
-        
-        // 3. Custom System Prompt (from database)
-        custom: await getCustomSystemPrompt(),
-        
-        // 4. LangChain System Prompt (from langchainChatbotService.ts)
-        langchain: await getLangChainSystemPrompt()
-      };
+      // Read the actual chatbotService.ts file to get hardcoded prompts
+      const chatbotServicePath = path.join(process.cwd(), 'server', 'chatbotService.ts');
+      const chatbotServiceContent = fs.readFileSync(chatbotServicePath, 'utf-8');
       
-      res.json(prompts);
+      // Extract training prompt (processTrainingConversation function)
+      const trainingPromptMatch = chatbotServiceContent.match(/const systemPrompt = `([^`]+)`/);
+      const trainingPrompt = trainingPromptMatch ? trainingPromptMatch[1] : "Training prompt not found";
+      
+      // Extract default visitor prompt (processRecruiterQuestion function)
+      const visitorPromptRegex = /else \{\s*\/\/ Use default system prompt\s*systemPrompt = `([^`]+)`/s;
+      const visitorPromptMatch = chatbotServiceContent.match(visitorPromptRegex);
+      const visitorPrompt = visitorPromptMatch ? visitorPromptMatch[1] : "Visitor prompt not found";
+      
+      // Get custom template from database
+      const customPrompt = await storage.getActiveSystemPromptTemplate();
+      
+      // Get LangChain prompt
+      const langchainServicePath = path.join(process.cwd(), 'server', 'langchainChatbotService.ts');
+      const langchainServiceContent = fs.readFileSync(langchainServicePath, 'utf-8');
+      const langchainPromptMatch = langchainServiceContent.match(/const SYSTEM_PROMPT = `([^`]+)`/s);
+      const langchainPrompt = langchainPromptMatch ? langchainPromptMatch[1] : "LangChain prompt not found";
+
+      res.json({
+        training: {
+          prompt: trainingPrompt,
+          editable: true,
+          description: "Used in training mode when you ask questions to train the chatbot (processTrainingConversation)",
+          lastModified: new Date().toISOString()
+        },
+        visitor: {
+          prompt: visitorPrompt,
+          editable: true,
+          description: "Default fallback prompt for visitor questions when no custom template is set (processRecruiterQuestion)",
+          lastModified: new Date().toISOString()
+        },
+        custom: {
+          prompt: customPrompt ? customPrompt.template : "",
+          editable: true,
+          description: "Database-stored custom template that overrides the default visitor prompt",
+          lastModified: customPrompt ? customPrompt.createdAt : new Date().toISOString()
+        },
+        langchain: {
+          prompt: langchainPrompt,
+          editable: false,
+          description: "Used only for document retrieval via LangChain - NOT for main chat responses",
+          lastModified: new Date().toISOString()
+        }
+      });
     } catch (error) {
       console.error("Error fetching system prompts:", error);
       res.status(500).json({ error: "Failed to fetch system prompts" });
@@ -1840,8 +1872,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Prompt text is required" });
       }
       
-      const result = await updateSystemPrompt(type, prompt);
-      res.json({ success: true, message: result.message });
+      const fs = await import('fs');
+      const path = await import('path');
+      
+      if (type === 'training') {
+        // Update training prompt in chatbotService.ts
+        const chatbotServicePath = path.join(process.cwd(), 'server', 'chatbotService.ts');
+        let content = fs.readFileSync(chatbotServicePath, 'utf-8');
+        
+        // Replace the training prompt
+        content = content.replace(
+          /const systemPrompt = `([^`]+)`/,
+          `const systemPrompt = \`${prompt}\``
+        );
+        
+        fs.writeFileSync(chatbotServicePath, content);
+        res.json({ success: true, message: "Training prompt updated in chatbotService.ts" });
+        
+      } else if (type === 'visitor') {
+        // Update visitor prompt in chatbotService.ts
+        const chatbotServicePath = path.join(process.cwd(), 'server', 'chatbotService.ts');
+        let content = fs.readFileSync(chatbotServicePath, 'utf-8');
+        
+        // Replace the visitor prompt
+        const visitorPromptRegex = /(else \{\s*\/\/ Use default system prompt\s*systemPrompt = `)[^`]+(`)/s;
+        content = content.replace(visitorPromptRegex, `$1${prompt}$2`);
+        
+        fs.writeFileSync(chatbotServicePath, content);
+        res.json({ success: true, message: "Visitor prompt updated in chatbotService.ts" });
+        
+      } else if (type === 'custom') {
+        // Update custom prompt in database
+        await storage.saveSystemPromptTemplate({
+          template: prompt,
+          isActive: true
+        });
+        res.json({ success: true, message: "Custom prompt updated in database" });
+        
+      } else if (type === 'langchain') {
+        // LangChain prompt is read-only
+        res.status(400).json({ error: "LangChain prompt cannot be edited - it's used only for document retrieval" });
+        
+      } else {
+        res.status(400).json({ error: "Invalid prompt type" });
+      }
+      
     } catch (error) {
       console.error("Error updating system prompt:", error);
       res.status(500).json({ error: "Failed to update system prompt" });
