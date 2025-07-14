@@ -96,7 +96,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         'video/webm',
         'video/ogg'
       ];
-      
+
       if (allowedMimes.includes(file.mimetype)) {
         cb(null, true);
       } else {
@@ -171,7 +171,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         'application/rtf',
         'text/rtf'
       ];
-      
+
       if (allowedMimes.includes(file.mimetype) || file.originalname.endsWith('.md') || file.originalname.endsWith('.txt')) {
         cb(null, true);
       } else {
@@ -228,13 +228,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/admin/upload', requireAdmin, upload.array('files', 8), async (req, res) => {
     try {
       const files = req.files as Express.Multer.File[];
-      
+
       if (!files || files.length === 0) {
         return res.status(400).json({ error: 'No files uploaded' });
       }
-      
+
       const fileUrls = files.map(file => `/uploads/projects/${file.filename}`);
-      
+
       res.json({ 
         message: 'Files uploaded successfully',
         files: fileUrls
@@ -249,11 +249,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/admin/resume/upload', requireAdmin, resumeUpload.single('resume'), async (req, res) => {
     try {
       const file = req.file;
-      
+
       if (!file) {
         return res.status(400).json({ error: 'No resume file uploaded' });
       }
-      
+
       // Save resume metadata to storage
       const resumeData = {
         filename: file.filename,
@@ -261,9 +261,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         path: `/uploads/resumes/${file.filename}`,
         size: file.size
       };
-      
+
       await storage.saveResume(resumeData);
-      
+
       res.json({ 
         message: 'Resume uploaded successfully',
         resume: resumeData
@@ -292,27 +292,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/resume/download', async (req, res) => {
     try {
       const { password } = req.body;
-      
+
       // Check password
       if (!password || password !== 'wolfpack') {
         return res.status(401).json({ error: 'Invalid password' });
       }
-      
+
       const resume = await storage.getResume();
-      
+
       if (!resume) {
         return res.status(404).json({ error: 'No resume available' });
       }
-      
+
       const resumePath = path.join(process.cwd(), 'uploads', 'resumes', resume.filename);
-      
+
       // Check if file exists
       try {
         await fs.access(resumePath);
       } catch (err) {
         return res.status(404).json({ error: 'Resume file not found' });
       }
-      
+
       res.setHeader('Content-Type', 'application/pdf');
       res.setHeader('Content-Disposition', `attachment; filename="${resume.originalName || 'Nick Lanahan Resume.pdf'}"`);
       res.sendFile(resumePath);
@@ -323,7 +323,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Handle API routes with prefix
-  
+
   // Get all projects
   app.get("/api/portfolio", async (req, res) => {
     try {
@@ -340,23 +340,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const identifier = req.params.identifier;
       let project;
-      
+
       // Try as ID first if identifier is a number
       const numericId = parseInt(identifier);
       if (!isNaN(numericId) && numericId.toString() === identifier) {
         project = await storage.getProjectById(numericId);
       }
-      
+
       // If not found as ID or identifier is not numeric, try as slug
       if (!project) {
         const projects = await storage.getAllProjects();
         project = projects.find(p => p.slug === identifier);
       }
-      
+
       if (!project) {
         return res.status(404).json({ message: "Project not found" });
       }
-      
+
       res.json(project);
     } catch (error) {
       console.error("Error fetching project:", error);
@@ -380,7 +380,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Blog Series API Routes (before blog posts to avoid conflicts)
-  
+
   // Get all blog series
   app.get("/api/blog/series", async (req, res) => {
     try {
@@ -397,25 +397,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const identifier = req.params.identifier;
       let series;
-      
+
       // Try as ID first if identifier is a number
       const numericId = parseInt(identifier);
       if (!isNaN(numericId) && numericId.toString() === identifier) {
         series = await storage.getBlogSeriesById(numericId);
       }
-      
+
       // If not found as ID or identifier is not numeric, try as slug
       if (!series) {
         series = await storage.getBlogSeriesBySlug(identifier);
       }
-      
+
       if (!series) {
         return res.status(404).json({ message: "Blog series not found" });
       }
-      
+
       // Also get all posts in this series
       const posts = await storage.getBlogPostsBySeriesId(series.id);
-      
+
       res.json({ ...series, posts });
     } catch (error) {
       console.error("Error fetching blog series:", error);
@@ -428,23 +428,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const identifier = req.params.identifier;
       let post;
-      
+
       // Try as ID first if identifier is a number
       const numericId = parseInt(identifier);
       if (!isNaN(numericId) && numericId.toString() === identifier) {
         post = await storage.getBlogPostById(numericId);
       }
-      
+
       // If not found as ID or identifier is not numeric, try as slug
       if (!post) {
         const posts = await storage.getAllBlogPosts();
         post = posts.find(p => p.slug === identifier);
       }
-      
+
       if (!post) {
         return res.status(404).json({ message: "Blog post not found" });
       }
-      
+
       res.json(post);
     } catch (error) {
       console.error("Error fetching blog post:", error);
@@ -512,10 +512,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/contact", async (req, res) => {
     try {
       const contactData = insertContactSchema.parse(req.body);
-      
+
       // Save to database
       await storage.saveContactSubmission(contactData);
-      
+
       // Send email notification
       const emailResult = await sendContactEmail({
         name: contactData.name,
@@ -523,7 +523,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         subject: contactData.subject,
         message: contactData.message
       });
-      
+
       if (!emailResult.success) {
         console.warn("Email notification could not be sent:", emailResult.error);
         // Still return success since we saved to database
@@ -531,7 +531,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           message: "Contact form submitted successfully, but email notification could not be sent."
         });
       }
-      
+
       res.status(201).json({ 
         message: "Contact form submitted successfully and notification email sent."
       });
@@ -540,7 +540,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const validationError = fromZodError(error);
         return res.status(400).json({ message: validationError.message });
       }
-      
+
       console.error("Error processing contact submission:", error);
       res.status(500).json({ message: "Failed to submit contact form" });
     }
@@ -550,13 +550,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/login", async (req, res) => {
     try {
       const { username, password } = req.body;
-      
+
       if (!username || !password) {
         return res.status(400).json({ error: "Username and password are required" });
       }
 
       const admin = await storage.getAdminByUsername(username);
-      
+
       if (!admin || admin.password !== password) {
         return res.status(401).json({ error: "Invalid credentials" });
       }
@@ -564,7 +564,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Set session
       req.session.adminId = admin.id;
       req.session.isAdmin = true;
-      
+
       res.json({ message: "Login successful", admin: { id: admin.id, username: admin.username } });
     } catch (error) {
       console.error("Error during admin login:", error);
@@ -596,7 +596,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (req.body.date && typeof req.body.date === 'string') {
         req.body.date = new Date(req.body.date);
       }
-      
+
       const validatedData = insertProjectSchema.parse(req.body);
       const project = await storage.createProject(validatedData);
       res.json(project);
@@ -609,12 +609,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.put("/api/admin/projects/:id", requireAdmin, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      
+
       // Handle date conversion from string to Date object
       if (req.body.date && typeof req.body.date === 'string') {
         req.body.date = new Date(req.body.date);
       }
-      
+
       const validatedData = insertProjectSchema.partial().parse(req.body);
       const project = await storage.updateProject(id, validatedData);
       res.json(project);
@@ -642,19 +642,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (req.body.date && typeof req.body.date === 'string') {
         req.body.date = new Date(req.body.date);
       }
-      
+
       // Calculate read time if not provided (estimate 200 words per minute)
       if (!req.body.readTime && req.body.content) {
         const wordCount = req.body.content.replace(/<[^>]*>/g, '').split(/\s+/).length;
         req.body.readTime = Math.max(1, Math.ceil(wordCount / 200));
       }
-      
+
       // For draft posts, ensure we have required fields with defaults
       if (!req.body.published) {
         if (!req.body.title) req.body.title = "Untitled Draft";
         if (!req.body.slug) req.body.slug = `draft-${Date.now()}`;
       }
-      
+
       const validatedData = insertBlogPostSchema.parse(req.body);
       const post = await storage.createBlogPost(validatedData);
       res.json(post);
@@ -667,24 +667,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.put("/api/admin/blog/:id", requireAdmin, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      
+
       // Handle date conversion from string to Date object
       if (req.body.date && typeof req.body.date === 'string') {
         req.body.date = new Date(req.body.date);
       }
-      
+
       // Calculate read time if not provided (estimate 200 words per minute)
       if (!req.body.readTime && req.body.content) {
         const wordCount = req.body.content.replace(/<[^>]*>/g, '').split(/\s+/).length;
         req.body.readTime = Math.max(1, Math.ceil(wordCount / 200));
       }
-      
+
       // For draft posts, ensure we have required fields with defaults
       if (!req.body.published) {
         if (!req.body.title) req.body.title = "Untitled Draft";
         if (!req.body.slug) req.body.slug = `draft-${Date.now()}`;
       }
-      
+
       const validatedData = insertBlogPostSchema.partial().parse(req.body);
       const post = await storage.updateBlogPost(id, validatedData);
       res.json(post);
@@ -709,25 +709,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/blog/import", requireAdmin, markdownUpload.single('markdown'), async (req, res) => {
     try {
       const file = req.file;
-      
+
       if (!file) {
         return res.status(400).json({ error: 'No markdown file uploaded' });
       }
-      
+
       const markdownContent = file.buffer.toString('utf-8');
-      
+
       // Simple markdown-to-HTML conversion and frontmatter parsing
       const lines = markdownContent.split('\n');
       let frontmatter = {};
       let content = markdownContent;
-      
+
       // Check for frontmatter
       if (lines[0] === '---') {
         const frontmatterEndIndex = lines.findIndex((line, index) => index > 0 && line === '---');
         if (frontmatterEndIndex !== -1) {
           const frontmatterLines = lines.slice(1, frontmatterEndIndex);
           content = lines.slice(frontmatterEndIndex + 1).join('\n');
-          
+
           // Parse simple YAML frontmatter
           frontmatterLines.forEach(line => {
             const [key, ...valueParts] = line.split(':');
@@ -738,7 +738,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
         }
       }
-      
+
       // Basic markdown to HTML conversion
       const htmlContent = content
         .replace(/^# (.*$)/gm, '<h1>$1</h1>')
@@ -750,7 +750,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .replace(/^(.+)$/gm, '<p>$1</p>')
         .replace(/<p><h/g, '<h')
         .replace(/<\/h([1-6])><\/p>/g, '</h$1>');
-      
+
       // Generate slug from title
       const generateSlug = (title) => {
         return title
@@ -758,7 +758,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           .replace(/[^a-z0-9]+/g, '-')
           .replace(/^-+|-+$/g, '');
       };
-      
+
       const blogData = {
         title: frontmatter.title || 'Imported Blog Post',
         slug: frontmatter.slug || generateSlug(frontmatter.title || 'imported-blog-post'),
@@ -771,7 +771,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         published: frontmatter.published === 'true' || false,
         date: frontmatter.date ? new Date(frontmatter.date) : new Date(),
       };
-      
+
       res.json({ 
         message: 'Markdown imported successfully',
         data: blogData
@@ -787,11 +787,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const id = parseInt(req.params.id);
       const post = await storage.getBlogPostById(id);
-      
+
       if (!post) {
         return res.status(404).json({ error: "Blog post not found" });
       }
-      
+
       // Convert HTML back to markdown (basic conversion)
       const markdownContent = post.content
         .replace(/<h1>(.*?)<\/h1>/g, '# $1')
@@ -802,7 +802,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .replace(/<p>(.*?)<\/p>/g, '$1\n\n')
         .replace(/<br\s*\/?>/g, '\n')
         .replace(/<[^>]*>/g, ''); // Remove remaining HTML tags
-      
+
       // Create frontmatter
       const frontmatter = [
         '---',
@@ -819,7 +819,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         '',
         markdownContent
       ].filter(Boolean).join('\n');
-      
+
       res.setHeader('Content-Type', 'text/markdown');
       res.setHeader('Content-Disposition', `attachment; filename="${post.slug}.md"`);
       res.send(frontmatter);
@@ -833,14 +833,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/polish-content", requireAdmin, async (req, res) => {
     try {
       const { content, contentType } = req.body;
-      
+
       if (!content || typeof content !== 'string') {
         return res.status(400).json({ error: 'Content is required' });
       }
 
       const { polishContent } = await import('./aiPolisher');
       const result = await polishContent(content, contentType || 'blog');
-      
+
       res.json(result);
     } catch (error) {
       console.error('Error polishing content:', error);
@@ -851,14 +851,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/quick-suggestions", requireAdmin, async (req, res) => {
     try {
       const { content } = req.body;
-      
+
       if (!content || typeof content !== 'string') {
         return res.status(400).json({ error: 'Content is required' });
       }
 
       const { getQuickSuggestions } = await import('./aiPolisher');
       const suggestions = await getQuickSuggestions(content);
-      
+
       res.json({ suggestions });
     } catch (error) {
       console.error('Error getting quick suggestions:', error);
@@ -869,14 +869,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/improve-selection", requireAdmin, async (req, res) => {
     try {
       const { selectedText, context } = req.body;
-      
+
       if (!selectedText || typeof selectedText !== 'string') {
         return res.status(400).json({ error: 'Selected text is required' });
       }
 
       const { improveSelection } = await import('./aiPolisher');
       const improved = await improveSelection(selectedText, context || '');
-      
+
       res.json({ improved });
     } catch (error) {
       console.error('Error improving selection:', error);
@@ -1054,19 +1054,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // CHATBOT API ROUTES
-  
+
   // Public chatbot endpoint for recruiters (VISITOR MODE)
   app.post("/api/chatbot/ask", async (req, res) => {
     try {
       const { question, sessionId } = req.body;
-      
+
       if (!question || typeof question !== 'string') {
         return res.status(400).json({ error: "Question is required" });
       }
 
       // Process the question using the new VISITOR MODE function
       const response = await processRecruiterQuestion(question, sessionId);
-      
+
       res.json({
         response: response.response,
         isOnTopic: response.isOnTopic,
@@ -1082,7 +1082,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/chatbot/chat", async (req, res) => {
     try {
       const { message, conversationId } = req.body;
-      
+
       if (!message || !conversationId) {
         return res.status(400).json({ error: 'Missing message or conversationId' });
       }
@@ -1090,7 +1090,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Use LangChain service for better document retrieval
       const { processMessage } = await import('./langchainChatbotService');
       const response = await processMessage(message, conversationId);
-      
+
       res.json({
         response: response.response,
         isOnTopic: response.isOnTopic ?? true,
@@ -1107,26 +1107,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/chatbot/train", requireAdmin, async (req, res) => {
     try {
       const { message, sessionId } = req.body;
-      
+
       if (!message || typeof message !== 'string') {
         return res.status(400).json({ error: "Message is required" });
       }
 
       // Process the training conversation using TRAINING MODE
       const response = await processTrainingConversation(message, sessionId);
-      
+
       // Only increment progress when user provides substantial information (not just short responses)
       // This helps track actual answered questions rather than every message exchange
       if (message.length > 10 && !message.toLowerCase().includes('hello') && !message.toLowerCase().includes('hi')) {
         const currentProgress = await storage.getChatbotTrainingProgress();
         const newQuestionCount = (currentProgress?.totalQuestions || 0) + 1;
-        
+
         await storage.updateChatbotTrainingProgress({
           totalQuestions: newQuestionCount,
           lastTrainingDate: new Date()
         });
       }
-      
+
       res.json({
         response: response.response,
         isOnTopic: response.isOnTopic,
@@ -1139,12 +1139,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Admin chatbot management routes
-  
+
   // Get training progress
   app.get("/api/admin/chatbot/progress", requireAdmin, async (req, res) => {
     try {
       const progress = await storage.getChatbotTrainingProgress();
-      
+
       res.json({
         ...progress,
         documentsCount: 27 // Fixed count from Chroma DB
@@ -1174,9 +1174,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const documents = await storage.getAllChatbotDocuments();
       const trainingSessions = await storage.getAllChatbotTrainingSessions();
       const progress = await storage.getChatbotTrainingProgress();
-      
+
       const question = await generateTrainingQuestion(documents, trainingSessions, progress);
-      
+
       res.json(question);
     } catch (error) {
       console.error("Error generating training question:", error);
@@ -1188,7 +1188,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/chatbot/training/answer", requireAdmin, async (req, res) => {
     try {
       const { question, answer, category } = req.body;
-      
+
       if (!question || !answer) {
         return res.status(400).json({ error: "Question and answer are required" });
       }
@@ -1203,7 +1203,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Update progress
       const currentProgress = await storage.getChatbotTrainingProgress();
       const newTotalQuestions = (currentProgress?.totalQuestions || 0) + 1;
-      
+
       await storage.updateChatbotTrainingProgress({
         totalQuestions: newTotalQuestions,
         lastTrainingDate: new Date()
@@ -1235,7 +1235,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/admin/chatbot/analytics", requireAdmin, async (req, res) => {
     try {
       const conversations = await storage.getAllChatbotConversations();
-      
+
       // Basic analytics
       const analytics = {
         totalConversations: conversations.length,
@@ -1258,13 +1258,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/chatbot/chat", async (req, res) => {
     try {
       const { message, sessionId } = req.body;
-      
+
       if (!message) {
         return res.status(400).json({ error: "Message is required" });
       }
 
       const response = await processRecruiterQuestion(message, sessionId);
-      
+
       // Automatically evaluate the conversation if it was saved
       if (response.conversationId) {
         // Run evaluation in the background without blocking the response
@@ -1277,7 +1277,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         }, 1000); // Small delay to ensure conversation is saved
       }
-      
+
       res.json(response);
     } catch (error) {
       console.error("Error processing chatbot message:", error);
@@ -1289,13 +1289,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/chatbot/train", requireAdmin, async (req, res) => {
     try {
       const { message, sessionId } = req.body;
-      
+
       if (!message) {
         return res.status(400).json({ error: "Message is required" });
       }
 
       const response = await processTrainingConversation(message, sessionId);
-      
+
       // Automatically evaluate training conversations if they were saved
       if (response.conversationId) {
         // Run evaluation in the background without blocking the response
@@ -1308,7 +1308,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         }, 1000); // Small delay to ensure conversation is saved
       }
-      
+
       res.json(response);
     } catch (error) {
       console.error("Error processing training conversation:", error);
@@ -1332,7 +1332,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const evaluations = await storage.getChatbotEvaluations();
       const conversations = await storage.getAllChatbotConversations();
-      
+
       // Create a map of conversation details
       const conversationMap = new Map();
       conversations.forEach(conv => {
@@ -1343,13 +1343,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           createdAt: conv.createdAt
         });
       });
-      
+
       // Combine evaluations with conversation details
       const detailedEvaluations = evaluations.map(evaluation => ({
         ...evaluation,
         conversation: conversationMap.get(evaluation.conversationId) || null
       }));
-      
+
       res.json(detailedEvaluations);
     } catch (error) {
       console.error("Error fetching detailed chatbot evaluations:", error);
@@ -1397,17 +1397,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const conversations = await storage.getAllChatbotConversations();
       const evaluations = await storage.getChatbotEvaluations();
-      
+
       // Find conversations that haven't been evaluated yet
       const evaluatedConversationIds = new Set(evaluations.map(e => e.conversationId));
       const unevaluatedConversations = conversations.filter(conv => !evaluatedConversationIds.has(conv.id));
-      
+
       console.log(`Starting batch evaluation for ${unevaluatedConversations.length} conversations`);
-      
+
       // Use the existing batch evaluation function
       const conversationIds = unevaluatedConversations.map(conv => conv.id);
       const results = await batchEvaluateConversations(conversationIds);
-      
+
       res.json({
         totalConversations: conversations.length,
         evaluatedBefore: evaluatedConversationIds.size,
@@ -1424,9 +1424,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/admin/chatbot/test-prebuilt-evaluators", requireAdmin, async (req, res) => {
     try {
       console.log("Testing prebuilt evaluators...");
-      
+
       const testResult = await testPrebuiltEvaluators();
-      
+
       if (testResult) {
         res.json({
           success: true,
@@ -1458,16 +1458,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/chatbot/evaluate-comprehensive/:conversationId", requireAdmin, async (req, res) => {
     try {
       const conversationId = parseInt(req.params.conversationId);
-      
+
       const conversation = await storage.getChatbotConversation(conversationId);
       if (!conversation) {
         return res.status(404).json({ error: "Conversation not found" });
       }
-      
+
       // Get context for evaluation
       const documents = await storage.getChatbotDocuments();
       const trainingData = await storage.getChatbotTrainingSessions();
-      
+
       let context = "Available knowledge about Nick Lanahan:\n\n";
       documents.forEach(doc => {
         context += `From ${doc.originalName}: ${doc.content.substring(0, 400)}...\n\n`;
@@ -1475,13 +1475,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       trainingData.forEach(session => {
         context += `Q: ${session.question}\nA: ${session.answer}\n\n`;
       });
-      
+
       const evaluation = await runComprehensiveEvaluation(
         conversation.userQuestion,
         conversation.botResponse,
         context.substring(0, 2000)
       );
-      
+
       res.json({
         success: true,
         conversation: {
@@ -1512,13 +1512,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const documents = await storage.getAllChatbotDocuments();
       console.log(`Starting re-extraction for ${documents.length} documents`);
-      
+
       const results = [];
-      
+
       for (const document of documents) {
         try {
           const filePath = path.join(chatbotUploadsDir, document.filename);
-          
+
           // Check if file exists
           if (!await fs.access(filePath).then(() => true).catch(() => false)) {
             results.push({
@@ -1529,16 +1529,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
             });
             continue;
           }
-          
+
           // Re-extract content
           const fileBuffer = await fs.readFile(filePath);
           const extractedContent = await extractTextFromFile(fileBuffer, document.fileType, document.originalName);
-          
+
           // Update document in database
           await storage.updateChatbotDocument(document.id, {
             content: extractedContent
           });
-          
+
           results.push({
             documentId: document.id,
             filename: document.originalName,
@@ -1546,7 +1546,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             contentLength: extractedContent.length,
             preview: extractedContent.substring(0, 100) + '...'
           });
-          
+
           console.log(`Re-extracted content for ${document.originalName}: ${extractedContent.length} characters`);
         } catch (error) {
           console.error(`Error re-extracting ${document.originalName}:`, error);
@@ -1558,10 +1558,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
         }
       }
-      
+
       const successful = results.filter(r => r.success).length;
       const failed = results.filter(r => !r.success).length;
-      
+
       res.json({
         totalDocuments: documents.length,
         successful,
@@ -1580,7 +1580,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!Array.isArray(conversationIds)) {
         return res.status(400).json({ error: "conversationIds must be an array" });
       }
-      
+
       const evaluations = await batchEvaluateConversations(conversationIds);
       res.json(evaluations);
     } catch (error) {
@@ -1697,7 +1697,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/chatbot/learning/update-prompt", requireAdmin, async (req, res) => {
     try {
       const { customPrompt } = req.body;
-      
+
       if (customPrompt) {
         // Save the custom system prompt
         await storage.saveSystemPromptTemplate({
@@ -1732,11 +1732,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const id = parseInt(req.params.id);
       const { isActive, importance } = req.body;
-      
+
       const updateData: any = {};
       if (typeof isActive === 'boolean') updateData.isActive = isActive;
       if (typeof importance === 'number') updateData.importance = importance;
-      
+
       const updatedInsight = await storage.updateChatbotLearningInsight(id, updateData);
       res.json(updatedInsight);
     } catch (error) {
@@ -1750,16 +1750,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const feedbackId = parseInt(req.params.feedbackId);
       const knowledgeUpdate = await processUserFeedback(feedbackId);
-      
+
       // Create knowledge facts from the feedback
       for (const gap of knowledgeUpdate.knowledgeGaps) {
         await createKnowledgeFact(gap, 'user_feedback', feedbackId);
       }
-      
+
       for (const correction of knowledgeUpdate.factCorrections) {
         await createKnowledgeFact(correction, 'user_feedback', feedbackId);
       }
-      
+
       res.json({
         message: "Feedback processed successfully",
         knowledgeUpdate,
@@ -1776,7 +1776,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const conversationId = parseInt(req.params.conversationId);
       const sessionInsights = await processConversationSession(conversationId);
       const learningInsights = await convertToLearningInsights(sessionInsights, conversationId);
-      
+
       res.json({
         message: "Session processed successfully",
         sessionInsights,
@@ -1808,23 +1808,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const fs = await import('fs');
       const path = await import('path');
-      
+
       // Read the actual chatbotService.ts file to get hardcoded prompts
       const chatbotServicePath = path.join(process.cwd(), 'server', 'chatbotService.ts');
       const chatbotServiceContent = fs.readFileSync(chatbotServicePath, 'utf-8');
-      
+
       // Extract training prompt (processTrainingConversation function)
       const trainingPromptMatch = chatbotServiceContent.match(/const systemPrompt = `([^`]+)`/);
       const trainingPrompt = trainingPromptMatch ? trainingPromptMatch[1] : "Training prompt not found";
-      
+
       // Extract default visitor prompt (processRecruiterQuestion function)
       const visitorPromptRegex = /else \{\s*\/\/ Use default system prompt[\s\S]*?systemPrompt = `([^`]+)`/;
       const visitorPromptMatch = chatbotServiceContent.match(visitorPromptRegex);
       const visitorPrompt = visitorPromptMatch ? visitorPromptMatch[1] : "Visitor prompt not found";
-      
+
       // Get custom template from database
       const customPrompt = await storage.getActiveSystemPromptTemplate();
-      
+
       // Get LangChain prompt
       const langchainServicePath = path.join(process.cwd(), 'server', 'langchainChatbotService.ts');
       const langchainServiceContent = fs.readFileSync(langchainServicePath, 'utf-8');
@@ -1833,7 +1833,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Get response formatting rules
       const formattingRules = await storage.getActiveResponseFormattingRules();
-      
+
       res.json({
         training: {
           prompt: trainingPrompt,
@@ -1876,40 +1876,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { type } = req.params;
       const { prompt } = req.body;
-      
+
       if (!prompt || typeof prompt !== 'string') {
         return res.status(400).json({ error: "Prompt text is required" });
       }
-      
+
       const fs = await import('fs');
       const path = await import('path');
-      
+
       if (type === 'training') {
         // Update training prompt in chatbotService.ts
         const chatbotServicePath = path.join(process.cwd(), 'server', 'chatbotService.ts');
         let content = fs.readFileSync(chatbotServicePath, 'utf-8');
-        
+
         // Replace the training prompt
         content = content.replace(
           /const systemPrompt = `([^`]+)`/,
           `const systemPrompt = \`${prompt}\``
         );
-        
+
         fs.writeFileSync(chatbotServicePath, content);
         res.json({ success: true, message: "Training prompt updated in chatbotService.ts" });
-        
+
       } else if (type === 'visitor') {
         // Update visitor prompt in chatbotService.ts
         const chatbotServicePath = path.join(process.cwd(), 'server', 'chatbotService.ts');
         let content = fs.readFileSync(chatbotServicePath, 'utf-8');
-        
+
         // Replace the visitor prompt
         const visitorPromptRegex = /(else \{\s*\/\/ Use default system prompt\s*systemPrompt = `)[^`]+(`)/s;
         content = content.replace(visitorPromptRegex, `$1${prompt}$2`);
-        
+
         fs.writeFileSync(chatbotServicePath, content);
         res.json({ success: true, message: "Visitor prompt updated in chatbotService.ts" });
-        
+
       } else if (type === 'custom') {
         // Update custom prompt in database
         await storage.saveSystemPromptTemplate({
@@ -1917,11 +1917,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
           isActive: true
         });
         res.json({ success: true, message: "Custom prompt updated in database" });
-        
+
       } else if (type === 'langchain') {
         // LangChain prompt is read-only - prevent editing
         res.status(403).json({ error: "LangChain prompt is read-only and cannot be edited" });
-        
+
       } else if (type === 'formatting') {
         // Update response formatting rules in database
         await storage.saveResponseFormattingRules({
@@ -1930,11 +1930,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
           isActive: true
         });
         res.json({ success: true, message: "Response formatting rules updated in database" });
-        
+
       } else {
         res.status(400).json({ error: "Invalid prompt type" });
       }
-      
+
     } catch (error) {
       console.error("Error updating system prompt:", error);
       res.status(500).json({ error: "Failed to update system prompt" });
@@ -1963,12 +1963,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const trainingData = await storage.getChatbotTrainingSessions();
       const documents = await storage.getChatbotDocuments();
       const learningInsights = await storage.getChatbotLearningInsights();
-      
+
       // Build a list of ALL active facts from learning insights
       const factInsights = learningInsights.filter(i => 
         i.isActive && i.insight.startsWith('FACT:')
       );
-      
+
       let factsSection = "";
       if (factInsights.length > 0) {
         factsSection = "\n\nIMPORTANT FACTS (from user feedback):\n";
@@ -2001,7 +2001,7 @@ AVAILABLE DOCUMENT TYPES:
 - Project documentation
 - Professional certifications
 - Work samples and portfolio pieces${factsSection}`;
-      
+
       res.json({
         prompt: systemPrompt,
         stats: {
@@ -2024,10 +2024,10 @@ AVAILABLE DOCUMENT TYPES:
       const negativeFeedback = allFeedback.filter(fb => 
         fb.rating === 'thumbs_down' && fb.comment && fb.comment.length > 0
       );
-      
+
       let processedCount = 0;
       const knowledgeUpdates = [];
-      
+
       for (const feedback of negativeFeedback) {
         try {
           const update = await processUserFeedback(feedback.id);
@@ -2037,23 +2037,23 @@ AVAILABLE DOCUMENT TYPES:
               conversationId: feedback.conversationId,
               update
             });
-            
+
             // Create knowledge facts
             for (const gap of update.knowledgeGaps) {
               await createKnowledgeFact(gap, 'user_feedback', feedback.id);
             }
-            
+
             for (const correction of update.factCorrections) {
               await createKnowledgeFact(correction, 'user_feedback', feedback.id);
             }
-            
+
             processedCount++;
           }
         } catch (error) {
           console.error(`Error processing feedback ${feedback.id}:`, error);
         }
       }
-      
+
       res.json({
         message: "All feedback processed",
         totalFeedback: negativeFeedback.length,
@@ -2074,14 +2074,14 @@ AVAILABLE DOCUMENT TYPES:
   app.post("/api/langchain/chatbot/chat", async (req, res) => {
     try {
       const { message, conversationId } = req.body;
-      
+
       if (!message || !conversationId) {
         return res.status(400).json({ error: "Message and conversationId are required" });
       }
-      
+
       // Process message through LangChain RAG pipeline
       const response = await processLangChainMessage(message, conversationId);
-      
+
       res.json({ response });
     } catch (error) {
       console.error("Error in LangChain chatbot:", error);
@@ -2093,13 +2093,13 @@ AVAILABLE DOCUMENT TYPES:
   app.post("/api/langchain/documents/add", requireAdmin, async (req, res) => {
     try {
       const { content, filename, type, id } = req.body;
-      
+
       if (!content || !filename || !type || !id) {
         return res.status(400).json({ error: "Content, filename, type, and id are required" });
       }
-      
+
       await addDocumentToVectorStore(content, { filename, type, id });
-      
+
       res.json({ message: "Document added to vector store successfully" });
     } catch (error) {
       console.error("Error adding document to vector store:", error);
@@ -2133,11 +2133,11 @@ AVAILABLE DOCUMENT TYPES:
   app.post("/api/langchain/evaluation/dataset", requireAdmin, async (req, res) => {
     try {
       const { name, examples } = req.body;
-      
+
       if (!name || !examples || !Array.isArray(examples)) {
         return res.status(400).json({ error: "Name and examples array are required" });
       }
-      
+
       const dataset = await createEvaluationDataset(name, examples);
       res.json(dataset);
     } catch (error) {
@@ -2174,6 +2174,86 @@ AVAILABLE DOCUMENT TYPES:
     }
   });
 
+  const requireAuth = (req: any, res: any, next: any) => {
+    if (!req.session.isAdmin) {
+      return res.status(401).json({ error: "Admin authentication required" });
+    }
+    next();
+  };
+
+  // Admin project management routes
+  app.post("/api/admin/projects", requireAuth, upload.array('files'), async (req: any, res: any) => {
+    try {
+      const { title, shortDescription, description, technologies, categories, demoUrl, codeUrl, featured } = req.body;
+      const files = req.files as Express.Multer.File[];
+
+      let mediaFiles: string[] = [];
+
+      if (files && files.length > 0) {
+        mediaFiles = files.map(file => `/uploads/projects/${file.filename}`);
+      }
+
+      const project = await storage.createProject({
+        title,
+        shortDescription,
+        description,
+        technologies: technologies.split(',').map((t: string) => t.trim()),
+        categories: categories ? categories.split(',').map((c: string) => c.trim()) : [],
+        demoUrl,
+        codeUrl,
+        featured: featured === 'true',
+        mediaFiles,
+        date: new Date(),
+      });
+
+      res.json(project);
+    } catch (error) {
+      console.error("Error creating project:", error);
+      res.status(500).json({ error: "Failed to create project" });
+    }
+  });
+
+  app.put("/api/admin/projects/:id", requireAuth, upload.array('files'), async (req: any, res: any) => {
+    try {
+      const { id } = req.params;
+      const { title, shortDescription, description, technologies, categories, demoUrl, codeUrl, featured } = req.body;
+      const files = req.files as Express.Multer.File[];
+
+      const updateData: any = {
+        title,
+        shortDescription,
+        description,
+        technologies: technologies.split(',').map((t: string) => t.trim()),
+        categories: categories ? categories.split(',').map((c: string) => c.trim()) : [],
+        demoUrl,
+        codeUrl,
+        featured: featured === 'true',
+      };
+
+      if (files && files.length > 0) {
+        updateData.mediaFiles = files.map(file => `/uploads/projects/${file.filename}`);
+      }
+
+      const project = await storage.updateProject(parseInt(id), updateData);
+
+      res.json(project);
+    } catch (error) {
+      console.error("Error updating project:", error);
+      res.status(500).json({ error: "Failed to update project" });
+    }
+  });
+
+  app.delete("/api/admin/projects/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteProject(id);
+      res.json({ message: "Project deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting project:", error);
+      res.status(500).json({ error: "Failed to delete project" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
@@ -2185,15 +2265,15 @@ AVAILABLE DOCUMENT TYPES:
 async function getDefaultSystemPrompt() {
   const fs = await import('fs').then(m => m.promises);
   const path = await import('path');
-  
+
   try {
     const filePath = path.join(process.cwd(), 'server', 'chatbotService.ts');
     const content = await fs.readFile(filePath, 'utf-8');
-    
+
     // Extract the default system prompt from the else block
     const elseBlockMatch = content.match(/} else {[\s\S]*?systemPrompt = `([\s\S]*?)`;/);
     const prompt = elseBlockMatch ? elseBlockMatch[1] : 'System prompt not found in chatbotService.ts';
-    
+
     return {
       prompt,
       isActive: true,
@@ -2215,7 +2295,7 @@ async function getEnhancedSystemPrompt() {
   try {
     const { generateEnhancedSystemPrompt } = await import('./chatbotLearningService');
     const prompt = await generateEnhancedSystemPrompt();
-    
+
     return {
       prompt,
       isActive: true,
@@ -2238,7 +2318,7 @@ async function getCustomSystemPrompt() {
     const customPrompt = await storage.getActiveSystemPromptTemplate();
     const trainingData = await storage.getChatbotTrainingSessions();
     const learningInsights = await storage.getChatbotLearningInsights();
-    
+
     return {
       prompt: customPrompt?.template || "No custom prompt saved",
       isActive: !!customPrompt,
@@ -2269,15 +2349,15 @@ async function getCustomSystemPrompt() {
 async function getLangChainSystemPrompt() {
   const fs = await import('fs').then(m => m.promises);
   const path = await import('path');
-  
+
   try {
     const filePath = path.join(process.cwd(), 'server', 'langchainChatbotService.ts');
     const content = await fs.readFile(filePath, 'utf-8');
-    
+
     // Extract the LangChain system prompt from the file
     const promptMatch = content.match(/const SYSTEM_PROMPT = `([\s\S]*?)`;/);
     const prompt = promptMatch ? promptMatch[1] : 'LangChain system prompt not found';
-    
+
     return {
       prompt,
       isActive: true,
@@ -2298,7 +2378,7 @@ async function getLangChainSystemPrompt() {
 async function updateSystemPrompt(type: string, prompt: string) {
   const fs = await import('fs').then(m => m.promises);
   const path = await import('path');
-  
+
   switch (type) {
     case 'default':
       // Update chatbotService.ts - Update the else block system prompt
@@ -2310,10 +2390,10 @@ async function updateSystemPrompt(type: string, prompt: string) {
       );
       await fs.writeFile(chatbotServicePath, updatedChatbotContent);
       return { message: "Default system prompt updated in chatbotService.ts" };
-      
+
     case 'enhanced':
       return { message: "Enhanced system prompt is auto-generated and cannot be directly edited" };
-      
+
     case 'custom':
       // Save to database
       await storage.saveSystemPromptTemplate({
@@ -2322,7 +2402,7 @@ async function updateSystemPrompt(type: string, prompt: string) {
         isActive: true
       });
       return { message: "Custom system prompt saved to database" };
-      
+
     case 'langchain':
       // Update langchainChatbotService.ts
       const langchainServicePath = path.join(process.cwd(), 'server', 'langchainChatbotService.ts');
@@ -2333,7 +2413,7 @@ async function updateSystemPrompt(type: string, prompt: string) {
       );
       await fs.writeFile(langchainServicePath, updatedLangchainContent);
       return { message: "LangChain system prompt updated in langchainChatbotService.ts" };
-      
+
     default:
       throw new Error(`Invalid system prompt type: ${type}`);
   }

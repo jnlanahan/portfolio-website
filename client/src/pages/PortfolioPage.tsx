@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { ProjectCategory, projectCategories } from "@/data/portfolio";
+import { ProjectCategory, getAllCategoriesFromProjects } from "@/data/portfolio";
 import { useState, useMemo, useRef } from "react";
 import { Link } from "wouter";
 
@@ -123,10 +123,19 @@ const ScrollableImageContainer = ({ project }: { project: any }) => {
         </>
       )}
 
-      {/* Category badge */}
-      {project.category && (
-        <div className="absolute top-3 left-3 bg-background/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs">
-          {project.category.name}
+      {/* Category badges */}
+      {project.categories && project.categories.length > 0 && (
+        <div className="absolute top-3 left-3 flex flex-wrap gap-1">
+          {project.categories.slice(0, 2).map((category, index) => (
+            <div key={index} className="bg-background/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs">
+              {category}
+            </div>
+          ))}
+          {project.categories.length > 2 && (
+            <div className="bg-background/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs">
+              +{project.categories.length - 2}
+            </div>
+          )}
         </div>
       )}
 
@@ -270,11 +279,17 @@ const PortfolioPage = () => {
     queryKey: ["/api/portfolio"],
   });
 
+  // Get all unique categories from projects
+  const availableCategories = useMemo(() => {
+    if (!projects) return [];
+    return getAllCategoriesFromProjects(projects);
+  }, [projects]);
+
   // Filter projects by category
   const filteredProjects = useMemo(() => {
     if (!projects || !selectedCategory) return projects || [];
     return projects.filter(project => 
-      project.category && project.category.id === selectedCategory
+      project.categories && project.categories.includes(selectedCategory)
     );
   }, [projects, selectedCategory]);
 
@@ -340,18 +355,18 @@ const PortfolioPage = () => {
           >
             All Projects
           </button>
-          {projectCategories.map((category) => (
+          {availableCategories.map((category) => (
             <button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
+              key={category}
+              onClick={() => setSelectedCategory(category)}
               className={`px-4 py-2 rounded-full text-sm transition-colors ${
-                selectedCategory === category.id
+                selectedCategory === category
                   ? "bg-blue-600 text-white"
                   : "bg-gray-100 hover:bg-gray-200 text-gray-700"
               }`}
               style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
             >
-              {category.name}
+              {category}
             </button>
           ))}
         </div>
@@ -375,7 +390,7 @@ const PortfolioPage = () => {
       <div className="mb-8">
         {selectedCategory && (
           <h2 className="text-2xl font-bold mb-6 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
-            {projectCategories.find(c => c.id === selectedCategory)?.name || 'Projects'}
+            {selectedCategory}
           </h2>
         )}
 

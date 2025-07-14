@@ -18,23 +18,30 @@ export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
 // Projects model
-export const projects = pgTable("projects", {
-  id: serial("id").primaryKey(),
-  title: text("title").notNull(),
-  slug: text("slug"),
-  shortDescription: text("short_description"),
-  description: text("description").notNull(), // Rich text HTML content
-  image: text("image"), // Keep for backward compatibility - will be the thumbnail
-  mediaFiles: text("media_files").array().default([]).notNull(), // Array of file paths
-  thumbnailIndex: integer("thumbnail_index").default(0).notNull(), // Index of thumbnail in mediaFiles
-  technologies: text("technologies").array().default([]).notNull(),
-  demoUrl: text("demo_url"),
-  codeUrl: text("code_url"),
-  featured: boolean("featured").default(false).notNull(),
-  date: timestamp("date").defaultNow().notNull(),
-  client: text("client"),
-  customColor: text("custom_color").default("#007AFF"), // Custom theme color for the project
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+export const projects = pgTable('projects', {
+  id: serial('id').primaryKey(),
+  title: text('title').notNull(),
+  slug: text('slug').notNull().unique(),
+  shortDescription: text('short_description').notNull(),
+  description: text('description').notNull(),
+  image: text('image'),
+  technologies: json('technologies').$type<string[]>().default([]),
+  categories: json('categories').$type<string[]>().default([]),
+  demoUrl: text('demo_url'),
+  codeUrl: text('code_url'),
+  featured: boolean('featured').default(false),
+  date: timestamp('date').defaultNow(),
+  lessonsLearned: text('lessons_learned'),
+  challenge: text('challenge'),
+  solution: text('solution'),
+  results: text('results'),
+  mediaFiles: json('media_files').$type<string[]>().default([]),
+  customColor: text('custom_color'),
+  testimonial: json('testimonial').$type<{
+    quote: string;
+    author: string;
+    role?: string;
+  }>(),
 });
 
 export const insertProjectSchema = createInsertSchema(projects).omit({
