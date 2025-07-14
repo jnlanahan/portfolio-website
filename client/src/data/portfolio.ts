@@ -16,7 +16,7 @@ export interface ProjectType {
   demoUrl: string;
   codeUrl: string;
   featured?: boolean;
-  categories?: string[]; // Changed to array of category names
+  category?: ProjectCategory;
   date: string;
   lessonsLearned?: string;
   testimonial?: {
@@ -28,40 +28,39 @@ export interface ProjectType {
   solution?: string;
   results?: string;
   gallery?: string[];
-  mediaFiles?: string[];
 }
 
-// Default project categories - these will be merged with dynamic ones
-export const defaultProjectCategories: ProjectCategory[] = [
+// Project categories
+export const projectCategories: ProjectCategory[] = [
   {
-    id: 'prototype',
-    name: 'Prototype',
-    slug: 'prototype',
-    description: 'Early-stage prototypes and proof of concepts'
+    id: 'web-development',
+    name: 'Web Development',
+    slug: 'web-development',
+    description: 'Full-stack and frontend web applications'
   },
   {
-    id: 'personal-tool',
-    name: 'Personal Tool',
-    slug: 'personal-tool',
-    description: 'Tools built for personal productivity and use'
+    id: 'mobile',
+    name: 'Mobile Apps',
+    slug: 'mobile',
+    description: 'iOS and Android mobile applications'
   },
   {
-    id: 'enterprise-tool',
-    name: 'Enterprise Tool',
-    slug: 'enterprise-tool',
-    description: 'Professional tools for business and enterprise use'
+    id: 'ai-ml',
+    name: 'AI & Machine Learning',
+    slug: 'ai-ml',
+    description: 'Projects utilizing artificial intelligence and machine learning'
+  },
+  {
+    id: 'ui-ux',
+    name: 'UI/UX Design',
+    slug: 'ui-ux',
+    description: 'User interface and experience design projects'
   }
 ];
 
-// Helper function to get all unique categories from projects
-export const getAllCategoriesFromProjects = (projects: ProjectType[]): string[] => {
-  const allCategories = new Set<string>();
-  projects.forEach(project => {
-    if (project.categories) {
-      project.categories.forEach(category => allCategories.add(category));
-    }
-  });
-  return Array.from(allCategories).sort();
+// Helper function to get category by ID
+export const getCategoryById = (id: string): ProjectCategory | undefined => {
+  return projectCategories.find(category => category.id === id);
 };
 
 export function getPortfolio(): ProjectType[] {
@@ -77,7 +76,7 @@ export function getPortfolio(): ProjectType[] {
       demoUrl: "https://example.com/demo1",
       codeUrl: "https://github.com/example/demo1",
       featured: true,
-      categories: ["Enterprise Tool", "Prototype"],
+      category: getCategoryById('web-development'),
       date: "2023-12-10",
       lessonsLearned: "Building this dashboard taught me the importance of modular architecture and real-time data synchronization at scale.",
       testimonial: {
@@ -104,7 +103,7 @@ export function getPortfolio(): ProjectType[] {
       technologies: ["React Native", "Redux", "Node.js", "Express", "MongoDB"],
       demoUrl: "https://example.com/demo2",
       codeUrl: "https://github.com/example/demo2",
-      categories: ["Personal Tool"],
+      category: getCategoryById('mobile'),
       date: "2023-08-15",
       lessonsLearned: "This project reinforced the value of user-centered design and the importance of gamification in health apps.",
       challenge: "Create a fitness app that stands out in a crowded market by adding social connectivity and data-driven insights.",
@@ -122,7 +121,7 @@ export function getPortfolio(): ProjectType[] {
       demoUrl: "https://example.com/demo3",
       codeUrl: "https://github.com/example/demo3",
       featured: true,
-      categories: ["Enterprise Tool", "Prototype"],
+      category: getCategoryById('web-development'),
       date: "2023-06-20",
       lessonsLearned: "Implementing real-time collaboration taught me about WebSocket optimization and the complexities of conflict resolution in collaborative editing.",
       challenge: "Create an educational platform that allows students to collaborate on coding projects in real-time while giving instructors the ability to monitor and provide feedback.",
@@ -139,7 +138,7 @@ export function getPortfolio(): ProjectType[] {
       technologies: ["Next.js", "Stripe", "Sanity CMS", "Tailwind CSS", "TypeScript"],
       demoUrl: "https://example.com/demo4",
       codeUrl: "https://github.com/example/demo4",
-      categories: ["Enterprise Tool"],
+      category: getCategoryById('web-development'),
       date: "2023-09-05",
       lessonsLearned: "This project taught me the critical importance of performance optimization in e-commerce and how to balance functionality with speed.",
       testimonial: {
@@ -162,7 +161,7 @@ export function getPortfolio(): ProjectType[] {
       demoUrl: "https://example.com/demo5",
       codeUrl: "https://github.com/example/demo5",
       featured: true,
-      categories: ["Prototype", "Personal Tool"],
+      category: getCategoryById('ai-ml'),
       date: "2023-11-15",
       lessonsLearned: "Working with TensorFlow.js taught me the importance of optimizing ML models for browser performance and managing memory efficiently in client-side applications.",
       challenge: "Create an accessible platform for data scientists and ML engineers to visualize complex neural networks and experiment with different model architectures without requiring specialized hardware.",
@@ -179,7 +178,7 @@ export function getPortfolio(): ProjectType[] {
       technologies: ["Flutter", "Firebase", "TensorFlow Lite", "Dart", "Cloud Functions"],
       demoUrl: "https://example.com/demo6",
       codeUrl: "https://github.com/example/demo6",
-      categories: ["Personal Tool"],
+      category: getCategoryById('mobile'),
       date: "2023-10-01",
       lessonsLearned: "Developing a mental wellness app taught me the importance of empathetic design and how technology can positively impact mental health.",
       testimonial: {

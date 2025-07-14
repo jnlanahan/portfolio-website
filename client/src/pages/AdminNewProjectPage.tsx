@@ -34,7 +34,6 @@ const projectSchema = z.object({
   date: z.string().optional(),
   lessonsLearned: z.string().optional(),
   customColor: z.string().default("#007AFF"),
-  categories: z.string().optional(),
 });
 
 type ProjectFormData = z.infer<typeof projectSchema>;
@@ -70,7 +69,6 @@ export default function AdminNewProjectPage() {
       mediaFiles: [],
       thumbnailIndex: 0,
       customColor: "#007AFF",
-      categories: "",
     },
   });
 
@@ -80,17 +78,17 @@ export default function AdminNewProjectPage() {
       Array.from(files).forEach(file => {
         formData.append('files', file);
       });
-
+      
       const response = await fetch('/api/admin/upload', {
         method: 'POST',
         body: formData,
         credentials: 'include',
       });
-
+      
       if (!response.ok) {
         throw new Error('Upload failed');
       }
-
+      
       return response.json();
     },
     onSuccess: (data) => {
@@ -125,7 +123,6 @@ export default function AdminNewProjectPage() {
         date: data.date ? new Date(data.date).toISOString() : new Date().toISOString(),
         mediaFiles: mediaFiles,
         thumbnailIndex: thumbnailIndex,
-        categories: data.categories ? data.categories.split(',').map(cat => cat.trim()) : [],
       };
       return await apiRequest("/api/admin/projects", "POST", payload);
     },
@@ -165,12 +162,12 @@ export default function AdminNewProjectPage() {
     const newFiles = mediaFiles.filter((_, i) => i !== index);
     setMediaFiles(newFiles);
     setValue('mediaFiles', newFiles);
-
+    
     // Update thumbnail index if necessary
     if (thumbnailIndex >= newFiles.length) {
       setThumbnailIndex(Math.max(0, newFiles.length - 1));
     }
-
+    
     // Update image field
     setValue('image', newFiles[thumbnailIndex] || newFiles[0] || '');
   };
@@ -336,14 +333,14 @@ export default function AdminNewProjectPage() {
                             />
                           )}
                         </div>
-
+                        
                         {/* Thumbnail indicator */}
                         {thumbnailIndex === index && (
                           <div className="absolute top-1 left-1 bg-yellow-500 text-white p-1 rounded-full">
                             <Star size={12} fill="currentColor" />
                           </div>
                         )}
-
+                        
                         {/* Action buttons */}
                         <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2">
                           <Button
@@ -395,19 +392,6 @@ export default function AdminNewProjectPage() {
                 />
                 {errors.technologies && (
                   <p className="text-sm text-red-500">{errors.technologies.message}</p>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="categories">Categories (optional, comma separated)</Label>
-                <Input
-                  id="categories"
-                  {...register("categories")}
-                  className={errors.categories ? "border-red-500" : ""}
-                  placeholder="Prototype, Personal Tool, Enterprise Tool"
-                />
-                {errors.categories && (
-                  <p className="text-sm text-red-500">{errors.categories.message}</p>
                 )}
               </div>
 

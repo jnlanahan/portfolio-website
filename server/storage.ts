@@ -47,18 +47,18 @@ export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-
+  
   // Admin methods
   getAdminByUsername(username: string): Promise<Admin | undefined>;
   createAdmin(admin: InsertAdmin): Promise<Admin>;
-
+  
   // Project methods
   getAllProjects(): Promise<Project[]>;
   getProjectById(id: number): Promise<Project | undefined>;
   createProject(project: InsertProject): Promise<Project>;
   updateProject(id: number, project: Partial<InsertProject>): Promise<Project>;
   deleteProject(id: number): Promise<void>;
-
+  
   // Blog series methods
   getAllBlogSeries(): Promise<BlogSeries[]>;
   getBlogSeriesById(id: number): Promise<BlogSeries | undefined>;
@@ -66,7 +66,7 @@ export interface IStorage {
   createBlogSeries(series: InsertBlogSeries): Promise<BlogSeries>;
   updateBlogSeries(id: number, series: Partial<InsertBlogSeries>): Promise<BlogSeries>;
   deleteBlogSeries(id: number): Promise<void>;
-
+  
   // Blog post methods
   getAllBlogPosts(): Promise<BlogPost[]>;
   getBlogPostById(id: number): Promise<BlogPost | undefined>;
@@ -74,77 +74,77 @@ export interface IStorage {
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
   updateBlogPost(id: number, post: Partial<InsertBlogPost>): Promise<BlogPost>;
   deleteBlogPost(id: number): Promise<void>;
-
+  
   // Resume methods
   getResume(): Promise<Resume | undefined>;
   saveResume(resume: InsertResume): Promise<Resume>;
-
+  
   // Lists methods
   getLists(): Promise<any[]>;
-
+  
   // Top 5 Lists methods
   getAllTopFiveLists(): Promise<TopFiveList[]>;
   getTopFiveListById(id: number): Promise<TopFiveList | undefined>;
   createTopFiveList(list: InsertTopFiveList): Promise<TopFiveList>;
   updateTopFiveList(id: number, list: Partial<InsertTopFiveList>): Promise<TopFiveList>;
   deleteTopFiveList(id: number): Promise<void>;
-
+  
   // Top 5 List Items methods
   getTopFiveListItems(listId: number): Promise<TopFiveListItem[]>;
   createTopFiveListItem(item: InsertTopFiveListItem): Promise<TopFiveListItem>;
   updateTopFiveListItem(id: number, item: Partial<InsertTopFiveListItem>): Promise<TopFiveListItem>;
   deleteTopFiveListItem(id: number): Promise<void>;
-
+  
   // Contact methods
   getAllContactSubmissions(): Promise<ContactSubmission[]>;
   saveContactSubmission(submission: InsertContact): Promise<ContactSubmission>;
   deleteContactSubmission(id: number): Promise<void>;
-
+  
   // Chatbot methods
   getAllChatbotDocuments(): Promise<ChatbotDocument[]>;
   getChatbotDocumentById(id: number): Promise<ChatbotDocument | undefined>;
   createChatbotDocument(document: InsertChatbotDocument): Promise<ChatbotDocument>;
   deleteChatbotDocument(id: number): Promise<void>;
-
+  
   getAllChatbotTrainingSessions(): Promise<ChatbotTrainingSession[]>;
   createChatbotTrainingSession(session: InsertChatbotTrainingSession): Promise<ChatbotTrainingSession>;
-
+  
   getAllChatbotConversations(): Promise<ChatbotConversation[]>;
   createChatbotConversation(conversation: InsertChatbotConversation): Promise<ChatbotConversation>;
-
+  
   getChatbotTrainingProgress(): Promise<ChatbotTrainingProgress | undefined>;
   updateChatbotTrainingProgress(progress: Partial<InsertChatbotTrainingProgress>): Promise<ChatbotTrainingProgress>;
-
+  
   // Chatbot evaluation methods
   getChatbotEvaluations(): Promise<ChatbotEvaluation[]>;
   getChatbotEvaluationById(id: number): Promise<ChatbotEvaluation | undefined>;
   getChatbotEvaluationsByConversationId(conversationId: number): Promise<ChatbotEvaluation[]>;
   saveChatbotEvaluation(evaluation: InsertChatbotEvaluation): Promise<ChatbotEvaluation>;
-
+  
   // User feedback methods
   getUserFeedback(): Promise<UserFeedback[]>;
   getUserFeedbackById(id: number): Promise<UserFeedback | undefined>;
   getUserFeedbackByConversationId(conversationId: number): Promise<UserFeedback[]>;
   saveUserFeedback(feedback: InsertUserFeedback): Promise<UserFeedback>;
-
+  
   // Helper methods for evaluation system
   getChatbotConversation(id: number): Promise<ChatbotConversation | undefined>;
   getChatbotDocuments(): Promise<ChatbotDocument[]>;
   getChatbotTrainingSessions(): Promise<ChatbotTrainingSession[]>;
   saveChatbotConversation(conversation: InsertChatbotConversation): Promise<ChatbotConversation>;
   getChatbotConversationById(id: number): Promise<ChatbotConversation | undefined>;
-
+  
   // Learning insights methods
   getChatbotLearningInsights(): Promise<ChatbotLearningInsight[]>;
   getChatbotLearningInsightsByEvaluationId(evaluationId: number): Promise<ChatbotLearningInsight[]>;
   createChatbotLearningInsight(insight: InsertChatbotLearningInsight): Promise<ChatbotLearningInsight>;
   updateChatbotLearningInsight(id: number, insight: Partial<InsertChatbotLearningInsight>): Promise<ChatbotLearningInsight>;
   deleteChatbotLearningInsight(id: number): Promise<void>;
-
+  
   // System prompt template methods
   getActiveSystemPromptTemplate(): Promise<SystemPromptTemplate | undefined>;
   saveSystemPromptTemplate(template: InsertSystemPromptTemplate): Promise<SystemPromptTemplate>;
-
+  
   // Response formatting rules methods
   getActiveResponseFormattingRules(): Promise<ResponseFormattingRules | undefined>;
   saveResponseFormattingRules(rules: InsertResponseFormattingRules): Promise<ResponseFormattingRules>;
@@ -157,7 +157,7 @@ export class MemStorage implements IStorage {
   private blogPosts: Map<number, BlogPost>;
   private contactSubmissions: Map<number, ContactSubmission>;
   private resumeContent: Resume | undefined;
-
+  
   private userId: number;
   private adminId: number;
   private projectId: number;
@@ -171,17 +171,17 @@ export class MemStorage implements IStorage {
     this.blogPosts = new Map();
     this.contactSubmissions = new Map();
     this.resumeContent = undefined;
-
+    
     this.userId = 1;
     this.adminId = 1;
     this.projectId = 1;
     this.blogPostId = 1;
     this.contactId = 1;
-
+    
     // Initialize with sample data
     this.initializeData();
   }
-
+  
   private initializeData() {
     try {
       // Initialize default admin
@@ -193,7 +193,7 @@ export class MemStorage implements IStorage {
       };
       this.admins.set(1, defaultAdmin);
       this.adminId = 2;
-
+      
       // Initialize projects
       console.log("Initializing project data...");
       const portfolioData = getPortfolio();
@@ -218,7 +218,7 @@ export class MemStorage implements IStorage {
         this.projectId = Math.max(this.projectId, project.id + 1);
       });
       console.log(`Loaded ${portfolioData.length} projects successfully.`);
-
+      
       // Initialize blog posts
       console.log("Initializing blog post data...");
       const blogData = getBlogPosts();
@@ -243,7 +243,7 @@ export class MemStorage implements IStorage {
         this.blogPostId = Math.max(this.blogPostId, post.id + 1);
       });
       console.log(`Loaded ${blogData.length} blog posts successfully.`);
-
+      
       // Initialize default resume content (no resume by default)
       this.resumeContent = undefined;
     } catch (error) {
@@ -287,16 +287,16 @@ export class MemStorage implements IStorage {
     this.admins.set(id, admin);
     return admin;
   }
-
+  
   // Project methods
   async getAllProjects(): Promise<Project[]> {
     return Array.from(this.projects.values());
   }
-
+  
   async getProjectById(id: number): Promise<Project | undefined> {
     return this.projects.get(id);
   }
-
+  
   async createProject(insertProject: InsertProject): Promise<Project> {
     const id = this.projectId++;
     const project: Project = { 
@@ -325,12 +325,12 @@ export class MemStorage implements IStorage {
     if (!existingProject) {
       throw new Error(`Project with ID ${id} not found`);
     }
-
+    
     const updatedProject: Project = {
       ...existingProject,
       ...updateData,
     };
-
+    
     this.projects.set(id, updatedProject);
     return updatedProject;
   }
@@ -341,7 +341,7 @@ export class MemStorage implements IStorage {
       throw new Error(`Project with ID ${id} not found`);
     }
   }
-
+  
   // Blog series methods (placeholder implementation for MemStorage)
   async getAllBlogSeries(): Promise<BlogSeries[]> {
     // MemStorage doesn't implement series yet
@@ -377,7 +377,7 @@ export class MemStorage implements IStorage {
     console.log(`Returning ${posts.length} blog posts`);
     return posts;
   }
-
+  
   async getBlogPostById(id: number): Promise<BlogPost | undefined> {
     console.log(`Fetching blog post with ID: ${id}`);
     const post = this.blogPosts.get(id);
@@ -393,7 +393,7 @@ export class MemStorage implements IStorage {
     // MemStorage doesn't implement series yet
     return [];
   }
-
+  
   async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
     const id = this.blogPostId++;
     const post: BlogPost = {
@@ -421,14 +421,14 @@ export class MemStorage implements IStorage {
     if (!existingPost) {
       throw new Error(`Blog post with ID ${id} not found`);
     }
-
+    
     const updatedPost: BlogPost = {
       ...existingPost,
       ...updateData,
       id: existingPost.id, // Preserve ID
       createdAt: existingPost.createdAt, // Preserve created timestamp
     };
-
+    
     this.blogPosts.set(id, updatedPost);
     console.log(`Updated blog post: ID=${id}, Title="${updatedPost.title}"`);
     return updatedPost;
@@ -441,9 +441,9 @@ export class MemStorage implements IStorage {
     }
     console.log(`Deleted blog post: ID=${id}`);
   }
+  
 
-
-
+  
   // Resume methods
   async getResume(): Promise<Resume | undefined> {
     return this.resumeContent;
@@ -465,7 +465,7 @@ export class MemStorage implements IStorage {
   async getLists(): Promise<any[]> {
     return getLists();
   }
-
+  
   // Top 5 Lists methods (placeholder implementation for MemStorage)
   async getAllTopFiveLists(): Promise<TopFiveList[]> {
     // Since this is MemStorage, we'll return empty for now
@@ -504,7 +504,7 @@ export class MemStorage implements IStorage {
   async deleteTopFiveListItem(id: number): Promise<void> {
     throw new Error("Top 5 Lists not implemented for MemStorage");
   }
-
+  
   // Contact methods
   async getAllContactSubmissions(): Promise<ContactSubmission[]> {
     return Array.from(this.contactSubmissions.values()).sort(
@@ -595,7 +595,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { users } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [user] = await db.select().from(users).where(eq(users.id, id));
     return user || undefined;
   }
@@ -604,7 +604,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { users } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [user] = await db.select().from(users).where(eq(users.username, username));
     return user || undefined;
   }
@@ -612,7 +612,7 @@ export class DatabaseStorage implements IStorage {
   async createUser(insertUser: InsertUser): Promise<User> {
     const { db } = await import('./db');
     const { users } = await import('@shared/schema');
-
+    
     const [user] = await db.insert(users).values(insertUser).returning();
     return user;
   }
@@ -622,7 +622,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { admins } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [admin] = await db.select().from(admins).where(eq(admins.username, username));
     return admin || undefined;
   }
@@ -630,7 +630,7 @@ export class DatabaseStorage implements IStorage {
   async createAdmin(insertAdmin: InsertAdmin): Promise<Admin> {
     const { db } = await import('./db');
     const { admins } = await import('@shared/schema');
-
+    
     const [admin] = await db.insert(admins).values(insertAdmin).returning();
     return admin;
   }
@@ -640,7 +640,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { projects } = await import('@shared/schema');
     const { desc } = await import('drizzle-orm');
-
+    
     return await db.select().from(projects).orderBy(desc(projects.createdAt));
   }
 
@@ -648,7 +648,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { projects } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [project] = await db.select().from(projects).where(eq(projects.id, id));
     return project || undefined;
   }
@@ -656,7 +656,7 @@ export class DatabaseStorage implements IStorage {
   async createProject(insertProject: InsertProject): Promise<Project> {
     const { db } = await import('./db');
     const { projects } = await import('@shared/schema');
-
+    
     const [project] = await db.insert(projects).values(insertProject).returning();
     console.log(`Created project: ID=${project.id}, Title="${project.title}"`);
     return project;
@@ -666,16 +666,16 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { projects } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [project] = await db.update(projects)
       .set({ ...updateData, updatedAt: new Date() })
       .where(eq(projects.id, id))
       .returning();
-
+    
     if (!project) {
       throw new Error(`Project with ID ${id} not found`);
     }
-
+    
     console.log(`Updated project: ID=${id}, Title="${project.title}"`);
     return project;
   }
@@ -684,7 +684,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { projects } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const result = await db.delete(projects).where(eq(projects.id, id));
     console.log(`Deleted project: ID=${id}`);
   }
@@ -694,7 +694,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { blogSeries } = await import('@shared/schema');
     const { desc } = await import('drizzle-orm');
-
+    
     return await db.select().from(blogSeries).orderBy(desc(blogSeries.position));
   }
 
@@ -702,7 +702,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { blogSeries } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [series] = await db.select().from(blogSeries).where(eq(blogSeries.id, id));
     return series || undefined;
   }
@@ -711,7 +711,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { blogSeries } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [series] = await db.select().from(blogSeries).where(eq(blogSeries.slug, slug));
     return series || undefined;
   }
@@ -719,7 +719,7 @@ export class DatabaseStorage implements IStorage {
   async createBlogSeries(insertSeries: InsertBlogSeries): Promise<BlogSeries> {
     const { db } = await import('./db');
     const { blogSeries } = await import('@shared/schema');
-
+    
     const [series] = await db.insert(blogSeries).values(insertSeries).returning();
     console.log(`Created blog series: ID=${series.id}, Title="${series.title}"`);
     return series;
@@ -729,16 +729,16 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { blogSeries } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [series] = await db.update(blogSeries)
       .set({ ...updateData, updatedAt: new Date() })
       .where(eq(blogSeries.id, id))
       .returning();
-
+    
     if (!series) {
       throw new Error(`Blog series with ID ${id} not found`);
     }
-
+    
     console.log(`Updated blog series: ID=${id}, Title="${series.title}"`);
     return series;
   }
@@ -747,7 +747,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { blogSeries } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     await db.delete(blogSeries).where(eq(blogSeries.id, id));
     console.log(`Deleted blog series: ID=${id}`);
   }
@@ -757,7 +757,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { blogPosts } = await import('@shared/schema');
     const { desc } = await import('drizzle-orm');
-
+    
     return await db.select().from(blogPosts).orderBy(desc(blogPosts.createdAt));
   }
 
@@ -765,7 +765,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { blogPosts } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [post] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
     return post || undefined;
   }
@@ -774,7 +774,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { blogPosts } = await import('@shared/schema');
     const { eq, asc } = await import('drizzle-orm');
-
+    
     return await db.select().from(blogPosts)
       .where(eq(blogPosts.seriesId, seriesId))
       .orderBy(asc(blogPosts.seriesPosition));
@@ -783,7 +783,7 @@ export class DatabaseStorage implements IStorage {
   async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
     const { db } = await import('./db');
     const { blogPosts } = await import('@shared/schema');
-
+    
     const [post] = await db.insert(blogPosts).values(insertPost).returning();
     console.log(`Created blog post: ID=${post.id}, Title="${post.title}"`);
     return post;
@@ -793,16 +793,16 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { blogPosts } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [post] = await db.update(blogPosts)
       .set({ ...updateData, updatedAt: new Date() })
       .where(eq(blogPosts.id, id))
       .returning();
-
+    
     if (!post) {
       throw new Error(`Blog post with ID ${id} not found`);
     }
-
+    
     console.log(`Updated blog post: ID=${id}, Title="${post.title}"`);
     return post;
   }
@@ -811,7 +811,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { blogPosts } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const result = await db.delete(blogPosts).where(eq(blogPosts.id, id));
     console.log(`Deleted blog post: ID=${id}`);
   }
@@ -820,7 +820,7 @@ export class DatabaseStorage implements IStorage {
   async getResume(): Promise<Resume | undefined> {
     const { db } = await import('./db');
     const { resumeContent } = await import('@shared/schema');
-
+    
     const [resume] = await db.select().from(resumeContent).limit(1);
     return resume || undefined;
   }
@@ -828,11 +828,11 @@ export class DatabaseStorage implements IStorage {
   async saveResume(insertResume: InsertResume): Promise<Resume> {
     const { db } = await import('./db');
     const { resumeContent } = await import('@shared/schema');
-
+    
     // Delete existing resume and insert new one
     await db.delete(resumeContent);
     const [resume] = await db.insert(resumeContent).values(insertResume).returning();
-
+    
     console.log(`Updated resume content`);
     return resume;
   }
@@ -848,7 +848,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { topFiveLists } = await import('@shared/schema');
     const { asc } = await import('drizzle-orm');
-
+    
     return await db.select().from(topFiveLists).orderBy(asc(topFiveLists.position));
   }
 
@@ -856,7 +856,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { topFiveLists } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [list] = await db.select().from(topFiveLists).where(eq(topFiveLists.id, id));
     return list || undefined;
   }
@@ -864,7 +864,7 @@ export class DatabaseStorage implements IStorage {
   async createTopFiveList(insertList: InsertTopFiveList): Promise<TopFiveList> {
     const { db } = await import('./db');
     const { topFiveLists } = await import('@shared/schema');
-
+    
     const [list] = await db.insert(topFiveLists).values(insertList).returning();
     return list;
   }
@@ -873,16 +873,16 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { topFiveLists } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [list] = await db.update(topFiveLists)
       .set(updateData)
       .where(eq(topFiveLists.id, id))
       .returning();
-
+    
     if (!list) {
       throw new Error(`Top 5 list with ID ${id} not found`);
     }
-
+    
     return list;
   }
 
@@ -890,7 +890,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { topFiveLists, topFiveListItems } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     // Delete all items first
     await db.delete(topFiveListItems).where(eq(topFiveListItems.listId, id));
     // Then delete the list
@@ -902,7 +902,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { topFiveListItems } = await import('@shared/schema');
     const { eq, asc } = await import('drizzle-orm');
-
+    
     return await db.select().from(topFiveListItems)
       .where(eq(topFiveListItems.listId, listId))
       .orderBy(asc(topFiveListItems.position));
@@ -911,7 +911,7 @@ export class DatabaseStorage implements IStorage {
   async createTopFiveListItem(insertItem: InsertTopFiveListItem): Promise<TopFiveListItem> {
     const { db } = await import('./db');
     const { topFiveListItems } = await import('@shared/schema');
-
+    
     const [item] = await db.insert(topFiveListItems).values(insertItem).returning();
     return item;
   }
@@ -920,16 +920,16 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { topFiveListItems } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [item] = await db.update(topFiveListItems)
       .set(updateData)
       .where(eq(topFiveListItems.id, id))
       .returning();
-
+    
     if (!item) {
       throw new Error(`Top 5 list item with ID ${id} not found`);
     }
-
+    
     return item;
   }
 
@@ -937,7 +937,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { topFiveListItems } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     await db.delete(topFiveListItems).where(eq(topFiveListItems.id, id));
   }
 
@@ -946,14 +946,14 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { contactSubmissions } = await import('@shared/schema');
     const { desc } = await import('drizzle-orm');
-
+    
     return await db.select().from(contactSubmissions).orderBy(desc(contactSubmissions.createdAt));
   }
 
   async saveContactSubmission(insertSubmission: InsertContact): Promise<ContactSubmission> {
     const { db } = await import('./db');
     const { contactSubmissions } = await import('@shared/schema');
-
+    
     const [submission] = await db.insert(contactSubmissions).values(insertSubmission).returning();
     return submission;
   }
@@ -962,7 +962,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { contactSubmissions } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     await db.delete(contactSubmissions).where(eq(contactSubmissions.id, id));
   }
 
@@ -971,7 +971,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { chatbotDocuments } = await import('@shared/schema');
     const { desc } = await import('drizzle-orm');
-
+    
     return await db.select().from(chatbotDocuments).orderBy(desc(chatbotDocuments.uploadedAt));
   }
 
@@ -979,7 +979,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { chatbotDocuments } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [document] = await db.select().from(chatbotDocuments).where(eq(chatbotDocuments.id, id));
     return document || undefined;
   }
@@ -987,7 +987,7 @@ export class DatabaseStorage implements IStorage {
   async createChatbotDocument(insertDocument: InsertChatbotDocument): Promise<ChatbotDocument> {
     const { db } = await import('./db');
     const { chatbotDocuments } = await import('@shared/schema');
-
+    
     const [document] = await db.insert(chatbotDocuments).values(insertDocument).returning();
     return document;
   }
@@ -996,7 +996,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { chatbotDocuments } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     await db.delete(chatbotDocuments).where(eq(chatbotDocuments.id, id));
   }
 
@@ -1004,12 +1004,12 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { chatbotDocuments } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [document] = await db.update(chatbotDocuments)
       .set(updates)
       .where(eq(chatbotDocuments.id, id))
       .returning();
-
+    
     return document;
   }
 
@@ -1017,14 +1017,14 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { chatbotTrainingSessions } = await import('@shared/schema');
     const { desc } = await import('drizzle-orm');
-
+    
     return await db.select().from(chatbotTrainingSessions).orderBy(desc(chatbotTrainingSessions.createdAt));
   }
 
   async createChatbotTrainingSession(insertSession: InsertChatbotTrainingSession): Promise<ChatbotTrainingSession> {
     const { db } = await import('./db');
     const { chatbotTrainingSessions } = await import('@shared/schema');
-
+    
     const [session] = await db.insert(chatbotTrainingSessions).values(insertSession).returning();
     return session;
   }
@@ -1033,14 +1033,14 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { chatbotConversations } = await import('@shared/schema');
     const { desc } = await import('drizzle-orm');
-
+    
     return await db.select().from(chatbotConversations).orderBy(desc(chatbotConversations.createdAt));
   }
 
   async createChatbotConversation(insertConversation: InsertChatbotConversation): Promise<ChatbotConversation> {
     const { db } = await import('./db');
     const { chatbotConversations } = await import('@shared/schema');
-
+    
     const [conversation] = await db.insert(chatbotConversations).values(insertConversation).returning();
     return conversation;
   }
@@ -1048,7 +1048,7 @@ export class DatabaseStorage implements IStorage {
   async getChatbotTrainingProgress(): Promise<ChatbotTrainingProgress | undefined> {
     const { db } = await import('./db');
     const { chatbotTrainingProgress } = await import('@shared/schema');
-
+    
     const [progress] = await db.select().from(chatbotTrainingProgress).limit(1);
     return progress || undefined;
   }
@@ -1056,10 +1056,10 @@ export class DatabaseStorage implements IStorage {
   async updateChatbotTrainingProgress(updateData: Partial<InsertChatbotTrainingProgress>): Promise<ChatbotTrainingProgress> {
     const { db } = await import('./db');
     const { chatbotTrainingProgress } = await import('@shared/schema');
-
+    
     // Get existing progress or create new one
     const existing = await this.getChatbotTrainingProgress();
-
+    
     if (existing) {
       const [progress] = await db.update(chatbotTrainingProgress)
         .set(updateData)
@@ -1078,7 +1078,7 @@ export class DatabaseStorage implements IStorage {
   async saveChatbotConversation(insertConversation: InsertChatbotConversation): Promise<ChatbotConversation> {
     const { db } = await import('./db');
     const { chatbotConversations } = await import('@shared/schema');
-
+    
     const [conversation] = await db.insert(chatbotConversations).values(insertConversation).returning();
     return conversation;
   }
@@ -1086,7 +1086,7 @@ export class DatabaseStorage implements IStorage {
   async saveChatbotTrainingSession(insertSession: InsertChatbotTrainingSession): Promise<ChatbotTrainingSession> {
     const { db } = await import('./db');
     const { chatbotTrainingSessions } = await import('@shared/schema');
-
+    
     const [session] = await db.insert(chatbotTrainingSessions).values(insertSession).returning();
     return session;
   }
@@ -1095,7 +1095,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { chatbotTrainingSessions } = await import('@shared/schema');
     const { desc } = await import('drizzle-orm');
-
+    
     return await db.select().from(chatbotTrainingSessions).orderBy(desc(chatbotTrainingSessions.createdAt));
   }
 
@@ -1103,7 +1103,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { chatbotDocuments } = await import('@shared/schema');
     const { desc } = await import('drizzle-orm');
-
+    
     const docs = await db.select().from(chatbotDocuments).orderBy(desc(chatbotDocuments.uploadedAt));
     console.log(`Storage: Retrieved ${docs.length} documents from database`);
     return docs;
@@ -1114,7 +1114,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { chatbotEvaluations } = await import('@shared/schema');
     const { desc } = await import('drizzle-orm');
-
+    
     return await db.select().from(chatbotEvaluations).orderBy(desc(chatbotEvaluations.evaluatedAt));
   }
 
@@ -1122,7 +1122,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { chatbotEvaluations } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [evaluation] = await db.select().from(chatbotEvaluations).where(eq(chatbotEvaluations.id, id));
     return evaluation || undefined;
   }
@@ -1131,14 +1131,14 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { chatbotEvaluations } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     return await db.select().from(chatbotEvaluations).where(eq(chatbotEvaluations.conversationId, conversationId));
   }
 
   async saveChatbotEvaluation(insertEvaluation: InsertChatbotEvaluation): Promise<ChatbotEvaluation> {
     const { db } = await import('./db');
     const { chatbotEvaluations } = await import('@shared/schema');
-
+    
     const [evaluation] = await db.insert(chatbotEvaluations).values(insertEvaluation).returning();
     return evaluation;
   }
@@ -1148,7 +1148,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { userFeedback } = await import('@shared/schema');
     const { desc } = await import('drizzle-orm');
-
+    
     return await db.select().from(userFeedback).orderBy(desc(userFeedback.createdAt));
   }
 
@@ -1156,7 +1156,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { userFeedback } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [feedback] = await db.select().from(userFeedback).where(eq(userFeedback.id, id));
     return feedback || undefined;
   }
@@ -1165,14 +1165,14 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { userFeedback } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     return await db.select().from(userFeedback).where(eq(userFeedback.conversationId, conversationId));
   }
 
   async saveUserFeedback(insertFeedback: InsertUserFeedback): Promise<UserFeedback> {
     const { db } = await import('./db');
     const { userFeedback } = await import('@shared/schema');
-
+    
     const [feedback] = await db.insert(userFeedback).values(insertFeedback).returning();
     return feedback;
   }
@@ -1182,7 +1182,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { chatbotConversations } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [conversation] = await db.select().from(chatbotConversations).where(eq(chatbotConversations.id, id));
     return conversation || undefined;
   }
@@ -1196,7 +1196,7 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { chatbotLearningInsights } = await import('@shared/schema');
     const { desc } = await import('drizzle-orm');
-
+    
     return await db.select().from(chatbotLearningInsights).orderBy(desc(chatbotLearningInsights.createdAt));
   }
 
@@ -1204,14 +1204,14 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { chatbotLearningInsights } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     return await db.select().from(chatbotLearningInsights).where(eq(chatbotLearningInsights.sourceEvaluationId, evaluationId));
   }
 
   async createChatbotLearningInsight(insertInsight: InsertChatbotLearningInsight): Promise<ChatbotLearningInsight> {
     const { db } = await import('./db');
     const { chatbotLearningInsights } = await import('@shared/schema');
-
+    
     const [insight] = await db.insert(chatbotLearningInsights).values(insertInsight).returning();
     return insight;
   }
@@ -1220,16 +1220,16 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { chatbotLearningInsights } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [insight] = await db.update(chatbotLearningInsights)
       .set(updateData)
       .where(eq(chatbotLearningInsights.id, id))
       .returning();
-
+    
     if (!insight) {
       throw new Error(`Learning insight with ID ${id} not found`);
     }
-
+    
     return insight;
   }
 
@@ -1237,11 +1237,11 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { chatbotLearningInsights } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     const [deleted] = await db.delete(chatbotLearningInsights)
       .where(eq(chatbotLearningInsights.id, id))
       .returning();
-
+    
     if (!deleted) {
       throw new Error(`Learning insight with ID ${id} not found`);
     }
@@ -1251,13 +1251,13 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { systemPromptTemplate } = await import('@shared/schema');
     const { eq, desc } = await import('drizzle-orm');
-
+    
     const templates = await db.select()
       .from(systemPromptTemplate)
       .where(eq(systemPromptTemplate.isActive, true))
       .orderBy(desc(systemPromptTemplate.createdAt))
       .limit(1);
-
+    
     return templates[0];
   }
 
@@ -1265,18 +1265,18 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { systemPromptTemplate } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     // Deactivate all existing templates if this one is active
     if (template.isActive) {
       await db.update(systemPromptTemplate)
         .set({ isActive: false })
         .where(eq(systemPromptTemplate.isActive, true));
     }
-
+    
     const [newTemplate] = await db.insert(systemPromptTemplate)
       .values(template)
       .returning();
-
+    
     return newTemplate;
   }
 
@@ -1284,13 +1284,13 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { responseFormattingRules } = await import('@shared/schema');
     const { eq, desc } = await import('drizzle-orm');
-
+    
     const rules = await db.select()
       .from(responseFormattingRules)
       .where(eq(responseFormattingRules.isActive, true))
       .orderBy(desc(responseFormattingRules.createdAt))
       .limit(1);
-
+    
     return rules[0];
   }
 
@@ -1298,18 +1298,18 @@ export class DatabaseStorage implements IStorage {
     const { db } = await import('./db');
     const { responseFormattingRules } = await import('@shared/schema');
     const { eq } = await import('drizzle-orm');
-
+    
     // Deactivate all existing rules if this one is active
     if (rules.isActive) {
       await db.update(responseFormattingRules)
         .set({ isActive: false })
         .where(eq(responseFormattingRules.isActive, true));
     }
-
+    
     const [newRules] = await db.insert(responseFormattingRules)
       .values(rules)
       .returning();
-
+    
     return newRules;
   }
 }
