@@ -38,15 +38,32 @@ const BlogCard = ({ post, index }: { post: any; index: number }) => {
           <img
             src={post.coverImage}
             alt={post.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${
+              post.status === "coming_soon" ? "filter brightness-50" : ""
+            }`}
+            style={{ 
+              filter: post.status === "coming_soon" 
+                ? 'brightness(0.5) contrast(1.05)' 
+                : 'brightness(1.02) contrast(1.05)'
+            }}
           />
-          {post.status && post.status !== "published" && (
-            <div className={`absolute top-2 px-2 py-1 rounded text-xs font-medium ${
-              post.status === "coming_soon" 
-                ? "bg-yellow-100 text-yellow-800" 
-                : "bg-blue-100 text-blue-800"
-            } ${post.featured ? 'right-20' : 'right-2'}`}>
-              {post.status === "coming_soon" ? "Coming Soon" : "In Progress"}
+          {/* Coming Soon overlay */}
+          {post.status === "coming_soon" && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+              <div className="text-center">
+                <div className="text-red-500 text-2xl font-bold mb-2 drop-shadow-lg">
+                  COMING SOON
+                </div>
+                <div className="text-white text-sm font-medium drop-shadow-md">
+                  This post is in development
+                </div>
+              </div>
+            </div>
+          )}
+          {/* Status badge - only show for in_progress, coming_soon has overlay */}
+          {post.status && post.status === "in_progress" && (
+            <div className={`absolute top-2 px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800 ${post.featured ? 'right-20' : 'right-2'}`}>
+              In Progress
             </div>
           )}
           {post.featured && (
@@ -188,6 +205,7 @@ const BlogPage = () => {
         {/* Tag filters */}
         <div className="flex flex-wrap justify-center gap-2 mb-8">
           <button
+            key="all"
             onClick={() => setSelectedTag(null)}
             className={`px-4 py-2 rounded-full text-sm transition-colors ${
               !selectedTag

@@ -60,16 +60,33 @@ const ScrollableImageContainer = ({ project }: { project: any }) => {
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {images.map((image: string, index: number) => (
-          <div key={index} className="min-w-full snap-start">
+          <div key={index} className="min-w-full snap-start relative">
             <img
               src={image}
               alt={`${project.title} - Image ${index + 1}`}
-              className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+              className={`w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105 ${
+                project.status === "coming_soon" ? "filter brightness-50" : ""
+              }`}
               style={{ 
-                filter: 'brightness(1.02) contrast(1.05)',
+                filter: project.status === "coming_soon" 
+                  ? 'brightness(0.5) contrast(1.05)' 
+                  : 'brightness(1.02) contrast(1.05)',
                 border: `1px solid rgba(0, 0, 0, 0.1)`
               }}
             />
+            {/* Coming Soon overlay */}
+            {project.status === "coming_soon" && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                <div className="text-center">
+                  <div className="text-red-500 text-2xl font-bold mb-2 drop-shadow-lg">
+                    COMING SOON
+                  </div>
+                  <div className="text-white text-sm font-medium drop-shadow-md">
+                    This project is in development
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -130,14 +147,10 @@ const ScrollableImageContainer = ({ project }: { project: any }) => {
         </div>
       )}
 
-      {/* Status badge */}
-      {project.status && project.status !== "published" && (
-        <div className={`absolute top-3 px-3 py-1 rounded-full text-xs font-medium ${
-          project.status === "coming_soon" 
-            ? "bg-yellow-100 text-yellow-800" 
-            : "bg-blue-100 text-blue-800"
-        } ${project.featured ? 'right-20' : 'right-3'}`}>
-          {project.status === "coming_soon" ? "Coming Soon" : "In Progress"}
+      {/* Status badge - only show for in_progress, coming_soon has overlay */}
+      {project.status && project.status === "in_progress" && (
+        <div className={`absolute top-3 px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 ${project.featured ? 'right-20' : 'right-3'}`}>
+          In Progress
         </div>
       )}
 
