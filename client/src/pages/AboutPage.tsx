@@ -154,14 +154,14 @@ const AboutPage = () => {
               My Strengths
             </h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
               {/* Critical Thinker */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="bg-white p-6 rounded-2xl shadow-lg"
+                className="bg-white p-6 rounded-2xl shadow-lg h-full"
               >
                 <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
                   Critical Thinker
@@ -181,7 +181,7 @@ const AboutPage = () => {
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="bg-white p-6 rounded-2xl shadow-lg"
+                className="bg-white p-6 rounded-2xl shadow-lg h-full"
               >
                 <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
                   Decision Maker
@@ -201,7 +201,7 @@ const AboutPage = () => {
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="bg-white p-6 rounded-2xl shadow-lg"
+                className="bg-white p-6 rounded-2xl shadow-lg h-full"
               >
                 <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
                   Lifelong Learner
@@ -221,7 +221,7 @@ const AboutPage = () => {
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
-                className="bg-white p-6 rounded-2xl shadow-lg md:col-span-1 lg:col-span-1"
+                className="bg-white p-6 rounded-2xl shadow-lg h-full"
               >
                 <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
                   Driver of Change
@@ -241,7 +241,7 @@ const AboutPage = () => {
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ delay: 0.4 }}
-                className="bg-white p-6 rounded-2xl shadow-lg md:col-span-1 lg:col-span-2"
+                className="bg-white p-6 rounded-2xl shadow-lg h-full"
               >
                 <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
                   Communicator
