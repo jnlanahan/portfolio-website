@@ -113,7 +113,6 @@ export default function AdminProjectsPage() {
     mutationFn: async (data: ProjectFormData) => {
       const payload = {
         ...data,
-        technologies: data.technologies.split(',').map(tech => tech.trim()),
         date: new Date(data.date).toISOString(),
         mediaFiles: mediaFiles,
         thumbnailIndex: thumbnailIndex,
@@ -144,7 +143,6 @@ export default function AdminProjectsPage() {
     mutationFn: async (data: ProjectFormData) => {
       const payload = {
         ...data,
-        technologies: data.technologies.split(',').map(tech => tech.trim()),
         date: new Date(data.date).toISOString(),
         mediaFiles: mediaFiles,
         thumbnailIndex: thumbnailIndex,
