@@ -51,7 +51,7 @@ export default function AdminProjectsPage() {
   const queryClient = useQueryClient();
 
   const { data: projects, isLoading } = useQuery({
-    queryKey: ["/api/portfolio"],
+    queryKey: ["/api/admin/portfolio"],
   });
 
   const {
@@ -121,7 +121,7 @@ export default function AdminProjectsPage() {
       return await apiRequest("/api/admin/projects", "POST", payload);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/portfolio"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/portfolio"] });
       setIsDialogOpen(false);
       reset();
       setEditingProject(null);
@@ -152,7 +152,7 @@ export default function AdminProjectsPage() {
       return await apiRequest(`/api/admin/projects/${editingProject.id}`, "PUT", payload);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/portfolio"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/portfolio"] });
       setIsDialogOpen(false);
       reset();
       setEditingProject(null);
@@ -175,7 +175,7 @@ export default function AdminProjectsPage() {
       return await apiRequest(`/api/admin/projects/${id}`, "DELETE");
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/portfolio"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/portfolio"] });
       toast({
         title: "Project deleted",
         description: "The project has been deleted successfully",

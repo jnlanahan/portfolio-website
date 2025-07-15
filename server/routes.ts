@@ -324,8 +324,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Handle API routes with prefix
   
-  // Get all projects
+  // Get all published projects (public endpoint)
   app.get("/api/portfolio", async (req, res) => {
+    try {
+      const projects = await storage.getAllProjects();
+      // Filter to only show published projects (not drafts)
+      const publishedProjects = projects.filter(project => project.published !== false);
+      res.json(publishedProjects);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+      res.status(500).json({ message: "Failed to fetch projects" });
+    }
+  });
+
+  // Get all projects including drafts (admin endpoint)
+  app.get("/api/admin/portfolio", requireAdmin, async (req, res) => {
     try {
       const projects = await storage.getAllProjects();
       res.json(projects);
@@ -368,8 +381,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
 
 
-  // Get all blog posts
+  // Get all published blog posts (public endpoint)
   app.get("/api/blog", async (req, res) => {
+    try {
+      const posts = await storage.getAllBlogPosts();
+      // Filter to only show published posts (not drafts)
+      const publishedPosts = posts.filter(post => post.published !== false);
+      res.json(publishedPosts);
+    } catch (error) {
+      console.error("Error fetching blog posts:", error);
+      res.status(500).json({ message: "Failed to fetch blog posts" });
+    }
+  });
+
+  // Get all blog posts including drafts (admin endpoint)
+  app.get("/api/admin/blog", requireAdmin, async (req, res) => {
     try {
       const posts = await storage.getAllBlogPosts();
       res.json(posts);

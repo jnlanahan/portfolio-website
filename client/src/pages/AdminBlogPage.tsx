@@ -16,7 +16,7 @@ export default function AdminBlogPage() {
   const queryClient = useQueryClient();
 
   const { data: blogPosts, isLoading } = useQuery({
-    queryKey: ["/api/blog"],
+    queryKey: ["/api/admin/blog"],
   });
 
   const deleteBlogPostMutation = useMutation({
@@ -24,7 +24,7 @@ export default function AdminBlogPage() {
       return await apiRequest(`/api/admin/blog/${id}`, "DELETE");
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/blog"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/blog"] });
       toast({
         title: "Blog post deleted",
         description: "The blog post has been deleted successfully",
