@@ -167,23 +167,6 @@ export default function AdminDashboardPage() {
             </Button>
           </div>
 
-          {/* Blog Post Creation Tile */}
-          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#007AFF] transition-all duration-200">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h3 className="text-lg font-semibold text-white">New Blog Post</h3>
-                <p className="text-sm text-gray-300">Write & publish content</p>
-              </div>
-              <Edit className="h-8 w-8 text-[#007AFF]" />
-            </div>
-            <Button
-              onClick={() => setLocation("/admin/blog/new")}
-              className="w-full bg-[#007AFF] hover:bg-[#0056CC] text-white font-medium rounded-xl"
-            >
-              Write Blog Post
-            </Button>
-          </div>
-
           {/* System Prompts Tile */}
           <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#AF52DE] transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
@@ -253,10 +236,10 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* Content Management Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        {/* Additional Quick Actions */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {/* Project Management */}
-          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#007AFF] transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-lg font-semibold text-white">Project Management</h3>
@@ -264,42 +247,16 @@ export default function AdminDashboardPage() {
               </div>
               <Folder className="h-8 w-8 text-[#007AFF]" />
             </div>
-            <div className="flex gap-2 mb-4">
-              <Button
-                onClick={() => setLocation("/admin/projects/new")}
-                className="flex-1 bg-[#007AFF] hover:bg-[#0056CC] text-white text-sm rounded-xl"
-              >
-                <Plus size={16} className="mr-1" />
-                Add New
-              </Button>
-              <Button
-                onClick={() => setLocation("/admin/projects")}
-                variant="outline"
-                className="flex-1 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white text-sm rounded-xl"
-              >
-                <Edit size={16} className="mr-1" />
-                Manage
-              </Button>
-            </div>
-            {projects && projects.length > 0 && (
-              <div className="space-y-2">
-                {projects.slice(0, 2).map((project: any) => (
-                  <div key={project.id} className="flex items-center justify-between p-3 bg-[#1a1a1a] rounded-lg">
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-white truncate">{project.title}</p>
-                      <p className="text-xs text-gray-400">{project.shortDescription?.substring(0, 50)}...</p>
-                    </div>
-                    {project.featured && (
-                      <Badge className="bg-yellow-500 text-white text-xs">Featured</Badge>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
+            <Button
+              onClick={() => setLocation("/admin/projects")}
+              className="w-full bg-[#007AFF] hover:bg-[#0056CC] text-white font-medium rounded-xl"
+            >
+              Manage Projects
+            </Button>
           </div>
 
           {/* Blog Management */}
-          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#34C759] transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-lg font-semibold text-white">Blog Management</h3>
@@ -307,47 +264,16 @@ export default function AdminDashboardPage() {
               </div>
               <FileText className="h-8 w-8 text-[#34C759]" />
             </div>
-            <div className="flex gap-2 mb-4">
-              <Button
-                onClick={() => setLocation("/admin/blog/new")}
-                className="flex-1 bg-[#34C759] hover:bg-[#28A745] text-white text-sm rounded-xl"
-              >
-                <Plus size={16} className="mr-1" />
-                Add New
-              </Button>
-              <Button
-                onClick={() => setLocation("/admin/blog")}
-                variant="outline"
-                className="flex-1 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white text-sm rounded-xl"
-              >
-                <Edit size={16} className="mr-1" />
-                Manage
-              </Button>
-            </div>
-            <div className="space-y-2">
-              <div className="p-3 bg-[#007AFF] rounded-lg">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-white">Blog Series Management</span>
-                  <Button
-                    onClick={() => setLocation("/admin/blog/series")}
-                    size="sm"
-                    variant="outline"
-                    className="border-white/20 text-white hover:bg-white/10 text-xs"
-                  >
-                    <Edit size={14} className="mr-1" />
-                    Manage Series
-                  </Button>
-                </div>
-                <p className="text-xs text-blue-100 mt-1">Organize posts into series</p>
-              </div>
-              {blogPosts && blogPosts.length === 0 && (
-                <p className="text-sm text-gray-400">No blog posts found</p>
-              )}
-            </div>
+            <Button
+              onClick={() => setLocation("/admin/blog")}
+              className="w-full bg-[#34C759] hover:bg-[#28A745] text-white font-medium rounded-xl"
+            >
+              Manage Blog
+            </Button>
           </div>
 
           {/* Top 5 Lists Management */}
-          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a]">
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#FF9500] transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-lg font-semibold text-white">Top 5 Lists Management</h3>
@@ -355,26 +281,12 @@ export default function AdminDashboardPage() {
               </div>
               <Users className="h-8 w-8 text-[#FF9500]" />
             </div>
-            <div className="flex gap-2 mb-4">
-              <Button
-                onClick={() => setLocation("/admin/top5-lists/new")}
-                className="flex-1 bg-[#FF9500] hover:bg-[#E6850E] text-white text-sm rounded-xl"
-              >
-                <Plus size={16} className="mr-1" />
-                Add New
-              </Button>
-              <Button
-                onClick={() => setLocation("/admin/top5-lists")}
-                variant="outline"
-                className="flex-1 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white text-sm rounded-xl"
-              >
-                <Edit size={16} className="mr-1" />
-                Manage
-              </Button>
-            </div>
-            {topFiveLists && topFiveLists.length === 0 && (
-              <p className="text-sm text-gray-400">No top 5 lists found</p>
-            )}
+            <Button
+              onClick={() => setLocation("/admin/top5-lists")}
+              className="w-full bg-[#FF9500] hover:bg-[#E6850E] text-white font-medium rounded-xl"
+            >
+              Manage Top 5 Lists
+            </Button>
           </div>
         </div>
 
