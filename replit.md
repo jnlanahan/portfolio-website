@@ -349,8 +349,8 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
 - All components follow TypeScript best practices
 
 ## Testing
-- Comprehensive test suite available in root directory
-- Run all tests with: `node run-tests.js`
+- Comprehensive test suite organized in `/tests/` directory
+- Run all tests with: `node run-tests.js` (from root directory)
 - Test coverage includes:
   - Admin authentication and session management
   - Project CRUD operations with image uploads
@@ -362,4 +362,5 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - LangSmith integration and AI evaluation
 - Tests automatically clean up after execution
 - Server must be running (npm run dev) before running tests
+- All test files properly organized in `/tests/` folder following standard project structure
 - Removed redundant test files for resume downloads and password protection (covered by main test suite)
