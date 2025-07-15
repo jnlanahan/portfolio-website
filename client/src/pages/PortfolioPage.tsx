@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { ProjectCategory, projectCategories } from "@/data/portfolio";
 import { useState, useMemo, useRef } from "react";
 import { Link } from "wouter";
 
@@ -290,19 +289,31 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
 };
 
 const PortfolioPage = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   const { data: projects, isLoading } = useQuery({
     queryKey: ["/api/portfolio"],
   });
 
-  // Filter projects by category
+  // Extract all unique tags from projects
+  const allTags = useMemo(() => {
+    if (!projects) return [];
+    const tags = new Set<string>();
+    projects.forEach(project => {
+      if (project.tags && project.tags.length > 0) {
+        project.tags.forEach(tag => tags.add(tag));
+      }
+    });
+    return Array.from(tags).sort();
+  }, [projects]);
+
+  // Filter projects by tag
   const filteredProjects = useMemo(() => {
-    if (!projects || !selectedCategory) return projects || [];
+    if (!projects || !selectedTag) return projects || [];
     return projects.filter(project => 
-      project.category && project.category.id === selectedCategory
+      project.tags && project.tags.includes(selectedTag)
     );
-  }, [projects, selectedCategory]);
+  }, [projects, selectedTag]);
 
   // Extract featured projects
   const featuredProjects = useMemo(() => 
@@ -353,12 +364,13 @@ const PortfolioPage = () => {
           Built using modern AI development tools, IDEs, and LLMs to rapidly prototype and validate product concepts.
         </p>
 
-        {/* Category filters */}
+        {/* Tag filters */}
         <div className="flex flex-wrap justify-center gap-2 mt-8">
           <button
-            onClick={() => setSelectedCategory(null)}
+            key="all"
+            onClick={() => setSelectedTag(null)}
             className={`px-4 py-2 rounded-full text-sm transition-colors ${
-              !selectedCategory
+              !selectedTag
                 ? "bg-blue-600 text-white"
                 : "bg-gray-100 hover:bg-gray-200 text-gray-700"
             }`}
@@ -366,25 +378,25 @@ const PortfolioPage = () => {
           >
             All Projects
           </button>
-          {projectCategories.map((category) => (
+          {allTags.map((tag) => (
             <button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
+              key={tag}
+              onClick={() => setSelectedTag(tag)}
               className={`px-4 py-2 rounded-full text-sm transition-colors ${
-                selectedCategory === category.id
+                selectedTag === tag
                   ? "bg-blue-600 text-white"
                   : "bg-gray-100 hover:bg-gray-200 text-gray-700"
               }`}
               style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
             >
-              {category.name}
+              {tag}
             </button>
           ))}
         </div>
       </motion.div>
 
       {/* Featured projects section */}
-      {featuredProjects.length > 0 && !selectedCategory && (
+      {featuredProjects.length > 0 && !selectedTag && (
         <div className="mb-16">
           <h2 className="text-2xl font-bold mb-6 flex items-center" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif', color: '#1a1a1a' }}>
             <i className="ri-star-fill text-blue-600 mr-2"></i> Featured Projects
@@ -399,32 +411,33 @@ const PortfolioPage = () => {
 
       {/* Projects grid */}
       <div className="mb-8">
-        {selectedCategory && (
+        {selectedTag && (
           <h2 className="text-2xl font-bold mb-6 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
-            {projectCategories.find(c => c.id === selectedCategory)?.name || 'Projects'}
+            {selectedTag}
           </h2>
         )}
 
-        {!selectedCategory && featuredProjects.length > 0 && (
+        {!selectedTag && featuredProjects.length > 0 && (
           <h2 className="text-2xl font-bold mb-6 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>All Projects</h2>
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {(selectedCategory ? filteredProjects : (projects || []).filter(p => !p.featured)).map((project, index) => (
+          {(selectedTag ? filteredProjects : (projects || []).filter(p => !p.featured)).map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
         </div>
       </div>
 
       {/* Empty state */}
-      {filteredProjects.length === 0 && selectedCategory && (
+      {filteredProjects.length === 0 && selectedTag && (
         <div className="text-center py-12">
           <div className="text-5xl mb-4 opacity-30">
             <i className="ri-folder-unknow-line"></i>
           </div>
-          <p className="text-gray-600 text-lg mb-4" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>No projects found in this category.</p>
+          <p className="text-gray-600 text-lg mb-4" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>No projects found with this tag.</p>
           <button
-            onClick={() => setSelectedCategory(null)}
+            key="view-all-projects"
+            onClick={() => setSelectedTag(null)}
             className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
             style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
           >

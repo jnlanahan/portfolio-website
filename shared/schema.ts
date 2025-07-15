@@ -28,6 +28,7 @@ export const projects = pgTable("projects", {
   mediaFiles: text("media_files").array().default([]).notNull(), // Array of file paths
   thumbnailIndex: integer("thumbnail_index").default(0).notNull(), // Index of thumbnail in mediaFiles
   technologies: text("technologies").array().default([]).notNull(),
+  tags: text("tags").array().default([]).notNull(), // Tags for filtering projects
   demoUrl: text("demo_url"),
   codeUrl: text("code_url"),
   featured: boolean("featured").default(false).notNull(),

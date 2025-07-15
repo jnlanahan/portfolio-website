@@ -25,6 +25,7 @@ const projectSchema = z.object({
   mediaFiles: z.array(z.string()).default([]),
   thumbnailIndex: z.number().default(0),
   technologies: z.string().optional(),
+  tags: z.string().optional(), // Comma-separated tags for filtering
   demoUrl: z.string().optional().refine((val) => !val || z.string().url().safeParse(val).success, {
     message: "Must be a valid URL if provided",
   }),
@@ -63,6 +64,7 @@ export default function AdminNewProjectPage() {
       description: "",
       image: "",
       technologies: "",
+      tags: "",
       demoUrl: "",
       codeUrl: "",
       featured: false,
@@ -121,6 +123,7 @@ export default function AdminNewProjectPage() {
         shortDescription: data.shortDescription || data.description.substring(0, 100) + '...',
         image: mediaFiles[thumbnailIndex] || data.image || '/api/placeholder/600/400',
         technologies: data.technologies ? data.technologies.split(',').map(tech => tech.trim()) : [],
+        tags: data.tags ? data.tags.split(',').map(tag => tag.trim()) : [],
         demoUrl: data.demoUrl || '',
         codeUrl: data.codeUrl || '',
         date: data.date ? new Date(data.date).toISOString() : new Date().toISOString(),
@@ -396,6 +399,22 @@ export default function AdminNewProjectPage() {
                 {errors.technologies && (
                   <p className="text-sm text-red-500">{errors.technologies.message}</p>
                 )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="tags">Filter Tags (optional, comma separated)</Label>
+                <Input
+                  id="tags"
+                  {...register("tags")}
+                  className={errors.tags ? "border-red-500" : ""}
+                  placeholder="Web Development, Mobile Apps, AI & Machine Learning, UI/UX Design"
+                />
+                {errors.tags && (
+                  <p className="text-sm text-red-500">{errors.tags.message}</p>
+                )}
+                <p className="text-xs text-gray-500">
+                  Tags will appear as filter buttons on the portfolio page. Examples: "Web Development", "Mobile Apps", "AI & Machine Learning", "UI/UX Design"
+                </p>
               </div>
 
               <div className="space-y-2">
