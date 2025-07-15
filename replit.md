@@ -274,6 +274,8 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Stored in localStorage to show only once per user
   - Includes clear privacy statement and data usage explanation
   - Analytics tracking for disclaimer acknowledgment
+  - Updated disclaimer to accurately reflect all data collection including PostHog analytics, LangSmith conversation review, contact form submissions, and file uploads
+  - Condensed to concise format while maintaining transparency and showcasing PM skills
 
 - **January 2025**: Fixed LangSmith dashboard URL generation for proper trace viewing
   - Corrected dashboard URL format to match LangSmith structure: `/o/{organizationId}/projects/p/{projectId}`
