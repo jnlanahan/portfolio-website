@@ -2387,7 +2387,7 @@ AVAILABLE DOCUMENT TYPES:
         projectName: "My Portfolio Chatbot",
         projectId: projectId,
         dashboardUrl: `https://smith.langchain.com/o/${organizationId}/projects/p/${projectId}`,
-        tracesUrl: `https://smith.langchain.com/o/${organizationId}/projects/p/${projectId}?timeModel=%7B%22duration%22%3A%227d%22%7D`,
+        tracesUrl: `https://smith.langchain.com/o/${organizationId}/projects/p/${projectId}`,
         datasetsUrl: `https://smith.langchain.com/o/${organizationId}/datasets`
       });
     } catch (error) {
