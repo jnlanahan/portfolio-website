@@ -20,8 +20,7 @@ import {
   Upload,
   Bot,
   Settings,
-  Clock,
-  Shield
+  Clock
 } from "lucide-react";
 
 export default function AdminDashboardPage() {
@@ -85,11 +84,7 @@ export default function AdminDashboardPage() {
     enabled: adminStatus?.isAdmin,
   });
 
-  // Fetch temporary password status
-  const { data: tempPasswordStatus } = useQuery({
-    queryKey: ["/api/admin/temp-password/status"],
-    enabled: adminStatus?.isAdmin,
-  });
+
 
   // Delete contact submission
   const deleteContactMutation = useMutation({
@@ -243,27 +238,7 @@ export default function AdminDashboardPage() {
             </Button>
           </div>
 
-          {/* Temporary Password Status */}
-          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#FF9500] transition-all duration-200">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h3 className="text-lg font-semibold text-white">Password Status</h3>
-                <p className="text-sm text-gray-300">
-                  {tempPasswordStatus?.active ? 
-                    `Active: ${tempPasswordStatus?.timeLeft}` : 
-                    "Using environment password"
-                  }
-                </p>
-              </div>
-              <Shield className="h-8 w-8 text-[#FF9500]" />
-            </div>
-            <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${tempPasswordStatus?.active ? 'bg-[#FF9500]' : 'bg-[#34C759]'}`} />
-              <span className="text-sm text-gray-300">
-                {tempPasswordStatus?.active ? 'Temporary Password' : 'Environment Password'}
-              </span>
-            </div>
-          </div>
+
         </div>
 
         {/* Additional Quick Actions */}

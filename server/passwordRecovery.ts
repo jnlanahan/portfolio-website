@@ -183,25 +183,28 @@ export async function completePasswordReset(newPassword: string): Promise<string
   // Hash the new password
   const hashedPassword = await bcrypt.hash(newPassword, 12);
   
-  // Set temporary password override (valid for 24 hours)
-  temporaryPasswordHash = hashedPassword;
-  temporaryPasswordExpiry = Date.now() + TEMP_PASSWORD_EXPIRY;
+  // Update the environment variable directly for permanent password change
+  process.env.ADMIN_PASSWORD = hashedPassword;
   
-  // Generate instructions for updating the environment variable
+  // Clear any temporary password override
+  temporaryPasswordHash = null;
+  temporaryPasswordExpiry = null;
+  
+  // Generate instructions
   const instructions = `
 === PASSWORD RECOVERY COMPLETE ===
 
-Your new password is now active and ready to use immediately!
+Your password has been permanently changed!
 
-Temporary Password: ${newPassword}
+New Password: ${newPassword}
 
 IMPORTANT NOTES:
-- Your new password is now active and will work for the next 30 days
-- For permanent access, update your ADMIN_PASSWORD environment variable with this hash:
-  ${hashedPassword}
-- The temporary password will expire in 30 days for security
+- Your new password is now permanently active
+- The password has been updated in your environment variables
+- No temporary password was created - this is your permanent password now
+- You can log in with your new password immediately and it will not expire
 
-You can now log in with your new password immediately.
+Password recovery successful!
 `;
 
   console.log(instructions);
@@ -216,17 +219,9 @@ export function isTemporaryPasswordValid(): boolean {
   return Date.now() < temporaryPasswordExpiry;
 }
 
-// Function to validate password against temporary override or environment variable
+// Function to validate password against environment variable
 export async function validateAdminPassword(password: string): Promise<boolean> {
-  // First check temporary password override
-  if (isTemporaryPasswordValid() && temporaryPasswordHash) {
-    const isValidTemp = await bcrypt.compare(password, temporaryPasswordHash);
-    if (isValidTemp) {
-      return true;
-    }
-  }
-  
-  // Fall back to environment variable
+  // Check against environment variable (which is now updated directly during password recovery)
   const adminPassword = process.env.ADMIN_PASSWORD;
   if (adminPassword) {
     return await bcrypt.compare(password, adminPassword);
