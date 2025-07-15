@@ -12,6 +12,7 @@ import BlogPage from "@/pages/BlogPage";
 import TopFiveListsPage from "@/pages/TopFiveListsPage";
 import ContactPage from "@/pages/ContactPage";
 import AdminLoginPage from "@/pages/AdminLoginPage";
+import AdminRecoveryPage from "@/pages/AdminRecoveryPage";
 import AdminDashboardPage from "@/pages/AdminDashboardPage";
 import AdminProjectsPage from "@/pages/AdminProjectsPage";
 import AdminNewProjectPage from "@/pages/AdminNewProjectPage";
@@ -50,6 +51,7 @@ function Router() {
       
       {/* Admin Routes */}
       <Route path="/admin/login" component={AdminLoginPage} />
+      <Route path="/admin/recovery" component={AdminRecoveryPage} />
       <Route path="/admin" component={AdminDashboardPage} />
       <Route path="/admin/dashboard" component={AdminDashboardPage} />
       <Route path="/admin/projects" component={AdminProjectsPage} />

@@ -111,10 +111,21 @@ export default function AdminLoginPage() {
             </Button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
-            <p>Default credentials for testing:</p>
-            <p>Username: admin</p>
-            <p>Password: admin123</p>
+          <div className="mt-4 text-center">
+            <p className="text-sm text-gray-600">
+              Forgot your password?{' '}
+              <a 
+                href="/admin/recovery" 
+                className="text-blue-600 hover:text-blue-500 font-medium"
+              >
+                Recover Account
+              </a>
+            </p>
+          </div>
+          
+          <div className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
+            <p>Authentication now uses environment variables</p>
+            <p>Set ADMIN_USERNAME and ADMIN_PASSWORD in Secrets</p>
           </div>
         </CardContent>
       </Card>

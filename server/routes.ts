@@ -27,6 +27,15 @@ import { fromZodError } from "zod-validation-error";
 import { sendContactEmail, verifyConnection } from "./mailer";
 import bcrypt from "bcrypt";
 import { 
+  generateRecoveryKey, 
+  hashRecoveryKey, 
+  verifyRecoveryKey,
+  checkRecoveryRateLimit,
+  recordRecoveryAttempt,
+  initiatePasswordReset,
+  getRecoveryInstructions
+} from "./passwordRecovery";
+import { 
   generateTrainingQuestion, 
   processRecruiterQuestion, 
   processTrainingConversation,
@@ -640,6 +649,72 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ isAdmin: true, adminId: req.session.adminId });
     } else {
       res.json({ isAdmin: false });
+    }
+  });
+
+  // Password recovery endpoints
+  app.get("/api/admin/recovery-info", (req, res) => {
+    const instructions = getRecoveryInstructions();
+    res.json({ instructions });
+  });
+
+  app.post("/api/admin/generate-recovery-key", async (req, res) => {
+    try {
+      const recoveryKey = generateRecoveryKey();
+      const hashedKey = await hashRecoveryKey(recoveryKey);
+      
+      res.json({ 
+        recoveryKey,
+        hashedKey,
+        message: "Store this recovery key securely. You'll need it to recover your password.",
+        instructions: "Add ADMIN_RECOVERY_KEY to your Replit Secrets with the hashed value above."
+      });
+    } catch (error) {
+      console.error("Error generating recovery key:", error);
+      res.status(500).json({ error: "Failed to generate recovery key" });
+    }
+  });
+
+  app.post("/api/admin/recover", async (req, res) => {
+    try {
+      const { recoveryKey, newPassword } = req.body;
+      const clientIp = req.ip || req.connection.remoteAddress || 'unknown';
+      const userAgent = req.get('User-Agent') || 'unknown';
+      
+      if (!recoveryKey || !newPassword) {
+        return res.status(400).json({ error: "Recovery key and new password are required" });
+      }
+
+      // Check rate limiting
+      if (!checkRecoveryRateLimit(clientIp)) {
+        return res.status(429).json({ error: "Too many recovery attempts. Please try again later." });
+      }
+
+      // Record this attempt
+      recordRecoveryAttempt(clientIp, userAgent);
+
+      // Verify recovery key
+      const adminRecoveryKey = process.env.ADMIN_RECOVERY_KEY;
+      if (!adminRecoveryKey) {
+        return res.status(500).json({ error: "Recovery key not configured" });
+      }
+
+      const isRecoveryKeyValid = await verifyRecoveryKey(recoveryKey, adminRecoveryKey);
+      if (!isRecoveryKeyValid) {
+        return res.status(401).json({ error: "Invalid recovery key" });
+      }
+
+      // Generate new hashed password
+      const hashedPassword = await initiatePasswordReset(newPassword);
+      
+      res.json({ 
+        message: "Password reset initiated. Check server logs for instructions.",
+        hashedPassword,
+        instructions: "Update ADMIN_PASSWORD secret with the hashed value and restart your application."
+      });
+    } catch (error) {
+      console.error("Error during password recovery:", error);
+      res.status(500).json({ error: "Password recovery failed" });
     }
   });
 
