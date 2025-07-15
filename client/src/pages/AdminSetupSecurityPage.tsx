@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,16 +11,32 @@ import { Link } from "wouter";
 import { ArrowLeft, Shield, Check } from "lucide-react";
 
 export default function AdminSetupSecurityPage() {
+  const [, setLocation] = useLocation();
   const [securityAnswers, setSecurityAnswers] = useState<string[]>(["", "", "", "", ""]);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
+  // Check admin authentication
+  const { data: adminStatus, isLoading: adminLoading } = useQuery({
+    queryKey: ["/api/admin/status"],
+    retry: false,
+  });
+
+  // Redirect if not authenticated
+  useEffect(() => {
+    if (!adminLoading && !adminStatus?.isAdmin) {
+      setLocation("/admin/login");
+    }
+  }, [adminStatus, adminLoading, setLocation]);
+
   const { data: questionsData, isLoading } = useQuery({
     queryKey: ["/api/admin/security-questions"],
+    enabled: adminStatus?.isAdmin,
   });
 
   const { data: statusData } = useQuery({
     queryKey: ["/api/admin/security-questions/status"],
+    enabled: adminStatus?.isAdmin,
   });
 
   const setupMutation = useMutation({
@@ -65,7 +82,7 @@ export default function AdminSetupSecurityPage() {
     setupMutation.mutate(securityAnswers);
   };
 
-  if (isLoading) {
+  if (adminLoading || isLoading || !adminStatus?.isAdmin) {
     return (
       <div className="min-h-screen bg-gray-50 p-6">
         <div className="max-w-2xl mx-auto">
