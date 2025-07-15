@@ -31,6 +31,7 @@ export const projects = pgTable("projects", {
   demoUrl: text("demo_url"),
   codeUrl: text("code_url"),
   featured: boolean("featured").default(false).notNull(),
+  status: text("status").default("published").notNull(), // "published", "coming_soon", "in_progress"
   date: timestamp("date").defaultNow().notNull(),
   client: text("client"),
   customColor: text("custom_color").default("#007AFF"), // Custom theme color for the project
@@ -78,6 +79,7 @@ export const blogPosts = pgTable("blog_posts", {
   category: text("category"),
   featured: boolean("featured").default(false).notNull(),
   published: boolean("published").default(false).notNull(),
+  status: text("status").default("published").notNull(), // "published", "coming_soon", "in_progress"
   readTime: integer("read_time").default(5).notNull(),
   date: timestamp("date").defaultNow().notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),

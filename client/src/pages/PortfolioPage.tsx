@@ -130,9 +130,22 @@ const ScrollableImageContainer = ({ project }: { project: any }) => {
         </div>
       )}
 
+      {/* Status badge */}
+      {project.status && project.status !== "published" && (
+        <div className={`absolute top-3 px-3 py-1 rounded-full text-xs font-medium ${
+          project.status === "coming_soon" 
+            ? "bg-yellow-100 text-yellow-800" 
+            : "bg-blue-100 text-blue-800"
+        } ${project.featured ? 'right-20' : 'right-3'}`}>
+          {project.status === "coming_soon" ? "Coming Soon" : "In Progress"}
+        </div>
+      )}
+
       {/* Featured badge */}
       {project.featured && (
-        <div className="absolute top-3 right-3 bg-secondary px-3 py-1 rounded-full text-xs font-medium text-secondary-foreground">
+        <div className={`absolute top-3 bg-secondary px-3 py-1 rounded-full text-xs font-medium text-secondary-foreground ${
+          project.status && project.status !== "published" ? 'right-32' : 'right-3'
+        }`}>
           Featured
         </div>
       )}

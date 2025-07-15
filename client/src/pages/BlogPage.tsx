@@ -40,8 +40,19 @@ const BlogCard = ({ post, index }: { post: any; index: number }) => {
             alt={post.title}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
+          {post.status && post.status !== "published" && (
+            <div className={`absolute top-2 px-2 py-1 rounded text-xs font-medium ${
+              post.status === "coming_soon" 
+                ? "bg-yellow-100 text-yellow-800" 
+                : "bg-blue-100 text-blue-800"
+            } ${post.featured ? 'right-20' : 'right-2'}`}>
+              {post.status === "coming_soon" ? "Coming Soon" : "In Progress"}
+            </div>
+          )}
           {post.featured && (
-            <div className="absolute top-2 right-2 bg-secondary px-2 py-1 rounded text-xs font-medium text-secondary-foreground">
+            <div className={`absolute top-2 bg-secondary px-2 py-1 rounded text-xs font-medium text-secondary-foreground ${
+              post.status && post.status !== "published" ? 'right-32' : 'right-2'
+            }`}>
               Featured
             </div>
           )}

@@ -28,6 +28,7 @@ const blogSchema = z.object({
   seriesId: z.string().optional(), // Series selection
   featured: z.boolean().default(false),
   published: z.boolean().default(false), // Default to draft mode
+  status: z.enum(["published", "coming_soon", "in_progress"]).default("published"),
   date: z.string().optional(),
 });
 
@@ -82,6 +83,7 @@ export default function AdminNewBlogPage() {
     defaultValues: {
       featured: false,
       published: false, // Default to draft mode
+      status: "published" as const,
       date: new Date().toISOString().split('T')[0],
       seriesId: "",
     },
@@ -101,6 +103,7 @@ export default function AdminNewBlogPage() {
         seriesId: postData.seriesId ? postData.seriesId.toString() : "",
         featured: postData.featured || false,
         published: postData.published || false,
+        status: postData.status || "published",
         date: postData.date ? new Date(postData.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
       });
       setContent(postData.content || "");
@@ -579,17 +582,32 @@ export default function AdminNewBlogPage() {
                 </p>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="date">Publication Date <span className="text-gray-500 text-sm">(optional)</span></Label>
-                <Input
-                  id="date"
-                  type="date"
-                  {...register("date")}
-                  className={errors.date ? "border-red-500" : ""}
-                />
-                {errors.date && (
-                  <p className="text-sm text-red-500">{errors.date.message}</p>
-                )}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="date">Publication Date <span className="text-gray-500 text-sm">(optional)</span></Label>
+                  <Input
+                    id="date"
+                    type="date"
+                    {...register("date")}
+                    className={errors.date ? "border-red-500" : ""}
+                  />
+                  {errors.date && (
+                    <p className="text-sm text-red-500">{errors.date.message}</p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="status">Status</Label>
+                  <Select value={watch("status")} onValueChange={(value: "published" | "coming_soon" | "in_progress") => setValue("status", value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="published">Published</SelectItem>
+                      <SelectItem value="coming_soon">Coming Soon</SelectItem>
+                      <SelectItem value="in_progress">In Progress</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
               <div className="flex items-center gap-6">
