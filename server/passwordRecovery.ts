@@ -35,9 +35,9 @@ const TOKEN_EXPIRY_MS = 30 * 60 * 1000; // 30 minutes
 // Security questions for multi-factor authentication
 const SECURITY_QUESTIONS = [
   "What city were you born in?",
-  "What was your first pet's name?",
+  "What was your first girlfriend's name?",
   "What is your mother's maiden name?",
-  "What was the name of your first school?",
+  "What is your favorite color?",
   "What is your favorite movie?"
 ];
 
