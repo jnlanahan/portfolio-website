@@ -40,7 +40,9 @@ import {
   sendRecoveryEmail,
   completePasswordReset,
   getRecoveryInstructions,
-  validateAdminPassword
+  validateAdminPassword,
+  extendTemporaryPassword,
+  getTemporaryPasswordStatus
 } from "./passwordRecovery";
 import { 
   generateTrainingQuestion, 
@@ -805,6 +807,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error during password recovery verification:", error);
       res.status(500).json({ error: "Password recovery verification failed" });
+    }
+  });
+
+  // Temporary password management endpoints
+  app.get("/api/admin/temp-password/status", requireAdmin, (req, res) => {
+    try {
+      const status = getTemporaryPasswordStatus();
+      res.json(status);
+    } catch (error) {
+      console.error("Error getting temporary password status:", error);
+      res.status(500).json({ error: "Failed to get temporary password status" });
+    }
+  });
+
+  app.post("/api/admin/temp-password/extend", requireAdmin, async (req, res) => {
+    try {
+      const { newPassword } = req.body;
+      
+      const hashedPassword = await extendTemporaryPassword(newPassword);
+      res.json({ 
+        message: "Temporary password extended successfully",
+        hashedPassword,
+        status: getTemporaryPasswordStatus()
+      });
+    } catch (error) {
+      console.error("Error extending temporary password:", error);
+      res.status(500).json({ error: "Failed to extend temporary password" });
     }
   });
 

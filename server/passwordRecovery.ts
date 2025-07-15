@@ -30,7 +30,7 @@ const recoveryTokens: RecoveryToken[] = [];
 // Temporary password override system
 let temporaryPasswordHash: string | null = null;
 let temporaryPasswordExpiry: number | null = null;
-const TEMP_PASSWORD_EXPIRY = 24 * 60 * 60 * 1000; // 24 hours
+const TEMP_PASSWORD_EXPIRY = 30 * 24 * 60 * 60 * 1000; // 30 days (extended for convenience)
 
 // Rate limiting: Max 3 recovery attempts per hour
 const MAX_RECOVERY_ATTEMPTS = 3;
@@ -196,10 +196,10 @@ Your new password is now active and ready to use immediately!
 Temporary Password: ${newPassword}
 
 IMPORTANT NOTES:
-- Your new password is now active and will work for the next 24 hours
+- Your new password is now active and will work for the next 30 days
 - For permanent access, update your ADMIN_PASSWORD environment variable with this hash:
   ${hashedPassword}
-- The temporary password will expire in 24 hours for security
+- The temporary password will expire in 30 days for security
 
 You can now log in with your new password immediately.
 `;
@@ -233,6 +233,56 @@ export async function validateAdminPassword(password: string): Promise<boolean> 
   }
   
   return false;
+}
+
+// Function to extend temporary password validity (for admin convenience)
+export async function extendTemporaryPassword(newPassword?: string): Promise<string> {
+  if (newPassword) {
+    // Set new temporary password
+    temporaryPasswordHash = await bcrypt.hash(newPassword, 12);
+  } else if (temporaryPasswordHash) {
+    // Just extend existing temporary password
+    console.log('Extending existing temporary password validity...');
+  } else {
+    throw new Error('No temporary password to extend');
+  }
+  
+  // Extend validity by 30 days
+  temporaryPasswordExpiry = Date.now() + TEMP_PASSWORD_EXPIRY;
+  
+  const instructions = `
+=== TEMPORARY PASSWORD EXTENDED ===
+
+Your temporary password has been extended and is now valid for another 30 days.
+
+Current Status:
+- Temporary password: ${newPassword ? 'Updated' : 'Extended'}
+- Valid until: ${new Date(temporaryPasswordExpiry).toLocaleString()}
+
+You can continue using your current password for the next 30 days.
+`;
+  
+  console.log(instructions);
+  return temporaryPasswordHash;
+}
+
+// Function to get current temporary password status
+export function getTemporaryPasswordStatus(): { active: boolean; expiresAt: Date | null; timeLeft: string } {
+  if (!temporaryPasswordHash || !temporaryPasswordExpiry) {
+    return { active: false, expiresAt: null, timeLeft: 'No temporary password set' };
+  }
+  
+  const now = Date.now();
+  const isValid = now < temporaryPasswordExpiry;
+  const timeLeft = isValid ? 
+    Math.ceil((temporaryPasswordExpiry - now) / (24 * 60 * 60 * 1000)) + ' days' : 
+    'Expired';
+  
+  return { 
+    active: isValid, 
+    expiresAt: new Date(temporaryPasswordExpiry), 
+    timeLeft 
+  };
 }
 
 export function getRecoveryInstructions(): string {
