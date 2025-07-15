@@ -38,7 +38,11 @@ export default function DataDisclaimer() {
         
         <div className="space-y-4 py-4">
           <p className="text-gray-700 leading-relaxed">
-            As a Product Manager, I'm always looking for ways to improve this product. While I don't know who you are and don't collect personal details, I do use product analytics (via Posthog) to see how the site is used, and I review chatbot conversations (via Evals) to enhance the experience.
+            As a Product Manager, I'm always looking for ways to improve this product. While I don't know who you are and don't collect personal details, I do use product analytics (via PostHog) to see how the site is used, and I review chatbot conversations (via LangSmith) to enhance the experience.
+          </p>
+          
+          <p className="text-gray-700 leading-relaxed">
+            Additionally, when you use the contact form or interact with the chatbot, those messages are stored to help me respond and improve the service. Performance metrics and usage patterns are also collected to optimize the user experience.
           </p>
           
           <p className="text-gray-700 leading-relaxed">
@@ -47,6 +51,10 @@ export default function DataDisclaimer() {
           
           <p className="text-gray-700 leading-relaxed">
             By continuing to use this site, you acknowledge this data collection.
+          </p>
+          
+          <p className="text-gray-600 text-sm mt-4 italic">
+            -Nick
           </p>
         </div>
         
