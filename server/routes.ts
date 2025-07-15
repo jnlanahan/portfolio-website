@@ -732,6 +732,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(429).json({ error: "Too many recovery attempts. Please try again later." });
       }
 
+      // Validate security answers before sending email
+      const correctAnswers = await verifySecurityAnswers(securityAnswers);
+      if (correctAnswers < 2) {
+        return res.status(401).json({ error: "Insufficient correct security answers. At least 2 out of 5 required." });
+      }
+
       // Record this attempt
       recordRecoveryAttempt(clientIp, userAgent, email);
 

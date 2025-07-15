@@ -294,6 +294,7 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
     - Step 2: Verify & Reset (token + security questions + new password)
   - Security questions: birth city, first pet, mother's maiden name, first school, favorite movie
   - All answers normalized (lowercase, trimmed) and securely hashed with bcrypt (12 salt rounds)
+  - **Enhanced security questions system**: Added complete setup interface at /admin/setup-security for configuring security questions before using recovery system, implemented database-driven security question storage and validation, added proper security question verification during recovery initiation (prevents emails from being sent with wrong answers), created comprehensive test suite verifying all functionality including setup, validation, error handling, and rate limiting
 
 - **January 2025**: Added privacy-focused data collection disclaimer modal
   - Created DataDisclaimer component that appears for first-time visitors
