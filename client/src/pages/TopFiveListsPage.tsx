@@ -209,7 +209,7 @@ const TopFiveListsPage = () => {
                         <img 
                           src={item.image} 
                           alt={item.title} 
-                          className="mt-3 rounded-lg w-32 h-24 object-cover border border-gray-200"
+                          className="mt-3 rounded-lg w-32 h-24 object-contain border border-gray-200 bg-white"
                         />
                       )}
                     </div>
