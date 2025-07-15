@@ -185,7 +185,18 @@ export default function AdminNewProjectPage() {
   };
 
   const onSubmit = (data: ProjectFormData) => {
-    createProjectMutation.mutate(data);
+    // Convert comma-separated strings to arrays
+    const processedData = {
+      ...data,
+      technologies: data.technologies 
+        ? data.technologies.split(',').map(tech => tech.trim()).filter(tech => tech.length > 0)
+        : [],
+      tags: data.tags 
+        ? data.tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0)
+        : [],
+    };
+    
+    createProjectMutation.mutate(processedData);
   };
 
   const featuredValue = watch("featured");

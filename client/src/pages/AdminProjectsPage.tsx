@@ -26,6 +26,7 @@ const projectSchema = z.object({
   mediaFiles: z.array(z.string()).default([]),
   thumbnailIndex: z.number().default(0),
   technologies: z.string().optional(),
+  tags: z.string().optional(), // Comma-separated tags for filtering
   demoUrl: z.string().optional().refine((val) => !val || z.string().url().safeParse(val).success, {
     message: "Must be a valid URL if provided",
   }),
@@ -191,10 +192,21 @@ export default function AdminProjectsPage() {
   });
 
   const onSubmit = (data: ProjectFormData) => {
+    // Convert comma-separated strings to arrays
+    const processedData = {
+      ...data,
+      technologies: data.technologies 
+        ? data.technologies.split(',').map(tech => tech.trim()).filter(tech => tech.length > 0)
+        : [],
+      tags: data.tags 
+        ? data.tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0)
+        : [],
+    };
+    
     if (editingProject) {
-      updateProjectMutation.mutate(data);
+      updateProjectMutation.mutate({ ...processedData, id: editingProject.id });
     } else {
-      createProjectMutation.mutate(data);
+      createProjectMutation.mutate(processedData);
     }
   };
 
@@ -247,6 +259,7 @@ export default function AdminProjectsPage() {
       setValue('mediaFiles', project.mediaFiles || []);
       setValue('thumbnailIndex', project.thumbnailIndex || 0);
       setValue('technologies', project.technologies?.join(', ') || '');
+      setValue('tags', project.tags?.join(', ') || '');
       setValue('demoUrl', project.demoUrl);
       setValue('codeUrl', project.codeUrl);
       setValue('featured', project.featured || false);
@@ -492,6 +505,22 @@ export default function AdminProjectsPage() {
                     {errors.technologies && (
                       <p className="text-sm text-red-500">{errors.technologies.message}</p>
                     )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="tags">Filter Tags (comma separated, optional)</Label>
+                    <Input
+                      id="tags"
+                      {...register("tags")}
+                      className={errors.tags ? "border-red-500" : ""}
+                      placeholder="Web Development, Mobile Apps, AI & Machine Learning, UI/UX Design"
+                    />
+                    {errors.tags && (
+                      <p className="text-sm text-red-500">{errors.tags.message}</p>
+                    )}
+                    <p className="text-xs text-gray-500">
+                      Tags will appear as filter buttons on the portfolio page
+                    </p>
                   </div>
 
                   <div className="space-y-2">
