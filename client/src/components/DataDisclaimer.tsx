@@ -38,7 +38,7 @@ export default function DataDisclaimer() {
         
         <div className="space-y-4 py-4">
           <p className="text-gray-700 leading-relaxed">
-            As a Product Manager, I'm always looking for ways to improve this product. While I don't know who you are and don't collect personal details, I do use product analytics (via PostHog) to see how the site is used, review chatbot conversations (via LangSmith) to enhance the experience, and store contact form messages to help me respond. Performance metrics and usage patterns are also collected to optimize the user experience.
+            As a Product Manager, I'm always looking for ways to improve this product. While I don't know who you are and don't collect personal details outside of the contact form, I do use product analytics (via PostHog) to see how the site is used, review chatbot conversations (via LangSmith) to enhance the experience, and store contact form messages to help me respond. Performance metrics and usage patterns are also collected to optimize the user experience.
           </p>
           
           <p className="text-gray-700 leading-relaxed">
