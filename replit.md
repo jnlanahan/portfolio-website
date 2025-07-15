@@ -268,6 +268,13 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - **Created centralized response formatting system**: Built responseFormatter.ts service to eliminate duplication of response style instructions across all four system prompts (Training, Visitor Fallback, Custom Template, LangChain). All prompts now use getResponseStyleInstructions() function for consistent formatting: short conversational responses (2-3 sentences), no bullet points/formatting, natural speech patterns, professional tone for recruiters. Updated database Custom template to remove redundant response style instructions. This ensures uniform response quality across all chatbot interactions regardless of which prompt is used.
   - **Made response formatting rules database-driven and editable**: Converted hardcoded response formatting instructions to database-stored rules in new `response_formatting_rules` table. Added comprehensive admin interface with new "Response Formatting" tab (5th tab, green) in system prompt manager allowing real-time editing of formatting guidelines. Created API endpoints for reading and updating formatting rules. System now loads formatting rules asynchronously from database with fallback to defaults. Added professional formatting rules including: short conversational style, recruiter-friendly tone, no bullet points, natural paragraph flow, focus on achievements and qualifications, and proper use of active voice. All chatbot responses now use these database-stored formatting rules for consistent professional appearance across all interactions.
 
+- **January 2025**: Added privacy-focused data collection disclaimer modal
+  - Created DataDisclaimer component that appears for first-time visitors
+  - Professional notice explaining PostHog analytics and chatbot conversation review
+  - Stored in localStorage to show only once per user
+  - Includes clear privacy statement and data usage explanation
+  - Analytics tracking for disclaimer acknowledgment
+
 - **January 2025**: Fixed LangSmith dashboard URL generation for proper trace viewing
   - Corrected dashboard URL format to match LangSmith structure: `/o/{organizationId}/projects/p/{projectId}`
   - Fixed traces URL with proper query parameters for 7-day time model

@@ -29,6 +29,7 @@ import AdminSystemPromptsPage from "@/pages/AdminSystemPromptsPage";
 import BlogSeriesPage from "@/pages/BlogSeriesPage";
 import Layout from "./components/Layout";
 import FloatingChatbot from "./components/FloatingChatbot";
+import DataDisclaimer from "./components/DataDisclaimer";
 import { BlogDetail } from "./sections/BlogDetail";
 import { ProjectDetail } from "./sections/ProjectDetail";
 
@@ -81,6 +82,7 @@ function App() {
           <Toaster />
           <Router />
           <FloatingChatbot />
+          <DataDisclaimer />
         </Layout>
       </TooltipProvider>
     </QueryClientProvider>
