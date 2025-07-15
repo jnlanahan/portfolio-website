@@ -259,6 +259,7 @@ const BlogPage = () => {
         <div className="text-center py-12">
           <p className="text-gray-600 text-lg" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>No posts found with this tag.</p>
           <button
+            key="view-all-posts"
             onClick={() => setSelectedTag(null)}
             className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
             style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
