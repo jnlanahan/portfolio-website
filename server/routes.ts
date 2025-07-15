@@ -25,6 +25,7 @@ import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
 
 import { sendContactEmail, verifyConnection } from "./mailer";
+import bcrypt from "bcrypt";
 import { 
   generateTrainingQuestion, 
   processRecruiterQuestion, 
@@ -593,17 +594,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Username and password are required" });
       }
 
-      const admin = await storage.getAdminByUsername(username);
+      // Check against environment variables
+      const adminUsername = process.env.ADMIN_USERNAME;
+      const adminPassword = process.env.ADMIN_PASSWORD;
       
-      if (!admin || admin.password !== password) {
+      if (!adminUsername || !adminPassword) {
+        console.error("Admin credentials not configured in environment");
+        return res.status(500).json({ error: "Server configuration error" });
+      }
+
+      // Verify username
+      if (username !== adminUsername) {
+        return res.status(401).json({ error: "Invalid credentials" });
+      }
+
+      // Verify password using bcrypt
+      const isPasswordValid = await bcrypt.compare(password, adminPassword);
+      
+      if (!isPasswordValid) {
         return res.status(401).json({ error: "Invalid credentials" });
       }
 
       // Set session
-      req.session.adminId = admin.id;
+      req.session.adminId = 1; // Use a fixed admin ID
       req.session.isAdmin = true;
       
-      res.json({ message: "Login successful", admin: { id: admin.id, username: admin.username } });
+      res.json({ message: "Login successful", admin: { id: 1, username: adminUsername } });
     } catch (error) {
       console.error("Error during admin login:", error);
       res.status(500).json({ error: "Login failed" });
