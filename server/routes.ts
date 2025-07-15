@@ -2379,12 +2379,16 @@ AVAILABLE DOCUMENT TYPES:
   // Get LangSmith project dashboard URL
   app.get("/api/langchain/dashboard", requireAdmin, async (req, res) => {
     try {
+      // Get organization ID from environment or use default
+      const organizationId = process.env.LANGCHAIN_ORGANIZATION_ID || "9fbc7d13-ba02-4734-9a9b-f8d1f4d7f68c";
+      const projectId = process.env.LANGCHAIN_PROJECT_ID || "21a3c70c-25b8-4d9c-ac78-0e4e2a9766b4";
+      
       res.json({
         projectName: "My Portfolio Chatbot",
-        projectId: process.env.LANGCHAIN_PROJECT_ID,
-        dashboardUrl: `https://smith.langchain.com/o/projects/${process.env.LANGCHAIN_PROJECT_ID}`,
-        tracesUrl: `https://smith.langchain.com/o/projects/${process.env.LANGCHAIN_PROJECT_ID}/traces`,
-        datasetsUrl: "https://smith.langchain.com/o/datasets"
+        projectId: projectId,
+        dashboardUrl: `https://smith.langchain.com/o/${organizationId}/projects/p/${projectId}`,
+        tracesUrl: `https://smith.langchain.com/o/${organizationId}/projects/p/${projectId}?timeModel=%7B%22duration%22%3A%227d%22%7D`,
+        datasetsUrl: `https://smith.langchain.com/o/${organizationId}/datasets`
       });
     } catch (error) {
       console.error("Error getting dashboard info:", error);
