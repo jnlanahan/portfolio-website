@@ -138,8 +138,6 @@ export async function sendRecoveryEmail(email: string, token: string, ip: string
     const recoveryLink = `${process.env.REPLIT_DOMAINS ? `https://${process.env.REPLIT_DOMAINS.split(',')[0]}` : 'http://localhost:5000'}/admin/recovery/verify?token=${token}`;
     
     const emailContent = `
-Subject: Admin Password Recovery Request
-
 Hello,
 
 A password recovery request has been initiated for your admin account.
@@ -161,8 +159,15 @@ Best regards,
 Portfolio Admin System
 `;
 
-    await sendContactEmail(email, "Admin Password Recovery", emailContent);
-    return true;
+    const emailData = {
+      name: "Admin System",
+      email: email,
+      subject: "Admin Password Recovery Request",
+      message: emailContent
+    };
+
+    const result = await sendContactEmail(emailData);
+    return result.success;
   } catch (error) {
     console.error('Failed to send recovery email:', error);
     return false;
