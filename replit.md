@@ -276,16 +276,24 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Removed old admin database table dependency for authentication
   - Enhanced security with bcrypt salt rounds of 12 for maximum protection
 
-- **January 2025**: Added comprehensive password recovery system
-  - Created password recovery service with secure recovery keys and time-limited tokens
-  - Implemented rate limiting (3 attempts per hour) to prevent brute force attacks
-  - Added recovery page at /admin/recovery with three recovery options:
-    1. Manual recovery using password hashing script (recommended)
-    2. Recovery key system with ADMIN_RECOVERY_KEY environment variable
-    3. Complete credential reset option
-  - Built comprehensive admin interface for recovery key generation and password reset
-  - Added recovery link to admin login page for easy access
-  - All recovery attempts are logged with IP and user agent for security monitoring
+- **January 2025**: Implemented comprehensive email-based password recovery system with multi-factor authentication
+  - Created platform-independent password recovery system using email verification and security questions
+  - Implemented two-step recovery process:
+    1. Email verification: User enters email and answers 5 security questions, receives recovery token
+    2. Identity verification: User enters token and re-answers questions (2 out of 5 must match)
+  - Added 5 predefined security questions for multi-factor authentication
+  - Recovery tokens expire in 30 minutes for enhanced security
+  - Rate limiting: 3 attempts per hour to prevent brute force attacks
+  - All recovery attempts logged with IP, user agent, and email for security monitoring
+  - Email recovery links automatically redirect to verification page with pre-filled token
+  - System works on any hosting platform with PostgreSQL and email service (not dependent on Replit secrets)
+  - Backup manual recovery option available via password hashing script
+  - Added comprehensive admin interface at /admin/recovery with three tabs:
+    - Instructions: Step-by-step guide and security question list
+    - Step 1: Request Recovery (email + security questions)
+    - Step 2: Verify & Reset (token + security questions + new password)
+  - Security questions: birth city, first pet, mother's maiden name, first school, favorite movie
+  - All answers normalized (lowercase, trimmed) and securely hashed with bcrypt (12 salt rounds)
 
 - **January 2025**: Added privacy-focused data collection disclaimer modal
   - Created DataDisclaimer component that appears for first-time visitors

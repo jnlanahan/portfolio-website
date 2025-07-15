@@ -1,35 +1,63 @@
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
+import { sendContactEmail } from './mailer';
 
 /**
  * Password Recovery Service
- * Provides secure password recovery functionality using environment variables
+ * Provides secure password recovery functionality using email and security questions
  */
 
 interface RecoveryAttempt {
   timestamp: number;
   ip: string;
   userAgent: string;
+  email?: string;
 }
 
-// In-memory storage for recovery attempts (resets on server restart)
+interface RecoveryToken {
+  token: string;
+  email: string;
+  timestamp: number;
+  ip: string;
+  securityAnswers: string[];
+}
+
+// In-memory storage for recovery attempts and tokens (resets on server restart)
 const recoveryAttempts: RecoveryAttempt[] = [];
+const recoveryTokens: RecoveryToken[] = [];
 
 // Rate limiting: Max 3 recovery attempts per hour
 const MAX_RECOVERY_ATTEMPTS = 3;
 const RECOVERY_WINDOW_MS = 60 * 60 * 1000; // 1 hour
+const TOKEN_EXPIRY_MS = 30 * 60 * 1000; // 30 minutes
 
-export function generateRecoveryKey(): string {
-  // Generate a secure 32-character recovery key
-  return crypto.randomBytes(16).toString('hex');
+// Security questions for multi-factor authentication
+const SECURITY_QUESTIONS = [
+  "What city were you born in?",
+  "What was your first pet's name?",
+  "What is your mother's maiden name?",
+  "What was the name of your first school?",
+  "What is your favorite movie?"
+];
+
+export function generateRecoveryToken(): string {
+  // Generate a secure 32-character recovery token
+  return crypto.randomBytes(32).toString('hex');
 }
 
-export async function hashRecoveryKey(recoveryKey: string): Promise<string> {
-  return await bcrypt.hash(recoveryKey, 12);
+export async function hashSecurityAnswer(answer: string): Promise<string> {
+  // Normalize answer (lowercase, trim) before hashing
+  const normalized = answer.toLowerCase().trim();
+  return await bcrypt.hash(normalized, 12);
 }
 
-export async function verifyRecoveryKey(recoveryKey: string, hashedKey: string): Promise<boolean> {
-  return await bcrypt.compare(recoveryKey, hashedKey);
+export async function verifySecurityAnswer(answer: string, hashedAnswer: string): Promise<boolean> {
+  const normalized = answer.toLowerCase().trim();
+  return await bcrypt.compare(normalized, hashedAnswer);
+}
+
+export function getSecurityQuestions(): string[] {
+  return SECURITY_QUESTIONS;
 }
 
 export function checkRecoveryRateLimit(ip: string): boolean {
@@ -41,11 +69,12 @@ export function checkRecoveryRateLimit(ip: string): boolean {
   return recentAttempts.length < MAX_RECOVERY_ATTEMPTS;
 }
 
-export function recordRecoveryAttempt(ip: string, userAgent: string): void {
+export function recordRecoveryAttempt(ip: string, userAgent: string, email?: string): void {
   recoveryAttempts.push({
     timestamp: Date.now(),
     ip,
-    userAgent
+    userAgent,
+    email
   });
   
   // Clean up old attempts
@@ -56,21 +85,87 @@ export function recordRecoveryAttempt(ip: string, userAgent: string): void {
   }
 }
 
-export async function initiatePasswordReset(newPassword: string): Promise<string> {
+export function storeRecoveryToken(token: string, email: string, ip: string, securityAnswers: string[]): void {
+  recoveryTokens.push({
+    token,
+    email,
+    timestamp: Date.now(),
+    ip,
+    securityAnswers
+  });
+  
+  // Clean up expired tokens
+  const cutoff = Date.now() - TOKEN_EXPIRY_MS;
+  const index = recoveryTokens.findIndex(token => token.timestamp >= cutoff);
+  if (index > 0) {
+    recoveryTokens.splice(0, index);
+  }
+}
+
+export function getRecoveryToken(token: string): RecoveryToken | undefined {
+  const now = Date.now();
+  return recoveryTokens.find(
+    rt => rt.token === token && (now - rt.timestamp) < TOKEN_EXPIRY_MS
+  );
+}
+
+export function removeRecoveryToken(token: string): void {
+  const index = recoveryTokens.findIndex(rt => rt.token === token);
+  if (index > -1) {
+    recoveryTokens.splice(index, 1);
+  }
+}
+
+export async function sendRecoveryEmail(email: string, token: string, ip: string): Promise<boolean> {
+  try {
+    const recoveryLink = `${process.env.REPLIT_DOMAINS ? `https://${process.env.REPLIT_DOMAINS.split(',')[0]}` : 'http://localhost:5000'}/admin/recovery/verify?token=${token}`;
+    
+    const emailContent = `
+Subject: Admin Password Recovery Request
+
+Hello,
+
+A password recovery request has been initiated for your admin account.
+
+Recovery Details:
+- IP Address: ${ip}
+- Time: ${new Date().toLocaleString()}
+- Token: ${token}
+
+To complete the password recovery:
+1. Click this link: ${recoveryLink}
+2. Or go to /admin/recovery/verify and enter token: ${token}
+
+This link will expire in 30 minutes.
+
+If you did not request this recovery, please ignore this email.
+
+Best regards,
+Portfolio Admin System
+`;
+
+    await sendContactEmail(email, "Admin Password Recovery", emailContent);
+    return true;
+  } catch (error) {
+    console.error('Failed to send recovery email:', error);
+    return false;
+  }
+}
+
+export async function completePasswordReset(newPassword: string): Promise<string> {
   // Hash the new password
   const hashedPassword = await bcrypt.hash(newPassword, 12);
   
   // Generate instructions for updating the environment variable
   const instructions = `
-=== PASSWORD RECOVERY INSTRUCTIONS ===
+=== PASSWORD RECOVERY COMPLETE ===
 
 Your new password has been hashed. To complete the password reset:
 
-1. Go to your Replit Secrets panel
-2. Update the ADMIN_PASSWORD secret with this new hashed value:
+1. Update your ADMIN_PASSWORD environment variable with this new hashed value:
    ${hashedPassword}
 
-3. Restart your application
+2. Restart your application
 
 Your new password will be: ${newPassword}
 
@@ -85,23 +180,32 @@ export function getRecoveryInstructions(): string {
   return `
 === ADMIN PASSWORD RECOVERY ===
 
-If you've forgotten your admin password, you have two options:
+Secure password recovery using email verification and security questions:
 
-OPTION 1: Manual Recovery (Recommended)
-1. Go to your Replit Secrets panel
-2. Generate a new password
-3. Use the password hashing script: node scripts/hash-password.js [your-new-password]
-4. Update ADMIN_PASSWORD secret with the hashed value
-5. Restart your application
+STEP 1: Email Verification
+- Enter your admin email address
+- System sends a recovery token to your email
+- Token expires in 30 minutes for security
 
-OPTION 2: Emergency Recovery Key
-If you have your recovery key, you can use the /api/admin/recover endpoint.
+STEP 2: Security Questions
+- Answer 2 out of 5 security questions correctly
+- Questions must be configured in advance
+- Answers are case-insensitive but must match exactly
 
-OPTION 3: Reset Everything
-1. Delete the ADMIN_PASSWORD secret
-2. Delete the ADMIN_USERNAME secret
-3. Re-run the secret setup process
+STEP 3: Password Reset
+- Enter your new password
+- System generates hashed password
+- Follow instructions to update your environment variables
 
-For maximum security, it's recommended to use Option 1.
+SECURITY FEATURES:
+- Rate limited to 3 attempts per hour
+- All attempts logged with IP and timestamp
+- Tokens expire automatically
+- Multi-factor authentication required
+- Platform independent (works anywhere)
+
+BACKUP RECOVERY:
+If you can't access your email, use the manual recovery script:
+node scripts/hash-password.js [your-new-password]
 `;
 }

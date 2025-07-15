@@ -52,6 +52,7 @@ function Router() {
       {/* Admin Routes */}
       <Route path="/admin/login" component={AdminLoginPage} />
       <Route path="/admin/recovery" component={AdminRecoveryPage} />
+      <Route path="/admin/recovery/verify" component={AdminRecoveryPage} />
       <Route path="/admin" component={AdminDashboardPage} />
       <Route path="/admin/dashboard" component={AdminDashboardPage} />
       <Route path="/admin/projects" component={AdminProjectsPage} />

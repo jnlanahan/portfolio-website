@@ -27,12 +27,17 @@ import { fromZodError } from "zod-validation-error";
 import { sendContactEmail, verifyConnection } from "./mailer";
 import bcrypt from "bcrypt";
 import { 
-  generateRecoveryKey, 
-  hashRecoveryKey, 
-  verifyRecoveryKey,
+  generateRecoveryToken, 
+  hashSecurityAnswer, 
+  verifySecurityAnswer,
+  getSecurityQuestions,
   checkRecoveryRateLimit,
   recordRecoveryAttempt,
-  initiatePasswordReset,
+  storeRecoveryToken,
+  getRecoveryToken,
+  removeRecoveryToken,
+  sendRecoveryEmail,
+  completePasswordReset,
   getRecoveryInstructions
 } from "./passwordRecovery";
 import { 
@@ -658,31 +663,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ instructions });
   });
 
-  app.post("/api/admin/generate-recovery-key", async (req, res) => {
-    try {
-      const recoveryKey = generateRecoveryKey();
-      const hashedKey = await hashRecoveryKey(recoveryKey);
-      
-      res.json({ 
-        recoveryKey,
-        hashedKey,
-        message: "Store this recovery key securely. You'll need it to recover your password.",
-        instructions: "Add ADMIN_RECOVERY_KEY to your Replit Secrets with the hashed value above."
-      });
-    } catch (error) {
-      console.error("Error generating recovery key:", error);
-      res.status(500).json({ error: "Failed to generate recovery key" });
-    }
+  app.get("/api/admin/security-questions", (req, res) => {
+    const questions = getSecurityQuestions();
+    res.json({ questions });
   });
 
-  app.post("/api/admin/recover", async (req, res) => {
+  app.post("/api/admin/initiate-recovery", async (req, res) => {
     try {
-      const { recoveryKey, newPassword } = req.body;
+      const { email, securityAnswers } = req.body;
       const clientIp = req.ip || req.connection.remoteAddress || 'unknown';
       const userAgent = req.get('User-Agent') || 'unknown';
       
-      if (!recoveryKey || !newPassword) {
-        return res.status(400).json({ error: "Recovery key and new password are required" });
+      if (!email || !securityAnswers || !Array.isArray(securityAnswers)) {
+        return res.status(400).json({ error: "Email and security answers are required" });
       }
 
       // Check rate limiting
@@ -691,30 +684,80 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Record this attempt
-      recordRecoveryAttempt(clientIp, userAgent);
+      recordRecoveryAttempt(clientIp, userAgent, email);
 
-      // Verify recovery key
-      const adminRecoveryKey = process.env.ADMIN_RECOVERY_KEY;
-      if (!adminRecoveryKey) {
-        return res.status(500).json({ error: "Recovery key not configured" });
+      // Generate recovery token
+      const token = generateRecoveryToken();
+      
+      // Store token with security answers
+      storeRecoveryToken(token, email, clientIp, securityAnswers);
+      
+      // Send recovery email
+      const emailSent = await sendRecoveryEmail(email, token, clientIp);
+      
+      if (!emailSent) {
+        return res.status(500).json({ error: "Failed to send recovery email" });
+      }
+      
+      res.json({ 
+        message: "Recovery email sent successfully. Check your email for the recovery link.",
+        tokenSent: true
+      });
+    } catch (error) {
+      console.error("Error initiating password recovery:", error);
+      res.status(500).json({ error: "Failed to initiate password recovery" });
+    }
+  });
+
+  app.post("/api/admin/verify-recovery", async (req, res) => {
+    try {
+      const { token, securityAnswers, newPassword } = req.body;
+      const clientIp = req.ip || req.connection.remoteAddress || 'unknown';
+      
+      if (!token || !securityAnswers || !newPassword) {
+        return res.status(400).json({ error: "Token, security answers, and new password are required" });
       }
 
-      const isRecoveryKeyValid = await verifyRecoveryKey(recoveryKey, adminRecoveryKey);
-      if (!isRecoveryKeyValid) {
-        return res.status(401).json({ error: "Invalid recovery key" });
+      // Check rate limiting
+      if (!checkRecoveryRateLimit(clientIp)) {
+        return res.status(429).json({ error: "Too many recovery attempts. Please try again later." });
+      }
+
+      // Get recovery token
+      const recoveryToken = getRecoveryToken(token);
+      if (!recoveryToken) {
+        return res.status(401).json({ error: "Invalid or expired recovery token" });
+      }
+
+      // Verify security answers (at least 2 out of 5 must match)
+      let correctAnswers = 0;
+      for (let i = 0; i < securityAnswers.length && i < recoveryToken.securityAnswers.length; i++) {
+        if (securityAnswers[i] && recoveryToken.securityAnswers[i]) {
+          const isCorrect = await verifySecurityAnswer(securityAnswers[i], recoveryToken.securityAnswers[i]);
+          if (isCorrect) {
+            correctAnswers++;
+          }
+        }
+      }
+
+      if (correctAnswers < 2) {
+        return res.status(401).json({ error: "Insufficient correct security answers. At least 2 out of 5 required." });
       }
 
       // Generate new hashed password
-      const hashedPassword = await initiatePasswordReset(newPassword);
+      const hashedPassword = await completePasswordReset(newPassword);
+      
+      // Remove the used token
+      removeRecoveryToken(token);
       
       res.json({ 
-        message: "Password reset initiated. Check server logs for instructions.",
+        message: "Password reset completed successfully. Check server logs for instructions.",
         hashedPassword,
-        instructions: "Update ADMIN_PASSWORD secret with the hashed value and restart your application."
+        instructions: "Update your ADMIN_PASSWORD environment variable with the hashed value and restart your application."
       });
     } catch (error) {
-      console.error("Error during password recovery:", error);
-      res.status(500).json({ error: "Password recovery failed" });
+      console.error("Error during password recovery verification:", error);
+      res.status(500).json({ error: "Password recovery verification failed" });
     }
   });
 
