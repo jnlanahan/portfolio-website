@@ -151,7 +151,7 @@ const AboutPage = () => {
             className="max-w-6xl mx-auto text-center"
           >
             <h2 className="text-3xl font-bold text-gray-900 mb-8 font-futura">
-              What Sets Me Apart
+              My Strengths
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -169,7 +169,7 @@ const AboutPage = () => {
                 <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
                   20+ years solving unique, one of a kind challenges as an Army Officer, consultant, and engineer.
                 </p>
-                <p className="text-slate-600 text-sm font-futura font-medium italic">
+                <p className="text-slate-600 text-base font-futura font-bold">
                   No problem is too big.
                 </p>
               </motion.div>
@@ -189,7 +189,7 @@ const AboutPage = () => {
                 <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
                   Trained to make tough calls and set priorities even when the stakes are high. I have had to make decisions that affect not just me but others too.
                 </p>
-                <p className="text-slate-600 text-sm font-futura font-medium italic">
+                <p className="text-slate-600 text-base font-futura font-bold">
                   I am decisive.
                 </p>
               </motion.div>
@@ -209,7 +209,7 @@ const AboutPage = () => {
                 <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
                   I never aim to just get the job done. I want to master what I do. I dive in, get obsessed (in a good way), and keep learning the finer points as I go.
                 </p>
-                <p className="text-slate-600 text-sm font-futura font-medium italic">
+                <p className="text-slate-600 text-base font-futura font-bold">
                   Learning is always the goal.
                 </p>
               </motion.div>
@@ -229,7 +229,7 @@ const AboutPage = () => {
                 <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
                   I have led and supported multiple large scale transformations in the Army and major financial services organizations. I know how to drive change from stakeholder communication and planning to managing resistance before it becomes a problem.
                 </p>
-                <p className="text-slate-600 text-sm font-futura font-medium italic">
+                <p className="text-slate-600 text-base font-futura font-bold">
                   Effective change is a team effort.
                 </p>
               </motion.div>
@@ -249,7 +249,7 @@ const AboutPage = () => {
                 <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
                   I understand what effective communication requires and have trained others to identify its root causes when it fails. I have presented to executives at major banks and commanding generals in the Army, adapting my approach for every audience.
                 </p>
-                <p className="text-slate-600 text-sm font-futura font-medium italic">
+                <p className="text-slate-600 text-base font-futura font-bold">
                   All communication is not equal.
                 </p>
               </motion.div>
