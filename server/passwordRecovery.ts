@@ -27,6 +27,11 @@ interface RecoveryToken {
 const recoveryAttempts: RecoveryAttempt[] = [];
 const recoveryTokens: RecoveryToken[] = [];
 
+// Temporary password override system
+let temporaryPasswordHash: string | null = null;
+let temporaryPasswordExpiry: number | null = null;
+const TEMP_PASSWORD_EXPIRY = 24 * 60 * 60 * 1000; // 24 hours
+
 // Rate limiting: Max 3 recovery attempts per hour
 const MAX_RECOVERY_ATTEMPTS = 3;
 const RECOVERY_WINDOW_MS = 60 * 60 * 1000; // 1 hour
@@ -178,24 +183,56 @@ export async function completePasswordReset(newPassword: string): Promise<string
   // Hash the new password
   const hashedPassword = await bcrypt.hash(newPassword, 12);
   
+  // Set temporary password override (valid for 24 hours)
+  temporaryPasswordHash = hashedPassword;
+  temporaryPasswordExpiry = Date.now() + TEMP_PASSWORD_EXPIRY;
+  
   // Generate instructions for updating the environment variable
   const instructions = `
 === PASSWORD RECOVERY COMPLETE ===
 
-Your new password has been hashed. To complete the password reset:
+Your new password is now active and ready to use immediately!
 
-1. Update your ADMIN_PASSWORD environment variable with this new hashed value:
-   ${hashedPassword}
+Temporary Password: ${newPassword}
 
-2. Restart your application
+IMPORTANT NOTES:
+- Your new password is now active and will work for the next 24 hours
+- For permanent access, update your ADMIN_PASSWORD environment variable with this hash:
+  ${hashedPassword}
+- The temporary password will expire in 24 hours for security
 
-Your new password will be: ${newPassword}
-
-IMPORTANT: Save this password securely. The original password is no longer valid.
+You can now log in with your new password immediately.
 `;
 
   console.log(instructions);
   return hashedPassword;
+}
+
+// Function to check if temporary password is valid and not expired
+export function isTemporaryPasswordValid(): boolean {
+  if (!temporaryPasswordHash || !temporaryPasswordExpiry) {
+    return false;
+  }
+  return Date.now() < temporaryPasswordExpiry;
+}
+
+// Function to validate password against temporary override or environment variable
+export async function validateAdminPassword(password: string): Promise<boolean> {
+  // First check temporary password override
+  if (isTemporaryPasswordValid() && temporaryPasswordHash) {
+    const isValidTemp = await bcrypt.compare(password, temporaryPasswordHash);
+    if (isValidTemp) {
+      return true;
+    }
+  }
+  
+  // Fall back to environment variable
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  if (adminPassword) {
+    return await bcrypt.compare(password, adminPassword);
+  }
+  
+  return false;
 }
 
 export function getRecoveryInstructions(): string {

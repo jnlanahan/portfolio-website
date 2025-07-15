@@ -39,7 +39,8 @@ import {
   removeRecoveryToken,
   sendRecoveryEmail,
   completePasswordReset,
-  getRecoveryInstructions
+  getRecoveryInstructions,
+  validateAdminPassword
 } from "./passwordRecovery";
 import { 
   generateTrainingQuestion, 
@@ -611,10 +612,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Check against environment variables
       const adminUsername = process.env.ADMIN_USERNAME;
-      const adminPassword = process.env.ADMIN_PASSWORD;
       
-      if (!adminUsername || !adminPassword) {
-        console.error("Admin credentials not configured in environment");
+      if (!adminUsername) {
+        console.error("Admin username not configured in environment");
         return res.status(500).json({ error: "Server configuration error" });
       }
 
@@ -623,8 +623,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ error: "Invalid credentials" });
       }
 
-      // Verify password using bcrypt
-      const isPasswordValid = await bcrypt.compare(password, adminPassword);
+      // Verify password using temporary override or environment variable
+      const isPasswordValid = await validateAdminPassword(password);
       
       if (!isPasswordValid) {
         return res.status(401).json({ error: "Invalid credentials" });

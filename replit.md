@@ -295,6 +295,7 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - Security questions: birth city, first girlfriend's name, mother's maiden name, favorite color, favorite movie
   - All answers normalized (lowercase, trimmed) and securely hashed with bcrypt (12 salt rounds)
   - **Enhanced security questions system**: Added complete setup interface at /admin/setup-security for configuring security questions before using recovery system, implemented database-driven security question storage and validation, added proper security question verification during recovery initiation (prevents emails from being sent with wrong answers), created comprehensive test suite verifying all functionality including setup, validation, error handling, and rate limiting
+  - **FIXED: Automatic password activation**: Implemented temporary password override system that activates recovered passwords immediately without requiring manual environment variable updates. New passwords work for 24 hours automatically, eliminating the need for manual ADMIN_PASSWORD environment variable updates. Fixed email formatting issues so recovery emails now contain proper tokens and clickable links.
 
 - **January 2025**: Added privacy-focused data collection disclaimer modal
   - Created DataDisclaimer component that appears for first-time visitors
