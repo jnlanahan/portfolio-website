@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'wouter';
+import { useLocation, Link } from 'wouter';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -174,6 +174,15 @@ export default function AdminRecoveryPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
+          <div className="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <p className="text-sm text-yellow-800">
+              <strong>Need to setup security questions first?</strong>
+            </p>
+            <Link href="/admin/setup-security" className="text-blue-600 hover:text-blue-800 underline text-sm">
+              Configure Security Questions →
+            </Link>
+          </div>
+          
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="info">Instructions</TabsTrigger>

@@ -34,7 +34,9 @@ import {
   type SystemPromptTemplate,
   type InsertSystemPromptTemplate,
   type ResponseFormattingRules,
-  type InsertResponseFormattingRules
+  type InsertResponseFormattingRules,
+  type SecurityQuestion,
+  type InsertSecurityQuestion
 } from "@shared/schema";
 import { getBlogPosts, getBlogPostById } from "../client/src/data/blog";
 import { getPortfolio } from "../client/src/data/portfolio";
@@ -148,6 +150,11 @@ export interface IStorage {
   // Response formatting rules methods
   getActiveResponseFormattingRules(): Promise<ResponseFormattingRules | undefined>;
   saveResponseFormattingRules(rules: InsertResponseFormattingRules): Promise<ResponseFormattingRules>;
+  
+  // Security questions methods
+  getSecurityQuestions(): Promise<SecurityQuestion[]>;
+  saveSecurityQuestions(questions: InsertSecurityQuestion[]): Promise<SecurityQuestion[]>;
+  hasSecurityQuestionsSetup(): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
@@ -1311,6 +1318,41 @@ export class DatabaseStorage implements IStorage {
       .returning();
     
     return newRules;
+  }
+
+  // Security questions methods
+  async getSecurityQuestions(): Promise<SecurityQuestion[]> {
+    const { db } = await import('./db');
+    const { securityQuestions } = await import('@shared/schema');
+    const { asc } = await import('drizzle-orm');
+    
+    return await db.select().from(securityQuestions).orderBy(asc(securityQuestions.questionIndex));
+  }
+
+  async saveSecurityQuestions(questions: InsertSecurityQuestion[]): Promise<SecurityQuestion[]> {
+    const { db } = await import('./db');
+    const { securityQuestions } = await import('@shared/schema');
+    
+    // Clear existing questions first
+    await db.delete(securityQuestions);
+    
+    // Insert new questions
+    const insertedQuestions = [];
+    for (const question of questions) {
+      const [inserted] = await db.insert(securityQuestions).values(question).returning();
+      insertedQuestions.push(inserted);
+    }
+    
+    return insertedQuestions;
+  }
+
+  async hasSecurityQuestionsSetup(): Promise<boolean> {
+    const { db } = await import('./db');
+    const { securityQuestions } = await import('@shared/schema');
+    const { count } = await import('drizzle-orm');
+    
+    const [result] = await db.select({ count: count() }).from(securityQuestions);
+    return result.count >= 5; // Need all 5 questions answered
   }
 }
 

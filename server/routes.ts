@@ -30,6 +30,7 @@ import {
   generateRecoveryToken, 
   hashSecurityAnswer, 
   verifySecurityAnswer,
+  verifySecurityAnswers,
   getSecurityQuestions,
   checkRecoveryRateLimit,
   recordRecoveryAttempt,
@@ -668,6 +669,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ questions });
   });
 
+  app.get("/api/admin/security-questions/status", async (req, res) => {
+    try {
+      const hasSetup = await storage.hasSecurityQuestionsSetup();
+      res.json({ hasSetup });
+    } catch (error) {
+      console.error("Error checking security questions status:", error);
+      res.status(500).json({ error: "Failed to check security questions status" });
+    }
+  });
+
+  app.post("/api/admin/setup-security-questions", async (req, res) => {
+    try {
+      const { securityAnswers } = req.body;
+      
+      if (!securityAnswers || !Array.isArray(securityAnswers) || securityAnswers.length !== 5) {
+        return res.status(400).json({ error: "All 5 security questions must be answered" });
+      }
+
+      // Hash the answers and save to database
+      const hashedQuestions = [];
+      for (let i = 0; i < securityAnswers.length; i++) {
+        const hashedAnswer = await hashSecurityAnswer(securityAnswers[i]);
+        hashedQuestions.push({
+          questionIndex: i,
+          hashedAnswer: hashedAnswer,
+        });
+      }
+
+      await storage.saveSecurityQuestions(hashedQuestions);
+      
+      res.json({ 
+        message: "Security questions setup completed successfully",
+        questionsSetup: true 
+      });
+    } catch (error) {
+      console.error("Error setting up security questions:", error);
+      res.status(500).json({ error: "Failed to setup security questions" });
+    }
+  });
+
   app.post("/api/admin/initiate-recovery", async (req, res) => {
     try {
       const { email, securityAnswers } = req.body;
@@ -676,6 +717,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       if (!email || !securityAnswers || !Array.isArray(securityAnswers)) {
         return res.status(400).json({ error: "Email and security answers are required" });
+      }
+
+      // Check if security questions are configured
+      const hasSetup = await storage.hasSecurityQuestionsSetup();
+      if (!hasSetup) {
+        return res.status(400).json({ 
+          error: "Security questions have not been configured. Please setup security questions first." 
+        });
       }
 
       // Check rate limiting
@@ -730,15 +779,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Verify security answers (at least 2 out of 5 must match)
-      let correctAnswers = 0;
-      for (let i = 0; i < securityAnswers.length && i < recoveryToken.securityAnswers.length; i++) {
-        if (securityAnswers[i] && recoveryToken.securityAnswers[i]) {
-          const isCorrect = await verifySecurityAnswer(securityAnswers[i], recoveryToken.securityAnswers[i]);
-          if (isCorrect) {
-            correctAnswers++;
-          }
-        }
-      }
+      const correctAnswers = await verifySecurityAnswers(securityAnswers);
 
       if (correctAnswers < 2) {
         return res.status(401).json({ error: "Insufficient correct security answers. At least 2 out of 5 required." });

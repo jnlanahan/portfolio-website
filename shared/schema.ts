@@ -17,6 +17,18 @@ export const insertUserSchema = createInsertSchema(users).pick({
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
+// Security questions for admin recovery
+export const securityQuestions = pgTable("security_questions", {
+  id: serial("id").primaryKey(),
+  questionIndex: integer("question_index").notNull(),
+  hashedAnswer: text("hashed_answer").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export type SecurityQuestion = typeof securityQuestions.$inferSelect;
+export type InsertSecurityQuestion = typeof securityQuestions.$inferInsert;
+
 // Projects model
 export const projects = pgTable("projects", {
   id: serial("id").primaryKey(),

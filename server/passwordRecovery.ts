@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import { sendContactEmail } from './mailer';
+import { storage } from './storage';
 
 /**
  * Password Recovery Service
@@ -54,6 +55,22 @@ export async function hashSecurityAnswer(answer: string): Promise<string> {
 export async function verifySecurityAnswer(answer: string, hashedAnswer: string): Promise<boolean> {
   const normalized = answer.toLowerCase().trim();
   return await bcrypt.compare(normalized, hashedAnswer);
+}
+
+export async function verifySecurityAnswers(answers: string[]): Promise<number> {
+  const storedQuestions = await storage.getSecurityQuestions();
+  
+  let correctAnswers = 0;
+  for (let i = 0; i < answers.length && i < storedQuestions.length; i++) {
+    if (answers[i] && storedQuestions[i]) {
+      const isCorrect = await verifySecurityAnswer(answers[i], storedQuestions[i].hashedAnswer);
+      if (isCorrect) {
+        correctAnswers++;
+      }
+    }
+  }
+  
+  return correctAnswers;
 }
 
 export function getSecurityQuestions(): string[] {
