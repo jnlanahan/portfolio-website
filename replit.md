@@ -349,15 +349,17 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
 - All components follow TypeScript best practices
 
 ## Testing
-- Comprehensive test suite available in `/tests/` directory
+- Comprehensive test suite available in root directory
 - Run all tests with: `node run-tests.js`
-- Individual API tests: `node tests/api-tests.js`
 - Test coverage includes:
   - Admin authentication and session management
   - Project CRUD operations with image uploads
   - Blog management with draft/publish workflow
   - Contact form functionality
   - Public API endpoints
-  - Resume management system
+  - Content status system (draft/published)
+  - Top 5 lists functionality
+  - LangSmith integration and AI evaluation
 - Tests automatically clean up after execution
 - Server must be running (npm run dev) before running tests
+- Removed redundant test files for resume downloads and password protection (covered by main test suite)
