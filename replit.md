@@ -298,6 +298,7 @@ A modern, responsive personal portfolio website built with React, TypeScript, an
   - **FIXED: Automatic password activation**: Implemented temporary password override system that activates recovered passwords immediately without requiring manual environment variable updates. New passwords work for 24 hours automatically, eliminating the need for manual ADMIN_PASSWORD environment variable updates. Fixed email formatting issues so recovery emails now contain proper tokens and clickable links.
   - **FIXED: Security vulnerability**: Removed security questions setup notification from recovery page - this interface is now only accessible from within the admin dashboard (/admin/setup-security) after proper authentication. Prevents unauthorized access to security questions configuration.
   - **FIXED: Authentication protection**: Added proper authentication guards to AdminSetupSecurityPage - page now requires admin login and redirects unauthorized users to login page. All security question APIs are only accessible to authenticated admins.
+  - **Enhanced security UX**: Added password visibility toggle functionality to all security question answer fields in recovery process - answers are hidden by default with eye/eye-off icons to toggle visibility for better security and user experience.
 
 - **January 2025**: Added privacy-focused data collection disclaimer modal
   - Created DataDisclaimer component that appears for first-time visitors

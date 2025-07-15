@@ -13,7 +13,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
-import { Key, Shield, RefreshCw, Info, AlertTriangle, Mail, HelpCircle } from 'lucide-react';
+import { Key, Shield, RefreshCw, Info, AlertTriangle, Mail, HelpCircle, Eye, EyeOff } from 'lucide-react';
 
 const initiateRecoverySchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -38,6 +38,8 @@ export default function AdminRecoveryPage() {
   const [activeTab, setActiveTab] = useState("info");
   const [recoveryStep, setRecoveryStep] = useState<'initiate' | 'verify'>('initiate');
   const [emailSent, setEmailSent] = useState(false);
+  const [showInitiateAnswers, setShowInitiateAnswers] = useState<boolean[]>([false, false, false, false, false]);
+  const [showVerifyAnswers, setShowVerifyAnswers] = useState<boolean[]>([false, false, false, false, false]);
   const { toast } = useToast();
 
   // Check if we're on the verify route and extract token from URL
@@ -159,6 +161,14 @@ export default function AdminRecoveryPage() {
     verifyRecoveryMutation.mutate(data);
   };
 
+  const toggleInitiateAnswerVisibility = (index: number) => {
+    setShowInitiateAnswers(prev => prev.map((show, i) => i === index ? !show : show));
+  };
+
+  const toggleVerifyAnswerVisibility = (index: number) => {
+    setShowVerifyAnswers(prev => prev.map((show, i) => i === index ? !show : show));
+  };
+
   const questions = securityQuestions?.questions || [];
 
   return (
@@ -261,13 +271,26 @@ export default function AdminRecoveryPage() {
                         <Label htmlFor={`securityAnswer${index}`} className="text-sm">
                           {index + 1}. {question}
                         </Label>
-                        <Input
-                          id={`securityAnswer${index}`}
-                          type="text"
-                          placeholder="Your answer"
-                          {...registerInitiate(`securityAnswers.${index}` as const)}
-                          className={initiateErrors.securityAnswers?.[index] ? "border-red-500" : ""}
-                        />
+                        <div className="relative">
+                          <Input
+                            id={`securityAnswer${index}`}
+                            type={showInitiateAnswers[index] ? "text" : "password"}
+                            placeholder="Your answer"
+                            {...registerInitiate(`securityAnswers.${index}` as const)}
+                            className={initiateErrors.securityAnswers?.[index] ? "border-red-500 pr-10" : "pr-10"}
+                          />
+                          <button
+                            type="button"
+                            className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                            onClick={() => toggleInitiateAnswerVisibility(index)}
+                          >
+                            {showInitiateAnswers[index] ? (
+                              <EyeOff className="h-4 w-4 text-gray-400" />
+                            ) : (
+                              <Eye className="h-4 w-4 text-gray-400" />
+                            )}
+                          </button>
+                        </div>
                         {initiateErrors.securityAnswers?.[index] && (
                           <p className="text-sm text-red-500">{initiateErrors.securityAnswers[index]?.message}</p>
                         )}
@@ -331,13 +354,26 @@ export default function AdminRecoveryPage() {
                         <Label htmlFor={`verifyAnswer${index}`} className="text-sm">
                           {index + 1}. {question}
                         </Label>
-                        <Input
-                          id={`verifyAnswer${index}`}
-                          type="text"
-                          placeholder="Your answer"
-                          {...registerVerify(`securityAnswers.${index}` as const)}
-                          className={verifyErrors.securityAnswers?.[index] ? "border-red-500" : ""}
-                        />
+                        <div className="relative">
+                          <Input
+                            id={`verifyAnswer${index}`}
+                            type={showVerifyAnswers[index] ? "text" : "password"}
+                            placeholder="Your answer"
+                            {...registerVerify(`securityAnswers.${index}` as const)}
+                            className={verifyErrors.securityAnswers?.[index] ? "border-red-500 pr-10" : "pr-10"}
+                          />
+                          <button
+                            type="button"
+                            className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                            onClick={() => toggleVerifyAnswerVisibility(index)}
+                          >
+                            {showVerifyAnswers[index] ? (
+                              <EyeOff className="h-4 w-4 text-gray-400" />
+                            ) : (
+                              <Eye className="h-4 w-4 text-gray-400" />
+                            )}
+                          </button>
+                        </div>
                         {verifyErrors.securityAnswers?.[index] && (
                           <p className="text-sm text-red-500">{verifyErrors.securityAnswers[index]?.message}</p>
                         )}
