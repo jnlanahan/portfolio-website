@@ -67,10 +67,10 @@ const AboutPage = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-futura">
-              {aboutMeContent?.title || 'Beyond the Resume'}
+              {aboutMeContent?.heroTitle || 'Beyond the Resume'}
             </h1>
             <p className="text-lg text-gray-600 leading-relaxed font-futura">
-              {aboutMeContent?.subtitle || 'Here is a little information about me that goes beyond my resume and LinkedIn profile.'}
+              {aboutMeContent?.heroSubtitle || 'Here is a little information about me that goes beyond my resume and LinkedIn profile.'}
             </p>
           </motion.div>
         </div>
@@ -111,7 +111,7 @@ const AboutPage = () => {
                   Leadership
                 </h3>
                 <p className="text-gray-600 text-center leading-relaxed font-futura">
-                  I'm passionate about leadership because I've lived it, taught it, and studied it. It's not about titles or rank. Leadership is about people. Taking care of them, learning from them, and developing them. I was not and am still not the best leader, but I try to get better, and I really care about the people I lead.
+                  {aboutMeContent?.leadershipContent || "I'm passionate about leadership because I've lived it, taught it, and studied it. It's not about titles or rank. Leadership is about people. Taking care of them, learning from them, and developing them. I was not and am still not the best leader, but I try to get better, and I really care about the people I lead."}
                 </p>
               </div>
             </motion.div>
@@ -133,7 +133,7 @@ const AboutPage = () => {
                   Strategy
                 </h3>
                 <p className="text-gray-600 text-center leading-relaxed font-futura">
-                  Strategy is misunderstood. I studied it in the military and business school, and I practice it in both places. You need those different views and a sense of the long history of that word to really understand it. I'm writing a series of articles now to share my perspective on strategy which can apply to both the military and the business world.
+                  {aboutMeContent?.strategyContent || "Strategy is misunderstood. I studied it in the military and business school, and I practice it in both places. You need those different views and a sense of the long history of that word to really understand it. I'm writing a series of articles now to share my perspective on strategy which can apply to both the military and the business world."}
                 </p>
               </div>
             </motion.div>
@@ -155,7 +155,7 @@ const AboutPage = () => {
                   Innovation
                 </h3>
                 <p className="text-gray-600 text-center leading-relaxed font-futura">
-                  Innovation always pulls me in. I enjoy looking for better ways to do things, spoting new problems to solve, and trying ideas where they don't usually fit. I keep a running list of ideas, and with new vibe coding tools, I'm finally bringing some of them to life.
+                  {aboutMeContent?.innovationContent || "Innovation always pulls me in. I enjoy looking for better ways to do things, spoting new problems to solve, and trying ideas where they don't usually fit. I keep a running list of ideas, and with new vibe coding tools, I'm finally bringing some of them to life."}
                 </p>
               </div>
             </motion.div>
@@ -190,7 +190,7 @@ const AboutPage = () => {
                   Critical Thinker
                 </div>
                 <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
-                  20+ years solving unique, one of a kind challenges as an Army Officer, consultant, and engineer.
+                  {aboutMeContent?.criticalThinkerBio || "20+ years solving unique, one of a kind challenges as an Army Officer, consultant, and engineer."}
                 </p>
                 <p className="text-slate-600 text-base font-futura font-bold">
                   No problem is too big.
@@ -210,7 +210,7 @@ const AboutPage = () => {
                   Decision Maker
                 </div>
                 <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
-                  Trained to make tough calls and set priorities even when the stakes are high. I have had to make decisions that affect not just me but others too.
+                  {aboutMeContent?.decisionMakerBio || "Trained to make tough calls and set priorities even when the stakes are high. I have had to make decisions that affect not just me but others too."}
                 </p>
                 <p className="text-slate-600 text-base font-futura font-bold">
                   I am decisive.
@@ -230,7 +230,7 @@ const AboutPage = () => {
                   Lifelong Learner
                 </div>
                 <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
-                  I never aim to just get the job done. I want to master what I do. I dive in, get obsessed (in a good way), and keep learning the finer points as I go.
+                  {aboutMeContent?.lifelongLearnerBio || "I never aim to just get the job done. I want to master what I do. I dive in, get obsessed (in a good way), and keep learning the finer points as I go."}
                 </p>
                 <p className="text-slate-600 text-base font-futura font-bold">
                   Learning is always the goal.
@@ -250,7 +250,7 @@ const AboutPage = () => {
                   Change agent
                 </div>
                 <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
-                  I have led and supported multiple large scale transformations in the Army and major financial services organizations. I know how to drive change from stakeholder communication and planning to managing resistance before it becomes a problem.
+                  {aboutMeContent?.changeAgentBio || "I have led and supported multiple large scale transformations in the Army and major financial services organizations. I know how to drive change from stakeholder communication and planning to managing resistance before it becomes a problem."}
                 </p>
                 <p className="text-slate-600 text-base font-futura font-bold">
                   Effective change is a team effort.
@@ -270,7 +270,7 @@ const AboutPage = () => {
                   Communicator
                 </div>
                 <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
-                  I understand what effective communication requires and have trained others to identify its root causes when it fails. I have presented to executives at major banks and commanding generals in the Army, adapting my approach for every audience.
+                  {aboutMeContent?.communicatorBio || "I understand what effective communication requires and have trained others to identify its root causes when it fails. I have presented to executives at major banks and commanding generals in the Army, adapting my approach for every audience."}
                 </p>
                 <p className="text-slate-600 text-base font-futura font-bold">
                   All communication is not equal.

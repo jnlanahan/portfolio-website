@@ -468,10 +468,47 @@ export default function AdminAboutMePage() {
                   <h3 className="text-xl font-bold text-gray-900 mb-3 text-center font-futura">
                     Strategy
                   </h3>
-                  <p className="text-gray-600 text-center leading-relaxed font-futura">
-                    Strategy is misunderstood. I studied it in the military and business school, and I practice it in both places. You need those different views and a sense of the long history of that word to really understand it. I'm writing a series of articles now to share my perspective on strategy which can apply to both the military and the business world.
-                  </p>
+                  <div className="relative">
+                    {editingSection === 'strategy' ? (
+                      <div>
+                        <Textarea
+                          defaultValue={aboutMeContent?.strategyContent || "Strategy is misunderstood. I studied it in the military and business school, and I practice it in both places. You need those different views and a sense of the long history of that word to really understand it. I'm writing a series of articles now to share my perspective on strategy which can apply to both the military and the business world."}
+                          onChange={(e) => form.setValue('strategyContent', e.target.value)}
+                          className="text-center text-gray-600 border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-32"
+                          placeholder="Strategy content..."
+                          rows={6}
+                        />
+                        <div className="flex justify-center gap-2 mt-2">
+                          <Button
+                            onClick={() => handleSaveSection({ strategyContent: form.getValues('strategyContent') })}
+                            size="sm"
+                            disabled={saveMutation.isPending}
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            onClick={() => setEditingSection(null)}
+                            variant="outline"
+                            size="sm"
+                          >
+                            Cancel
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-gray-600 text-center leading-relaxed font-futura">
+                        {aboutMeContent?.strategyContent || "Strategy is misunderstood. I studied it in the military and business school, and I practice it in both places. You need those different views and a sense of the long history of that word to really understand it. I'm writing a series of articles now to share my perspective on strategy which can apply to both the military and the business world."}
+                      </p>
+                    )}
+                  </div>
                 </div>
+                <Button
+                  onClick={() => setEditingSection(editingSection === 'strategy' ? null : 'strategy')}
+                  className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                  size="sm"
+                >
+                  <Edit size={14} />
+                </Button>
               </motion.div>
 
               {/* Innovation */}
@@ -490,10 +527,47 @@ export default function AdminAboutMePage() {
                   <h3 className="text-xl font-bold text-gray-900 mb-3 text-center font-futura">
                     Innovation
                   </h3>
-                  <p className="text-gray-600 text-center leading-relaxed font-futura">
-                    Innovation always pulls me in. I enjoy looking for better ways to do things, spoting new problems to solve, and trying ideas where they don't usually fit. I keep a running list of ideas, and with new vibe coding tools, I'm finally bringing some of them to life.
-                  </p>
+                  <div className="relative">
+                    {editingSection === 'innovation' ? (
+                      <div>
+                        <Textarea
+                          defaultValue={aboutMeContent?.innovationContent || "Innovation always pulls me in. I enjoy looking for better ways to do things, spoting new problems to solve, and trying ideas where they don't usually fit. I keep a running list of ideas, and with new vibe coding tools, I'm finally bringing some of them to life."}
+                          onChange={(e) => form.setValue('innovationContent', e.target.value)}
+                          className="text-center text-gray-600 border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-32"
+                          placeholder="Innovation content..."
+                          rows={6}
+                        />
+                        <div className="flex justify-center gap-2 mt-2">
+                          <Button
+                            onClick={() => handleSaveSection({ innovationContent: form.getValues('innovationContent') })}
+                            size="sm"
+                            disabled={saveMutation.isPending}
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            onClick={() => setEditingSection(null)}
+                            variant="outline"
+                            size="sm"
+                          >
+                            Cancel
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-gray-600 text-center leading-relaxed font-futura">
+                        {aboutMeContent?.innovationContent || "Innovation always pulls me in. I enjoy looking for better ways to do things, spoting new problems to solve, and trying ideas where they don't usually fit. I keep a running list of ideas, and with new vibe coding tools, I'm finally bringing some of them to life."}
+                      </p>
+                    )}
+                  </div>
                 </div>
+                <Button
+                  onClick={() => setEditingSection(editingSection === 'innovation' ? null : 'innovation')}
+                  className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                  size="sm"
+                >
+                  <Edit size={14} />
+                </Button>
               </motion.div>
             </div>
           </div>
