@@ -496,7 +496,9 @@ export default function AdminAboutMePage() {
           </div>
         </section>
 
-        {/* Leadership Philosophy Section */}
+
+
+        {/* "I am a..." Leadership Cards Section */}
         <section className="py-12 bg-gray-50">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
@@ -510,39 +512,73 @@ export default function AdminAboutMePage() {
                 I am a...
               </h2>
               
-              <div className="relative">
-                {editingSection === 'bio' ? (
-                  <div>
-                    <Textarea
-                      defaultValue={aboutMeContent?.bio || "Critical Thinker, Decision Maker, Lifelong Learner, Change Agent, Communicator, Cross-Functional Leader"}
-                      onChange={(e) => form.setValue('bio', e.target.value)}
-                      className="text-center text-gray-600 border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-32 max-w-4xl mx-auto"
-                      placeholder="Describe your leadership philosophy..."
-                      rows={8}
-                    />
-                    <div className="flex justify-center gap-2 mt-4">
-                      <Button
-                        onClick={() => handleSaveSection({ bio: form.getValues('bio') })}
-                        size="sm"
-                        disabled={saveMutation.isPending}
-                      >
-                        Save
-                      </Button>
-                      <Button
-                        onClick={() => setEditingSection(null)}
-                        variant="outline"
-                        size="sm"
-                      >
-                        Cancel
-                      </Button>
-                    </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                {/* Critical Thinker */}
+                <div className="bg-white p-6 rounded-2xl shadow-lg h-full">
+                  <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
+                    Critical Thinker
                   </div>
-                ) : (
-                  <p className="text-lg text-gray-600 leading-relaxed max-w-4xl mx-auto font-futura">
-                    {aboutMeContent?.bio || "Critical Thinker, Decision Maker, Lifelong Learner, Change Agent, Communicator, Cross-Functional Leader"}
+                  <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
+                    20+ years solving unique, one of a kind challenges as an Army Officer, consultant, and engineer.
                   </p>
-                )}
+                  <p className="text-slate-600 text-base font-futura font-bold">
+                    No problem is too big.
+                  </p>
+                </div>
+
+                {/* Decision Maker */}
+                <div className="bg-white p-6 rounded-2xl shadow-lg h-full">
+                  <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
+                    Decision Maker
+                  </div>
+                  <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
+                    Trained to make tough calls and set priorities even when the stakes are high. I have had to make decisions that affect not just me but others too.
+                  </p>
+                  <p className="text-slate-600 text-base font-futura font-bold">
+                    I am decisive.
+                  </p>
+                </div>
+
+                {/* Lifelong Learner */}
+                <div className="bg-white p-6 rounded-2xl shadow-lg h-full">
+                  <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
+                    Lifelong Learner
+                  </div>
+                  <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
+                    I never aim to just get the job done. I want to master what I do. I dive in, get obsessed (in a good way), and keep learning the finer points as I go.
+                  </p>
+                  <p className="text-slate-600 text-base font-futura font-bold">
+                    Learning is always the goal.
+                  </p>
+                </div>
+
+                {/* Change Agent */}
+                <div className="bg-white p-6 rounded-2xl shadow-lg h-full">
+                  <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
+                    Change agent
+                  </div>
+                  <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
+                    I have led and supported multiple large scale transformations in the Army and major financial services organizations. I know how to drive change from stakeholder communication and planning to managing resistance before it becomes a problem.
+                  </p>
+                  <p className="text-slate-600 text-base font-futura font-bold">
+                    Effective change is a team effort.
+                  </p>
+                </div>
+
+                {/* Communicator */}
+                <div className="bg-white p-6 rounded-2xl shadow-lg h-full">
+                  <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
+                    Communicator
+                  </div>
+                  <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
+                    I understand what effective communication requires and have trained others to identify its root causes when it fails. I have presented to executives at major banks and commanding generals in the Army, adapting my approach for every audience.
+                  </p>
+                  <p className="text-slate-600 text-base font-futura font-bold">
+                    All communication is not equal.
+                  </p>
+                </div>
               </div>
+              
               <Button
                 onClick={() => setEditingSection(editingSection === 'bio' ? null : 'bio')}
                 className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
@@ -550,6 +586,144 @@ export default function AdminAboutMePage() {
               >
                 <Edit size={14} />
               </Button>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Life in Pictures */}
+        <section className="py-12">
+          <div className="container mx-auto px-4 md:px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="max-w-4xl mx-auto relative group"
+            >
+              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center font-futura">
+                Life in Pictures
+              </h2>
+              
+              <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div className="h-80 bg-gray-200 flex items-center justify-center">
+                  <span className="text-gray-500 text-sm">Professional Team Photo</span>
+                </div>
+                <div className="p-6 bg-white">
+                  <h3 className="font-bold text-gray-900 mb-2 font-futura text-xl">
+                    Leading Teams
+                  </h3>
+                  <p className="text-gray-600 font-futura">
+                    Working with my team at EY
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* My Leadership Philosophy */}
+        <section className="py-12 bg-gray-50">
+          <div className="container mx-auto px-4 md:px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="max-w-4xl mx-auto relative group"
+            >
+              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center font-futura">
+                My Leadership Philosophy
+              </h2>
+              
+              <div className="space-y-8">
+                {/* Purpose */}
+                <div className="bg-white p-8 rounded-2xl shadow-lg">
+                  <h3 className="text-xl font-bold text-slate-600 mb-4 font-futura">
+                    Purpose
+                  </h3>
+                  <p className="text-gray-700 leading-relaxed font-futura">
+                    Ensure every teammate leaves stronger, more confident, and better prepared for the next challenge.
+                  </p>
+                </div>
+
+                {/* Values & Guiding Principles */}
+                <div className="bg-white p-8 rounded-2xl shadow-lg">
+                  <h3 className="text-xl font-bold text-slate-600 mb-4 font-futura">
+                    Values & Guiding Principles
+                  </h3>
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Integrity:</h4>
+                      <p className="text-gray-700 leading-relaxed font-futura">
+                        Always choose what is right over what is easy, using every task as a learning opportunity and never cutting corners.
+                      </p>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Growth:</h4>
+                      <p className="text-gray-700 leading-relaxed font-futura">
+                        Always raise the least experienced so no one is left behind, building a team whose floor exceeds others' ceiling through shared commitment.
+                      </p>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Mastery:</h4>
+                      <p className="text-gray-700 leading-relaxed font-futura">
+                        Always dig deep to master the craft, because excellence, not "good enough," is the foundation of sound judgment.
+                      </p>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Empathy:</h4>
+                      <p className="text-gray-700 leading-relaxed font-futura">
+                        Always lead with empathy, listening first and tailoring communication to each person's background and needs.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Leadership Approach & Style */}
+                <div className="bg-white p-8 rounded-2xl shadow-lg">
+                  <h3 className="text-xl font-bold text-slate-600 mb-4 font-futura">
+                    Leadership Approach & Style
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Allow mistakes for growth:</h4>
+                      <p className="text-gray-700 text-sm leading-relaxed font-futura">
+                        Let teammates learn by doing, even when the result isn't my preferred way.
+                      </p>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Prioritize people:</h4>
+                      <p className="text-gray-700 text-sm leading-relaxed font-futura">
+                        Dedicate my time to teammates first, placing their needs above competing demands.
+                      </p>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Seek effort over natural abilities:</h4>
+                      <p className="text-gray-700 text-sm leading-relaxed font-futura">
+                        Reward hard work, persistence, and steady improvement above natural talent.
+                      </p>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Invite bad news:</h4>
+                      <p className="text-gray-700 text-sm leading-relaxed font-futura">
+                        Ask first for what is going wrong and never punish honesty.
+                      </p>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Remove blockers:</h4>
+                      <p className="text-gray-700 text-sm leading-relaxed font-futura">
+                        Quickly clear obstacles so the team can keep moving.
+                      </p>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Value intentions:</h4>
+                      <p className="text-gray-700 text-sm leading-relaxed font-futura">
+                        Prioritize teammates with good intentions over those with bad intentions, regardless of their skills.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </div>
         </section>
@@ -608,6 +782,20 @@ export default function AdminAboutMePage() {
                 <Edit size={14} />
               </Button>
             </motion.div>
+          </div>
+        </section>
+
+        {/* Final section */}
+        <section className="py-12 bg-gray-50">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="text-center text-gray-600 mb-4 font-futura">
+                Based in Columbus, Ohio
+              </div>
+              <div className="text-center text-gray-600 font-futura">
+                Ready for your next challenge
+              </div>
+            </div>
           </div>
         </section>
       </div>
