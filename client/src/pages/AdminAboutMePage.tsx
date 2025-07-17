@@ -108,7 +108,16 @@ export default function AdminAboutMePage() {
         }
       }
 
-      const currentData = form.getValues();
+      // Get current data from both form and aboutMeContent
+      const currentData = {
+        title: aboutMeContent?.title || '',
+        subtitle: aboutMeContent?.subtitle || '',
+        bio: aboutMeContent?.bio || '',
+        passions: aboutMeContent?.passions || '',
+        differentiators: aboutMeContent?.differentiators || '',
+        image: aboutMeContent?.image || null
+      };
+      
       const updatedData = { ...currentData, ...sectionData };
       
       saveMutation.mutate(updatedData);
@@ -168,7 +177,14 @@ export default function AdminAboutMePage() {
             </div>
             <div className="flex items-center gap-3">
               <Button
-                onClick={() => handleSaveSection(form.getValues())}
+                onClick={() => handleSaveSection({
+                  title: form.getValues('title'),
+                  subtitle: form.getValues('subtitle'),
+                  bio: form.getValues('bio'),
+                  passions: form.getValues('passions'),
+                  differentiators: form.getValues('differentiators'),
+                  image: form.getValues('image')
+                })}
                 disabled={saveMutation.isPending}
                 className="flex items-center gap-2"
               >
@@ -218,9 +234,32 @@ export default function AdminAboutMePage() {
                     />
                     <div className="flex gap-2">
                       <Button
-                        onClick={() => handleSaveSection({ image: imagePreview })}
+                        onClick={async () => {
+                          if (imageFile) {
+                            const formData = new FormData();
+                            formData.append('image', imageFile);
+                            
+                            try {
+                              const uploadResponse = await fetch('/api/admin/about-me/upload-image', {
+                                method: 'POST',
+                                body: formData
+                              });
+                              
+                              if (uploadResponse.ok) {
+                                const { imagePath } = await uploadResponse.json();
+                                await handleSaveSection({ image: imagePath });
+                              }
+                            } catch (error) {
+                              toast({ 
+                                title: "Error uploading image", 
+                                description: "Failed to upload image",
+                                variant: "destructive"
+                              });
+                            }
+                          }
+                        }}
                         size="sm"
-                        disabled={saveMutation.isPending}
+                        disabled={saveMutation.isPending || !imageFile}
                       >
                         Save
                       </Button>
@@ -237,12 +276,13 @@ export default function AdminAboutMePage() {
               </div>
               
               {/* Title Section */}
-              <div className="relative">
+              <div className="relative group">
                 <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-futura">
                   {editingSection === 'title' ? (
                     <div className="inline-block">
                       <Input
-                        {...form.register('title')}
+                        defaultValue={aboutMeContent?.title || 'Beyond the Resume'}
+                        onChange={(e) => form.setValue('title', e.target.value)}
                         className="text-center text-4xl md:text-5xl font-bold font-futura border-2 border-slate-300 rounded-lg px-4 py-2"
                         placeholder="Beyond the Resume"
                       />
@@ -282,7 +322,8 @@ export default function AdminAboutMePage() {
                   {editingSection === 'subtitle' ? (
                     <div>
                       <Textarea
-                        {...form.register('subtitle')}
+                        defaultValue={aboutMeContent?.subtitle || 'Here is a little information about me that goes beyond my resume and LinkedIn profile.'}
+                        onChange={(e) => form.setValue('subtitle', e.target.value)}
                         className="text-center text-lg font-futura border-2 border-slate-300 rounded-lg px-4 py-2 resize-none"
                         placeholder="Here is a little information about me that goes beyond my resume and LinkedIn profile."
                         rows={2}
@@ -360,7 +401,7 @@ export default function AdminAboutMePage() {
                     {editingSection === 'leadership' ? (
                       <div>
                         <Textarea
-                          value={form.watch('passions') || ''}
+                          defaultValue={aboutMeContent?.passions || "I'm passionate about leadership because I've lived it, taught it, and studied it. It's not about titles or rank. Leadership is about people. Taking care of them, learning from them, and developing them. I was not and am still not the best leader, but I try to get better, and I really care about the people I lead."}
                           onChange={(e) => form.setValue('passions', e.target.value)}
                           className="text-center text-gray-600 border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-32"
                           placeholder="I'm passionate about leadership because..."
@@ -463,7 +504,8 @@ export default function AdminAboutMePage() {
                 {editingSection === 'differentiators' ? (
                   <div>
                     <Textarea
-                      {...form.register('differentiators')}
+                      defaultValue={aboutMeContent?.differentiators || "What sets me apart is my unique combination of military leadership experience, business education, and hands-on product management expertise. I've led teams in high-pressure environments, studied strategy at top institutions, and delivered real results in technology companies. This diverse background gives me a perspective that's both strategic and practical."}
+                      onChange={(e) => form.setValue('differentiators', e.target.value)}
                       className="text-center text-gray-600 border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-32 max-w-4xl mx-auto"
                       placeholder="What makes you unique..."
                       rows={8}
