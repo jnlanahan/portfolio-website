@@ -591,68 +591,253 @@ export default function AdminAboutMePage() {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
                 {/* Critical Thinker */}
-                <div className="bg-white p-6 rounded-2xl shadow-lg h-full">
+                <div className="bg-white p-6 rounded-2xl shadow-lg h-full relative group">
                   <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
                     Critical Thinker
                   </div>
-                  <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
-                    20+ years solving unique, one of a kind challenges as an Army Officer, consultant, and engineer.
-                  </p>
+                  <div className="relative">
+                    {editingSection === 'criticalThinker' ? (
+                      <div>
+                        <Textarea
+                          defaultValue={aboutMeContent?.criticalThinkerBio || "20+ years solving unique, one of a kind challenges as an Army Officer, consultant, and engineer."}
+                          onChange={(e) => form.setValue('criticalThinkerBio', e.target.value)}
+                          className="text-gray-600 text-sm border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-20 mb-3"
+                          placeholder="Critical Thinker bio..."
+                          rows={3}
+                        />
+                        <div className="flex justify-center gap-2 mt-2">
+                          <Button
+                            onClick={() => handleSaveSection({ criticalThinkerBio: form.getValues('criticalThinkerBio') })}
+                            size="sm"
+                            disabled={saveMutation.isPending}
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            onClick={() => setEditingSection(null)}
+                            variant="outline"
+                            size="sm"
+                          >
+                            Cancel
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
+                        {aboutMeContent?.criticalThinkerBio || "20+ years solving unique, one of a kind challenges as an Army Officer, consultant, and engineer."}
+                      </p>
+                    )}
+                  </div>
                   <p className="text-slate-600 text-base font-futura font-bold">
                     No problem is too big.
                   </p>
+                  <Button
+                    onClick={() => setEditingSection(editingSection === 'criticalThinker' ? null : 'criticalThinker')}
+                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    size="sm"
+                  >
+                    <Edit size={14} />
+                  </Button>
                 </div>
 
                 {/* Decision Maker */}
-                <div className="bg-white p-6 rounded-2xl shadow-lg h-full">
+                <div className="bg-white p-6 rounded-2xl shadow-lg h-full relative group">
                   <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
                     Decision Maker
                   </div>
-                  <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
-                    Trained to make tough calls and set priorities even when the stakes are high. I have had to make decisions that affect not just me but others too.
-                  </p>
+                  <div className="relative">
+                    {editingSection === 'decisionMaker' ? (
+                      <div>
+                        <Textarea
+                          defaultValue={aboutMeContent?.decisionMakerBio || "Trained to make tough calls and set priorities even when the stakes are high. I have had to make decisions that affect not just me but others too."}
+                          onChange={(e) => form.setValue('decisionMakerBio', e.target.value)}
+                          className="text-gray-600 text-sm border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-20 mb-3"
+                          placeholder="Decision Maker bio..."
+                          rows={3}
+                        />
+                        <div className="flex justify-center gap-2 mt-2">
+                          <Button
+                            onClick={() => handleSaveSection({ decisionMakerBio: form.getValues('decisionMakerBio') })}
+                            size="sm"
+                            disabled={saveMutation.isPending}
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            onClick={() => setEditingSection(null)}
+                            variant="outline"
+                            size="sm"
+                          >
+                            Cancel
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
+                        {aboutMeContent?.decisionMakerBio || "Trained to make tough calls and set priorities even when the stakes are high. I have had to make decisions that affect not just me but others too."}
+                      </p>
+                    )}
+                  </div>
                   <p className="text-slate-600 text-base font-futura font-bold">
                     I am decisive.
                   </p>
+                  <Button
+                    onClick={() => setEditingSection(editingSection === 'decisionMaker' ? null : 'decisionMaker')}
+                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    size="sm"
+                  >
+                    <Edit size={14} />
+                  </Button>
                 </div>
 
                 {/* Lifelong Learner */}
-                <div className="bg-white p-6 rounded-2xl shadow-lg h-full">
+                <div className="bg-white p-6 rounded-2xl shadow-lg h-full relative group">
                   <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
                     Lifelong Learner
                   </div>
-                  <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
-                    I never aim to just get the job done. I want to master what I do. I dive in, get obsessed (in a good way), and keep learning the finer points as I go.
-                  </p>
+                  <div className="relative">
+                    {editingSection === 'lifelongLearner' ? (
+                      <div>
+                        <Textarea
+                          defaultValue={aboutMeContent?.lifelongLearnerBio || "I never aim to just get the job done. I want to master what I do. I dive in, get obsessed (in a good way), and keep learning the finer points as I go."}
+                          onChange={(e) => form.setValue('lifelongLearnerBio', e.target.value)}
+                          className="text-gray-600 text-sm border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-20 mb-3"
+                          placeholder="Lifelong Learner bio..."
+                          rows={3}
+                        />
+                        <div className="flex justify-center gap-2 mt-2">
+                          <Button
+                            onClick={() => handleSaveSection({ lifelongLearnerBio: form.getValues('lifelongLearnerBio') })}
+                            size="sm"
+                            disabled={saveMutation.isPending}
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            onClick={() => setEditingSection(null)}
+                            variant="outline"
+                            size="sm"
+                          >
+                            Cancel
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
+                        {aboutMeContent?.lifelongLearnerBio || "I never aim to just get the job done. I want to master what I do. I dive in, get obsessed (in a good way), and keep learning the finer points as I go."}
+                      </p>
+                    )}
+                  </div>
                   <p className="text-slate-600 text-base font-futura font-bold">
                     Learning is always the goal.
                   </p>
+                  <Button
+                    onClick={() => setEditingSection(editingSection === 'lifelongLearner' ? null : 'lifelongLearner')}
+                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    size="sm"
+                  >
+                    <Edit size={14} />
+                  </Button>
                 </div>
 
                 {/* Change Agent */}
-                <div className="bg-white p-6 rounded-2xl shadow-lg h-full">
+                <div className="bg-white p-6 rounded-2xl shadow-lg h-full relative group">
                   <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
                     Change agent
                   </div>
-                  <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
-                    I have led and supported multiple large scale transformations in the Army and major financial services organizations. I know how to drive change from stakeholder communication and planning to managing resistance before it becomes a problem.
-                  </p>
+                  <div className="relative">
+                    {editingSection === 'changeAgent' ? (
+                      <div>
+                        <Textarea
+                          defaultValue={aboutMeContent?.changeAgentBio || "I have led and supported multiple large scale transformations in the Army and major financial services organizations. I know how to drive change from stakeholder communication and planning to managing resistance before it becomes a problem."}
+                          onChange={(e) => form.setValue('changeAgentBio', e.target.value)}
+                          className="text-gray-600 text-sm border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-20 mb-3"
+                          placeholder="Change Agent bio..."
+                          rows={3}
+                        />
+                        <div className="flex justify-center gap-2 mt-2">
+                          <Button
+                            onClick={() => handleSaveSection({ changeAgentBio: form.getValues('changeAgentBio') })}
+                            size="sm"
+                            disabled={saveMutation.isPending}
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            onClick={() => setEditingSection(null)}
+                            variant="outline"
+                            size="sm"
+                          >
+                            Cancel
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
+                        {aboutMeContent?.changeAgentBio || "I have led and supported multiple large scale transformations in the Army and major financial services organizations. I know how to drive change from stakeholder communication and planning to managing resistance before it becomes a problem."}
+                      </p>
+                    )}
+                  </div>
                   <p className="text-slate-600 text-base font-futura font-bold">
                     Effective change is a team effort.
                   </p>
+                  <Button
+                    onClick={() => setEditingSection(editingSection === 'changeAgent' ? null : 'changeAgent')}
+                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    size="sm"
+                  >
+                    <Edit size={14} />
+                  </Button>
                 </div>
 
                 {/* Communicator */}
-                <div className="bg-white p-6 rounded-2xl shadow-lg h-full">
+                <div className="bg-white p-6 rounded-2xl shadow-lg h-full relative group">
                   <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
                     Communicator
                   </div>
-                  <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
-                    I understand what effective communication requires and have trained others to identify its root causes when it fails. I have presented to executives at major banks and commanding generals in the Army, adapting my approach for every audience.
-                  </p>
+                  <div className="relative">
+                    {editingSection === 'communicator' ? (
+                      <div>
+                        <Textarea
+                          defaultValue={aboutMeContent?.communicatorBio || "I understand what effective communication requires and have trained others to identify its root causes when it fails. I have presented to executives at major banks and commanding generals in the Army, adapting my approach for every audience."}
+                          onChange={(e) => form.setValue('communicatorBio', e.target.value)}
+                          className="text-gray-600 text-sm border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-20 mb-3"
+                          placeholder="Communicator bio..."
+                          rows={3}
+                        />
+                        <div className="flex justify-center gap-2 mt-2">
+                          <Button
+                            onClick={() => handleSaveSection({ communicatorBio: form.getValues('communicatorBio') })}
+                            size="sm"
+                            disabled={saveMutation.isPending}
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            onClick={() => setEditingSection(null)}
+                            variant="outline"
+                            size="sm"
+                          >
+                            Cancel
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
+                        {aboutMeContent?.communicatorBio || "I understand what effective communication requires and have trained others to identify its root causes when it fails. I have presented to executives at major banks and commanding generals in the Army, adapting my approach for every audience."}
+                      </p>
+                    )}
+                  </div>
                   <p className="text-slate-600 text-base font-futura font-bold">
                     All communication is not equal.
                   </p>
+                  <Button
+                    onClick={() => setEditingSection(editingSection === 'communicator' ? null : 'communicator')}
+                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    size="sm"
+                  >
+                    <Edit size={14} />
+                  </Button>
                 </div>
               </div>
               
