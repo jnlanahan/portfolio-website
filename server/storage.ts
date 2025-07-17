@@ -912,6 +912,7 @@ export class DatabaseStorage implements IStorage {
   async updateAboutMeContent(updateData: Partial<InsertAboutMeContent>): Promise<AboutMeContent> {
     const { db } = await import('./db');
     const { aboutMeContent } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
     
     // First, try to get existing content
     const existingContent = await this.getAboutMeContent();
@@ -920,6 +921,7 @@ export class DatabaseStorage implements IStorage {
       // Update existing content
       const [content] = await db.update(aboutMeContent)
         .set({ ...updateData, updatedAt: new Date() })
+        .where(eq(aboutMeContent.id, existingContent.id))
         .returning();
       
       console.log(`Updated About Me content`);

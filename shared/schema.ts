@@ -191,6 +191,22 @@ export const aboutMeContent = pgTable("about_me_content", {
   strengthsSectionTitle: text("strengths_section_title").notNull().default("I am a..."),
   picturesSectionTitle: text("pictures_section_title").notNull().default("Life in Pictures"),
   picturesSectionImages: text("pictures_section_images").array().default([]).notNull(), // Array of image URLs
+  
+  // Leadership Philosophy Section
+  leadershipPhilosophyTitle: text("leadership_philosophy_title").notNull().default("My Leadership Philosophy"),
+  leadershipPurpose: text("leadership_purpose").notNull().default("Ensure every teammate leaves stronger, more confident, and better prepared for the next challenge."),
+  leadershipIntegrity: text("leadership_integrity").notNull().default("Always choose what is right over what is easy, using every task as a learning opportunity and never cutting corners."),
+  leadershipGrowth: text("leadership_growth").notNull().default("Always raise the least experienced so no one is left behind, building a team whose floor exceeds others' ceiling through shared commitment."),
+  leadershipMastery: text("leadership_mastery").notNull().default("Always dig deep to master the craft, because excellence, not 'good enough,' is the foundation of sound judgment."),
+  leadershipEmpathy: text("leadership_empathy").notNull().default("Always lead with empathy, listening first and tailoring communication to each person's background and needs."),
+  
+  // Leadership Cards Bio Section
+  criticalThinkerBio: text("critical_thinker_bio").notNull().default("20+ years solving unique, one of a kind challenges as an Army Officer, consultant, and engineer."),
+  decisionMakerBio: text("decision_maker_bio").notNull().default("Trained to make tough calls and set priorities even when the stakes are high. I have had to make decisions that affect not just me but others too."),
+  lifelongLearnerBio: text("lifelong_learner_bio").notNull().default("I never aim to just get the job done. I want to master what I do. I dive in, get obsessed (in a good way), and keep learning the finer points as I go."),
+  changeAgentBio: text("change_agent_bio").notNull().default("I have led and supported multiple large scale transformations in the Army and major financial services organizations. I know how to drive change from stakeholder communication and planning to managing resistance before it becomes a problem."),
+  communicatorBio: text("communicator_bio").notNull().default("I understand what effective communication requires and have trained others to identify its root causes when it fails. I have presented to executives at major banks and commanding generals in the Army, adapting my approach for every audience."),
+  
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

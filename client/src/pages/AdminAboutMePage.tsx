@@ -33,12 +33,17 @@ export default function AdminAboutMePage() {
   const form = useForm<InsertAboutMeContent>({
     resolver: zodResolver(insertAboutMeContentSchema),
     defaultValues: {
-      title: '',
-      subtitle: '',
-      bio: '',
-      passions: '',
-      differentiators: '',
-      image: null
+      heroTitle: '',
+      heroSubtitle: '',
+      criticalThinkerBio: '',
+      decisionMakerBio: '',
+      lifelongLearnerBio: '',
+      changeAgentBio: '',
+      communicatorBio: '',
+      leadershipContent: '',
+      strategyContent: '',
+      innovationContent: '',
+      heroImage: null
     }
   });
 
@@ -46,20 +51,26 @@ export default function AdminAboutMePage() {
   React.useEffect(() => {
     if (aboutMeContent) {
       form.reset({
-        title: aboutMeContent.title || '',
-        subtitle: aboutMeContent.subtitle || '',
-        bio: aboutMeContent.bio || '',
-        passions: aboutMeContent.passions || '',
-        differentiators: aboutMeContent.differentiators || '',
-        image: aboutMeContent.image || null
+        heroTitle: aboutMeContent.heroTitle || '',
+        heroSubtitle: aboutMeContent.heroSubtitle || '',
+        criticalThinkerBio: aboutMeContent.criticalThinkerBio || '',
+        decisionMakerBio: aboutMeContent.decisionMakerBio || '',
+        lifelongLearnerBio: aboutMeContent.lifelongLearnerBio || '',
+        changeAgentBio: aboutMeContent.changeAgentBio || '',
+        communicatorBio: aboutMeContent.communicatorBio || '',
+        leadershipContent: aboutMeContent.leadershipContent || '',
+        strategyContent: aboutMeContent.strategyContent || '',
+        innovationContent: aboutMeContent.innovationContent || '',
+        heroImage: aboutMeContent.heroImage || null
       });
     }
   }, [aboutMeContent, form]);
 
   const saveMutation = useMutation({
-    mutationFn: async (data: InsertAboutMeContent) => {
+    mutationFn: async (data: Partial<InsertAboutMeContent>) => {
+      // Always use PUT for partial updates
       const response = await fetch('/api/admin/about-me', {
-        method: aboutMeContent && Object.keys(aboutMeContent).length > 0 ? 'PUT' : 'POST',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -67,7 +78,9 @@ export default function AdminAboutMePage() {
       });
       
       if (!response.ok) {
-        throw new Error('Failed to save About Me content');
+        const errorText = await response.text();
+        console.error('Save error response:', errorText);
+        throw new Error(`Failed to save About Me content: ${response.status}`);
       }
       
       return response.json();
@@ -79,6 +92,7 @@ export default function AdminAboutMePage() {
       setEditingSection(null);
     },
     onError: (error) => {
+      console.error('Save error:', error);
       toast({ 
         title: "Error saving content", 
         description: error.message,
@@ -117,19 +131,8 @@ export default function AdminAboutMePage() {
         }
       }
 
-      // Get current data from both form and aboutMeContent
-      const currentData = {
-        title: aboutMeContent?.title || '',
-        subtitle: aboutMeContent?.subtitle || '',
-        bio: aboutMeContent?.bio || '',
-        passions: aboutMeContent?.passions || '',
-        differentiators: aboutMeContent?.differentiators || '',
-        image: aboutMeContent?.image || null
-      };
-      
-      const updatedData = { ...currentData, ...sectionData };
-      
-      saveMutation.mutate(updatedData);
+      // For partial updates, we just need to send the changed fields
+      saveMutation.mutate(sectionData);
     } catch (error) {
       toast({ 
         title: "Error saving content", 
@@ -290,14 +293,14 @@ export default function AdminAboutMePage() {
                   {editingSection === 'title' ? (
                     <div className="inline-block">
                       <Input
-                        defaultValue={aboutMeContent?.title || 'Beyond the Resume'}
-                        onChange={(e) => form.setValue('title', e.target.value)}
+                        defaultValue={aboutMeContent?.heroTitle || 'Beyond the Resume'}
+                        onChange={(e) => form.setValue('heroTitle', e.target.value)}
                         className="text-center text-4xl md:text-5xl font-bold font-futura border-2 border-slate-300 rounded-lg px-4 py-2"
                         placeholder="Beyond the Resume"
                       />
                       <div className="flex justify-center gap-2 mt-2">
                         <Button
-                          onClick={() => handleSaveSection({ title: form.getValues('title') })}
+                          onClick={() => handleSaveSection({ heroTitle: form.getValues('heroTitle') })}
                           size="sm"
                           disabled={saveMutation.isPending}
                         >
@@ -314,7 +317,7 @@ export default function AdminAboutMePage() {
                     </div>
                   ) : (
                     <span className="relative">
-                      {aboutMeContent?.title || 'Beyond the Resume'}
+                      {aboutMeContent?.heroTitle || 'Beyond the Resume'}
                       <Button
                         onClick={() => setEditingSection('title')}
                         className="absolute -top-2 -right-8 w-6 h-6 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
@@ -331,15 +334,15 @@ export default function AdminAboutMePage() {
                   {editingSection === 'subtitle' ? (
                     <div>
                       <Textarea
-                        defaultValue={aboutMeContent?.subtitle || 'Here is a little information about me that goes beyond my resume and LinkedIn profile.'}
-                        onChange={(e) => form.setValue('subtitle', e.target.value)}
+                        defaultValue={aboutMeContent?.heroSubtitle || 'Here is a little information about me that goes beyond my resume and LinkedIn profile.'}
+                        onChange={(e) => form.setValue('heroSubtitle', e.target.value)}
                         className="text-center text-lg font-futura border-2 border-slate-300 rounded-lg px-4 py-2 resize-none"
                         placeholder="Here is a little information about me that goes beyond my resume and LinkedIn profile."
                         rows={2}
                       />
                       <div className="flex justify-center gap-2 mt-2">
                         <Button
-                          onClick={() => handleSaveSection({ subtitle: form.getValues('subtitle') })}
+                          onClick={() => handleSaveSection({ heroSubtitle: form.getValues('heroSubtitle') })}
                           size="sm"
                           disabled={saveMutation.isPending}
                         >
@@ -356,7 +359,7 @@ export default function AdminAboutMePage() {
                     </div>
                   ) : (
                     <p className="text-lg text-gray-600 leading-relaxed font-futura relative">
-                      {aboutMeContent?.subtitle || 'Here is a little information about me that goes beyond my resume and LinkedIn profile.'}
+                      {aboutMeContent?.heroSubtitle || 'Here is a little information about me that goes beyond my resume and LinkedIn profile.'}
                       <Button
                         onClick={() => setEditingSection('subtitle')}
                         className="absolute -top-2 -right-8 w-6 h-6 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
@@ -728,62 +731,7 @@ export default function AdminAboutMePage() {
           </div>
         </section>
 
-        {/* What Sets Me Apart */}
-        <section className="py-12">
-          <div className="container mx-auto px-4 md:px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="max-w-6xl mx-auto text-center relative group"
-            >
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 font-futura">
-                What Sets Me <span className="text-slate-600">Apart</span>
-              </h2>
-              <div className="relative">
-                {editingSection === 'differentiators' ? (
-                  <div>
-                    <Textarea
-                      defaultValue={aboutMeContent?.differentiators || "What sets me apart is my unique combination of military leadership experience, business education, and hands-on product management expertise. I've led teams in high-pressure environments, studied strategy at top institutions, and delivered real results in technology companies. This diverse background gives me a perspective that's both strategic and practical."}
-                      onChange={(e) => form.setValue('differentiators', e.target.value)}
-                      className="text-center text-gray-600 border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-32 max-w-4xl mx-auto"
-                      placeholder="What makes you unique..."
-                      rows={8}
-                    />
-                    <div className="flex justify-center gap-2 mt-4">
-                      <Button
-                        onClick={() => handleSaveSection({ differentiators: form.getValues('differentiators') })}
-                        size="sm"
-                        disabled={saveMutation.isPending}
-                      >
-                        Save
-                      </Button>
-                      <Button
-                        onClick={() => setEditingSection(null)}
-                        variant="outline"
-                        size="sm"
-                      >
-                        Cancel
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  <p className="text-lg text-gray-600 leading-relaxed max-w-4xl mx-auto font-futura">
-                    {aboutMeContent?.differentiators || "What sets me apart is my unique combination of military leadership experience, business education, and hands-on product management expertise. I've led teams in high-pressure environments, studied strategy at top institutions, and delivered real results in technology companies. This diverse background gives me a perspective that's both strategic and practical."}
-                  </p>
-                )}
-              </div>
-              <Button
-                onClick={() => setEditingSection(editingSection === 'differentiators' ? null : 'differentiators')}
-                className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                size="sm"
-              >
-                <Edit size={14} />
-              </Button>
-            </motion.div>
-          </div>
-        </section>
+
 
         {/* Final section */}
         <section className="py-12 bg-gray-50">
