@@ -58,10 +58,19 @@ export default function AdminAboutMePage() {
 
   const saveMutation = useMutation({
     mutationFn: async (data: InsertAboutMeContent) => {
-      return await apiRequest('/api/admin/about-me', {
-        method: aboutMeContent ? 'PUT' : 'POST',
+      const response = await fetch('/api/admin/about-me', {
+        method: aboutMeContent && Object.keys(aboutMeContent).length > 0 ? 'PUT' : 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(data)
       });
+      
+      if (!response.ok) {
+        throw new Error('Failed to save About Me content');
+      }
+      
+      return response.json();
     },
     onSuccess: () => {
       toast({ title: "About Me content saved successfully" });
@@ -487,8 +496,66 @@ export default function AdminAboutMePage() {
           </div>
         </section>
 
-        {/* What Sets Me Apart */}
+        {/* Leadership Philosophy Section */}
         <section className="py-12 bg-gray-50">
+          <div className="container mx-auto px-4 md:px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="max-w-6xl mx-auto text-center relative group"
+            >
+              <h2 className="text-3xl font-bold text-gray-900 mb-8 font-futura">
+                I am a...
+              </h2>
+              
+              <div className="relative">
+                {editingSection === 'bio' ? (
+                  <div>
+                    <Textarea
+                      defaultValue={aboutMeContent?.bio || "Critical Thinker, Decision Maker, Lifelong Learner, Change Agent, Communicator, Cross-Functional Leader"}
+                      onChange={(e) => form.setValue('bio', e.target.value)}
+                      className="text-center text-gray-600 border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-32 max-w-4xl mx-auto"
+                      placeholder="Describe your leadership philosophy..."
+                      rows={8}
+                    />
+                    <div className="flex justify-center gap-2 mt-4">
+                      <Button
+                        onClick={() => handleSaveSection({ bio: form.getValues('bio') })}
+                        size="sm"
+                        disabled={saveMutation.isPending}
+                      >
+                        Save
+                      </Button>
+                      <Button
+                        onClick={() => setEditingSection(null)}
+                        variant="outline"
+                        size="sm"
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <p className="text-lg text-gray-600 leading-relaxed max-w-4xl mx-auto font-futura">
+                    {aboutMeContent?.bio || "Critical Thinker, Decision Maker, Lifelong Learner, Change Agent, Communicator, Cross-Functional Leader"}
+                  </p>
+                )}
+              </div>
+              <Button
+                onClick={() => setEditingSection(editingSection === 'bio' ? null : 'bio')}
+                className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                size="sm"
+              >
+                <Edit size={14} />
+              </Button>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* What Sets Me Apart */}
+        <section className="py-12">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
