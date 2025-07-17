@@ -47,7 +47,7 @@ const AboutPage = () => {
               Beyond the Resume
             </h1>
             <p className="text-lg text-gray-600 leading-relaxed font-futura">
-              What drives me as a leader and how I approach challenges that matter.
+              Here is a little information about me that goes beyond my resume and LinkedIn profile.
             </p>
           </motion.div>
         </div>
