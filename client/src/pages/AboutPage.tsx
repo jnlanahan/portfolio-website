@@ -494,28 +494,129 @@ const AboutPage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="max-w-3xl mx-auto text-center"
+            className="max-w-4xl mx-auto"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-6 font-futura">
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center font-futura">
               My Professional Philosophy
             </h2>
             
-            <div className="bg-white p-8 rounded-2xl shadow-lg">
-              <blockquote className="text-lg text-gray-700 italic mb-6 font-futura">
-                "Leadership is not about being in charge. It's about taking care of those in your charge."
-              </blockquote>
-              <p className="text-gray-600 leading-relaxed mb-6 font-futura">
-                This principle, learned through military service and refined in corporate environments, drives how I approach every challenge. Whether leading a team through complex transformations or solving technical problems, I focus on empowering others and delivering results that matter.
-              </p>
-              <div className="flex justify-center">
-                <div className="text-center">
-                  <p className="text-sm text-gray-500 mb-1 font-futura">
-                    Based in Columbus, Ohio
-                  </p>
-                  <p className="text-sm text-gray-500 font-futura">
-                    Ready for your next challenge
-                  </p>
+            <div className="space-y-8">
+              {/* Purpose */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="bg-white p-8 rounded-2xl shadow-lg"
+              >
+                <h3 className="text-xl font-bold text-slate-600 mb-4 font-futura">
+                  Purpose
+                </h3>
+                <p className="text-gray-700 leading-relaxed font-futura">
+                  Ensure every teammate leaves stronger, more confident, and better prepared for the next challenge.
+                </p>
+              </motion.div>
+
+              {/* Values & Guiding Principles */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="bg-white p-8 rounded-2xl shadow-lg"
+              >
+                <h3 className="text-xl font-bold text-slate-600 mb-4 font-futura">
+                  Values & Guiding Principles
+                </h3>
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-bold text-gray-900 mb-2 font-futura">Integrity:</h4>
+                    <p className="text-gray-700 leading-relaxed font-futura">
+                      Always choose what is right over what is easy, using every task as a learning opportunity and never cutting corners.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-gray-900 mb-2 font-futura">Growth:</h4>
+                    <p className="text-gray-700 leading-relaxed font-futura">
+                      Always raise the least experienced so no one is left behind, building a team whose floor exceeds others' ceiling through shared commitment.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-gray-900 mb-2 font-futura">Mastery:</h4>
+                    <p className="text-gray-700 leading-relaxed font-futura">
+                      Always dig deep to master the craft, because excellence, not "good enough," is the foundation of sound judgment.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-gray-900 mb-2 font-futura">Empathy:</h4>
+                    <p className="text-gray-700 leading-relaxed font-futura">
+                      Always lead with empathy, listening first and tailoring communication to each person's background and needs.
+                    </p>
+                  </div>
                 </div>
+              </motion.div>
+
+              {/* Leadership Approach & Style */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="bg-white p-8 rounded-2xl shadow-lg"
+              >
+                <h3 className="text-xl font-bold text-slate-600 mb-4 font-futura">
+                  Leadership Approach & Style
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <h4 className="font-bold text-gray-900 mb-2 font-futura">Allow mistakes for growth:</h4>
+                    <p className="text-gray-700 text-sm leading-relaxed font-futura">
+                      Let teammates learn by doing, even when the result isn't my preferred way.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-gray-900 mb-2 font-futura">Prioritize people:</h4>
+                    <p className="text-gray-700 text-sm leading-relaxed font-futura">
+                      Dedicate my time to teammates first, placing their needs above competing demands.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-gray-900 mb-2 font-futura">Seek effort over natural abilities:</h4>
+                    <p className="text-gray-700 text-sm leading-relaxed font-futura">
+                      Reward hard work, persistence, and steady improvement above natural talent.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-gray-900 mb-2 font-futura">Invite bad news:</h4>
+                    <p className="text-gray-700 text-sm leading-relaxed font-futura">
+                      Ask first for what is going wrong and never punish honesty.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-gray-900 mb-2 font-futura">Remove blockers:</h4>
+                    <p className="text-gray-700 text-sm leading-relaxed font-futura">
+                      Quickly clear obstacles so the team can keep moving.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-gray-900 mb-2 font-futura">Value intentions:</h4>
+                    <p className="text-gray-700 text-sm leading-relaxed font-futura">
+                      Prioritize teammates with good intentions over those with bad intentions, regardless of their skills.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Contact Info */}
+              <div className="text-center pt-4">
+                <p className="text-sm text-gray-500 mb-1 font-futura">
+                  Based in Columbus, Ohio
+                </p>
+                <p className="text-sm text-gray-500 font-futura">
+                  Ready for your next challenge
+                </p>
               </div>
             </div>
           </motion.div>
