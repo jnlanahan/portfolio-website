@@ -428,64 +428,6 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Core Leadership Philosophy */}
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4 md:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto"
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center font-futura">
-              How I Lead
-            </h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Leadership Philosophy */}
-              <motion.div
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="bg-white p-6 rounded-2xl shadow-lg"
-              >
-                <div className="flex items-center mb-4">
-                  <Users className="w-8 h-8 text-slate-500 mr-3" />
-                  <h3 className="text-xl font-bold text-gray-900 font-futura">
-                    Military to Corporate
-                  </h3>
-                </div>
-                <p className="text-gray-600 leading-relaxed font-futura">
-                  8+ years of military leadership taught me that great leaders empower others to succeed. I bring this servant-leadership approach to corporate environments, focusing on team development and mission accomplishment.
-                </p>
-              </motion.div>
-
-              {/* Problem-Solving Approach */}
-              <motion.div
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="bg-white p-6 rounded-2xl shadow-lg"
-              >
-                <div className="flex items-center mb-4">
-                  <Target className="w-8 h-8 text-slate-500 mr-3" />
-                  <h3 className="text-xl font-bold text-gray-900 font-futura">
-                    Strategic Thinking
-                  </h3>
-                </div>
-                <p className="text-gray-600 leading-relaxed font-futura">
-                  I break down complex business challenges into actionable strategies. My approach combines analytical rigor with creative problem-solving to deliver results that matter.
-                </p>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Professional Philosophy */}
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4 md:px-6">
