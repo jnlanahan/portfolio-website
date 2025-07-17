@@ -224,7 +224,7 @@ const AboutPage = () => {
                 className="bg-white p-6 rounded-2xl shadow-lg h-full"
               >
                 <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
-                  Driver of Change
+                  Change agent
                 </div>
                 <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
                   I have led and supported multiple large scale transformations in the Army and major financial services organizations. I know how to drive change from stakeholder communication and planning to managing resistance before it becomes a problem.
