@@ -286,143 +286,123 @@ const AboutPage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="max-w-6xl mx-auto"
+            className="max-w-4xl mx-auto"
           >
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center font-futura">
               Life in Pictures
             </h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Professional Photo */}
-              <motion.div
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            {/* Scrollable Image Container */}
+            <div className="relative bg-white rounded-2xl shadow-lg overflow-hidden">
+              <div 
+                className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
-                <div className="h-48 bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-500 text-sm">Professional Team Photo</span>
+                {/* Professional Photo */}
+                <div className="min-w-full snap-start relative">
+                  <div className="h-80 bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-500 text-sm">Professional Team Photo</span>
+                  </div>
+                  <div className="p-6 bg-white">
+                    <h3 className="font-bold text-gray-900 mb-2 font-futura text-xl">
+                      Leading Teams
+                    </h3>
+                    <p className="text-gray-600 font-futura">
+                      Working with my team at EY
+                    </p>
+                  </div>
                 </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-gray-900 mb-2 font-futura">
-                    Leading Teams
-                  </h3>
-                  <p className="text-gray-600 text-sm font-futura">
-                    Working with my team at EY
-                  </p>
-                </div>
-              </motion.div>
 
-              {/* Military Photo */}
-              <motion.div
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className="h-48 bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-500 text-sm">Military Service Photo</span>
+                {/* Military Photo */}
+                <div className="min-w-full snap-start relative">
+                  <div className="h-80 bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-500 text-sm">Military Service Photo</span>
+                  </div>
+                  <div className="p-6 bg-white">
+                    <h3 className="font-bold text-gray-900 mb-2 font-futura text-xl">
+                      Military Leadership
+                    </h3>
+                    <p className="text-gray-600 font-futura">
+                      8+ years serving in the U.S. Army
+                    </p>
+                  </div>
                 </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-gray-900 mb-2 font-futura">
-                    Military Leadership
-                  </h3>
-                  <p className="text-gray-600 text-sm font-futura">
-                    8+ years serving in the U.S. Army
-                  </p>
-                </div>
-              </motion.div>
 
-              {/* Personal/Adventure Photo */}
-              <motion.div
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className="h-48 bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-500 text-sm">Adventure/Hiking Photo</span>
+                {/* Personal/Adventure Photo */}
+                <div className="min-w-full snap-start relative">
+                  <div className="h-80 bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-500 text-sm">Adventure/Hiking Photo</span>
+                  </div>
+                  <div className="p-6 bg-white">
+                    <h3 className="font-bold text-gray-900 mb-2 font-futura text-xl">
+                      Beyond Work
+                    </h3>
+                    <p className="text-gray-600 font-futura">
+                      Exploring trails and recharging outdoors
+                    </p>
+                  </div>
                 </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-gray-900 mb-2 font-futura">
-                    Beyond Work
-                  </h3>
-                  <p className="text-gray-600 text-sm font-futura">
-                    Exploring trails and recharging outdoors
-                  </p>
-                </div>
-              </motion.div>
 
-              {/* Travel Photo */}
-              <motion.div
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className="h-48 bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-500 text-sm">Travel/Location Photo</span>
+                {/* Travel Photo */}
+                <div className="min-w-full snap-start relative">
+                  <div className="h-80 bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-500 text-sm">Travel/Location Photo</span>
+                  </div>
+                  <div className="p-6 bg-white">
+                    <h3 className="font-bold text-gray-900 mb-2 font-futura text-xl">
+                      Journey Across States
+                    </h3>
+                    <p className="text-gray-600 font-futura">
+                      From NC to Missouri to Ohio
+                    </p>
+                  </div>
                 </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-gray-900 mb-2 font-futura">
-                    Journey Across States
-                  </h3>
-                  <p className="text-gray-600 text-sm font-futura">
-                    From NC to Missouri to Ohio
-                  </p>
-                </div>
-              </motion.div>
 
-              {/* University Photo */}
-              <motion.div
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ delay: 0.4 }}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className="h-48 bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-500 text-sm">University Photo</span>
+                {/* University Photo */}
+                <div className="min-w-full snap-start relative">
+                  <div className="h-80 bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-500 text-sm">University Photo</span>
+                  </div>
+                  <div className="p-6 bg-white">
+                    <h3 className="font-bold text-gray-900 mb-2 font-futura text-xl">
+                      Academic Journey
+                    </h3>
+                    <p className="text-gray-600 font-futura">
+                      Engineering studies and continued learning
+                    </p>
+                  </div>
                 </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-gray-900 mb-2 font-futura">
-                    Academic Journey
-                  </h3>
-                  <p className="text-gray-600 text-sm font-futura">
-                    Engineering studies and continued learning
-                  </p>
-                </div>
-              </motion.div>
 
-              {/* Family/Personal Photo */}
-              <motion.div
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ delay: 0.5 }}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className="h-48 bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-500 text-sm">Family/Personal Photo</span>
+                {/* Family/Personal Photo */}
+                <div className="min-w-full snap-start relative">
+                  <div className="h-80 bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-500 text-sm">Family/Personal Photo</span>
+                  </div>
+                  <div className="p-6 bg-white">
+                    <h3 className="font-bold text-gray-900 mb-2 font-futura text-xl">
+                      What Matters Most
+                    </h3>
+                    <p className="text-gray-600 font-futura">
+                      Family and personal connections
+                    </p>
+                  </div>
                 </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-gray-900 mb-2 font-futura">
-                    What Matters Most
-                  </h3>
-                  <p className="text-gray-600 text-sm font-futura">
-                    Family and personal connections
-                  </p>
-                </div>
-              </motion.div>
+              </div>
+
+              {/* Scroll Indicators */}
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                <div className="w-2 h-2 bg-slate-400 rounded-full"></div>
+                <div className="w-2 h-2 bg-slate-300 rounded-full"></div>
+                <div className="w-2 h-2 bg-slate-300 rounded-full"></div>
+                <div className="w-2 h-2 bg-slate-300 rounded-full"></div>
+                <div className="w-2 h-2 bg-slate-300 rounded-full"></div>
+                <div className="w-2 h-2 bg-slate-300 rounded-full"></div>
+              </div>
+
+              {/* Instructions */}
+              <div className="absolute top-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-xs font-futura">
+                Swipe to see more
+              </div>
             </div>
           </motion.div>
         </div>
