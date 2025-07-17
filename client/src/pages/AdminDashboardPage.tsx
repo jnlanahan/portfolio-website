@@ -293,6 +293,23 @@ export default function AdminDashboardPage() {
               Manage Top 5 Lists
             </Button>
           </div>
+
+          {/* About Me Management */}
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#AF52DE] transition-all duration-200">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold text-white">About Me Content</h3>
+                <p className="text-sm text-gray-300">Edit page content</p>
+              </div>
+              <Users className="h-8 w-8 text-[#AF52DE]" />
+            </div>
+            <Button
+              onClick={() => setLocation("/admin/about-me")}
+              className="w-full bg-[#AF52DE] hover:bg-[#9A44C4] text-white font-medium rounded-xl"
+            >
+              Edit About Me
+            </Button>
+          </div>
         </div>
 
         {/* Contact Messages Overview */}

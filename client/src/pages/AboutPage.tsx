@@ -1,7 +1,20 @@
 import { motion } from "framer-motion";
 import { Target, Users, Lightbulb, Camera, MapPin } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import type { AboutMeContent } from "@shared/schema";
 
 const AboutPage = () => {
+  const { data: aboutMeContent, isLoading } = useQuery<AboutMeContent>({
+    queryKey: ['/api/about-me'],
+    queryFn: async () => {
+      const response = await fetch('/api/about-me');
+      if (!response.ok) {
+        throw new Error('Failed to fetch About Me content');
+      }
+      return response.json();
+    }
+  });
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -25,6 +38,16 @@ const AboutPage = () => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="page-container relative">
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-slate-600"></div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="page-container relative">
       {/* Hero Introduction with Photo */}
@@ -44,10 +67,10 @@ const AboutPage = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-futura">
-              Beyond the Resume
+              {aboutMeContent?.title || 'Beyond the Resume'}
             </h1>
             <p className="text-lg text-gray-600 leading-relaxed font-futura">
-              Here is a little information about me that goes beyond my resume and LinkedIn profile.
+              {aboutMeContent?.subtitle || 'Here is a little information about me that goes beyond my resume and LinkedIn profile.'}
             </p>
           </motion.div>
         </div>

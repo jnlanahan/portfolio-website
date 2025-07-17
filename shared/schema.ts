@@ -174,6 +174,36 @@ export const insertResumeSchema = createInsertSchema(resumeContent).omit({
 export type InsertResume = z.infer<typeof insertResumeSchema>;
 export type Resume = typeof resumeContent.$inferSelect;
 
+// About Me content model
+export const aboutMeContent = pgTable("about_me_content", {
+  id: serial("id").primaryKey(),
+  heroTitle: text("hero_title").notNull().default("Beyond the Resume"),
+  heroSubtitle: text("hero_subtitle").notNull().default("Here is a little information about me that goes beyond my resume and LinkedIn profile."),
+  heroImage: text("hero_image"), // URL or path to hero image
+  passionsSectionTitle: text("passions_section_title").notNull().default("My Passions"),
+  passionsSectionSubtitle: text("passions_section_subtitle").notNull().default("I'm driven by 3 things that keep me moving forward in my career."),
+  leadershipTitle: text("leadership_title").notNull().default("Leadership"),
+  leadershipContent: text("leadership_content").notNull().default("I'm passionate about leadership because I've lived it, taught it, and studied it. It's not about titles or rank. Leadership is about people. Taking care of them, learning from them, and developing them. I was not and am still not the best leader, but I try to get better, and I really care about the people I lead."),
+  strategyTitle: text("strategy_title").notNull().default("Strategy"),
+  strategyContent: text("strategy_content").notNull().default("Strategy is misunderstood. I studied it in the military and business school, and I practice it in both places. You need those different views and a sense of the long history of that word to really understand it. I'm writing a series of articles now to share my perspective on strategy which can apply to both the military and the business world."),
+  innovationTitle: text("innovation_title").notNull().default("Innovation"),
+  innovationContent: text("innovation_content").notNull().default("Innovation always pulls me in. I enjoy looking for better ways to do things, spoting new problems to solve, and trying ideas where they don't usually fit. I keep a running list of ideas, and with new vibe coding tools, I'm finally bringing some of them to life."),
+  strengthsSectionTitle: text("strengths_section_title").notNull().default("I am a..."),
+  picturesSectionTitle: text("pictures_section_title").notNull().default("Life in Pictures"),
+  picturesSectionImages: text("pictures_section_images").array().default([]).notNull(), // Array of image URLs
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const insertAboutMeContentSchema = createInsertSchema(aboutMeContent).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type InsertAboutMeContent = z.infer<typeof insertAboutMeContentSchema>;
+export type AboutMeContent = typeof aboutMeContent.$inferSelect;
+
 // Top 5 Lists model
 export const topFiveLists = pgTable("top_five_lists", {
   id: serial("id").primaryKey(),

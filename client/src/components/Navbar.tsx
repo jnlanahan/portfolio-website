@@ -102,7 +102,7 @@ const Navbar = () => {
     },
     { 
       path: "/about", 
-      label: "About", 
+      label: "About Me", 
       icon: "ri-user-line",
       isActiveCheck: (path: string) => isActive(path) 
     },

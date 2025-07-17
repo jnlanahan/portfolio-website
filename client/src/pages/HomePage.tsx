@@ -447,7 +447,7 @@ const HomePage = () => {
         {/* Main Navigation Tiles */}
         <div className="grid grid-cols-1 md:grid-cols-4 relative" style={{ gap: '16px', marginBottom: '32px', zIndex: 20 }}> {/* 8-point grid spacing */}
           <HomeTile
-            title="About"
+            title="About Me"
             description="Learn more about me"
             icon="ri-user-line"
             linkTo="/about"

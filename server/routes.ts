@@ -12,6 +12,7 @@ import {
   insertProjectSchema,
   insertAdminSchema,
   insertResumeSchema,
+  insertAboutMeContentSchema,
   insertTopFiveListSchema,
   insertTopFiveListItemSchema,
   insertChatbotDocumentSchema,
@@ -1151,6 +1152,70 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error saving resume:", error);
       res.status(500).json({ error: "Failed to save resume" });
+    }
+  });
+
+  // About Me content management routes
+  app.get("/api/admin/about-me", requireAdmin, async (req, res) => {
+    try {
+      const content = await storage.getAboutMeContent();
+      res.json(content || {});
+    } catch (error) {
+      console.error("Error fetching About Me content:", error);
+      res.status(500).json({ error: "Failed to fetch About Me content" });
+    }
+  });
+
+  app.post("/api/admin/about-me", requireAdmin, async (req, res) => {
+    try {
+      const validatedData = insertAboutMeContentSchema.parse(req.body);
+      const content = await storage.saveAboutMeContent(validatedData);
+      res.json(content);
+    } catch (error) {
+      console.error("Error saving About Me content:", error);
+      res.status(500).json({ error: "Failed to save About Me content" });
+    }
+  });
+
+  app.put("/api/admin/about-me", requireAdmin, async (req, res) => {
+    try {
+      const validatedData = insertAboutMeContentSchema.partial().parse(req.body);
+      const content = await storage.updateAboutMeContent(validatedData);
+      res.json(content);
+    } catch (error) {
+      console.error("Error updating About Me content:", error);
+      res.status(500).json({ error: "Failed to update About Me content" });
+    }
+  });
+
+  // Public About Me content endpoint
+  app.get("/api/about-me", async (req, res) => {
+    try {
+      const content = await storage.getAboutMeContent();
+      res.json(content || {});
+    } catch (error) {
+      console.error("Error fetching About Me content:", error);
+      res.status(500).json({ error: "Failed to fetch About Me content" });
+    }
+  });
+
+  // About Me image upload endpoint
+  app.post("/api/admin/about-me/upload-image", requireAdmin, upload.single('image'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'No image file uploaded' });
+      }
+
+      const imagePath = `/uploads/${req.file.filename}`;
+      
+      res.json({
+        success: true,
+        imagePath: imagePath,
+        originalName: req.file.originalname
+      });
+    } catch (error) {
+      console.error('Error uploading About Me image:', error);
+      res.status(500).json({ error: 'Failed to upload image' });
     }
   });
 
