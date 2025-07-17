@@ -293,8 +293,9 @@ const AboutPage = () => {
             </h2>
             
             {/* Scrollable Image Container */}
-            <div className="relative bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div className="relative bg-white rounded-2xl shadow-lg overflow-hidden group">
               <div 
+                id="pictures-carousel"
                 className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
@@ -389,6 +390,35 @@ const AboutPage = () => {
                 </div>
               </div>
 
+              {/* Navigation Arrows */}
+              <button
+                onClick={() => {
+                  const carousel = document.getElementById('pictures-carousel');
+                  if (carousel) {
+                    carousel.scrollBy({ left: -carousel.clientWidth, behavior: 'smooth' });
+                  }
+                }}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 z-10"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              
+              <button
+                onClick={() => {
+                  const carousel = document.getElementById('pictures-carousel');
+                  if (carousel) {
+                    carousel.scrollBy({ left: carousel.clientWidth, behavior: 'smooth' });
+                  }
+                }}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 z-10"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+
               {/* Scroll Indicators */}
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
                 <div className="w-2 h-2 bg-slate-400 rounded-full"></div>
@@ -401,7 +431,7 @@ const AboutPage = () => {
 
               {/* Instructions */}
               <div className="absolute top-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-xs font-futura">
-                Swipe to see more
+                Click arrows or swipe to navigate
               </div>
             </div>
           </motion.div>
