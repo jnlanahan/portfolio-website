@@ -80,6 +80,7 @@ const AboutPage = () => {
                     src="/@fs/home/runner/workspace/attached_assets/NC State 1_1752808224603.jpg"
                     alt="Nick Lanahan speaking at NC State commissioning ceremony"
                     className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
                     <h3 className="font-bold text-white mb-2 font-futura text-xl">
@@ -97,6 +98,7 @@ const AboutPage = () => {
                     src="/@fs/home/runner/workspace/attached_assets/PL1_1752808536164.jpg"
                     alt="Nick Lanahan with Bradley Fighting Vehicle showing NC State pride and Top Gun achievement"
                     className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
                     <h3 className="font-bold text-white mb-2 font-futura text-xl">
@@ -114,6 +116,7 @@ const AboutPage = () => {
                     src="/@fs/home/runner/workspace/attached_assets/PE1_1752808678226.jpg"
                     alt="Nick Lanahan as Project Engineer with U.S. Army Corps of Engineers Fort Worth District"
                     className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
                     <h3 className="font-bold text-white mb-2 font-futura text-xl">
@@ -131,6 +134,7 @@ const AboutPage = () => {
                     src="/@fs/home/runner/workspace/attached_assets/ECCC1_1752808814150.jpg"
                     alt="Nick Lanahan with international students at Engineers Captain Career Course, Fort Leonard Wood"
                     className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
                     <h3 className="font-bold text-white mb-2 font-futura text-xl">
@@ -148,64 +152,50 @@ const AboutPage = () => {
                     src="/@fs/home/runner/workspace/attached_assets/CDR1_1752809094087.jpg"
                     alt="Nick Lanahan with his company of 165+ soldiers during PT formation"
                     className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
                     <h3 className="font-bold text-white mb-2 font-futura text-xl">
-                      My Soldiers!
+                      Company Command - PT Formation
                     </h3>
                     <p className="text-white/90 font-futura">
-                      These are photos of my Soldiers when I was a Company Commander. I got the privilege to lead 165+ soldiers in this role. It was the most satisfying job I have ever had because I woke up every day to lead this great group of people.
+                      This is my company during our morning PT formation. As a Company Commander, I got the privilege to lead 165+ soldiers. It was the most satisfying job I have ever had because I woke up every day to lead this great group of people.
                     </p>
                   </div>
                 </div>
 
-                {/* Company Commander Photo 2 - DMZ */}
+                {/* Company Commander Photo 2 - DMZ Visit */}
                 <div className="min-w-full snap-center relative">
                   <img
                     src="/@fs/home/runner/workspace/attached_assets/Company Command_1752810172435.JPG"
                     alt="Nick Lanahan with his company at the DMZ in South Korea"
                     className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
                     <h3 className="font-bold text-white mb-2 font-futura text-xl">
-                      My Soldiers!
+                      Company Command - DMZ Visit
                     </h3>
                     <p className="text-white/90 font-futura">
-                      These are photos of my Soldiers when I was a Company Commander. I got the privilege to lead 165+ soldiers in this role. It was the most satisfying job I have ever had because I woke up every day to lead this great group of people.
+                      Taking my soldiers to visit the DMZ in South Korea was an incredible experience. Being able to show them this historic location and explain its significance was one of the highlights of my command.
                     </p>
                   </div>
                 </div>
 
-                {/* Company Commander Photo 3 - Trophy Formation */}
+                {/* Company Commander Photo 3 - Award Ceremony */}
                 <div className="min-w-full snap-center relative">
                   <img
                     src="/@fs/home/runner/workspace/attached_assets/CDR3_1752809202463.jpg"
                     alt="Nick Lanahan with his company celebrating a unit achievement with trophy"
                     className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
                     <h3 className="font-bold text-white mb-2 font-futura text-xl">
-                      My Soldiers!
+                      Company Command - Award Ceremony
                     </h3>
                     <p className="text-white/90 font-futura">
-                      These are photos of my Soldiers when I was a Company Commander. I got the privilege to lead 165+ soldiers in this role. It was the most satisfying job I have ever had because I woke up every day to lead this great group of people.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Company Commander Photo 4 - DMZ */}
-                <div className="min-w-full snap-center relative">
-                  <img
-                    src="/@fs/home/runner/workspace/attached_assets/DMZ Soldiers_1752810675853.jpg"
-                    alt="Nick Lanahan with his company at the DMZ in South Korea"
-                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
-                      My Soldiers!
-                    </h3>
-                    <p className="text-white/90 font-futura">
-                      These are photos of my Soldiers when I was a Company Commander. I got the privilege to lead 165+ soldiers in this role. It was the most satisfying job I have ever had because I woke up every day to lead this great group of people.
+                      One of my proudest moments as a commander - celebrating with my soldiers after receiving a unit achievement award. Their hard work and dedication made moments like this possible.
                     </p>
                   </div>
                 </div>
@@ -216,30 +206,32 @@ const AboutPage = () => {
                     src="/@fs/home/runner/workspace/attached_assets/ROKFC2_1752810334953.jpg"
                     alt="Nick Lanahan with college buddy holding NC State Wolfpack flag in South Korea"
                     className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
                     <h3 className="font-bold text-white mb-2 font-futura text-xl">
-                      South Korea
+                      South Korea - NC State Pride
                     </h3>
                     <p className="text-white/90 font-futura">
-                      I lived in South Korea for 3 years where I served as a Construction Program Manager and a Company Commander. I got to meet some great people (I even got to work with one of my old college buddys while I was there!).
+                      I lived in South Korea for 3 years where I served as a Construction Program Manager and a Company Commander. Here I am with one of my old college buddies showing our NC State pride - you can take the Wolf out of the Pack, but you can't take the Pack out of the Wolf!
                     </p>
                   </div>
                 </div>
 
-                {/* South Korea Photo 2 - Group Photo */}
+                {/* South Korea Photo 2 - Military Exercise */}
                 <div className="min-w-full snap-center relative">
                   <img
                     src="/@fs/home/runner/workspace/attached_assets/ROK1_1752809157456.jpg"
                     alt="Nick Lanahan with team members in South Korea during military exercise"
                     className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
                     <h3 className="font-bold text-white mb-2 font-futura text-xl">
-                      South Korea
+                      South Korea - Military Exercise
                     </h3>
                     <p className="text-white/90 font-futura">
-                      I lived in South Korea for 3 years where I served as a Construction Program Manager and a Company Commander. I got to meet some great people (I even got to work with one of my old college buddys while I was there!).
+                      During a military exercise in South Korea with my team. These experiences taught me so much about working with international partners and adapting to different cultures while maintaining mission focus.
                     </p>
                   </div>
                 </div>
@@ -274,9 +266,9 @@ const AboutPage = () => {
                 </svg>
               </button>
 
-              {/* Scroll Indicators */}
+              {/* Scroll Indicators - Dynamic count based on actual images */}
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                {[...Array(10)].map((_, i) => (
+                {[...Array(9)].map((_, i) => (
                   <div key={i} className="w-2 h-2 bg-white/50 rounded-full"></div>
                 ))}
               </div>
