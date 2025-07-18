@@ -61,8 +61,12 @@ const AboutPage = () => {
           >
             {/* Large Profile Photo */}
             <div className="mb-8">
-              <div className="w-48 h-48 md:w-64 md:h-64 bg-gray-200 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg">
-                <span className="text-gray-500 text-lg">Professional Photo</span>
+              <div className="w-48 h-48 md:w-64 md:h-64 bg-gray-200 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg overflow-hidden">
+                {aboutMeContent?.image ? (
+                  <img src={aboutMeContent.image} alt="Profile" className="w-full h-full object-cover" />
+                ) : (
+                  <span className="text-gray-500 text-lg">Professional Photo</span>
+                )}
               </div>
             </div>
             
@@ -174,7 +178,7 @@ const AboutPage = () => {
             className="max-w-6xl mx-auto text-center"
           >
             <h2 className="text-3xl font-bold text-gray-900 mb-8 font-futura">
-              I am a...
+              {aboutMeContent?.bioSectionTitle || 'I am a...'}
             </h2>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
@@ -187,13 +191,13 @@ const AboutPage = () => {
                 className="bg-white p-6 rounded-2xl shadow-lg h-full"
               >
                 <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
-                  Critical Thinker
+                  {aboutMeContent?.criticalThinkerTitle || 'Critical Thinker'}
                 </div>
                 <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
                   {aboutMeContent?.criticalThinkerBio || "20+ years solving unique, one of a kind challenges as an Army Officer, consultant, and engineer."}
                 </p>
                 <p className="text-slate-600 text-base font-futura font-bold">
-                  No problem is too big.
+                  {aboutMeContent?.criticalThinkerTagline || 'No problem is too big.'}
                 </p>
               </motion.div>
 
@@ -312,7 +316,7 @@ const AboutPage = () => {
             className="max-w-4xl mx-auto"
           >
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center font-futura">
-              Life in Pictures
+              {aboutMeContent?.lifePicturesTitle || 'Life in Pictures'}
             </h2>
             
             {/* Scrollable Image Container */}
@@ -324,15 +328,19 @@ const AboutPage = () => {
               >
                 {/* Professional Photo */}
                 <div className="min-w-full snap-start relative">
-                  <div className="h-80 bg-gray-200 flex items-center justify-center">
-                    <span className="text-gray-500 text-sm">Professional Team Photo</span>
+                  <div className="h-80 bg-gray-200 flex items-center justify-center overflow-hidden">
+                    {aboutMeContent?.lifePictureImage ? (
+                      <img src={aboutMeContent.lifePictureImage} alt="Team" className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-gray-500 text-sm">Professional Team Photo</span>
+                    )}
                   </div>
                   <div className="p-6 bg-white">
                     <h3 className="font-bold text-gray-900 mb-2 font-futura text-xl">
-                      Leading Teams
+                      {aboutMeContent?.lifePictureTitle || 'Leading Teams'}
                     </h3>
                     <p className="text-gray-600 font-futura">
-                      Working with my team at EY
+                      {aboutMeContent?.lifePictureDescription || 'Working with my team at EY'}
                     </p>
                   </div>
                 </div>
@@ -472,7 +480,7 @@ const AboutPage = () => {
             className="max-w-4xl mx-auto"
           >
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center font-futura">
-              My Leadership Philosophy
+              {aboutMeContent?.leadershipPhilosophyTitle || 'My Leadership Philosophy'}
             </h2>
             
             <div className="space-y-8">
@@ -488,7 +496,7 @@ const AboutPage = () => {
                   Purpose
                 </h3>
                 <p className="text-gray-700 leading-relaxed font-futura">
-                  Ensure every teammate leaves stronger, more confident, and better prepared for the next challenge.
+                  {aboutMeContent?.leadershipPurpose || 'Ensure every teammate leaves stronger, more confident, and better prepared for the next challenge.'}
                 </p>
               </motion.div>
 
