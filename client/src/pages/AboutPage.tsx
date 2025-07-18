@@ -443,75 +443,77 @@ const AboutPage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto text-center grid grid-cols-1 md:grid-cols-3 gap-6"
+            className="max-w-4xl mx-auto text-center"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-6 font-futura col-span-full">
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 font-futura">
               My Leadership Philosophy
             </h2>
 
-            {/* Purpose Tile */}
-            <div className="bg-white p-6 rounded-2xl shadow-lg">
-              <h3 className="text-xl font-bold text-gray-900 mb-3 font-futura">Purpose</h3>
-              <p className="text-gray-600 leading-relaxed font-futura">
-                Ensure every teammate leaves stronger, more confident, and better prepared for the next challenge.
-              </p>
-            </div>
+            <div className="space-y-6">
+              {/* Purpose Tile */}
+              <div className="bg-white p-6 rounded-2xl shadow-lg">
+                <h3 className="text-xl font-bold text-gray-900 mb-3 font-futura">Purpose</h3>
+                <p className="text-gray-600 leading-relaxed font-futura">
+                  Ensure every teammate leaves stronger, more confident, and better prepared for the next challenge.
+                </p>
+              </div>
 
-            {/* Values & Guiding Principles Tile */}
-            <div className="bg-white p-6 rounded-2xl shadow-lg">
-              <h3 className="text-xl font-bold text-gray-900 mb-3 font-futura">Values</h3>
-              <div className="space-y-3 text-left">
-                <div>
-                  <span className="font-semibold text-gray-900 font-futura">Integrity:</span>
-                  <span className="text-gray-600 font-futura"> Always choose what is right over what is easy.</span>
+              {/* Values & Guiding Principles Tile */}
+              <div className="bg-white p-6 rounded-2xl shadow-lg">
+                <h3 className="text-xl font-bold text-gray-900 mb-3 font-futura">Values</h3>
+                <div className="space-y-3 text-left">
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Integrity:</span>
+                    <span className="text-gray-600 font-futura"> Always choose what is right over what is easy.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Growth:</span>
+                    <span className="text-gray-600 font-futura"> Always raise the least experienced so no one is left behind.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Mastery:</span>
+                    <span className="text-gray-600 font-futura"> Always dig deep to master the craft.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Empathy:</span>
+                    <span className="text-gray-600 font-futura"> Always lead with empathy, listening first.</span>
+                  </div>
                 </div>
-                <div>
-                  <span className="font-semibold text-gray-900 font-futura">Growth:</span>
-                  <span className="text-gray-600 font-futura"> Always raise the least experienced so no one is left behind.</span>
-                </div>
-                <div>
-                  <span className="font-semibold text-gray-900 font-futura">Mastery:</span>
-                  <span className="text-gray-600 font-futura"> Always dig deep to master the craft.</span>
-                </div>
-                <div>
-                  <span className="font-semibold text-gray-900 font-futura">Empathy:</span>
-                  <span className="text-gray-600 font-futura"> Always lead with empathy, listening first.</span>
+              </div>
+
+              {/* Leadership Approach & Style Tile */}
+              <div className="bg-white p-6 rounded-2xl shadow-lg">
+                <h3 className="text-xl font-bold text-gray-900 mb-3 font-futura">Approach</h3>
+                <div className="space-y-2 text-left">
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Allow mistakes:</span>
+                    <span className="text-gray-600 font-futura"> Let teammates learn by doing.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Prioritize people:</span>
+                    <span className="text-gray-600 font-futura"> Dedicate my time to teammates first.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Seek effort:</span>
+                    <span className="text-gray-600 font-futura"> Reward hard work, persistence, and steady improvement.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Invite bad news:</span>
+                    <span className="text-gray-600 font-futura"> Ask first for what is going wrong and never punish honesty.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Remove blockers:</span>
+                    <span className="text-gray-600 font-futura"> Quickly clear obstacles so the team can keep moving.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Value intentions:</span>
+                    <span className="text-gray-600 font-futura"> Prioritize teammates with good intentions.</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Leadership Approach & Style Tile */}
-            <div className="bg-white p-6 rounded-2xl shadow-lg">
-              <h3 className="text-xl font-bold text-gray-900 mb-3 font-futura">Approach</h3>
-              <div className="space-y-2 text-left">
-                <div>
-                  <span className="font-semibold text-gray-900 font-futura">Allow mistakes:</span>
-                  <span className="text-gray-600 font-futura"> Let teammates learn by doing.</span>
-                </div>
-                <div>
-                  <span className="font-semibold text-gray-900 font-futura">Prioritize people:</span>
-                  <span className="text-gray-600 font-futura"> Dedicate my time to teammates first.</span>
-                </div>
-                <div>
-                  <span className="font-semibold text-gray-900 font-futura">Seek effort:</span>
-                  <span className="text-gray-600 font-futura"> Reward hard work, persistence, and steady improvement.</span>
-                </div>
-                <div>
-                  <span className="font-semibold text-gray-900 font-futura">Invite bad news:</span>
-                  <span className="text-gray-600 font-futura"> Ask first for what is going wrong and never punish honesty.</span>
-                </div>
-                <div>
-                  <span className="font-semibold text-gray-900 font-futura">Remove blockers:</span>
-                  <span className="text-gray-600 font-futura"> Quickly clear obstacles so the team can keep moving.</span>
-                </div>
-                <div>
-                  <span className="font-semibold text-gray-900 font-futura">Value intentions:</span>
-                  <span className="text-gray-600 font-futura"> Prioritize teammates with good intentions.</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-span-full flex justify-center">
+            <div className="flex justify-center mt-8">
               <div className="text-center">
                 <p className="text-sm text-gray-500 mb-1 font-futura">
                   Based in Columbus, Ohio
