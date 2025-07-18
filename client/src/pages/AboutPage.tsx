@@ -89,7 +89,7 @@ const AboutPage = () => {
                   Leadership
                 </h3>
                 <p className="text-gray-600 text-center leading-relaxed font-futura">
-                  From commanding troops to leading product teams, I believe leadership is about empowering others to achieve their best.
+                  I'm passionate about leadership because I've lived it, taught it, and studied it. It's not about titles or rank. Leadership is about people. Taking care of them, learning from them, and developing them. I was not and am still not the best leader, but I try to get better, and I really care about the people I lead.
                 </p>
               </div>
             </motion.div>
@@ -111,7 +111,7 @@ const AboutPage = () => {
                   Strategy
                 </h3>
                 <p className="text-gray-600 text-center leading-relaxed font-futura">
-                  Breaking down complex challenges into actionable plans, aligning teams toward common goals and adapting when needed.
+                  Strategy is misunderstood. I studied it in the military and business school, and I practice it in both places. You need those different views and a sense of the long history of that word to really understand it. I'm writing a series of articles now to share my perspective on strategy which can apply to both the military and the business world.
                 </p>
               </div>
             </motion.div>
@@ -133,7 +133,7 @@ const AboutPage = () => {
                   Innovation
                 </h3>
                 <p className="text-gray-600 text-center leading-relaxed font-futura">
-                  Finding better ways to solve problems, challenging assumptions, and turning ideas into reality.
+                  Innovation always pulls me in. I enjoy looking for better ways to do things, spotting new problems to solve, and trying ideas where they don't usually fit. I keep a running list of ideas, and with new vibe coding tools, I'm finally bringing some of them to life.
                 </p>
               </div>
             </motion.div>
