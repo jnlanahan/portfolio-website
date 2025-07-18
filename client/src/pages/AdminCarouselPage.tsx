@@ -29,7 +29,7 @@ export default function AdminCarouselPage() {
   const queryClient = useQueryClient();
 
   const { data: carouselImages = [], isLoading } = useQuery({
-    queryKey: ["/api/carousel-images"],
+    queryKey: ["/api/admin/carousel-images"],
   });
 
   const form = useForm<CarouselImageFormData>({
@@ -56,7 +56,7 @@ export default function AdminCarouselPage() {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/carousel-images"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/carousel-images"] });
       toast({
         title: "Success",
         description: "Carousel image created successfully",
@@ -87,7 +87,7 @@ export default function AdminCarouselPage() {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/carousel-images"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/carousel-images"] });
       toast({
         title: "Success",
         description: "Carousel image updated successfully",
@@ -112,7 +112,7 @@ export default function AdminCarouselPage() {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/carousel-images"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/carousel-images"] });
       toast({
         title: "Success",
         description: "Carousel image deleted successfully",
@@ -143,7 +143,7 @@ export default function AdminCarouselPage() {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/carousel-images"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/carousel-images"] });
       toast({
         title: "Success",
         description: "Visibility updated successfully",

@@ -160,6 +160,7 @@ export interface IStorage {
   
   // Carousel images methods
   getAllCarouselImages(): Promise<CarouselImage[]>;
+  getVisibleCarouselImages(): Promise<CarouselImage[]>;
   getCarouselImageById(id: number): Promise<CarouselImage | undefined>;
   createCarouselImage(image: InsertCarouselImage): Promise<CarouselImage>;
   updateCarouselImage(id: number, image: Partial<InsertCarouselImage>): Promise<CarouselImage>;
@@ -1367,6 +1368,15 @@ export class DatabaseStorage implements IStorage {
 
   // Carousel images methods
   async getAllCarouselImages(): Promise<CarouselImage[]> {
+    const { db } = await import('./db');
+    const { carouselImages } = await import('@shared/schema');
+    const { asc } = await import('drizzle-orm');
+    
+    return await db.select().from(carouselImages)
+      .orderBy(asc(carouselImages.position));
+  }
+
+  async getVisibleCarouselImages(): Promise<CarouselImage[]> {
     const { db } = await import('./db');
     const { carouselImages } = await import('@shared/schema');
     const { asc, eq } = await import('drizzle-orm');

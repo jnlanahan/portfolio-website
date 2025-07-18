@@ -2611,8 +2611,19 @@ AVAILABLE DOCUMENT TYPES:
   // Carousel Images API
   // ======================================
 
-  // Get all carousel images
+  // Get all carousel images (public - only visible ones)
   app.get("/api/carousel-images", async (req, res) => {
+    try {
+      const images = await storage.getVisibleCarouselImages();
+      res.json(images);
+    } catch (error) {
+      console.error("Error fetching carousel images:", error);
+      res.status(500).json({ error: "Failed to fetch carousel images" });
+    }
+  });
+
+  // Get all carousel images for admin (including hidden ones)
+  app.get("/api/admin/carousel-images", requireAdmin, async (req, res) => {
     try {
       const images = await storage.getAllCarouselImages();
       res.json(images);
