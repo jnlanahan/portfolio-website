@@ -2686,11 +2686,33 @@ AVAILABLE DOCUMENT TYPES:
   // Create new carousel image (admin only)
   app.post("/api/carousel-images", requireAdmin, carouselUpload.single('image'), async (req, res) => {
     try {
+      console.log("=== CAROUSEL IMAGE UPLOAD DEBUG ===");
+      console.log("Request body:", req.body);
+      console.log("Request file:", req.file);
+      console.log("Request headers:", req.headers);
+      
       const { title, caption, altText, position, isVisible } = req.body;
       
+      console.log("Parsed form data:", {
+        title,
+        caption,
+        altText,
+        position,
+        isVisible
+      });
+      
       if (!req.file) {
+        console.log("ERROR: No file uploaded");
         return res.status(400).json({ error: "Image file is required" });
       }
+      
+      console.log("File details:", {
+        filename: req.file.filename,
+        originalname: req.file.originalname,
+        mimetype: req.file.mimetype,
+        size: req.file.size,
+        path: req.file.path
+      });
       
       const imageData = {
         title,
@@ -2701,14 +2723,20 @@ AVAILABLE DOCUMENT TYPES:
         isVisible: isVisible === 'true' || isVisible === true
       };
 
+      console.log("Image data to validate:", imageData);
+      
       const validatedData = insertCarouselImageSchema.parse(imageData);
+      console.log("Validated data:", validatedData);
+      
       const image = await storage.createCarouselImage(validatedData);
+      console.log("Created image:", image);
       
       res.status(201).json(image);
     } catch (error) {
       console.error("Error creating carousel image:", error);
       if (error instanceof ZodError) {
         const validationError = fromZodError(error);
+        console.log("Validation error:", validationError.message);
         res.status(400).json({ error: validationError.message });
       } else {
         res.status(500).json({ error: "Failed to create carousel image" });
