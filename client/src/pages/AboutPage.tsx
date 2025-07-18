@@ -224,132 +224,128 @@ const AboutPage = () => {
               Professional Certifications
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Certificate 1 */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              {/* Maven Certificate 1 */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                className="bg-white p-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl">🎓</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 font-futura">
-                    Maven Certificate
+                  <iframe
+                    src="https://maven.com/certificate/isKysWak"
+                    className="w-full h-24 rounded-lg mb-2 border"
+                    style={{ pointerEvents: 'none' }}
+                  />
+                  <h3 className="text-sm font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    Maven Analytics Certificate
                   </h3>
-                  <p className="text-gray-600 text-sm mb-4 font-futura">
-                    Professional certification from Maven
-                  </p>
                   <a
                     href="https://maven.com/certificate/isKysWak"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-sm transition-colors"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
                   >
-                    View Certificate
-                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    View
+                    <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
                   </a>
                 </div>
               </motion.div>
 
-              {/* Certificate 2 */}
+              {/* Maven Certificate 2 */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                className="bg-white p-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl">🏆</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 font-futura">
-                    Maven Certificate
+                  <iframe
+                    src="https://maven.com/certificate/YBSOUklu"
+                    className="w-full h-24 rounded-lg mb-2 border"
+                    style={{ pointerEvents: 'none' }}
+                  />
+                  <h3 className="text-sm font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    Maven Analytics Certificate
                   </h3>
-                  <p className="text-gray-600 text-sm mb-4 font-futura">
-                    Professional certification from Maven
-                  </p>
                   <a
                     href="https://maven.com/certificate/YBSOUklu"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-sm transition-colors"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
                   >
-                    View Certificate
-                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    View
+                    <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
                   </a>
                 </div>
               </motion.div>
 
-              {/* Certificate 3 */}
+              {/* Maven Certificate 3 */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                className="bg-white p-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl">📜</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 font-futura">
-                    Maven Certificate
+                  <iframe
+                    src="https://maven.com/certificate/gtpKvnRC"
+                    className="w-full h-24 rounded-lg mb-2 border"
+                    style={{ pointerEvents: 'none' }}
+                  />
+                  <h3 className="text-sm font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    Maven Analytics Certificate
                   </h3>
-                  <p className="text-gray-600 text-sm mb-4 font-futura">
-                    Professional certification from Maven
-                  </p>
                   <a
                     href="https://maven.com/certificate/gtpKvnRC"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-sm transition-colors"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
                   >
-                    View Certificate
-                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    View
+                    <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
                   </a>
                 </div>
               </motion.div>
 
-              {/* Certificate 4 */}
+              {/* Maven Certificate 4 */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
-                className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                className="bg-white p-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl">🎯</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 font-futura">
-                    Maven Certificate
+                  <iframe
+                    src="https://maven.com/certificate/jHkWhBST"
+                    className="w-full h-24 rounded-lg mb-2 border"
+                    style={{ pointerEvents: 'none' }}
+                  />
+                  <h3 className="text-sm font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    Maven Analytics Certificate
                   </h3>
-                  <p className="text-gray-600 text-sm mb-4 font-futura">
-                    Professional certification from Maven
-                  </p>
                   <a
                     href="https://maven.com/certificate/jHkWhBST"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-sm transition-colors"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
                   >
-                    View Certificate
-                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    View
+                    <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
                   </a>
@@ -363,26 +359,25 @@ const AboutPage = () => {
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ delay: 0.4 }}
-                className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                className="bg-white p-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl">🤖</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 font-futura">
-                    AI Certification
+                  <img
+                    src="/attached_assets/AI Badge_1752806308560.jpg"
+                    alt="AI Certification Badge"
+                    className="w-full h-24 object-cover rounded-lg mb-2"
+                  />
+                  <h3 className="text-sm font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    EY AI Certification
                   </h3>
-                  <p className="text-gray-600 text-sm mb-4 font-futura">
-                    EY AI certification from Credly
-                  </p>
                   <a
                     href="https://www.credly.com/badges/3f4e473d-f350-406c-b6d0-d3c9c3e77a55/linked_in_profile"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-sm transition-colors"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
                   >
-                    View Certificate
-                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    View
+                    <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
                   </a>
@@ -396,26 +391,25 @@ const AboutPage = () => {
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ delay: 0.5 }}
-                className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                className="bg-white p-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl">⛓️</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 font-futura">
-                    Blockchain Certification
+                  <img
+                    src="/attached_assets/Blockchain Badge_1752806308560.jpg"
+                    alt="Blockchain Certification Badge"
+                    className="w-full h-24 object-cover rounded-lg mb-2"
+                  />
+                  <h3 className="text-sm font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    EY Blockchain Certification
                   </h3>
-                  <p className="text-gray-600 text-sm mb-4 font-futura">
-                    EY Blockchain certification from Credly
-                  </p>
                   <a
                     href="https://www.credly.com/earner/earned/badge/219ce6d7-1317-419f-9ad7-bd3923d55587"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-sm transition-colors"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
                   >
-                    View Certificate
-                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    View
+                    <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
                   </a>
