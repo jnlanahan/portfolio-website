@@ -200,6 +200,23 @@ const AboutPage = () => {
                   </div>
                 </div>
 
+                {/* Top Gun Photo - Bradley Fighting Vehicle */}
+                <div className="min-w-full snap-center relative">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/PL1_1752808536164.jpg"
+                    alt="Nick Lanahan with Bradley Fighting Vehicle showing NC State pride and Top Gun achievement"
+                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                      Top Gun
+                    </h3>
+                    <p className="text-white/90 font-futura">
+                      This is me in front of my Bradley Fighting Vehicle. I was a Platoon Leader of a Combat Engineer Platoon of 30+ soldiers. I'm still obsessed with NC State. My crew earned Top Gun this year.
+                    </p>
+                  </div>
+                </div>
+
                 {/* Family/Personal Photo */}
                 <div className="min-w-full snap-center relative">
                   <div className="min-h-[60vh] max-h-[80vh] bg-gray-200 flex items-center justify-center">
@@ -247,7 +264,7 @@ const AboutPage = () => {
 
               {/* Scroll Indicators */}
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                {[...Array(9)].map((_, i) => (
+                {[...Array(10)].map((_, i) => (
                   <div key={i} className="w-2 h-2 bg-white/50 rounded-full"></div>
                 ))}
               </div>
