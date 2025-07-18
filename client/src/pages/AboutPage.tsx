@@ -36,42 +36,10 @@ const AboutPage = () => {
             transition={{ duration: 0.8 }}
             className="text-center max-w-5xl mx-auto"
           >
-            {/* Large Profile Photo with Certificates */}
-            <div className="mb-8 relative">
-              {/* Maven Certificates around photo */}
-              <div className="relative max-w-4xl mx-auto">
-                {/* Top certificates */}
-                <div className="flex justify-center gap-4 mb-6">
-                  <iframe 
-                    src="https://maven.com/certificate/isKysWak" 
-                    className="w-32 h-24 md:w-40 md:h-32 rounded-lg shadow-md border border-gray-200"
-                    title="Maven Certificate 1"
-                  />
-                  <iframe 
-                    src="https://maven.com/certificate/YBSOUklu" 
-                    className="w-32 h-24 md:w-40 md:h-32 rounded-lg shadow-md border border-gray-200"
-                    title="Maven Certificate 2"
-                  />
-                </div>
-
-                {/* Central Profile Photo */}
-                <div className="w-48 h-48 md:w-64 md:h-64 bg-gray-200 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg">
-                  <span className="text-gray-500 text-lg">Professional Photo</span>
-                </div>
-
-                {/* Bottom certificates */}
-                <div className="flex justify-center gap-4">
-                  <iframe 
-                    src="https://maven.com/certificate/gtpKvnRC" 
-                    className="w-32 h-24 md:w-40 md:h-32 rounded-lg shadow-md border border-gray-200"
-                    title="Maven Certificate 3"
-                  />
-                  <iframe 
-                    src="https://maven.com/certificate/jHkWhBST" 
-                    className="w-32 h-24 md:w-40 md:h-32 rounded-lg shadow-md border border-gray-200"
-                    title="Maven Certificate 4"
-                  />
-                </div>
+            {/* Large Profile Photo */}
+            <div className="mb-8">
+              <div className="w-48 h-48 md:w-64 md:h-64 bg-gray-200 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg">
+                <span className="text-gray-500 text-lg">Professional Photo</span>
               </div>
             </div>
 
