@@ -77,24 +77,11 @@ const AboutPage = () => {
                 {/* Commissioning Photo - Speaking at podium */}
                 <div className="min-w-full snap-center relative">
                   <img
-                    src="/attached_assets/NC State 1_1752808224603.jpg"
+                    src="/@fs/home/runner/workspace/attached_assets/NC State 1_1752808224603.jpg"
                     alt="Nick Lanahan speaking at NC State commissioning ceremony"
                     className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
-                    onError={(e) => { 
-                      const target = e.currentTarget;
-                      target.style.display = 'none';
-                      const fallback = target.nextElementSibling;
-                      if (fallback && fallback.className.includes('fallback-placeholder')) {
-                        fallback.style.display = 'flex';
-                      }
-                    }}
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
-                  <div className="fallback-placeholder w-full h-80 bg-gray-200 flex items-center justify-center" style={{ display: 'none' }}>
-                    <div className="text-center">
-                      <div className="text-6xl mb-4">🎓</div>
-                      <span className="text-gray-500 text-lg">NC State Commissioning</span>
-                    </div>
-                  </div>
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
                     <h3 className="font-bold text-white mb-2 font-futura text-xl">
                       Where it all started
@@ -108,24 +95,11 @@ const AboutPage = () => {
                 {/* Top Gun Photo - Bradley Fighting Vehicle */}
                 <div className="min-w-full snap-center relative">
                   <img
-                    src="/attached_assets/PL1_1752808536164.jpg"
+                    src="/@fs/home/runner/workspace/attached_assets/PL1_1752808536164.jpg"
                     alt="Nick Lanahan with Bradley Fighting Vehicle showing NC State pride and Top Gun achievement"
                     className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
-                    onError={(e) => { 
-                      const target = e.currentTarget;
-                      target.style.display = 'none';
-                      const fallback = target.nextElementSibling;
-                      if (fallback && fallback.className.includes('fallback-placeholder')) {
-                        fallback.style.display = 'flex';
-                      }
-                    }}
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
-                  <div className="fallback-placeholder w-full h-80 bg-gray-200 flex items-center justify-center" style={{ display: 'none' }}>
-                    <div className="text-center">
-                      <div className="text-6xl mb-4">🎯</div>
-                      <span className="text-gray-500 text-lg">Top Gun Achievement</span>
-                    </div>
-                  </div>
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
                     <h3 className="font-bold text-white mb-2 font-futura text-xl">
                       Top Gun
@@ -265,24 +239,11 @@ const AboutPage = () => {
                 {/* South Korea Photo 3 - With College Buddy */}
                 <div className="min-w-full snap-center relative">
                   <img
-                    src="/attached_assets/ROKFC1_1752810852416.jpg"
+                    src="/@fs/home/runner/workspace/attached_assets/ROKFC1_1752810852416.jpg"
                     alt="Nick Lanahan with college buddy and team members in South Korea"
                     className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
-                    onError={(e) => { 
-                      const target = e.currentTarget;
-                      target.style.display = 'none';
-                      const fallback = target.nextElementSibling;
-                      if (fallback && fallback.className.includes('fallback-placeholder')) {
-                        fallback.style.display = 'flex';
-                      }
-                    }}
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
-                  <div className="fallback-placeholder w-full h-80 bg-gray-200 flex items-center justify-center" style={{ display: 'none' }}>
-                    <div className="text-center">
-                      <div className="text-6xl mb-4">🇰🇷</div>
-                      <span className="text-gray-500 text-lg">South Korea Service</span>
-                    </div>
-                  </div>
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
                     <h3 className="font-bold text-white mb-2 font-futura text-xl">
                       South Korea
