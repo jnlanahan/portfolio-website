@@ -1200,18 +1200,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // About Me image upload endpoint
-  app.post("/api/admin/about-me/upload-image", requireAdmin, upload.single('image'), async (req, res) => {
+  app.post("/api/admin/about-me/upload-image", requireAdmin, upload.single('file'), async (req, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({ error: 'No image file uploaded' });
       }
 
       const imagePath = `/uploads/${req.file.filename}`;
+      const fieldName = req.body.fieldName; // 'heroImage' or 'lifePicturesImage'
+      
+      console.log(`Uploading image for field: ${fieldName}`);
+      console.log(`Image path: ${imagePath}`);
       
       res.json({
         success: true,
         imagePath: imagePath,
-        originalName: req.file.originalname
+        originalName: req.file.originalname,
+        fieldName: fieldName
       });
     } catch (error) {
       console.error('Error uploading About Me image:', error);

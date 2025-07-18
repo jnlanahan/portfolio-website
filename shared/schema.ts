@@ -174,39 +174,14 @@ export const insertResumeSchema = createInsertSchema(resumeContent).omit({
 export type InsertResume = z.infer<typeof insertResumeSchema>;
 export type Resume = typeof resumeContent.$inferSelect;
 
-// About Me content model
+// About Me content model - simplified to only editable content
 export const aboutMeContent = pgTable("about_me_content", {
   id: serial("id").primaryKey(),
-  heroTitle: text("hero_title").notNull().default("Beyond the Resume"),
-  heroSubtitle: text("hero_subtitle").notNull().default("Here is a little information about me that goes beyond my resume and LinkedIn profile."),
   heroImage: text("hero_image"), // URL or path to hero image
-  passionsSectionTitle: text("passions_section_title").notNull().default("My Passions"),
-  passionsSectionSubtitle: text("passions_section_subtitle").notNull().default("I'm driven by 3 things that keep me moving forward in my career."),
-  leadershipTitle: text("leadership_title").notNull().default("Leadership"),
-  leadershipContent: text("leadership_content").notNull().default("I'm passionate about leadership because I've lived it, taught it, and studied it. It's not about titles or rank. Leadership is about people. Taking care of them, learning from them, and developing them. I was not and am still not the best leader, but I try to get better, and I really care about the people I lead."),
-  strategyTitle: text("strategy_title").notNull().default("Strategy"),
-  strategyContent: text("strategy_content").notNull().default("Strategy is misunderstood. I studied it in the military and business school, and I practice it in both places. You need those different views and a sense of the long history of that word to really understand it. I'm writing a series of articles now to share my perspective on strategy which can apply to both the military and the business world."),
-  innovationTitle: text("innovation_title").notNull().default("Innovation"),
-  innovationContent: text("innovation_content").notNull().default("Innovation always pulls me in. I enjoy looking for better ways to do things, spoting new problems to solve, and trying ideas where they don't usually fit. I keep a running list of ideas, and with new vibe coding tools, I'm finally bringing some of them to life."),
-  strengthsSectionTitle: text("strengths_section_title").notNull().default("I am a..."),
-  picturesSectionTitle: text("pictures_section_title").notNull().default("Life in Pictures"),
-  picturesSectionImages: text("pictures_section_images").array().default([]).notNull(), // Array of image URLs
-  
-  // Leadership Philosophy Section
-  leadershipPhilosophyTitle: text("leadership_philosophy_title").notNull().default("My Leadership Philosophy"),
-  leadershipPurpose: text("leadership_purpose").notNull().default("Ensure every teammate leaves stronger, more confident, and better prepared for the next challenge."),
-  leadershipIntegrity: text("leadership_integrity").notNull().default("Always choose what is right over what is easy, using every task as a learning opportunity and never cutting corners."),
-  leadershipGrowth: text("leadership_growth").notNull().default("Always raise the least experienced so no one is left behind, building a team whose floor exceeds others' ceiling through shared commitment."),
-  leadershipMastery: text("leadership_mastery").notNull().default("Always dig deep to master the craft, because excellence, not 'good enough,' is the foundation of sound judgment."),
-  leadershipEmpathy: text("leadership_empathy").notNull().default("Always lead with empathy, listening first and tailoring communication to each person's background and needs."),
-  
-  // Leadership Cards Bio Section
-  criticalThinkerBio: text("critical_thinker_bio").notNull().default("20+ years solving unique, one of a kind challenges as an Army Officer, consultant, and engineer."),
-  decisionMakerBio: text("decision_maker_bio").notNull().default("Trained to make tough calls and set priorities even when the stakes are high. I have had to make decisions that affect not just me but others too."),
-  lifelongLearnerBio: text("lifelong_learner_bio").notNull().default("I never aim to just get the job done. I want to master what I do. I dive in, get obsessed (in a good way), and keep learning the finer points as I go."),
-  changeAgentBio: text("change_agent_bio").notNull().default("I have led and supported multiple large scale transformations in the Army and major financial services organizations. I know how to drive change from stakeholder communication and planning to managing resistance before it becomes a problem."),
-  communicatorBio: text("communicator_bio").notNull().default("I understand what effective communication requires and have trained others to identify its root causes when it fails. I have presented to executives at major banks and commanding generals in the Army, adapting my approach for every audience."),
-  
+  lifePicturesTitle: text("life_pictures_title").notNull().default("Life in Pictures"),
+  lifePicturesImage: text("life_pictures_image"), // URL or path to life pictures image
+  lifePicturesCaption: text("life_pictures_caption").notNull().default("Leading Teams"),
+  lifePicturesDescription: text("life_pictures_description").notNull().default("Working with my team at EY"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

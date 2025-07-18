@@ -9,15 +9,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Save, Upload, Edit, Target, Users, Lightbulb, Camera, MapPin } from "lucide-react";
+import { ArrowLeft, Save, Upload, Camera } from "lucide-react";
 import { Link } from "wouter";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 
 export default function AdminAboutMePage() {
   const { toast } = useToast();
-  const [editingSection, setEditingSection] = useState<string | null>(null);
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [heroImageFile, setHeroImageFile] = useState<File | null>(null);
+  const [lifePicturesImageFile, setLifePicturesImageFile] = useState<File | null>(null);
+  const [heroImagePreview, setHeroImagePreview] = useState<string | null>(null);
+  const [lifePicturesImagePreview, setLifePicturesImagePreview] = useState<string | null>(null);
 
   const { data: aboutMeContent, isLoading } = useQuery<AboutMeContent>({
     queryKey: ['/api/admin/about-me'],
@@ -33,17 +34,11 @@ export default function AdminAboutMePage() {
   const form = useForm<InsertAboutMeContent>({
     resolver: zodResolver(insertAboutMeContentSchema),
     defaultValues: {
-      heroTitle: '',
-      heroSubtitle: '',
-      criticalThinkerBio: '',
-      decisionMakerBio: '',
-      lifelongLearnerBio: '',
-      changeAgentBio: '',
-      communicatorBio: '',
-      leadershipContent: '',
-      strategyContent: '',
-      innovationContent: '',
-      heroImage: null
+      heroImage: null,
+      lifePicturesTitle: 'Life in Pictures',
+      lifePicturesImage: null,
+      lifePicturesCaption: 'Leading Teams',
+      lifePicturesDescription: 'Working with my team at EY'
     }
   });
 
@@ -51,1287 +46,288 @@ export default function AdminAboutMePage() {
   React.useEffect(() => {
     if (aboutMeContent) {
       form.reset({
-        heroTitle: aboutMeContent.heroTitle || '',
-        heroSubtitle: aboutMeContent.heroSubtitle || '',
-        criticalThinkerBio: aboutMeContent.criticalThinkerBio || '',
-        decisionMakerBio: aboutMeContent.decisionMakerBio || '',
-        lifelongLearnerBio: aboutMeContent.lifelongLearnerBio || '',
-        changeAgentBio: aboutMeContent.changeAgentBio || '',
-        communicatorBio: aboutMeContent.communicatorBio || '',
-        leadershipContent: aboutMeContent.leadershipContent || '',
-        strategyContent: aboutMeContent.strategyContent || '',
-        innovationContent: aboutMeContent.innovationContent || '',
-        heroImage: aboutMeContent.heroImage || null
+        heroImage: aboutMeContent.heroImage || null,
+        lifePicturesTitle: aboutMeContent.lifePicturesTitle || 'Life in Pictures',
+        lifePicturesImage: aboutMeContent.lifePicturesImage || null,
+        lifePicturesCaption: aboutMeContent.lifePicturesCaption || 'Leading Teams',
+        lifePicturesDescription: aboutMeContent.lifePicturesDescription || 'Working with my team at EY'
       });
     }
   }, [aboutMeContent, form]);
 
   const saveMutation = useMutation({
     mutationFn: async (data: Partial<InsertAboutMeContent>) => {
-      // Always use PUT for partial updates
       const response = await fetch('/api/admin/about-me', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       });
       
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Save error response:', errorText);
-        throw new Error(`Failed to save About Me content: ${response.status}`);
+        throw new Error('Failed to save About Me content');
       }
       
       return response.json();
     },
     onSuccess: () => {
-      toast({ title: "About Me content saved successfully" });
       queryClient.invalidateQueries({ queryKey: ['/api/admin/about-me'] });
-      queryClient.invalidateQueries({ queryKey: ['/api/about-me'] });
-      setEditingSection(null);
+      toast({
+        title: "Success",
+        description: "About Me content saved successfully",
+      });
     },
     onError: (error) => {
       console.error('Save error:', error);
-      toast({ 
-        title: "Error saving content", 
-        description: error.message,
-        variant: "destructive"
+      toast({
+        title: "Error",
+        description: "Failed to save About Me content",
+        variant: "destructive",
       });
     }
   });
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const handleHeroImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (file) {
-      setImageFile(file);
+      setHeroImageFile(file);
       const reader = new FileReader();
       reader.onload = (e) => {
-        setImagePreview(e.target?.result as string);
+        setHeroImagePreview(e.target?.result as string);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSaveSection = async (sectionData: Partial<InsertAboutMeContent>) => {
-    try {
-      // Handle image upload if there's a new image
-      if (imageFile) {
-        const formData = new FormData();
-        formData.append('image', imageFile);
-        
-        const uploadResponse = await fetch('/api/admin/about-me/upload-image', {
-          method: 'POST',
-          body: formData
-        });
-        
-        if (uploadResponse.ok) {
-          const { imagePath } = await uploadResponse.json();
-          sectionData.image = imagePath;
-        }
-      }
+  const handleLifePicturesImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setLifePicturesImageFile(file);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setLifePicturesImagePreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
-      // For partial updates, we just need to send the changed fields
-      saveMutation.mutate(sectionData);
-    } catch (error) {
-      toast({ 
-        title: "Error saving content", 
-        description: "An unexpected error occurred",
-        variant: "destructive"
+  const uploadImage = async (file: File, fieldName: string) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('fieldName', fieldName);
+    
+    const response = await fetch('/api/admin/about-me/upload-image', {
+      method: 'POST',
+      body: formData,
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to upload image');
+    }
+    
+    return response.json();
+  };
+
+  const uploadImageMutation = useMutation({
+    mutationFn: async ({ file, fieldName }: { file: File; fieldName: string }) => {
+      return uploadImage(file, fieldName);
+    },
+    onSuccess: (data, variables) => {
+      // Update the form with the new image path
+      if (variables.fieldName === 'heroImage') {
+        form.setValue('heroImage', data.imagePath);
+        setHeroImageFile(null);
+        setHeroImagePreview(null);
+      } else if (variables.fieldName === 'lifePicturesImage') {
+        form.setValue('lifePicturesImage', data.imagePath);
+        setLifePicturesImageFile(null);
+        setLifePicturesImagePreview(null);
+      }
+      
+      // Save the form automatically after image upload
+      const formData = form.getValues();
+      saveMutation.mutate(formData);
+      
+      toast({
+        title: "Success",
+        description: "Image uploaded successfully",
+      });
+    },
+    onError: (error) => {
+      console.error('Upload error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to upload image",
+        variant: "destructive",
       });
     }
-  };
+  });
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.2,
-        staggerChildren: 0.1
-      }
+  const handleSave = async () => {
+    // Upload images first if they exist
+    if (heroImageFile) {
+      await uploadImageMutation.mutateAsync({ file: heroImageFile, fieldName: 'heroImage' });
     }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100
-      }
+    if (lifePicturesImageFile) {
+      await uploadImageMutation.mutateAsync({ file: lifePicturesImageFile, fieldName: 'lifePicturesImage' });
     }
+    
+    // Save the form data
+    const formData = form.getValues();
+    saveMutation.mutate(formData);
   };
 
   if (isLoading) {
-    return (
-      <div className="page-container relative">
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-slate-600"></div>
-        </div>
-      </div>
-    );
+    return <div className="p-8">Loading...</div>;
   }
 
   return (
-    <div className="page-container relative">
-      {/* Fixed header */}
-      <div className="fixed top-0 left-0 right-0 bg-white shadow-sm z-50 border-b">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Link to="/admin" className="text-slate-600 hover:text-slate-800">
-                <ArrowLeft size={24} />
-              </Link>
-              <h1 className="text-xl font-bold text-gray-900">Edit About Me Content</h1>
-            </div>
-            <div className="flex items-center gap-3">
-              <Button
-                onClick={() => handleSaveSection({
-                  title: form.getValues('title'),
-                  subtitle: form.getValues('subtitle'),
-                  bio: form.getValues('bio'),
-                  passions: form.getValues('passions'),
-                  differentiators: form.getValues('differentiators'),
-                  image: form.getValues('image')
-                })}
-                disabled={saveMutation.isPending}
-                className="flex items-center gap-2"
-              >
-                <Save size={16} />
-                {saveMutation.isPending ? 'Saving...' : 'Save All Changes'}
+    <div className="min-h-screen bg-[#1a1a1a] text-white">
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-8 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Link to="/admin">
+              <Button variant="ghost" size="sm" className="text-white hover:bg-[#2a2a2a]">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to Dashboard
               </Button>
+            </Link>
+            <div>
+              <h1 className="text-3xl font-bold">Edit About Me Page</h1>
+              <p className="text-gray-400 mt-2">Manage the hero image and Life in Pictures section</p>
+            </div>
+          </div>
+          <Button 
+            onClick={handleSave}
+            disabled={saveMutation.isPending || uploadImageMutation.isPending}
+            className="bg-[#007AFF] hover:bg-[#0056CC] text-white"
+          >
+            <Save className="h-4 w-4 mr-2" />
+            {saveMutation.isPending ? 'Saving...' : 'Save Changes'}
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Hero Image Section */}
+          <div className="bg-[#2a2a2a] p-6 rounded-2xl">
+            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+              <Camera className="h-5 w-5" />
+              Hero Image
+            </h2>
+            
+            <div className="space-y-4">
+              <div className="aspect-video bg-gray-700 rounded-lg overflow-hidden">
+                {heroImagePreview ? (
+                  <img src={heroImagePreview} alt="Hero preview" className="w-full h-full object-cover" />
+                ) : aboutMeContent?.heroImage ? (
+                  <img src={aboutMeContent.heroImage} alt="Current hero" className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-gray-400">
+                    No image uploaded
+                  </div>
+                )}
+              </div>
+              
+              <div>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleHeroImageChange}
+                  className="bg-[#1a1a1a] border-gray-600 text-white"
+                />
+                <p className="text-sm text-gray-400 mt-1">
+                  Upload a new hero image (recommended: 1200x600px)
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Life in Pictures Section */}
+          <div className="bg-[#2a2a2a] p-6 rounded-2xl">
+            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+              <Camera className="h-5 w-5" />
+              Life in Pictures
+            </h2>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Section Title</label>
+                <Input
+                  {...form.register('lifePicturesTitle')}
+                  className="bg-[#1a1a1a] border-gray-600 text-white"
+                  placeholder="Life in Pictures"
+                />
+              </div>
+              
+              <div className="aspect-video bg-gray-700 rounded-lg overflow-hidden">
+                {lifePicturesImagePreview ? (
+                  <img src={lifePicturesImagePreview} alt="Life pictures preview" className="w-full h-full object-cover" />
+                ) : aboutMeContent?.lifePicturesImage ? (
+                  <img src={aboutMeContent.lifePicturesImage} alt="Current life pictures" className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-gray-400">
+                    No image uploaded
+                  </div>
+                )}
+              </div>
+              
+              <div>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleLifePicturesImageChange}
+                  className="bg-[#1a1a1a] border-gray-600 text-white"
+                />
+                <p className="text-sm text-gray-400 mt-1">
+                  Upload a new life pictures image (recommended: 1200x600px)
+                </p>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-2">Caption</label>
+                <Input
+                  {...form.register('lifePicturesCaption')}
+                  className="bg-[#1a1a1a] border-gray-600 text-white"
+                  placeholder="Leading Teams"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-2">Description</label>
+                <Textarea
+                  {...form.register('lifePicturesDescription')}
+                  className="bg-[#1a1a1a] border-gray-600 text-white"
+                  placeholder="Working with my team at EY"
+                  rows={3}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Content with top padding to account for fixed header */}
-      <div className="pt-20">
-        {/* Hero Introduction with Photo */}
-        <section className="py-12 md:py-16">
-          <div className="container mx-auto px-4 md:px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center max-w-5xl mx-auto"
-            >
-              {/* Large Profile Photo */}
-              <div className="mb-8 relative">
-                <div className="w-48 h-48 md:w-64 md:h-64 bg-gray-200 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg relative">
-                  {imagePreview ? (
-                    <img src={imagePreview} alt="Profile" className="w-full h-full object-cover rounded-full" />
-                  ) : (
-                    <span className="text-gray-500 text-lg">Professional Photo</span>
-                  )}
-                  <Button
-                    onClick={() => setEditingSection(editingSection === 'image' ? null : 'image')}
-                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center"
-                    size="sm"
-                  >
-                    <Edit size={14} />
-                  </Button>
-                </div>
-                
-                {editingSection === 'image' && (
-                  <div className="mt-4 p-4 bg-white rounded-lg shadow-lg max-w-md mx-auto">
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                      className="mb-3"
-                    />
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={async () => {
-                          if (imageFile) {
-                            const formData = new FormData();
-                            formData.append('image', imageFile);
-                            
-                            try {
-                              const uploadResponse = await fetch('/api/admin/about-me/upload-image', {
-                                method: 'POST',
-                                body: formData
-                              });
-                              
-                              if (uploadResponse.ok) {
-                                const { imagePath } = await uploadResponse.json();
-                                await handleSaveSection({ image: imagePath });
-                              }
-                            } catch (error) {
-                              toast({ 
-                                title: "Error uploading image", 
-                                description: "Failed to upload image",
-                                variant: "destructive"
-                              });
-                            }
-                          }
-                        }}
-                        size="sm"
-                        disabled={saveMutation.isPending || !imageFile}
-                      >
-                        Save
-                      </Button>
-                      <Button
-                        onClick={() => setEditingSection(null)}
-                        variant="outline"
-                        size="sm"
-                      >
-                        Cancel
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </div>
-              
-              {/* Title Section */}
-              <div className="relative group">
-                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-futura">
-                  {editingSection === 'title' ? (
-                    <div className="inline-block">
-                      <Input
-                        defaultValue={aboutMeContent?.heroTitle || 'Beyond the Resume'}
-                        onChange={(e) => form.setValue('heroTitle', e.target.value)}
-                        className="text-center text-4xl md:text-5xl font-bold font-futura border-2 border-slate-300 rounded-lg px-4 py-2"
-                        placeholder="Beyond the Resume"
-                      />
-                      <div className="flex justify-center gap-2 mt-2">
-                        <Button
-                          onClick={() => handleSaveSection({ heroTitle: form.getValues('heroTitle') })}
-                          size="sm"
-                          disabled={saveMutation.isPending}
-                        >
-                          Save
-                        </Button>
-                        <Button
-                          onClick={() => setEditingSection(null)}
-                          variant="outline"
-                          size="sm"
-                        >
-                          Cancel
-                        </Button>
-                      </div>
-                    </div>
-                  ) : (
-                    <span className="relative">
-                      {aboutMeContent?.heroTitle || 'Beyond the Resume'}
-                      <Button
-                        onClick={() => setEditingSection('title')}
-                        className="absolute -top-2 -right-8 w-6 h-6 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                        size="sm"
-                      >
-                        <Edit size={12} />
-                      </Button>
-                    </span>
-                  )}
-                </h1>
-                
-                {/* Subtitle Section */}
-                <div className="relative group">
-                  {editingSection === 'subtitle' ? (
-                    <div>
-                      <Textarea
-                        defaultValue={aboutMeContent?.heroSubtitle || 'Here is a little information about me that goes beyond my resume and LinkedIn profile.'}
-                        onChange={(e) => form.setValue('heroSubtitle', e.target.value)}
-                        className="text-center text-lg font-futura border-2 border-slate-300 rounded-lg px-4 py-2 resize-none"
-                        placeholder="Here is a little information about me that goes beyond my resume and LinkedIn profile."
-                        rows={2}
-                      />
-                      <div className="flex justify-center gap-2 mt-2">
-                        <Button
-                          onClick={() => handleSaveSection({ heroSubtitle: form.getValues('heroSubtitle') })}
-                          size="sm"
-                          disabled={saveMutation.isPending}
-                        >
-                          Save
-                        </Button>
-                        <Button
-                          onClick={() => setEditingSection(null)}
-                          variant="outline"
-                          size="sm"
-                        >
-                          Cancel
-                        </Button>
-                      </div>
-                    </div>
-                  ) : (
-                    <p className="text-lg text-gray-600 leading-relaxed font-futura relative">
-                      {aboutMeContent?.heroSubtitle || 'Here is a little information about me that goes beyond my resume and LinkedIn profile.'}
-                      <Button
-                        onClick={() => setEditingSection('subtitle')}
-                        className="absolute -top-2 -right-8 w-6 h-6 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                        size="sm"
-                      >
-                        <Edit size={12} />
-                      </Button>
-                    </p>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* My Passions Section */}
-        <section className="py-12">
-          <div className="container mx-auto px-4 md:px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl font-bold text-gray-900 mb-4 font-futura">
-                My <span className="text-slate-600">Passions</span>
-              </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto font-futura">
-                I'm driven by 3 things that keep me moving forward in my career.
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {/* Leadership */}
-              <motion.div
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative group"
-              >
-                <div className="p-6">
-                  <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Users className="w-6 h-6 text-slate-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 text-center font-futura">
-                    Leadership
-                  </h3>
-                  <div className="relative">
-                    {editingSection === 'leadership' ? (
-                      <div>
-                        <Textarea
-                          defaultValue={aboutMeContent?.passions || "I'm passionate about leadership because I've lived it, taught it, and studied it. It's not about titles or rank. Leadership is about people. Taking care of them, learning from them, and developing them. I was not and am still not the best leader, but I try to get better, and I really care about the people I lead."}
-                          onChange={(e) => form.setValue('passions', e.target.value)}
-                          className="text-center text-gray-600 border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-32"
-                          placeholder="I'm passionate about leadership because..."
-                          rows={6}
-                        />
-                        <div className="flex justify-center gap-2 mt-2">
-                          <Button
-                            onClick={() => handleSaveSection({ passions: form.getValues('passions') })}
-                            size="sm"
-                            disabled={saveMutation.isPending}
-                          >
-                            Save
-                          </Button>
-                          <Button
-                            onClick={() => setEditingSection(null)}
-                            variant="outline"
-                            size="sm"
-                          >
-                            Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-gray-600 text-center leading-relaxed font-futura">
-                        {aboutMeContent?.passions || "I'm passionate about leadership because I've lived it, taught it, and studied it. It's not about titles or rank. Leadership is about people. Taking care of them, learning from them, and developing them. I was not and am still not the best leader, but I try to get better, and I really care about the people I lead."}
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <Button
-                  onClick={() => setEditingSection(editingSection === 'leadership' ? null : 'leadership')}
-                  className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                  size="sm"
-                >
-                  <Edit size={14} />
-                </Button>
-              </motion.div>
-
-              {/* Strategy */}
-              <motion.div
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative group"
-              >
-                <div className="p-6">
-                  <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Target className="w-6 h-6 text-slate-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 text-center font-futura">
-                    Strategy
-                  </h3>
-                  <div className="relative">
-                    {editingSection === 'strategy' ? (
-                      <div>
-                        <Textarea
-                          defaultValue={aboutMeContent?.strategyContent || "Strategy is misunderstood. I studied it in the military and business school, and I practice it in both places. You need those different views and a sense of the long history of that word to really understand it. I'm writing a series of articles now to share my perspective on strategy which can apply to both the military and the business world."}
-                          onChange={(e) => form.setValue('strategyContent', e.target.value)}
-                          className="text-center text-gray-600 border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-32"
-                          placeholder="Strategy content..."
-                          rows={6}
-                        />
-                        <div className="flex justify-center gap-2 mt-2">
-                          <Button
-                            onClick={() => handleSaveSection({ strategyContent: form.getValues('strategyContent') })}
-                            size="sm"
-                            disabled={saveMutation.isPending}
-                          >
-                            Save
-                          </Button>
-                          <Button
-                            onClick={() => setEditingSection(null)}
-                            variant="outline"
-                            size="sm"
-                          >
-                            Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-gray-600 text-center leading-relaxed font-futura">
-                        {aboutMeContent?.strategyContent || "Strategy is misunderstood. I studied it in the military and business school, and I practice it in both places. You need those different views and a sense of the long history of that word to really understand it. I'm writing a series of articles now to share my perspective on strategy which can apply to both the military and the business world."}
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <Button
-                  onClick={() => setEditingSection(editingSection === 'strategy' ? null : 'strategy')}
-                  className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                  size="sm"
-                >
-                  <Edit size={14} />
-                </Button>
-              </motion.div>
-
-              {/* Innovation */}
-              <motion.div
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ delay: 0.4 }}
-                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative group"
-              >
-                <div className="p-6">
-                  <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Lightbulb className="w-6 h-6 text-slate-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 text-center font-futura">
-                    Innovation
-                  </h3>
-                  <div className="relative">
-                    {editingSection === 'innovation' ? (
-                      <div>
-                        <Textarea
-                          defaultValue={aboutMeContent?.innovationContent || "Innovation always pulls me in. I enjoy looking for better ways to do things, spoting new problems to solve, and trying ideas where they don't usually fit. I keep a running list of ideas, and with new vibe coding tools, I'm finally bringing some of them to life."}
-                          onChange={(e) => form.setValue('innovationContent', e.target.value)}
-                          className="text-center text-gray-600 border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-32"
-                          placeholder="Innovation content..."
-                          rows={6}
-                        />
-                        <div className="flex justify-center gap-2 mt-2">
-                          <Button
-                            onClick={() => handleSaveSection({ innovationContent: form.getValues('innovationContent') })}
-                            size="sm"
-                            disabled={saveMutation.isPending}
-                          >
-                            Save
-                          </Button>
-                          <Button
-                            onClick={() => setEditingSection(null)}
-                            variant="outline"
-                            size="sm"
-                          >
-                            Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-gray-600 text-center leading-relaxed font-futura">
-                        {aboutMeContent?.innovationContent || "Innovation always pulls me in. I enjoy looking for better ways to do things, spoting new problems to solve, and trying ideas where they don't usually fit. I keep a running list of ideas, and with new vibe coding tools, I'm finally bringing some of them to life."}
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <Button
-                  onClick={() => setEditingSection(editingSection === 'innovation' ? null : 'innovation')}
-                  className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                  size="sm"
-                >
-                  <Edit size={14} />
-                </Button>
-              </motion.div>
+        {/* Test Log Section */}
+        <div className="mt-8 bg-[#2a2a2a] p-6 rounded-2xl">
+          <h2 className="text-xl font-bold mb-4">Test Log</h2>
+          <div className="space-y-2 text-sm">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              <span>Hero image upload endpoint: /api/admin/about-me/upload-image</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              <span>Life pictures image upload endpoint: /api/admin/about-me/upload-image</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              <span>Text fields: lifePicturesTitle, lifePicturesCaption, lifePicturesDescription</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              <span>Save endpoint: PUT /api/admin/about-me</span>
             </div>
           </div>
-        </section>
-
-
-
-        {/* "I am a..." Leadership Cards Section */}
-        <section className="py-12 bg-gray-50">
-          <div className="container mx-auto px-4 md:px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="max-w-6xl mx-auto text-center relative group"
-            >
-              <div className="relative group mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 text-center font-futura">
-                  {editingSection === 'bioSectionTitle' ? (
-                    <div className="inline-block">
-                      <Input
-                        defaultValue={aboutMeContent?.bioSectionTitle || 'I am a...'}
-                        onChange={(e) => form.setValue('bioSectionTitle', e.target.value)}
-                        className="text-center text-3xl font-bold font-futura border-2 border-slate-300 rounded-lg px-4 py-2"
-                        placeholder="I am a..."
-                      />
-                      <div className="flex justify-center gap-2 mt-2">
-                        <Button
-                          onClick={() => handleSaveSection({ bioSectionTitle: form.getValues('bioSectionTitle') })}
-                          size="sm"
-                          disabled={saveMutation.isPending}
-                        >
-                          Save
-                        </Button>
-                        <Button
-                          onClick={() => setEditingSection(null)}
-                          variant="outline"
-                          size="sm"
-                        >
-                          Cancel
-                        </Button>
-                      </div>
-                    </div>
-                  ) : (
-                    <span className="relative">
-                      {aboutMeContent?.bioSectionTitle || 'I am a...'}
-                      <Button
-                        onClick={() => setEditingSection('bioSectionTitle')}
-                        className="absolute -top-2 -right-8 w-6 h-6 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                        size="sm"
-                      >
-                        <Edit size={12} />
-                      </Button>
-                    </span>
-                  )}
-                </h2>
-              </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-                {/* Critical Thinker */}
-                <div className="bg-white p-6 rounded-2xl shadow-lg h-full relative group">
-                  <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
-                    {editingSection === 'criticalThinkerTitle' ? (
-                      <div>
-                        <Input
-                          defaultValue={aboutMeContent?.criticalThinkerTitle || 'Critical Thinker'}
-                          onChange={(e) => form.setValue('criticalThinkerTitle', e.target.value)}
-                          className="text-xl font-bold font-futura border-2 border-slate-300 rounded-lg px-2 py-1"
-                          placeholder="Critical Thinker"
-                        />
-                        <div className="flex gap-2 mt-2">
-                          <Button
-                            onClick={() => handleSaveSection({ criticalThinkerTitle: form.getValues('criticalThinkerTitle') })}
-                            size="sm"
-                            disabled={saveMutation.isPending}
-                          >
-                            Save
-                          </Button>
-                          <Button
-                            onClick={() => setEditingSection(null)}
-                            variant="outline"
-                            size="sm"
-                          >
-                            Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <span className="relative">
-                        {aboutMeContent?.criticalThinkerTitle || 'Critical Thinker'}
-                        <Button
-                          onClick={() => setEditingSection('criticalThinkerTitle')}
-                          className="absolute -top-1 -right-6 w-5 h-5 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                          size="sm"
-                        >
-                          <Edit size={10} />
-                        </Button>
-                      </span>
-                    )}
-                  </div>
-                  <div className="relative">
-                    {editingSection === 'criticalThinker' ? (
-                      <div>
-                        <Textarea
-                          defaultValue={aboutMeContent?.criticalThinkerBio || "20+ years solving unique, one of a kind challenges as an Army Officer, consultant, and engineer."}
-                          onChange={(e) => form.setValue('criticalThinkerBio', e.target.value)}
-                          className="text-gray-600 text-sm border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-20 mb-3"
-                          placeholder="Critical Thinker bio..."
-                          rows={3}
-                        />
-                        <div className="flex justify-center gap-2 mt-2">
-                          <Button
-                            onClick={() => handleSaveSection({ criticalThinkerBio: form.getValues('criticalThinkerBio') })}
-                            size="sm"
-                            disabled={saveMutation.isPending}
-                          >
-                            Save
-                          </Button>
-                          <Button
-                            onClick={() => setEditingSection(null)}
-                            variant="outline"
-                            size="sm"
-                          >
-                            Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
-                        {aboutMeContent?.criticalThinkerBio || "20+ years solving unique, one of a kind challenges as an Army Officer, consultant, and engineer."}
-                      </p>
-                    )}
-                  </div>
-                  <div className="relative">
-                    {editingSection === 'criticalThinkerTagline' ? (
-                      <div>
-                        <Input
-                          defaultValue={aboutMeContent?.criticalThinkerTagline || 'No problem is too big.'}
-                          onChange={(e) => form.setValue('criticalThinkerTagline', e.target.value)}
-                          className="text-base font-bold font-futura border-2 border-slate-300 rounded-lg px-2 py-1"
-                          placeholder="No problem is too big."
-                        />
-                        <div className="flex gap-2 mt-2">
-                          <Button
-                            onClick={() => handleSaveSection({ criticalThinkerTagline: form.getValues('criticalThinkerTagline') })}
-                            size="sm"
-                            disabled={saveMutation.isPending}
-                          >
-                            Save
-                          </Button>
-                          <Button
-                            onClick={() => setEditingSection(null)}
-                            variant="outline"
-                            size="sm"
-                          >
-                            Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-slate-600 text-base font-futura font-bold relative">
-                        {aboutMeContent?.criticalThinkerTagline || 'No problem is too big.'}
-                        <Button
-                          onClick={() => setEditingSection('criticalThinkerTagline')}
-                          className="absolute -top-1 -right-6 w-5 h-5 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity ml-2"
-                          size="sm"
-                        >
-                          <Edit size={10} />
-                        </Button>
-                      </p>
-                    )}
-                  </div>
-                  <Button
-                    onClick={() => setEditingSection(editingSection === 'criticalThinker' ? null : 'criticalThinker')}
-                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                    size="sm"
-                  >
-                    <Edit size={14} />
-                  </Button>
-                </div>
-
-                {/* Decision Maker */}
-                <div className="bg-white p-6 rounded-2xl shadow-lg h-full relative group">
-                  <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
-                    Decision Maker
-                  </div>
-                  <div className="relative">
-                    {editingSection === 'decisionMaker' ? (
-                      <div>
-                        <Textarea
-                          defaultValue={aboutMeContent?.decisionMakerBio || "Trained to make tough calls and set priorities even when the stakes are high. I have had to make decisions that affect not just me but others too."}
-                          onChange={(e) => form.setValue('decisionMakerBio', e.target.value)}
-                          className="text-gray-600 text-sm border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-20 mb-3"
-                          placeholder="Decision Maker bio..."
-                          rows={3}
-                        />
-                        <div className="flex justify-center gap-2 mt-2">
-                          <Button
-                            onClick={() => handleSaveSection({ decisionMakerBio: form.getValues('decisionMakerBio') })}
-                            size="sm"
-                            disabled={saveMutation.isPending}
-                          >
-                            Save
-                          </Button>
-                          <Button
-                            onClick={() => setEditingSection(null)}
-                            variant="outline"
-                            size="sm"
-                          >
-                            Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
-                        {aboutMeContent?.decisionMakerBio || "Trained to make tough calls and set priorities even when the stakes are high. I have had to make decisions that affect not just me but others too."}
-                      </p>
-                    )}
-                  </div>
-                  <p className="text-slate-600 text-base font-futura font-bold">
-                    I am decisive.
-                  </p>
-                  <Button
-                    onClick={() => setEditingSection(editingSection === 'decisionMaker' ? null : 'decisionMaker')}
-                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                    size="sm"
-                  >
-                    <Edit size={14} />
-                  </Button>
-                </div>
-
-                {/* Lifelong Learner */}
-                <div className="bg-white p-6 rounded-2xl shadow-lg h-full relative group">
-                  <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
-                    Lifelong Learner
-                  </div>
-                  <div className="relative">
-                    {editingSection === 'lifelongLearner' ? (
-                      <div>
-                        <Textarea
-                          defaultValue={aboutMeContent?.lifelongLearnerBio || "I never aim to just get the job done. I want to master what I do. I dive in, get obsessed (in a good way), and keep learning the finer points as I go."}
-                          onChange={(e) => form.setValue('lifelongLearnerBio', e.target.value)}
-                          className="text-gray-600 text-sm border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-20 mb-3"
-                          placeholder="Lifelong Learner bio..."
-                          rows={3}
-                        />
-                        <div className="flex justify-center gap-2 mt-2">
-                          <Button
-                            onClick={() => handleSaveSection({ lifelongLearnerBio: form.getValues('lifelongLearnerBio') })}
-                            size="sm"
-                            disabled={saveMutation.isPending}
-                          >
-                            Save
-                          </Button>
-                          <Button
-                            onClick={() => setEditingSection(null)}
-                            variant="outline"
-                            size="sm"
-                          >
-                            Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
-                        {aboutMeContent?.lifelongLearnerBio || "I never aim to just get the job done. I want to master what I do. I dive in, get obsessed (in a good way), and keep learning the finer points as I go."}
-                      </p>
-                    )}
-                  </div>
-                  <p className="text-slate-600 text-base font-futura font-bold">
-                    Learning is always the goal.
-                  </p>
-                  <Button
-                    onClick={() => setEditingSection(editingSection === 'lifelongLearner' ? null : 'lifelongLearner')}
-                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                    size="sm"
-                  >
-                    <Edit size={14} />
-                  </Button>
-                </div>
-
-                {/* Change Agent */}
-                <div className="bg-white p-6 rounded-2xl shadow-lg h-full relative group">
-                  <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
-                    Change agent
-                  </div>
-                  <div className="relative">
-                    {editingSection === 'changeAgent' ? (
-                      <div>
-                        <Textarea
-                          defaultValue={aboutMeContent?.changeAgentBio || "I have led and supported multiple large scale transformations in the Army and major financial services organizations. I know how to drive change from stakeholder communication and planning to managing resistance before it becomes a problem."}
-                          onChange={(e) => form.setValue('changeAgentBio', e.target.value)}
-                          className="text-gray-600 text-sm border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-20 mb-3"
-                          placeholder="Change Agent bio..."
-                          rows={3}
-                        />
-                        <div className="flex justify-center gap-2 mt-2">
-                          <Button
-                            onClick={() => handleSaveSection({ changeAgentBio: form.getValues('changeAgentBio') })}
-                            size="sm"
-                            disabled={saveMutation.isPending}
-                          >
-                            Save
-                          </Button>
-                          <Button
-                            onClick={() => setEditingSection(null)}
-                            variant="outline"
-                            size="sm"
-                          >
-                            Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
-                        {aboutMeContent?.changeAgentBio || "I have led and supported multiple large scale transformations in the Army and major financial services organizations. I know how to drive change from stakeholder communication and planning to managing resistance before it becomes a problem."}
-                      </p>
-                    )}
-                  </div>
-                  <p className="text-slate-600 text-base font-futura font-bold">
-                    Effective change is a team effort.
-                  </p>
-                  <Button
-                    onClick={() => setEditingSection(editingSection === 'changeAgent' ? null : 'changeAgent')}
-                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                    size="sm"
-                  >
-                    <Edit size={14} />
-                  </Button>
-                </div>
-
-                {/* Communicator */}
-                <div className="bg-white p-6 rounded-2xl shadow-lg h-full relative group">
-                  <div className="text-xl font-bold text-slate-600 mb-3 font-futura">
-                    Communicator
-                  </div>
-                  <div className="relative">
-                    {editingSection === 'communicator' ? (
-                      <div>
-                        <Textarea
-                          defaultValue={aboutMeContent?.communicatorBio || "I understand what effective communication requires and have trained others to identify its root causes when it fails. I have presented to executives at major banks and commanding generals in the Army, adapting my approach for every audience."}
-                          onChange={(e) => form.setValue('communicatorBio', e.target.value)}
-                          className="text-gray-600 text-sm border-2 border-slate-300 rounded-lg px-4 py-2 resize-none min-h-20 mb-3"
-                          placeholder="Communicator bio..."
-                          rows={3}
-                        />
-                        <div className="flex justify-center gap-2 mt-2">
-                          <Button
-                            onClick={() => handleSaveSection({ communicatorBio: form.getValues('communicatorBio') })}
-                            size="sm"
-                            disabled={saveMutation.isPending}
-                          >
-                            Save
-                          </Button>
-                          <Button
-                            onClick={() => setEditingSection(null)}
-                            variant="outline"
-                            size="sm"
-                          >
-                            Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-gray-600 text-sm font-futura mb-3 leading-relaxed">
-                        {aboutMeContent?.communicatorBio || "I understand what effective communication requires and have trained others to identify its root causes when it fails. I have presented to executives at major banks and commanding generals in the Army, adapting my approach for every audience."}
-                      </p>
-                    )}
-                  </div>
-                  <p className="text-slate-600 text-base font-futura font-bold">
-                    All communication is not equal.
-                  </p>
-                  <Button
-                    onClick={() => setEditingSection(editingSection === 'communicator' ? null : 'communicator')}
-                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                    size="sm"
-                  >
-                    <Edit size={14} />
-                  </Button>
-                </div>
-              </div>
-              
-              <Button
-                onClick={() => setEditingSection(editingSection === 'bio' ? null : 'bio')}
-                className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                size="sm"
-              >
-                <Edit size={14} />
-              </Button>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Life in Pictures */}
-        <section className="py-12">
-          <div className="container mx-auto px-4 md:px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="max-w-4xl mx-auto relative group"
-            >
-              <div className="relative group mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 text-center font-futura">
-                  {editingSection === 'lifePicturesTitle' ? (
-                    <div className="inline-block">
-                      <Input
-                        defaultValue={aboutMeContent?.lifePicturesTitle || 'Life in Pictures'}
-                        onChange={(e) => form.setValue('lifePicturesTitle', e.target.value)}
-                        className="text-center text-3xl font-bold font-futura border-2 border-slate-300 rounded-lg px-4 py-2"
-                        placeholder="Life in Pictures"
-                      />
-                      <div className="flex justify-center gap-2 mt-2">
-                        <Button
-                          onClick={() => handleSaveSection({ lifePicturesTitle: form.getValues('lifePicturesTitle') })}
-                          size="sm"
-                          disabled={saveMutation.isPending}
-                        >
-                          Save
-                        </Button>
-                        <Button
-                          onClick={() => setEditingSection(null)}
-                          variant="outline"
-                          size="sm"
-                        >
-                          Cancel
-                        </Button>
-                      </div>
-                    </div>
-                  ) : (
-                    <span className="relative">
-                      {aboutMeContent?.lifePicturesTitle || 'Life in Pictures'}
-                      <Button
-                        onClick={() => setEditingSection('lifePicturesTitle')}
-                        className="absolute -top-2 -right-8 w-6 h-6 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                        size="sm"
-                      >
-                        <Edit size={12} />
-                      </Button>
-                    </span>
-                  )}
-                </h2>
-              </div>
-              
-              <div className="bg-white rounded-2xl shadow-lg overflow-hidden relative group">
-                <div className="h-80 bg-gray-200 flex items-center justify-center relative">
-                  {aboutMeContent?.lifePictureImage ? (
-                    <img src={aboutMeContent.lifePictureImage} alt="Team" className="w-full h-full object-cover" />
-                  ) : (
-                    <span className="text-gray-500 text-sm">Professional Team Photo</span>
-                  )}
-                  <Button
-                    onClick={() => setEditingSection(editingSection === 'lifePictureImage' ? null : 'lifePictureImage')}
-                    className="absolute top-2 right-2 w-8 h-8 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                    size="sm"
-                  >
-                    <Edit size={14} />
-                  </Button>
-                </div>
-                {editingSection === 'lifePictureImage' && (
-                  <div className="p-4 bg-gray-100">
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                      className="mb-3"
-                    />
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={async () => {
-                          if (imageFile) {
-                            const formData = new FormData();
-                            formData.append('image', imageFile);
-                            
-                            try {
-                              const uploadResponse = await fetch('/api/admin/about-me/upload-image', {
-                                method: 'POST',
-                                body: formData
-                              });
-                              
-                              if (uploadResponse.ok) {
-                                const { imagePath } = await uploadResponse.json();
-                                await handleSaveSection({ lifePictureImage: imagePath });
-                              }
-                            } catch (error) {
-                              toast({ 
-                                title: "Error uploading image", 
-                                description: "Failed to upload image",
-                                variant: "destructive"
-                              });
-                            }
-                          }
-                        }}
-                        size="sm"
-                        disabled={saveMutation.isPending || !imageFile}
-                      >
-                        Save
-                      </Button>
-                      <Button
-                        onClick={() => setEditingSection(null)}
-                        variant="outline"
-                        size="sm"
-                      >
-                        Cancel
-                      </Button>
-                    </div>
-                  </div>
-                )}
-                <div className="p-6 bg-white">
-                  {editingSection === 'lifePictureCaption' ? (
-                    <div>
-                      <Input
-                        defaultValue={aboutMeContent?.lifePictureTitle || 'Leading Teams'}
-                        onChange={(e) => form.setValue('lifePictureTitle', e.target.value)}
-                        className="font-bold font-futura text-xl border-2 border-slate-300 rounded-lg px-2 py-1 mb-2"
-                        placeholder="Leading Teams"
-                      />
-                      <Textarea
-                        defaultValue={aboutMeContent?.lifePictureDescription || 'Working with my team at EY'}
-                        onChange={(e) => form.setValue('lifePictureDescription', e.target.value)}
-                        className="text-gray-600 font-futura border-2 border-slate-300 rounded-lg px-2 py-1"
-                        placeholder="Working with my team at EY"
-                        rows={2}
-                      />
-                      <div className="flex gap-2 mt-2">
-                        <Button
-                          onClick={() => handleSaveSection({ 
-                            lifePictureTitle: form.getValues('lifePictureTitle'),
-                            lifePictureDescription: form.getValues('lifePictureDescription')
-                          })}
-                          size="sm"
-                          disabled={saveMutation.isPending}
-                        >
-                          Save
-                        </Button>
-                        <Button
-                          onClick={() => setEditingSection(null)}
-                          variant="outline"
-                          size="sm"
-                        >
-                          Cancel
-                        </Button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="relative group">
-                      <h3 className="font-bold text-gray-900 mb-2 font-futura text-xl">
-                        {aboutMeContent?.lifePictureTitle || 'Leading Teams'}
-                      </h3>
-                      <p className="text-gray-600 font-futura">
-                        {aboutMeContent?.lifePictureDescription || 'Working with my team at EY'}
-                      </p>
-                      <Button
-                        onClick={() => setEditingSection('lifePictureCaption')}
-                        className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                        size="sm"
-                      >
-                        <Edit size={12} />
-                      </Button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* My Leadership Philosophy */}
-        <section className="py-12 bg-gray-50">
-          <div className="container mx-auto px-4 md:px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="max-w-4xl mx-auto relative group"
-            >
-              <div className="relative group mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 text-center font-futura">
-                  {editingSection === 'leadershipPhilosophyTitle' ? (
-                    <div className="inline-block">
-                      <Input
-                        defaultValue={aboutMeContent?.leadershipPhilosophyTitle || 'My Leadership Philosophy'}
-                        onChange={(e) => form.setValue('leadershipPhilosophyTitle', e.target.value)}
-                        className="text-center text-3xl font-bold font-futura border-2 border-slate-300 rounded-lg px-4 py-2"
-                        placeholder="My Leadership Philosophy"
-                      />
-                      <div className="flex justify-center gap-2 mt-2">
-                        <Button
-                          onClick={() => handleSaveSection({ leadershipPhilosophyTitle: form.getValues('leadershipPhilosophyTitle') })}
-                          size="sm"
-                          disabled={saveMutation.isPending}
-                        >
-                          Save
-                        </Button>
-                        <Button
-                          onClick={() => setEditingSection(null)}
-                          variant="outline"
-                          size="sm"
-                        >
-                          Cancel
-                        </Button>
-                      </div>
-                    </div>
-                  ) : (
-                    <span className="relative">
-                      {aboutMeContent?.leadershipPhilosophyTitle || 'My Leadership Philosophy'}
-                      <Button
-                        onClick={() => setEditingSection('leadershipPhilosophyTitle')}
-                        className="absolute -top-2 -right-8 w-6 h-6 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                        size="sm"
-                      >
-                        <Edit size={12} />
-                      </Button>
-                    </span>
-                  )}
-                </h2>
-              </div>
-              
-              <div className="space-y-8">
-                {/* Purpose */}
-                <div className="bg-white p-8 rounded-2xl shadow-lg relative group">
-                  <h3 className="text-xl font-bold text-slate-600 mb-4 font-futura">
-                    Purpose
-                  </h3>
-                  {editingSection === 'leadershipPurpose' ? (
-                    <div>
-                      <Textarea
-                        defaultValue={aboutMeContent?.leadershipPurpose || 'Ensure every teammate leaves stronger, more confident, and better prepared for the next challenge.'}
-                        onChange={(e) => form.setValue('leadershipPurpose', e.target.value)}
-                        className="text-gray-700 font-futura border-2 border-slate-300 rounded-lg px-3 py-2 w-full"
-                        placeholder="Purpose statement..."
-                        rows={2}
-                      />
-                      <div className="flex gap-2 mt-2">
-                        <Button
-                          onClick={() => handleSaveSection({ leadershipPurpose: form.getValues('leadershipPurpose') })}
-                          size="sm"
-                          disabled={saveMutation.isPending}
-                        >
-                          Save
-                        </Button>
-                        <Button
-                          onClick={() => setEditingSection(null)}
-                          variant="outline"
-                          size="sm"
-                        >
-                          Cancel
-                        </Button>
-                      </div>
-                    </div>
-                  ) : (
-                    <p className="text-gray-700 leading-relaxed font-futura">
-                      {aboutMeContent?.leadershipPurpose || 'Ensure every teammate leaves stronger, more confident, and better prepared for the next challenge.'}
-                    </p>
-                  )}
-                  <Button
-                    onClick={() => setEditingSection(editingSection === 'leadershipPurpose' ? null : 'leadershipPurpose')}
-                    className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-slate-600 hover:bg-slate-700 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                    size="sm"
-                  >
-                    <Edit size={12} />
-                  </Button>
-                </div>
-
-                {/* Values & Guiding Principles */}
-                <div className="bg-white p-8 rounded-2xl shadow-lg">
-                  <h3 className="text-xl font-bold text-slate-600 mb-4 font-futura">
-                    Values & Guiding Principles
-                  </h3>
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Integrity:</h4>
-                      <p className="text-gray-700 leading-relaxed font-futura">
-                        Always choose what is right over what is easy, using every task as a learning opportunity and never cutting corners.
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Growth:</h4>
-                      <p className="text-gray-700 leading-relaxed font-futura">
-                        Always raise the least experienced so no one is left behind, building a team whose floor exceeds others' ceiling through shared commitment.
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Mastery:</h4>
-                      <p className="text-gray-700 leading-relaxed font-futura">
-                        Always dig deep to master the craft, because excellence, not "good enough," is the foundation of sound judgment.
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Empathy:</h4>
-                      <p className="text-gray-700 leading-relaxed font-futura">
-                        Always lead with empathy, listening first and tailoring communication to each person's background and needs.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Leadership Approach & Style */}
-                <div className="bg-white p-8 rounded-2xl shadow-lg">
-                  <h3 className="text-xl font-bold text-slate-600 mb-4 font-futura">
-                    Leadership Approach & Style
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Allow mistakes for growth:</h4>
-                      <p className="text-gray-700 text-sm leading-relaxed font-futura">
-                        Let teammates learn by doing, even when the result isn't my preferred way.
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Prioritize people:</h4>
-                      <p className="text-gray-700 text-sm leading-relaxed font-futura">
-                        Dedicate my time to teammates first, placing their needs above competing demands.
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Seek effort over natural abilities:</h4>
-                      <p className="text-gray-700 text-sm leading-relaxed font-futura">
-                        Reward hard work, persistence, and steady improvement above natural talent.
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Invite bad news:</h4>
-                      <p className="text-gray-700 text-sm leading-relaxed font-futura">
-                        Ask first for what is going wrong and never punish honesty.
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Remove blockers:</h4>
-                      <p className="text-gray-700 text-sm leading-relaxed font-futura">
-                        Quickly clear obstacles so the team can keep moving.
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900 mb-2 font-futura">Value intentions:</h4>
-                      <p className="text-gray-700 text-sm leading-relaxed font-futura">
-                        Prioritize teammates with good intentions over those with bad intentions, regardless of their skills.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-
-
-        {/* Final section */}
-        <section className="py-12 bg-gray-50">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-4xl mx-auto text-center">
-              <div className="text-center text-gray-600 mb-4 font-futura">
-                Based in Columbus, Ohio
-              </div>
-              <div className="text-center text-gray-600 font-futura">
-                Ready for your next challenge
-              </div>
-            </div>
-          </div>
-        </section>
+        </div>
       </div>
     </div>
   );
