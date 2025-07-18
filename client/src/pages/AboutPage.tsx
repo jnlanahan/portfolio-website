@@ -251,6 +251,40 @@ const AboutPage = () => {
                   </div>
                 </div>
 
+                {/* South Korea Photo 1 - Group Photo */}
+                <div className="min-w-full snap-center relative">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/ROK1_1752809157456.jpg"
+                    alt="Nick Lanahan with team members in South Korea during military exercise"
+                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                      South Korea
+                    </h3>
+                    <p className="text-white/90 font-futura">
+                      I lived in South Korea for 3 years where I served as a Construction Program Manager and a Company Commander. I got to meet some great people (I even got to work with one of my old college buddys while I was there!).
+                    </p>
+                  </div>
+                </div>
+
+                {/* South Korea Photo 2 - NC State Flag */}
+                <div className="min-w-full snap-center relative">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/ROK2_1752809157456.jpg"
+                    alt="Nick Lanahan with college buddy holding NC State Wolfpack flag in South Korea"
+                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                      South Korea
+                    </h3>
+                    <p className="text-white/90 font-futura">
+                      I lived in South Korea for 3 years where I served as a Construction Program Manager and a Company Commander. I got to meet some great people (I even got to work with one of my old college buddys while I was there!).
+                    </p>
+                  </div>
+                </div>
+
                 {/* Family/Personal Photo */}
                 <div className="min-w-full snap-center relative">
                   <div className="min-h-[60vh] max-h-[80vh] bg-gray-200 flex items-center justify-center">
@@ -298,7 +332,7 @@ const AboutPage = () => {
 
               {/* Scroll Indicators */}
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                {[...Array(12)].map((_, i) => (
+                {[...Array(14)].map((_, i) => (
                   <div key={i} className="w-2 h-2 bg-white/50 rounded-full"></div>
                 ))}
               </div>
