@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Target, Users, Lightbulb, Camera, MapPin } from "lucide-react";
 
@@ -43,13 +42,170 @@ const AboutPage = () => {
                 <span className="text-gray-500 text-lg">Professional Photo</span>
               </div>
             </div>
-            
+
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-futura">
               Beyond the Resume
             </h1>
             <p className="text-lg text-gray-600 leading-relaxed font-futura">
               Here is a little information about me that goes beyond my resume and LinkedIn profile.
             </p>
+          </motion.div>
+        </div>
+      </section>
+
+       {/* Life in Pictures Carousel */}
+       <section className="py-12">
+        <div className="container mx-auto px-4 md:px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="max-w-6xl mx-auto"
+          >
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center font-futura">
+              Life in Pictures
+            </h2>
+
+            {/* Scrollable Image Container */}
+            <div className="relative bg-white rounded-2xl shadow-lg overflow-hidden group">
+              <div 
+                id="pictures-carousel"
+                className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                {/* Professional Photo */}
+                <div className="min-w-full snap-center relative">
+                  <div className="h-80 bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-500 text-lg">Professional Team Photo</span>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                      Leading Teams
+                    </h3>
+                    <p className="text-white/90 font-futura">
+                      Working with my team at EY
+                    </p>
+                  </div>
+                </div>
+
+                {/* Military Photo */}
+                <div className="min-w-full snap-center relative">
+                  <div className="h-80 bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-500 text-lg">Military Service Photo</span>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                      Military Leadership
+                    </h3>
+                    <p className="text-white/90 font-futura">
+                      8+ years serving in the U.S. Army
+                    </p>
+                  </div>
+                </div>
+
+                {/* Personal/Adventure Photo */}
+                <div className="min-w-full snap-center relative">
+                  <div className="h-80 bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-500 text-lg">Adventure/Hiking Photo</span>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                      Beyond Work
+                    </h3>
+                    <p className="text-white/90 font-futura">
+                      Exploring trails and recharging outdoors
+                    </p>
+                  </div>
+                </div>
+
+                {/* Travel Photo */}
+                <div className="min-w-full snap-center relative">
+                  <div className="h-80 bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-500 text-lg">Travel/Location Photo</span>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                      Journey Across States
+                    </h3>
+                    <p className="text-white/90 font-futura">
+                      From NC to Missouri to Ohio
+                    </p>
+                  </div>
+                </div>
+
+                {/* University Photo */}
+                <div className="min-w-full snap-center relative">
+                  <div className="h-80 bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-500 text-lg">University Photo</span>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                      Academic Journey
+                    </h3>
+                    <p className="text-white/90 font-futura">
+                      Engineering studies and continued learning
+                    </p>
+                  </div>
+                </div>
+
+                {/* Family/Personal Photo */}
+                <div className="min-w-full snap-center relative">
+                  <div className="h-80 bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-500 text-lg">Family/Personal Photo</span>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                      What Matters Most
+                    </h3>
+                    <p className="text-white/90 font-futura">
+                      Family and personal connections
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Navigation Arrows */}
+              <button
+                onClick={() => {
+                  const carousel = document.getElementById('pictures-carousel');
+                  if (carousel) {
+                    carousel.scrollBy({ left: -carousel.clientWidth, behavior: 'smooth' });
+                  }
+                }}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 z-10"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              <button
+                onClick={() => {
+                  const carousel = document.getElementById('pictures-carousel');
+                  if (carousel) {
+                    carousel.scrollBy({ left: carousel.clientWidth, behavior: 'smooth' });
+                  }
+                }}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 z-10"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+
+              {/* Scroll Indicators */}
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                {[...Array(6)].map((_, i) => (
+                  <div key={i} className="w-2 h-2 bg-white/50 rounded-full"></div>
+                ))}
+              </div>
+
+              {/* Instructions */}
+              <div className="absolute top-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-xs font-futura">
+                Click arrows or swipe to navigate
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -154,7 +310,7 @@ const AboutPage = () => {
             <h2 className="text-3xl font-bold text-gray-900 mb-8 font-futura">
               I am a...
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Critical Thinker */}
               <motion.div
@@ -279,163 +435,6 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Life in Pictures Carousel */}
-      <section className="py-12">
-        <div className="container mx-auto px-4 md:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="max-w-6xl mx-auto"
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center font-futura">
-              Life in Pictures
-            </h2>
-            
-            {/* Scrollable Image Container */}
-            <div className="relative bg-white rounded-2xl shadow-lg overflow-hidden group">
-              <div 
-                id="pictures-carousel"
-                className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
-                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-              >
-                {/* Professional Photo */}
-                <div className="min-w-full snap-center relative">
-                  <div className="h-80 bg-gray-200 flex items-center justify-center">
-                    <span className="text-gray-500 text-lg">Professional Team Photo</span>
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
-                      Leading Teams
-                    </h3>
-                    <p className="text-white/90 font-futura">
-                      Working with my team at EY
-                    </p>
-                  </div>
-                </div>
-
-                {/* Military Photo */}
-                <div className="min-w-full snap-center relative">
-                  <div className="h-80 bg-gray-200 flex items-center justify-center">
-                    <span className="text-gray-500 text-lg">Military Service Photo</span>
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
-                      Military Leadership
-                    </h3>
-                    <p className="text-white/90 font-futura">
-                      8+ years serving in the U.S. Army
-                    </p>
-                  </div>
-                </div>
-
-                {/* Personal/Adventure Photo */}
-                <div className="min-w-full snap-center relative">
-                  <div className="h-80 bg-gray-200 flex items-center justify-center">
-                    <span className="text-gray-500 text-lg">Adventure/Hiking Photo</span>
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
-                      Beyond Work
-                    </h3>
-                    <p className="text-white/90 font-futura">
-                      Exploring trails and recharging outdoors
-                    </p>
-                  </div>
-                </div>
-
-                {/* Travel Photo */}
-                <div className="min-w-full snap-center relative">
-                  <div className="h-80 bg-gray-200 flex items-center justify-center">
-                    <span className="text-gray-500 text-lg">Travel/Location Photo</span>
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
-                      Journey Across States
-                    </h3>
-                    <p className="text-white/90 font-futura">
-                      From NC to Missouri to Ohio
-                    </p>
-                  </div>
-                </div>
-
-                {/* University Photo */}
-                <div className="min-w-full snap-center relative">
-                  <div className="h-80 bg-gray-200 flex items-center justify-center">
-                    <span className="text-gray-500 text-lg">University Photo</span>
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
-                      Academic Journey
-                    </h3>
-                    <p className="text-white/90 font-futura">
-                      Engineering studies and continued learning
-                    </p>
-                  </div>
-                </div>
-
-                {/* Family/Personal Photo */}
-                <div className="min-w-full snap-center relative">
-                  <div className="h-80 bg-gray-200 flex items-center justify-center">
-                    <span className="text-gray-500 text-lg">Family/Personal Photo</span>
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
-                      What Matters Most
-                    </h3>
-                    <p className="text-white/90 font-futura">
-                      Family and personal connections
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Navigation Arrows */}
-              <button
-                onClick={() => {
-                  const carousel = document.getElementById('pictures-carousel');
-                  if (carousel) {
-                    carousel.scrollBy({ left: -carousel.clientWidth, behavior: 'smooth' });
-                  }
-                }}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 z-10"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              
-              <button
-                onClick={() => {
-                  const carousel = document.getElementById('pictures-carousel');
-                  if (carousel) {
-                    carousel.scrollBy({ left: carousel.clientWidth, behavior: 'smooth' });
-                  }
-                }}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 z-10"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-
-              {/* Scroll Indicators */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                {[...Array(6)].map((_, i) => (
-                  <div key={i} className="w-2 h-2 bg-white/50 rounded-full"></div>
-                ))}
-              </div>
-
-              {/* Instructions */}
-              <div className="absolute top-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-xs font-futura">
-                Click arrows or swipe to navigate
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* My Leadership Philosophy */}
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4 md:px-6">
@@ -444,81 +443,82 @@ const AboutPage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="max-w-3xl mx-auto text-center"
+            className="max-w-4xl mx-auto text-center grid grid-cols-1 md:grid-cols-3 gap-6"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-6 font-futura">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6 font-futura col-span-full">
               My Leadership Philosophy
             </h2>
-            
-            <div className="bg-white p-8 rounded-2xl shadow-lg">
-              <div className="mb-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-3 font-futura">Purpose</h3>
-                <p className="text-gray-600 leading-relaxed font-futura">
-                  Ensure every teammate leaves stronger, more confident, and better prepared for the next challenge.
+
+            {/* Purpose Tile */}
+            <div className="bg-white p-6 rounded-2xl shadow-lg">
+              <h3 className="text-xl font-bold text-gray-900 mb-3 font-futura">Purpose</h3>
+              <p className="text-gray-600 leading-relaxed font-futura">
+                Ensure every teammate leaves stronger, more confident, and better prepared for the next challenge.
+              </p>
+            </div>
+
+            {/* Values & Guiding Principles Tile */}
+            <div className="bg-white p-6 rounded-2xl shadow-lg">
+              <h3 className="text-xl font-bold text-gray-900 mb-3 font-futura">Values</h3>
+              <div className="space-y-3 text-left">
+                <div>
+                  <span className="font-semibold text-gray-900 font-futura">Integrity:</span>
+                  <span className="text-gray-600 font-futura"> Always choose what is right over what is easy.</span>
+                </div>
+                <div>
+                  <span className="font-semibold text-gray-900 font-futura">Growth:</span>
+                  <span className="text-gray-600 font-futura"> Always raise the least experienced so no one is left behind.</span>
+                </div>
+                <div>
+                  <span className="font-semibold text-gray-900 font-futura">Mastery:</span>
+                  <span className="text-gray-600 font-futura"> Always dig deep to master the craft.</span>
+                </div>
+                <div>
+                  <span className="font-semibold text-gray-900 font-futura">Empathy:</span>
+                  <span className="text-gray-600 font-futura"> Always lead with empathy, listening first.</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Leadership Approach & Style Tile */}
+            <div className="bg-white p-6 rounded-2xl shadow-lg">
+              <h3 className="text-xl font-bold text-gray-900 mb-3 font-futura">Approach</h3>
+              <div className="space-y-2 text-left">
+                <div>
+                  <span className="font-semibold text-gray-900 font-futura">Allow mistakes:</span>
+                  <span className="text-gray-600 font-futura"> Let teammates learn by doing.</span>
+                </div>
+                <div>
+                  <span className="font-semibold text-gray-900 font-futura">Prioritize people:</span>
+                  <span className="text-gray-600 font-futura"> Dedicate my time to teammates first.</span>
+                </div>
+                <div>
+                  <span className="font-semibold text-gray-900 font-futura">Seek effort:</span>
+                  <span className="text-gray-600 font-futura"> Reward hard work, persistence, and steady improvement.</span>
+                </div>
+                <div>
+                  <span className="font-semibold text-gray-900 font-futura">Invite bad news:</span>
+                  <span className="text-gray-600 font-futura"> Ask first for what is going wrong and never punish honesty.</span>
+                </div>
+                <div>
+                  <span className="font-semibold text-gray-900 font-futura">Remove blockers:</span>
+                  <span className="text-gray-600 font-futura"> Quickly clear obstacles so the team can keep moving.</span>
+                </div>
+                <div>
+                  <span className="font-semibold text-gray-900 font-futura">Value intentions:</span>
+                  <span className="text-gray-600 font-futura"> Prioritize teammates with good intentions.</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-span-full flex justify-center">
+              <div className="text-center">
+                <p className="text-sm text-gray-500 mb-1 font-futura">
+                  Based in Columbus, Ohio
                 </p>
-              </div>
-
-              <div className="mb-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-3 font-futura">Values & Guiding Principles</h3>
-                <div className="space-y-3">
-                  <div>
-                    <span className="font-semibold text-gray-900 font-futura">Integrity:</span>
-                    <span className="text-gray-600 font-futura"> Always choose what is right over what is easy, using every task as a learning opportunity and never cutting corners.</span>
-                  </div>
-                  <div>
-                    <span className="font-semibold text-gray-900 font-futura">Growth:</span>
-                    <span className="text-gray-600 font-futura"> Always raise the least experienced so no one is left behind, building a team whose floor exceeds others' ceiling through shared commitment.</span>
-                  </div>
-                  <div>
-                    <span className="font-semibold text-gray-900 font-futura">Mastery:</span>
-                    <span className="text-gray-600 font-futura"> Always dig deep to master the craft, because excellence, not "good enough," is the foundation of sound judgment.</span>
-                  </div>
-                  <div>
-                    <span className="font-semibold text-gray-900 font-futura">Empathy:</span>
-                    <span className="text-gray-600 font-futura"> Always lead with empathy, listening first and tailoring communication to each person's background and needs.</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mb-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-3 font-futura">Leadership Approach & Style</h3>
-                <div className="space-y-2">
-                  <div>
-                    <span className="font-semibold text-gray-900 font-futura">Allow mistakes for growth:</span>
-                    <span className="text-gray-600 font-futura"> Let teammates learn by doing, even when the result isn't my preferred way.</span>
-                  </div>
-                  <div>
-                    <span className="font-semibold text-gray-900 font-futura">Prioritize people:</span>
-                    <span className="text-gray-600 font-futura"> Dedicate my time to teammates first, placing their needs above competing demands.</span>
-                  </div>
-                  <div>
-                    <span className="font-semibold text-gray-900 font-futura">Seek effort over natural abilities:</span>
-                    <span className="text-gray-600 font-futura"> Reward hard work, persistence, and steady improvement above natural talent.</span>
-                  </div>
-                  <div>
-                    <span className="font-semibold text-gray-900 font-futura">Invite bad news:</span>
-                    <span className="text-gray-600 font-futura"> Ask first for what is going wrong and never punish honesty.</span>
-                  </div>
-                  <div>
-                    <span className="font-semibold text-gray-900 font-futura">Remove blockers:</span>
-                    <span className="text-gray-600 font-futura"> Quickly clear obstacles so the team can keep moving.</span>
-                  </div>
-                  <div>
-                    <span className="font-semibold text-gray-900 font-futura">Value intentions:</span>
-                    <span className="text-gray-600 font-futura"> Prioritize teammates with good intentions over those with bad intentions, regardless of their skills.</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex justify-center">
-                <div className="text-center">
-                  <p className="text-sm text-gray-500 mb-1 font-futura">
-                    Based in Columbus, Ohio
-                  </p>
-                  <p className="text-sm text-gray-500 font-futura">
-                    Ready for your next challenge
-                  </p>
-                </div>
+                <p className="text-sm text-gray-500 font-futura">
+                  Ready for your next challenge
+                </p>
               </div>
             </div>
           </motion.div>
