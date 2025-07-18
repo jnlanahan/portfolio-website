@@ -227,11 +227,28 @@ const AboutPage = () => {
                   </div>
                 </div>
 
-                {/* South Korea Photo 1 - Group Photo */}
+                {/* Company Commander Photo 4 - DMZ */}
                 <div className="min-w-full snap-center relative">
                   <img
-                    src="/@fs/home/runner/workspace/attached_assets/ROK1_1752809157456.jpg"
-                    alt="Nick Lanahan with team members in South Korea during military exercise"
+                    src="/@fs/home/runner/workspace/attached_assets/CDR2_1752809202464.jpg"
+                    alt="Nick Lanahan with his company at the DMZ in South Korea"
+                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                      My Soldiers!
+                    </h3>
+                    <p className="text-white/90 font-futura">
+                      These are photos of my Soldiers when I was a Company Commander. I got the privilege to lead 165+ soldiers in this role. It was the most satisfying job I have ever had because I woke up every day to lead this great group of people.
+                    </p>
+                  </div>
+                </div>
+
+                {/* South Korea Photo 1 - NC State Flag */}
+                <div className="min-w-full snap-center relative">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/ROKFC2_1752810334953.jpg"
+                    alt="Nick Lanahan with college buddy holding NC State Wolfpack flag in South Korea"
                     className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
@@ -244,11 +261,11 @@ const AboutPage = () => {
                   </div>
                 </div>
 
-                {/* South Korea Photo 2 - NC State Flag with New Image */}
+                {/* South Korea Photo 2 - Group Photo */}
                 <div className="min-w-full snap-center relative">
                   <img
-                    src="/@fs/home/runner/workspace/attached_assets/ROKFC2_1752810334953.jpg"
-                    alt="Nick Lanahan with college buddy holding NC State Wolfpack flag in South Korea"
+                    src="/@fs/home/runner/workspace/attached_assets/ROK1_1752809157456.jpg"
+                    alt="Nick Lanahan with team members in South Korea during military exercise"
                     className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
@@ -293,7 +310,7 @@ const AboutPage = () => {
 
               {/* Scroll Indicators */}
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                {[...Array(11)].map((_, i) => (
+                {[...Array(12)].map((_, i) => (
                   <div key={i} className="w-2 h-2 bg-white/50 rounded-full"></div>
                 ))}
               </div>
