@@ -44,13 +44,54 @@ const AboutPage = () => {
             className="text-center max-w-5xl mx-auto"
           >
             {/* Large Profile Photo */}
-            <div className="mb-8">
+            <div className="mb-8 relative">
               <div className="w-48 h-60 md:w-64 md:h-80 mx-auto mb-6 shadow-lg rounded-2xl overflow-hidden bg-white">
                 <img
                   src={professionalPhoto}
                   alt="Nick Lanahan - Professional Photo"
                   className="w-full h-full object-cover"
                 />
+              </div>
+              
+              {/* Handwritten-style annotation */}
+              <div className="absolute -right-4 md:-right-8 top-8 md:top-12 pointer-events-none">
+                {/* Curved arrow */}
+                <svg 
+                  width="80" 
+                  height="60" 
+                  viewBox="0 0 80 60" 
+                  className="transform rotate-12"
+                >
+                  <path
+                    d="M 10 50 Q 30 20 50 35 Q 60 40 65 35"
+                    stroke="#374151"
+                    strokeWidth="2"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeDasharray="2,2"
+                  />
+                  {/* Arrow head */}
+                  <path
+                    d="M 62 32 L 68 35 L 62 38"
+                    stroke="#374151"
+                    strokeWidth="2"
+                    fill="none"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                
+                {/* Handwritten text */}
+                <div 
+                  className="absolute -top-2 -left-16 md:-left-24 text-xs md:text-sm text-gray-600 transform -rotate-12 whitespace-nowrap"
+                  style={{
+                    fontFamily: 'Comic Sans MS, cursive, sans-serif',
+                    fontWeight: '400',
+                    letterSpacing: '0.5px'
+                  }}
+                >
+                  Ask me for the prompt I used<br />
+                  to generate this image in ChatGPT
+                </div>
               </div>
             </div>
 
