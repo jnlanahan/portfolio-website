@@ -44,8 +44,12 @@ const AboutPage = () => {
           >
             {/* Large Profile Photo */}
             <div className="mb-8">
-              <div className="w-48 h-48 md:w-64 md:h-64 bg-gray-200 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg">
-                <span className="text-gray-500 text-lg">Professional Photo</span>
+              <div className="w-48 h-48 md:w-64 md:h-64 rounded-full mx-auto mb-6 shadow-lg overflow-hidden">
+                <img
+                  src="/@fs/home/runner/workspace/attached_assets/professional-photo.jpg"
+                  alt="Nick Lanahan Professional Photo"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
 
