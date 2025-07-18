@@ -196,7 +196,7 @@ const AboutPage = () => {
                 {/* Company Commander Photo 4 - DMZ */}
                 <div className="min-w-full snap-center relative">
                   <img
-                    src="/@fs/home/runner/workspace/attached_assets/CDR2_1752809202464.jpg"
+                    src="/@fs/home/runner/workspace/attached_assets/DMZ Soldiers_1752810675853.jpg"
                     alt="Nick Lanahan with his company at the DMZ in South Korea"
                     className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
                   />
