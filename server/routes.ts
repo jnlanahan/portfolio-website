@@ -81,10 +81,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const uploadsDir = path.join(process.cwd(), 'uploads', 'projects');
   const resumeUploadsDir = path.join(process.cwd(), 'uploads', 'resumes');
   const chatbotUploadsDir = path.join(process.cwd(), 'uploads', 'chatbot');
+  const carouselUploadsDir = path.join(process.cwd(), 'uploads', 'carousel');
   try {
     await fs.mkdir(uploadsDir, { recursive: true });
     await fs.mkdir(resumeUploadsDir, { recursive: true });
     await fs.mkdir(chatbotUploadsDir, { recursive: true });
+    await fs.mkdir(carouselUploadsDir, { recursive: true });
   } catch (error) {
     console.error('Error creating uploads directory:', error);
   }
@@ -196,6 +198,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
         cb(null, true);
       } else {
         cb(new Error('Invalid file type. Only PDF, Word, text, and markdown files are allowed.'));
+      }
+    }
+  });
+
+  // Carousel upload configuration
+  const carouselUpload = multer({
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, carouselUploadsDir);
+      },
+      filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const ext = path.extname(file.originalname);
+        cb(null, `carousel-${uniqueSuffix}${ext}`);
+      }
+    }),
+    limits: {
+      fileSize: 10 * 1024 * 1024, // 10MB limit for carousel images
+    },
+    fileFilter: (req, file, cb) => {
+      // Accept images only
+      const allowedMimes = [
+        'image/jpeg',
+        'image/jpg', 
+        'image/png',
+        'image/gif',
+        'image/webp'
+      ];
+      
+      if (allowedMimes.includes(file.mimetype)) {
+        cb(null, true);
+      } else {
+        cb(new Error('Invalid file type. Only images are allowed.'));
       }
     }
   });
@@ -2649,7 +2684,7 @@ AVAILABLE DOCUMENT TYPES:
   });
 
   // Create new carousel image (admin only)
-  app.post("/api/carousel-images", requireAdmin, upload.single('image'), async (req, res) => {
+  app.post("/api/carousel-images", requireAdmin, carouselUpload.single('image'), async (req, res) => {
     try {
       const { title, caption, altText, position, isVisible } = req.body;
       
@@ -2660,7 +2695,7 @@ AVAILABLE DOCUMENT TYPES:
       const imageData = {
         title,
         caption,
-        imagePath: `/uploads/${req.file.filename}`,
+        imagePath: `/uploads/carousel/${req.file.filename}`,
         altText,
         position: position ? parseInt(position) : 0,
         isVisible: isVisible === 'true' || isVisible === true
@@ -2682,7 +2717,7 @@ AVAILABLE DOCUMENT TYPES:
   });
 
   // Update carousel image (admin only)
-  app.put("/api/carousel-images/:id", requireAdmin, upload.single('image'), async (req, res) => {
+  app.put("/api/carousel-images/:id", requireAdmin, carouselUpload.single('image'), async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const { title, caption, altText, position, isVisible } = req.body;
@@ -2697,7 +2732,7 @@ AVAILABLE DOCUMENT TYPES:
 
       // If new image file is provided, update the image path
       if (req.file) {
-        updateData.imagePath = `/uploads/${req.file.filename}`;
+        updateData.imagePath = `/uploads/carousel/${req.file.filename}`;
       }
 
       // Remove undefined values
