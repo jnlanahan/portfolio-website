@@ -253,7 +253,13 @@ export default function AdminCarouselPage() {
               {isEditing ? "Edit Carousel Image" : "Add New Carousel Image"}
             </h2>
             
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={(e) => {
+              console.log("Form submit event triggered");
+              console.log("Form errors:", form.formState.errors);
+              console.log("Form values:", form.getValues());
+              console.log("Form is valid:", form.formState.isValid);
+              form.handleSubmit(onSubmit)(e);
+            }} className="space-y-4">
               <div>
                 <Label htmlFor="image">Image File</Label>
                 <Input
@@ -328,6 +334,11 @@ export default function AdminCarouselPage() {
                 <Button
                   type="submit"
                   disabled={createMutation.isPending || updateMutation.isPending}
+                  onClick={(e) => {
+                    console.log("Button clicked!");
+                    console.log("Button type:", e.currentTarget.type);
+                    console.log("Button disabled:", createMutation.isPending || updateMutation.isPending);
+                  }}
                 >
                   {createMutation.isPending || updateMutation.isPending ? (
                     "Saving..."
