@@ -451,12 +451,65 @@ const AboutPage = () => {
             </h2>
             
             <div className="bg-white p-8 rounded-2xl shadow-lg">
-              <blockquote className="text-lg text-gray-700 italic mb-6 font-futura">
-                "Leadership is not about being in charge. It's about taking care of those in your charge."
-              </blockquote>
-              <p className="text-gray-600 leading-relaxed mb-6 font-futura">
-                This principle, learned through military service and refined in corporate environments, drives how I approach every challenge. Whether leading a team through complex transformations or solving technical problems, I focus on empowering others and delivering results that matter.
-              </p>
+              <div className="mb-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-3 font-futura">Purpose</h3>
+                <p className="text-gray-600 leading-relaxed font-futura">
+                  Ensure every teammate leaves stronger, more confident, and better prepared for the next challenge.
+                </p>
+              </div>
+
+              <div className="mb-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-3 font-futura">Values & Guiding Principles</h3>
+                <div className="space-y-3">
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Integrity:</span>
+                    <span className="text-gray-600 font-futura"> Always choose what is right over what is easy, using every task as a learning opportunity and never cutting corners.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Growth:</span>
+                    <span className="text-gray-600 font-futura"> Always raise the least experienced so no one is left behind, building a team whose floor exceeds others' ceiling through shared commitment.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Mastery:</span>
+                    <span className="text-gray-600 font-futura"> Always dig deep to master the craft, because excellence, not "good enough," is the foundation of sound judgment.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Empathy:</span>
+                    <span className="text-gray-600 font-futura"> Always lead with empathy, listening first and tailoring communication to each person's background and needs.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-3 font-futura">Leadership Approach & Style</h3>
+                <div className="space-y-2">
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Allow mistakes for growth:</span>
+                    <span className="text-gray-600 font-futura"> Let teammates learn by doing, even when the result isn't my preferred way.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Prioritize people:</span>
+                    <span className="text-gray-600 font-futura"> Dedicate my time to teammates first, placing their needs above competing demands.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Seek effort over natural abilities:</span>
+                    <span className="text-gray-600 font-futura"> Reward hard work, persistence, and steady improvement above natural talent.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Invite bad news:</span>
+                    <span className="text-gray-600 font-futura"> Ask first for what is going wrong and never punish honesty.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Remove blockers:</span>
+                    <span className="text-gray-600 font-futura"> Quickly clear obstacles so the team can keep moving.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Value intentions:</span>
+                    <span className="text-gray-600 font-futura"> Prioritize teammates with good intentions over those with bad intentions, regardless of their skills.</span>
+                  </div>
+                </div>
+              </div>
+
               <div className="flex justify-center">
                 <div className="text-center">
                   <p className="text-sm text-gray-500 mb-1 font-futura">
