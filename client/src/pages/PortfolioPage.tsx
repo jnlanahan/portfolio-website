@@ -359,10 +359,7 @@ const PortfolioPage = () => {
           fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif',
           fontSize: '14px',
           lineHeight: '1.4'
-        }}>
-          Note: These applications showcase product strategy and problem-solving rather than traditional development skills. 
-          Built using modern AI development tools, IDEs, and LLMs to rapidly prototype and validate product concepts.
-        </p>
+        }}>Note: The software products on this page were developed with AI. I am not a full stack developer and have limited knowledge of coding.  However, I am excited to finally be able to get my ideas out there and share them with you!</p>
 
         {/* Tag filters */}
         <div className="flex flex-wrap justify-center gap-2 mt-8">
@@ -394,7 +391,6 @@ const PortfolioPage = () => {
           ))}
         </div>
       </motion.div>
-
       {/* Featured projects section */}
       {featuredProjects.length > 0 && !selectedTag && (
         <div className="mb-16">
@@ -408,7 +404,6 @@ const PortfolioPage = () => {
           </div>
         </div>
       )}
-
       {/* Projects grid */}
       <div className="mb-8">
         {selectedTag && (
@@ -427,7 +422,6 @@ const PortfolioPage = () => {
           ))}
         </div>
       </div>
-
       {/* Empty state */}
       {filteredProjects.length === 0 && selectedTag && (
         <div className="text-center py-12">
@@ -445,8 +439,6 @@ const PortfolioPage = () => {
           </button>
         </div>
       )}
-
-      
     </div>
   );
 };
