@@ -96,11 +96,11 @@ const AboutPage = () => {
                         className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
                         onError={(e) => { e.currentTarget.style.display = 'none'; }}
                       />
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-                        <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 md:p-6">
+                        <h3 className="font-bold text-white mb-1 md:mb-2 font-futura text-sm md:text-xl">
                           {image.title}
                         </h3>
-                        <p className="text-white/90 font-futura">
+                        <p className="text-white/90 font-futura text-xs md:text-base line-clamp-3 md:line-clamp-none">
                           {image.caption}
                         </p>
                       </div>
