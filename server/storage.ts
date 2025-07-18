@@ -13,8 +13,6 @@ import {
   type InsertAdmin,
   type Resume,
   type InsertResume,
-  type AboutMeContent,
-  type InsertAboutMeContent,
   type TopFiveList,
   type InsertTopFiveList,
   type TopFiveListItem,
@@ -82,11 +80,6 @@ export interface IStorage {
   // Resume methods
   getResume(): Promise<Resume | undefined>;
   saveResume(resume: InsertResume): Promise<Resume>;
-  
-  // About Me methods
-  getAboutMeContent(): Promise<AboutMeContent | undefined>;
-  saveAboutMeContent(content: InsertAboutMeContent): Promise<AboutMeContent>;
-  updateAboutMeContent(content: Partial<InsertAboutMeContent>): Promise<AboutMeContent>;
   
   // Lists methods
   getLists(): Promise<any[]>;
@@ -171,7 +164,6 @@ export class MemStorage implements IStorage {
   private blogPosts: Map<number, BlogPost>;
   private contactSubmissions: Map<number, ContactSubmission>;
   private resumeContent: Resume | undefined;
-  private aboutMeContent: Map<number, AboutMeContent>;
   
   private userId: number;
   private adminId: number;
@@ -186,7 +178,6 @@ export class MemStorage implements IStorage {
     this.blogPosts = new Map();
     this.contactSubmissions = new Map();
     this.resumeContent = undefined;
-    this.aboutMeContent = new Map();
     
     this.userId = 1;
     this.adminId = 1;
@@ -475,41 +466,6 @@ export class MemStorage implements IStorage {
     this.resumeContent = resume;
     console.log(`Updated resume content`);
     return resume;
-  }
-
-  // About Me methods
-  async getAboutMeContent(): Promise<AboutMeContent | undefined> {
-    return this.aboutMeContent.get(1);
-  }
-
-  async saveAboutMeContent(insertContent: InsertAboutMeContent): Promise<AboutMeContent> {
-    const contentId = 1; // Only one about me content
-    const content: AboutMeContent = {
-      id: contentId,
-      ...insertContent,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    this.aboutMeContent.set(contentId, content);
-    return content;
-  }
-
-  async updateAboutMeContent(updateData: Partial<InsertAboutMeContent>): Promise<AboutMeContent> {
-    const contentId = 1;
-    const existingContent = this.aboutMeContent.get(contentId);
-    
-    if (existingContent) {
-      const updatedContent: AboutMeContent = {
-        ...existingContent,
-        ...updateData,
-        updatedAt: new Date(),
-      };
-      this.aboutMeContent.set(contentId, updatedContent);
-      return updatedContent;
-    } else {
-      // Create new content if none exists
-      return this.saveAboutMeContent(updateData as InsertAboutMeContent);
-    }
   }
 
   // Lists methods
@@ -886,52 +842,6 @@ export class DatabaseStorage implements IStorage {
     
     console.log(`Updated resume content`);
     return resume;
-  }
-
-  // About Me methods
-  async getAboutMeContent(): Promise<AboutMeContent | undefined> {
-    const { db } = await import('./db');
-    const { aboutMeContent } = await import('@shared/schema');
-    
-    const [content] = await db.select().from(aboutMeContent).limit(1);
-    return content || undefined;
-  }
-
-  async saveAboutMeContent(insertContent: InsertAboutMeContent): Promise<AboutMeContent> {
-    const { db } = await import('./db');
-    const { aboutMeContent } = await import('@shared/schema');
-    
-    // Delete existing content and insert new one
-    await db.delete(aboutMeContent);
-    const [content] = await db.insert(aboutMeContent).values(insertContent).returning();
-    
-    console.log(`Saved About Me content`);
-    return content;
-  }
-
-  async updateAboutMeContent(updateData: Partial<InsertAboutMeContent>): Promise<AboutMeContent> {
-    const { db } = await import('./db');
-    const { aboutMeContent } = await import('@shared/schema');
-    const { eq } = await import('drizzle-orm');
-    
-    // First, try to get existing content
-    const existingContent = await this.getAboutMeContent();
-    
-    if (existingContent) {
-      // Update existing content
-      const [content] = await db.update(aboutMeContent)
-        .set({ ...updateData, updatedAt: new Date() })
-        .where(eq(aboutMeContent.id, existingContent.id))
-        .returning();
-      
-      console.log(`Updated About Me content`);
-      return content;
-    } else {
-      // Create new content if none exists
-      const [content] = await db.insert(aboutMeContent).values(updateData).returning();
-      console.log(`Created About Me content`);
-      return content;
-    }
   }
 
   // Lists methods

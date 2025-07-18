@@ -174,27 +174,6 @@ export const insertResumeSchema = createInsertSchema(resumeContent).omit({
 export type InsertResume = z.infer<typeof insertResumeSchema>;
 export type Resume = typeof resumeContent.$inferSelect;
 
-// About Me content model - simplified to only editable content
-export const aboutMeContent = pgTable("about_me_content", {
-  id: serial("id").primaryKey(),
-  heroImage: text("hero_image"), // URL or path to hero image
-  lifePicturesTitle: text("life_pictures_title").notNull().default("Life in Pictures"),
-  lifePicturesImage: text("life_pictures_image"), // URL or path to life pictures image
-  lifePicturesCaption: text("life_pictures_caption").notNull().default("Leading Teams"),
-  lifePicturesDescription: text("life_pictures_description").notNull().default("Working with my team at EY"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
-
-export const insertAboutMeContentSchema = createInsertSchema(aboutMeContent).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-export type InsertAboutMeContent = z.infer<typeof insertAboutMeContentSchema>;
-export type AboutMeContent = typeof aboutMeContent.$inferSelect;
-
 // Top 5 Lists model
 export const topFiveLists = pgTable("top_five_lists", {
   id: serial("id").primaryKey(),

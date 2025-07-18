@@ -415,7 +415,7 @@ export default function FloatingChatbot() {
                 </Button>
               </div>
               <p className="text-xs text-gray-500 mt-2">
-                ⚠️ <strong>AI-powered responses</strong> - please verify important details directly with Nick.
+                💡 <strong>I know Nick extensively</strong> - trained on his complete professional background, skills, and experience.
               </p>
             </div>
           </Card>
