@@ -148,14 +148,7 @@ const AboutPage = () => {
                 </svg>
               </button>
 
-              {/* Scroll Indicators - Dynamic count based on actual images */}
-              {carouselImages.length > 0 && (
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                  {carouselImages.map((_, i) => (
-                    <div key={i} className="w-2 h-2 bg-white/50 rounded-full"></div>
-                  ))}
-                </div>
-              )}
+
 
               {/* Instructions */}
               <div className="absolute top-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-xs font-futura">
