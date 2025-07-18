@@ -458,7 +458,7 @@ const HomePage = () => {
           
           <HomeTile
             title="Projects"
-            description="See my side projects"
+            description="See what I have been working on"
             icon="ri-briefcase-line"
             linkTo="/portfolio"
             delay={0.6}
@@ -467,8 +467,8 @@ const HomePage = () => {
           />
           
           <HomeTile
-            title="Blog"
-            description="Read my thoughts"
+            title="My Writing"
+            description="Read what I have written"
             icon="ri-article-line"
             linkTo="/blog"
             delay={0.7}
