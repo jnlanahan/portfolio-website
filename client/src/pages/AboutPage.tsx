@@ -68,7 +68,7 @@ const AboutPage = () => {
               My <span className="text-slate-600">Passions</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto font-futura">
-              Three principles that guide everything I do
+              I'm driven by three things that keep me moving forward in my career.
             </p>
           </motion.div>
 
