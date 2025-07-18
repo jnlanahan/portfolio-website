@@ -74,7 +74,7 @@ const AboutPage = () => {
                 className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
-                {/* Commissioning Photo 1 - Speaking at podium */}
+                {/* Commissioning Photo - Speaking at podium */}
                 <div className="min-w-full snap-center relative">
                   <img
                     src="/@fs/home/runner/workspace/attached_assets/NC State 1_1752808224603.jpg"
@@ -86,41 +86,7 @@ const AboutPage = () => {
                       Where it all started
                     </h3>
                     <p className="text-white/90 font-futura">
-                      These photos are from the day I commissioned as an Engineer Officer in the U.S. Army and received my degree in Civil Engineering. This was the first day of my first career.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Commissioning Photo 2 - Taking oath */}
-                <div className="min-w-full snap-center relative">
-                  <img
-                    src="/@fs/home/runner/workspace/attached_assets/NC state 2_1752808224603.jpg"
-                    alt="Nick Lanahan taking his commissioning oath"
-                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
-                      Where it all started
-                    </h3>
-                    <p className="text-white/90 font-futura">
-                      These photos are from the day I commissioned as an Engineer Officer in the U.S. Army and received my degree in Civil Engineering. This was the first day of my first career.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Commissioning Photo 3 - Formal commissioning ceremony */}
-                <div className="min-w-full snap-center relative">
-                  <img
-                    src="/@fs/home/runner/workspace/attached_assets/NC State 3_1752808224604.jpg"
-                    alt="Nick Lanahan formal commissioning ceremony"
-                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
-                      Where it all started
-                    </h3>
-                    <p className="text-white/90 font-futura">
-                      These photos are from the day I commissioned as an Engineer Officer in the U.S. Army and received my degree in Civil Engineering. This was the first day of my first career.
+                      This photo is from the day I commissioned as an Engineer Officer in the U.S. Army and received my degree in Civil Engineering. This was the first day of my first career.
                     </p>
                   </div>
                 </div>
@@ -310,7 +276,7 @@ const AboutPage = () => {
 
               {/* Scroll Indicators */}
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                {[...Array(12)].map((_, i) => (
+                {[...Array(10)].map((_, i) => (
                   <div key={i} className="w-2 h-2 bg-white/50 rounded-full"></div>
                 ))}
               </div>
