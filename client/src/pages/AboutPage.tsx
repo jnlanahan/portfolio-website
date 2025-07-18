@@ -54,25 +54,25 @@ const AboutPage = () => {
               </div>
               
               {/* Handwritten-style annotation */}
-              <div className="absolute -right-4 md:-right-8 top-8 md:top-12 pointer-events-none">
-                {/* Curved arrow */}
+              <div className="absolute -right-2 md:right-4 top-16 md:top-20 pointer-events-none">
+                {/* Curved arrow pointing to the image */}
                 <svg 
-                  width="80" 
-                  height="60" 
-                  viewBox="0 0 80 60" 
-                  className="transform rotate-12"
+                  width="100" 
+                  height="80" 
+                  viewBox="0 0 100 80" 
+                  className="transform rotate-6"
                 >
                   <path
-                    d="M 10 50 Q 30 20 50 35 Q 60 40 65 35"
+                    d="M 85 10 Q 60 25 40 35 Q 25 45 15 60"
                     stroke="#374151"
                     strokeWidth="2"
                     fill="none"
                     strokeLinecap="round"
                     strokeDasharray="2,2"
                   />
-                  {/* Arrow head */}
+                  {/* Arrow head pointing toward image */}
                   <path
-                    d="M 62 32 L 68 35 L 62 38"
+                    d="M 12 57 L 15 63 L 19 59"
                     stroke="#374151"
                     strokeWidth="2"
                     fill="none"
@@ -82,7 +82,7 @@ const AboutPage = () => {
                 
                 {/* Handwritten text */}
                 <div 
-                  className="absolute -top-2 -left-16 md:-left-24 text-xs md:text-sm text-gray-600 transform -rotate-12 whitespace-nowrap"
+                  className="absolute -top-4 -right-8 md:-right-12 text-xs md:text-sm text-gray-600 transform -rotate-6 whitespace-nowrap"
                   style={{
                     fontFamily: 'Comic Sans MS, cursive, sans-serif',
                     fontWeight: '400',
