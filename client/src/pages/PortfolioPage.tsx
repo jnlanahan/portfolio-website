@@ -446,20 +446,7 @@ const PortfolioPage = () => {
         </div>
       )}
 
-      {/* Call to action */}
-      <div className="bg-blue-50 border border-blue-200 rounded-xl p-8 mt-16 text-center">
-        <h2 className="text-2xl font-bold mb-4 text-gray-900" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>Let's work together</h2>
-        <p className="text-gray-600 mb-6 max-w-2xl mx-auto" style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}>
-          I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
-        </p>
-        <Link 
-          href="/contact" 
-          className="inline-block px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-          style={{ fontFamily: 'Work Sans, -apple-system, BlinkMacSystemFont, sans-serif' }}
-        >
-          Get in Touch
-        </Link>
-      </div>
+      
     </div>
   );
 };
