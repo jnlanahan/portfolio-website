@@ -151,8 +151,8 @@ export default function AdminDashboardPage() {
 
       {/* Dashboard Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Main Action Tiles */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        {/* Admin Dashboard Tiles - 2 Column, 4 Row Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {/* Resume Upload Tile */}
           <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#007AFF] transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
@@ -254,10 +254,7 @@ export default function AdminDashboardPage() {
               Manage Projects
             </Button>
           </div>
-        </div>
 
-        {/* Content Management */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {/* Blog Management */}
           <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#34C759] transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
