@@ -45,12 +45,16 @@ const AboutPage = () => {
           >
             {/* Large Profile Photo */}
             <div className="mb-8">
-              <div className="w-48 h-60 md:w-64 md:h-80 mx-auto mb-6 shadow-lg rounded-2xl overflow-hidden bg-white">
-                <img
-                  src={professionalPhoto}
-                  alt="Nick Lanahan - Professional Photo"
-                  className="w-full h-full object-cover"
-                />
+              <div className="relative w-48 h-60 md:w-64 md:h-80 mx-auto mb-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-200 to-slate-300 rounded-2xl blur-lg opacity-60 transform scale-105"></div>
+                <div className="relative shadow-xl rounded-2xl overflow-hidden bg-white ring-1 ring-slate-200">
+                  <img
+                    src={professionalPhoto}
+                    alt="Nick Lanahan - Professional Photo"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-slate-50/10"></div>
+                </div>
               </div>
             </div>
 
