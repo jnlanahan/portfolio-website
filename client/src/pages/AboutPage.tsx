@@ -224,7 +224,7 @@ const AboutPage = () => {
               Professional Certifications
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Certificate 1 */}
               <motion.div
                 variants={itemVariants}
@@ -344,6 +344,72 @@ const AboutPage = () => {
                   </p>
                   <a
                     href="https://maven.com/certificate/jHkWhBST"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-sm transition-colors"
+                  >
+                    View Certificate
+                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </motion.div>
+
+              {/* AI Certificate */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">🤖</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 font-futura">
+                    AI Certification
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4 font-futura">
+                    EY AI certification from Credly
+                  </p>
+                  <a
+                    href="https://www.credly.com/badges/3f4e473d-f350-406c-b6d0-d3c9c3e77a55/linked_in_profile"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-sm transition-colors"
+                  >
+                    View Certificate
+                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </motion.div>
+
+              {/* Blockchain Certificate */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.5 }}
+                className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">⛓️</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 font-futura">
+                    Blockchain Certification
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4 font-futura">
+                    EY Blockchain certification from Credly
+                  </p>
+                  <a
+                    href="https://www.credly.com/earner/earned/badge/219ce6d7-1317-419f-9ad7-bd3923d55587"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-sm transition-colors"
