@@ -100,7 +100,7 @@ const AboutPage = () => {
                         <h3 className="font-bold text-white mb-1 md:mb-2 font-futura text-sm md:text-xl">
                           {image.title}
                         </h3>
-                        <p className="text-white/90 font-futura text-xs md:text-base line-clamp-3 md:line-clamp-none">
+                        <p className="text-white/90 font-futura text-xs md:text-base line-clamp-5 md:line-clamp-none">
                           {image.caption}
                         </p>
                       </div>
