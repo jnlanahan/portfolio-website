@@ -225,7 +225,7 @@ const AboutPage = () => {
             </h2>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-              {/* Maven Certificate 1 */}
+              {/* Maven Certificate 1 - Advanced Excel */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
@@ -236,11 +236,11 @@ const AboutPage = () => {
                 <div className="text-center">
                   <iframe
                     src="https://maven.com/certificate/isKysWak"
-                    className="w-full h-24 rounded-lg mb-2 border"
+                    className="w-full h-20 rounded-lg mb-2 border"
                     style={{ pointerEvents: 'none' }}
                   />
-                  <h3 className="text-sm font-bold text-gray-900 mb-1 font-futura line-clamp-2">
-                    Maven Analytics Certificate
+                  <h3 className="text-xs font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    Advanced Excel
                   </h3>
                   <a
                     href="https://maven.com/certificate/isKysWak"
@@ -256,7 +256,7 @@ const AboutPage = () => {
                 </div>
               </motion.div>
 
-              {/* Maven Certificate 2 */}
+              {/* Maven Certificate 2 - Power BI */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
@@ -268,11 +268,11 @@ const AboutPage = () => {
                 <div className="text-center">
                   <iframe
                     src="https://maven.com/certificate/YBSOUklu"
-                    className="w-full h-24 rounded-lg mb-2 border"
+                    className="w-full h-20 rounded-lg mb-2 border"
                     style={{ pointerEvents: 'none' }}
                   />
-                  <h3 className="text-sm font-bold text-gray-900 mb-1 font-futura line-clamp-2">
-                    Maven Analytics Certificate
+                  <h3 className="text-xs font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    Power BI Desktop
                   </h3>
                   <a
                     href="https://maven.com/certificate/YBSOUklu"
@@ -288,7 +288,7 @@ const AboutPage = () => {
                 </div>
               </motion.div>
 
-              {/* Maven Certificate 3 */}
+              {/* Maven Certificate 3 - MySQL */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
@@ -300,11 +300,11 @@ const AboutPage = () => {
                 <div className="text-center">
                   <iframe
                     src="https://maven.com/certificate/gtpKvnRC"
-                    className="w-full h-24 rounded-lg mb-2 border"
+                    className="w-full h-20 rounded-lg mb-2 border"
                     style={{ pointerEvents: 'none' }}
                   />
-                  <h3 className="text-sm font-bold text-gray-900 mb-1 font-futura line-clamp-2">
-                    Maven Analytics Certificate
+                  <h3 className="text-xs font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    MySQL Data Analysis
                   </h3>
                   <a
                     href="https://maven.com/certificate/gtpKvnRC"
@@ -320,7 +320,7 @@ const AboutPage = () => {
                 </div>
               </motion.div>
 
-              {/* Maven Certificate 4 */}
+              {/* Maven Certificate 4 - Python */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
@@ -332,11 +332,11 @@ const AboutPage = () => {
                 <div className="text-center">
                   <iframe
                     src="https://maven.com/certificate/jHkWhBST"
-                    className="w-full h-24 rounded-lg mb-2 border"
+                    className="w-full h-20 rounded-lg mb-2 border"
                     style={{ pointerEvents: 'none' }}
                   />
-                  <h3 className="text-sm font-bold text-gray-900 mb-1 font-futura line-clamp-2">
-                    Maven Analytics Certificate
+                  <h3 className="text-xs font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    Python Fundamentals
                   </h3>
                   <a
                     href="https://maven.com/certificate/jHkWhBST"
@@ -363,11 +363,11 @@ const AboutPage = () => {
               >
                 <div className="text-center">
                   <img
-                    src="/attached_assets/AI Badge_1752806308560.jpg"
+                    src="/@fs/home/runner/workspace/attached_assets/AI Badge_1752806308560.jpg"
                     alt="AI Certification Badge"
-                    className="w-full h-24 object-cover rounded-lg mb-2"
+                    className="w-full h-20 object-contain rounded-lg mb-2"
                   />
-                  <h3 className="text-sm font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                  <h3 className="text-xs font-bold text-gray-900 mb-1 font-futura line-clamp-2">
                     EY AI Certification
                   </h3>
                   <a
@@ -395,11 +395,11 @@ const AboutPage = () => {
               >
                 <div className="text-center">
                   <img
-                    src="/attached_assets/Blockchain Badge_1752806308560.jpg"
+                    src="/@fs/home/runner/workspace/attached_assets/Blockchain Badge_1752806308560.jpg"
                     alt="Blockchain Certification Badge"
-                    className="w-full h-24 object-cover rounded-lg mb-2"
+                    className="w-full h-20 object-contain rounded-lg mb-2"
                   />
-                  <h3 className="text-sm font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                  <h3 className="text-xs font-bold text-gray-900 mb-1 font-futura line-clamp-2">
                     EY Blockchain Certification
                   </h3>
                   <a
