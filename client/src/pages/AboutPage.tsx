@@ -155,8 +155,8 @@ const AboutPage = () => {
               I am a...
             </h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Military to Corporate */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Critical Thinker */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
@@ -165,14 +165,17 @@ const AboutPage = () => {
                 className="bg-white p-6 rounded-2xl shadow-lg"
               >
                 <div className="text-2xl font-bold text-slate-600 mb-2 font-futura">
-                  Military → Corporate
+                  Critical Thinker
                 </div>
-                <p className="text-gray-600 text-sm font-futura">
-                  Unique perspective bridging military discipline with corporate innovation
+                <p className="text-gray-600 text-sm font-futura mb-2">
+                  20+ years solving unique, one of a kind challenges as an Army Officer, consultant, and engineer.
+                </p>
+                <p className="text-gray-600 text-sm font-futura font-semibold">
+                  No problem is too big.
                 </p>
               </motion.div>
 
-              {/* Cross-functional Experience */}
+              {/* Decision Maker */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
@@ -182,14 +185,17 @@ const AboutPage = () => {
                 className="bg-white p-6 rounded-2xl shadow-lg"
               >
                 <div className="text-2xl font-bold text-slate-600 mb-2 font-futura">
-                  Technical + Business
+                  Decision Maker
                 </div>
-                <p className="text-gray-600 text-sm font-futura">
-                  Engineering background with business strategy execution
+                <p className="text-gray-600 text-sm font-futura mb-2">
+                  Trained to make tough calls and set priorities even when the stakes are high. I have had to make decisions that affect not just me but others too.
+                </p>
+                <p className="text-gray-600 text-sm font-futura font-semibold">
+                  I am decisive.
                 </p>
               </motion.div>
 
-              {/* Results-Oriented */}
+              {/* Lifelong Learner */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
@@ -199,14 +205,17 @@ const AboutPage = () => {
                 className="bg-white p-6 rounded-2xl shadow-lg"
               >
                 <div className="text-2xl font-bold text-slate-600 mb-2 font-futura">
-                  Mission-First
+                  Lifelong Learner
                 </div>
-                <p className="text-gray-600 text-sm font-futura">
-                  Focused on outcomes that drive real business impact
+                <p className="text-gray-600 text-sm font-futura mb-2">
+                  I never aim to just get the job done. I want to master what I do. I dive in, get obsessed (in a good way), and keep learning the finer points as I go.
+                </p>
+                <p className="text-gray-600 text-sm font-futura font-semibold">
+                  Learning is always the goal.
                 </p>
               </motion.div>
 
-              {/* Cross-Functional Leader */}
+              {/* Driver of Change */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
@@ -216,10 +225,33 @@ const AboutPage = () => {
                 className="bg-white p-6 rounded-2xl shadow-lg"
               >
                 <div className="text-2xl font-bold text-slate-600 mb-2 font-futura">
-                  Cross-Functional Leader
+                  Driver of Change
                 </div>
-                <p className="text-gray-600 text-sm font-futura">
-                  My career has always involved working with experts from a variety of fields, whether leading soldiers or collaborating with product, design, and business teams. I know how to adapt my message and style for any audience, building strong partnerships and getting everyone aligned. Bringing people together is what I do best.
+                <p className="text-gray-600 text-sm font-futura mb-2">
+                  I have led and supported multiple large scale transformations in the Army and major financial services organizations. I know how to drive change from stakeholder communication and planning to managing resistance before it becomes a problem.
+                </p>
+                <p className="text-gray-600 text-sm font-futura font-semibold">
+                  Effective change is a team effort.
+                </p>
+              </motion.div>
+
+              {/* Communicator */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                className="bg-white p-6 rounded-2xl shadow-lg"
+              >
+                <div className="text-2xl font-bold text-slate-600 mb-2 font-futura">
+                  Communicator
+                </div>
+                <p className="text-gray-600 text-sm font-futura mb-2">
+                  I understand what effective communication requires and have trained others to identify its root causes when it fails. I have presented to executives at major banks and commanding generals in the Army, adapting my approach for every audience.
+                </p>
+                <p className="text-gray-600 text-sm font-futura font-semibold">
+                  All communication is not equal.
                 </p>
               </motion.div>
             </div>
