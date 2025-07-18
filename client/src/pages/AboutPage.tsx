@@ -234,6 +234,23 @@ const AboutPage = () => {
                   </div>
                 </div>
 
+                {/* Engineers Captain Career Course Photo */}
+                <div className="min-w-full snap-center relative">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/ECCC1_1752808814150.jpg"
+                    alt="Nick Lanahan with international students at Engineers Captain Career Course, Fort Leonard Wood"
+                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                      Back to School
+                    </h3>
+                    <p className="text-white/90 font-futura">
+                      One thing I love about the Army is the education never ends. This is me at the Engineers Captains Career Course where I learned to be a better leader and a better engineer. I was lucky to meet some great friends including two international students that I mentored!
+                    </p>
+                  </div>
+                </div>
+
                 {/* Family/Personal Photo */}
                 <div className="min-w-full snap-center relative">
                   <div className="min-h-[60vh] max-h-[80vh] bg-gray-200 flex items-center justify-center">
@@ -281,7 +298,7 @@ const AboutPage = () => {
 
               {/* Scroll Indicators */}
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                {[...Array(11)].map((_, i) => (
+                {[...Array(12)].map((_, i) => (
                   <div key={i} className="w-2 h-2 bg-white/50 rounded-full"></div>
                 ))}
               </div>
