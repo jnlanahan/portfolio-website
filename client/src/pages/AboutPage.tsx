@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
+import { Target, Users, Lightbulb, Camera, MapPin } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { Camera, MapPin, BookOpen, Users, Target, Lightbulb, Award } from "lucide-react";
 
 const AboutPage = () => {
   // Fetch carousel images
@@ -73,20 +73,22 @@ const AboutPage = () => {
               Life in Pictures
             </h2>
 
-            {/* Carousel Container */}
-            {isCarouselLoading ? (
-              <div className="relative bg-black rounded-2xl overflow-hidden shadow-2xl h-[60vh] md:h-[80vh] flex items-center justify-center">
-                <div className="text-white">Loading images...</div>
-              </div>
-            ) : carouselImages.length > 0 ? (
-              <div className="relative bg-black rounded-2xl overflow-hidden shadow-2xl group">
-                {/* Carousel Scroll Area */}
-                <div 
-                  id="pictures-carousel"
-                  className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide h-[60vh] md:h-[80vh]"
-                  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                >
-                  {carouselImages.map((image: any, index: number) => (
+            {/* Scrollable Image Container */}
+            <div className="relative bg-white rounded-2xl shadow-lg overflow-hidden group">
+              <div 
+                id="pictures-carousel"
+                className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                {isCarouselLoading ? (
+                  <div className="min-w-full snap-center relative flex items-center justify-center h-[60vh]">
+                    <div className="text-center">
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-600 mx-auto mb-4"></div>
+                      <p className="text-gray-600">Loading images...</p>
+                    </div>
+                  </div>
+                ) : carouselImages.length > 0 ? (
+                  carouselImages.map((image: any) => (
                     <div key={image.id} className="min-w-full snap-center relative">
                       <img
                         src={image.imagePath}
@@ -103,64 +105,172 @@ const AboutPage = () => {
                         </p>
                       </div>
                     </div>
-                  ))}
+                  ))
+                ) : (
+                  <div className="min-w-full snap-center relative flex items-center justify-center h-[60vh]">
+                    <div className="text-center">
+                      <Camera className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                      <p className="text-gray-600">No images available yet.</p>
+                      <p className="text-gray-500 text-sm mt-2">Check back soon for life in pictures!</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Company Commander Photo 1 - PT Formation */}
+                <div className="min-w-full snap-center relative">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/CDR1_1752809094087.jpg"
+                    alt="Nick Lanahan with his company of 165+ soldiers during PT formation"
+                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                      Company Command - PT Formation
+                    </h3>
+                    <p className="text-white/90 font-futura">
+                      This is my company during our morning PT formation. As a Company Commander, I got the privilege to lead 165+ soldiers. It was the most satisfying job I have ever had because I woke up every day to lead this great group of people.
+                    </p>
+                  </div>
                 </div>
 
-                {/* Navigation Arrows */}
-                <button
-                  onClick={() => {
-                    const carousel = document.getElementById('pictures-carousel');
-                    if (carousel) {
-                      carousel.scrollBy({ left: -carousel.clientWidth, behavior: 'smooth' });
-                    }
-                  }}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 z-10"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-
-                <button
-                  onClick={() => {
-                    const carousel = document.getElementById('pictures-carousel');
-                    if (carousel) {
-                      carousel.scrollBy({ left: carousel.clientWidth, behavior: 'smooth' });
-                    }
-                  }}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 z-10"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-
-                {/* Scroll Indicators - Dynamic count based on actual images */}
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                  {carouselImages.map((_: any, i: number) => (
-                    <div key={i} className="w-2 h-2 bg-white/50 rounded-full"></div>
-                  ))}
+                {/* Company Commander Photo 2 - DMZ Visit */}
+                <div className="min-w-full snap-center relative">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/Company Command_1752810172435.JPG"
+                    alt="Nick Lanahan with his company at the DMZ in South Korea"
+                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                      Company Command - DMZ Visit
+                    </h3>
+                    <p className="text-white/90 font-futura">
+                      Taking my soldiers to visit the DMZ in South Korea was an incredible experience. Being able to show them this historic location and explain its significance was one of the highlights of my command.
+                    </p>
+                  </div>
                 </div>
 
-                {/* Instructions */}
-                <div className="absolute top-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-xs font-futura">
-                  Click arrows or swipe to navigate
+                {/* Company Commander Photo 3 - Award Ceremony */}
+                <div className="min-w-full snap-center relative">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/CDR3_1752809202463.jpg"
+                    alt="Nick Lanahan with his company celebrating a unit achievement with trophy"
+                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                      Company Command - Award Ceremony
+                    </h3>
+                    <p className="text-white/90 font-futura">
+                      One of my proudest moments as a commander - celebrating with my soldiers after receiving a unit achievement award. Their hard work and dedication made moments like this possible.
+                    </p>
+                  </div>
+                </div>
+
+                {/* South Korea Photo 1 - NC State Flag */}
+                <div className="min-w-full snap-center relative">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/ROKFC2_1752810334953.jpg"
+                    alt="Nick Lanahan with college buddy holding NC State Wolfpack flag in South Korea"
+                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                      South Korea - NC State Pride
+                    </h3>
+                    <p className="text-white/90 font-futura">
+                      I lived in South Korea for 3 years where I served as a Construction Program Manager and a Company Commander. Here I am with one of my old college buddies showing our NC State pride - you can take the Wolf out of the Pack, but you can't take the Pack out of the Wolf!
+                    </p>
+                  </div>
+                </div>
+
+                {/* South Korea Photo 2 - Military Exercise */}
+                <div className="min-w-full snap-center relative">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/ROK1_1752809157456.jpg"
+                    alt="Nick Lanahan with team members in South Korea during military exercise"
+                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                      South Korea - Military Exercise
+                    </h3>
+                    <p className="text-white/90 font-futura">
+                      During a military exercise in South Korea with my team. These experiences taught me so much about working with international partners and adapting to different cultures while maintaining mission focus.
+                    </p>
+                  </div>
+                </div>
+
+                {/* South Korea Photo 3 - With College Buddy */}
+                <div className="min-w-full snap-center relative">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/ROKFC1_1752810852416.jpg"
+                    alt="Nick Lanahan with college buddy and team members in South Korea"
+                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                      South Korea
+                    </h3>
+                    <p className="text-white/90 font-futura">
+                      I lived in South Korea for 3 years where I served as a Construction Program Manager and a Company Commander. I got to meet some great people (I even got to work with one of my old college buddys while I was there!).
+                    </p>
+                  </div>
                 </div>
               </div>
-            ) : (
-              <div className="relative bg-gray-100 rounded-2xl overflow-hidden shadow-2xl h-[60vh] md:h-[80vh] flex items-center justify-center">
-                <div className="text-center text-gray-500">
-                  <Camera className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                  <p className="text-lg font-futura">No images uploaded yet</p>
-                  <p className="text-sm">Images will appear here once uploaded through the admin interface</p>
-                </div>
+
+              {/* Navigation Arrows */}
+              <button
+                onClick={() => {
+                  const carousel = document.getElementById('pictures-carousel');
+                  if (carousel) {
+                    carousel.scrollBy({ left: -carousel.clientWidth, behavior: 'smooth' });
+                  }
+                }}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 z-10"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              <button
+                onClick={() => {
+                  const carousel = document.getElementById('pictures-carousel');
+                  if (carousel) {
+                    carousel.scrollBy({ left: carousel.clientWidth, behavior: 'smooth' });
+                  }
+                }}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 z-10"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+
+              {/* Scroll Indicators - Dynamic count based on actual images */}
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                {[...Array(10)].map((_, i) => (
+                  <div key={i} className="w-2 h-2 bg-white/50 rounded-full"></div>
+                ))}
               </div>
-            )}
+
+              {/* Instructions */}
+              <div className="absolute top-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-xs font-futura">
+                Click arrows or swipe to navigate
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* How I Lead Section */}
+      {/* Professional Certifications Section */}
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4 md:px-6">
           <motion.div
@@ -171,69 +281,198 @@ const AboutPage = () => {
             className="max-w-6xl mx-auto"
           >
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center font-futura">
-              How I Lead
+              Professional Certifications
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              {/* AI Prototyping for Product Managers */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="text-center"
+                className="bg-white p-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Users className="h-8 w-8 text-slate-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 font-futura">
-                    People First
+                <div className="text-center">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/Screenshot 2025-07-17 223656_1752807833594.png"
+                    alt="AI Prototyping for Product Managers Certificate"
+                    className="w-full h-20 object-cover rounded-lg mb-2"
+                  />
+                  <h3 className="text-xs font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    AI Prototyping for Product Managers
                   </h3>
-                  <p className="text-gray-600 font-futura">
-                    I believe that investing in people is the most important thing a leader can do. When you take care of your team, they'll take care of the mission.
-                  </p>
+                  <a
+                    href="https://maven.com/certificate/isKysWak"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
+                  >
+                    View
+                    <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
                 </div>
               </motion.div>
 
+              {/* Advanced AI Product Leadership */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="text-center"
+                className="bg-white p-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Target className="h-8 w-8 text-slate-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 font-futura">
-                    Strategic Thinking
+                <div className="text-center">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/Screenshot 2025-07-17 223705_1752807833594.png"
+                    alt="Advanced AI Product Leadership Certificate"
+                    className="w-full h-20 object-cover rounded-lg mb-2"
+                  />
+                  <h3 className="text-xs font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    Advanced AI Product Leadership
                   </h3>
-                  <p className="text-gray-600 font-futura">
-                    I focus on understanding the bigger picture and how each decision connects to our long-term goals. Strategy without execution is just planning.
-                  </p>
+                  <a
+                    href="https://maven.com/certificate/YBSOUklu"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
+                  >
+                    View
+                    <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
                 </div>
               </motion.div>
 
+              {/* AI Product Management 101 */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="text-center"
+                className="bg-white p-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Lightbulb className="h-8 w-8 text-slate-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 font-futura">
-                    Innovation
+                <div className="text-center">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/Screenshot 2025-07-17 223712_1752807833595.png"
+                    alt="AI Product Management 101 Certificate"
+                    className="w-full h-20 object-cover rounded-lg mb-2"
+                  />
+                  <h3 className="text-xs font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    AI Product Management 101
                   </h3>
-                  <p className="text-gray-600 font-futura">
-                    I'm always looking for better ways to do things. Innovation comes from listening to your team and being willing to try new approaches.
-                  </p>
+                  <a
+                    href="https://maven.com/certificate/gtpKvnRC"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
+                  >
+                    View
+                    <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </motion.div>
+
+              {/* AI Product Management Bootcamp */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="bg-white p-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/Screenshot 2025-07-17 223720_1752807833595.png"
+                    alt="AI Product Management Bootcamp Certificate"
+                    className="w-full h-20 object-cover rounded-lg mb-2"
+                  />
+                  <h3 className="text-xs font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    AI Product Management Bootcamp
+                  </h3>
+                  <a
+                    href="https://maven.com/certificate/jHkWhBST"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
+                  >
+                    View
+                    <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </motion.div>
+
+              {/* EY AI Certification */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                className="bg-white p-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/AI Badge_1752806308560.jpg"
+                    alt="EY AI Certification Badge"
+                    className="w-full h-20 object-cover rounded-lg mb-2"
+                  />
+                  <h3 className="text-xs font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    EY AI Certification
+                  </h3>
+                  <a
+                    href="https://www.credly.com/badges/3f4e473d-f350-406c-b6d0-d3c9c3e77a55/linked_in_profile"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
+                  >
+                    View
+                    <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </motion.div>
+
+              {/* EY Blockchain Certification */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.5 }}
+                className="bg-white p-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/Blockchain Badge_1752806308560.jpg"
+                    alt="EY Blockchain Certification Badge"
+                    className="w-full h-20 object-cover rounded-lg mb-2"
+                  />
+                  <h3 className="text-xs font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    EY Blockchain Certification
+                  </h3>
+                  <a
+                    href="https://www.credly.com/earner/earned/badge/219ce6d7-1317-419f-9ad7-bd3923d55587"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
+                  >
+                    View
+                    <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
                 </div>
               </motion.div>
             </div>
@@ -249,80 +488,86 @@ const AboutPage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="max-w-6xl mx-auto"
+            className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center font-futura">
-              My Passions
+            <h2 className="text-3xl font-bold text-gray-900 mb-4 font-futura">
+              My <span className="text-slate-600">Passions</span>
             </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <motion.div
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="text-center"
-              >
-                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Users className="h-8 w-8 text-slate-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 font-futura">
-                    Leadership
-                  </h3>
-                  <p className="text-gray-600 font-futura">
-                    Building high-performing teams and developing future leaders through mentorship and creating opportunities for growth.
-                  </p>
-                </div>
-              </motion.div>
-
-              <motion.div
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="text-center"
-              >
-                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Target className="h-8 w-8 text-slate-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 font-futura">
-                    Strategy
-                  </h3>
-                  <p className="text-gray-600 font-futura">
-                    Creating long-term vision and turning complex challenges into actionable plans that drive meaningful business results.
-                  </p>
-                </div>
-              </motion.div>
-
-              <motion.div
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="text-center"
-              >
-                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Lightbulb className="h-8 w-8 text-slate-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 font-futura">
-                    Innovation
-                  </h3>
-                  <p className="text-gray-600 font-futura">
-                    Exploring emerging technologies and finding creative solutions to transform how we work and deliver value to customers.
-                  </p>
-                </div>
-              </motion.div>
-            </div>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto font-futura">
+              I'm driven by three things that keep me moving forward in my career.
+            </p>
           </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* Leadership */}
+            <motion.div
+              variants={itemVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            >
+              <div className="p-6">
+                <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-6 h-6 text-slate-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3 text-center font-futura">
+                  Leadership
+                </h3>
+                <p className="text-gray-600 text-center leading-relaxed font-futura">
+                  I'm passionate about leadership because I've lived it, taught it, and studied it. It's not about titles or rank. Leadership is about people. Taking care of them, learning from them, and developing them. I was not and am still not the best leader, but I try to get better, and I really care about the people I lead.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Strategy */}
+            <motion.div
+              variants={itemVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            >
+              <div className="p-6">
+                <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Target className="w-6 h-6 text-slate-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3 text-center font-futura">
+                  Strategy
+                </h3>
+                <p className="text-gray-600 text-center leading-relaxed font-futura">
+                  Strategy is misunderstood. I studied it in the military and business school, and I practice it in both places. You need those different views and a sense of the long history of that word to really understand it. I'm writing a series of articles now to share my perspective on strategy which can apply to both the military and the business world.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Innovation */}
+            <motion.div
+              variants={itemVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            >
+              <div className="p-6">
+                <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Lightbulb className="w-6 h-6 text-slate-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3 text-center font-futura">
+                  Innovation
+                </h3>
+                <p className="text-gray-600 text-center leading-relaxed font-futura">
+                  Innovation always pulls me in. I enjoy looking for better ways to do things, spotting new problems to solve, and trying ideas where they don't usually fit. I keep a running list of ideas, and with new vibe coding tools, I'm finally bringing some of them to life.
+                </p>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* What Sets Me Apart Section */}
+      {/* I am a... Section */}
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4 md:px-6">
           <motion.div
@@ -333,44 +578,126 @@ const AboutPage = () => {
             className="max-w-4xl mx-auto text-center"
           >
             <h2 className="text-3xl font-bold text-gray-900 mb-8 font-futura">
-              What Sets Me Apart
+              I am a...
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Critical Thinker */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="bg-white rounded-2xl p-8 shadow-lg"
+                className="bg-white p-6 rounded-2xl shadow-lg"
               >
-                <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Award className="h-8 w-8 text-slate-600" />
+                <div className="text-2xl font-bold text-slate-600 mb-2 font-futura">
+                  Critical Thinker
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4 font-futura">
-                  Military Leadership Experience
-                </h3>
-                <p className="text-gray-600 font-futura">
-                  Leading 165+ soldiers as a Company Commander taught me how to build trust, make decisions under pressure, and accomplish missions with limited resources.
+                <p className="text-gray-600 text-sm font-futura mb-2">
+                  20+ years solving unique, one of a kind challenges as an Army Officer, consultant, and engineer.
+                </p>
+                <p className="text-gray-600 text-sm font-futura font-semibold">
+                  No problem is too big.
                 </p>
               </motion.div>
 
+              {/* Decision Maker */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="bg-white rounded-2xl p-8 shadow-lg"
+                className="bg-white p-6 rounded-2xl shadow-lg"
               >
-                <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <MapPin className="h-8 w-8 text-slate-600" />
+                <div className="text-2xl font-bold text-slate-600 mb-2 font-futura">
+                  Decision Maker
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4 font-futura">
-                  Global Perspective
-                </h3>
-                <p className="text-gray-600 font-futura">
-                  Living and working in South Korea for 3 years gave me a deep appreciation for different cultures and how to lead diverse, international teams.
+                <p className="text-gray-600 text-sm font-futura mb-2">
+                  Trained to make tough calls and set priorities even when the stakes are high. I have had to make decisions that affect not just me but others too.
+                </p>
+                <p className="text-gray-600 text-sm font-futura font-semibold">
+                  I am decisive.
+                </p>
+              </motion.div>
+
+              {/* Lifelong Learner */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="bg-white p-6 rounded-2xl shadow-lg"
+              >
+                <div className="text-2xl font-bold text-slate-600 mb-2 font-futura">
+                  Lifelong Learner
+                </div>
+                <p className="text-gray-600 text-sm font-futura mb-2">
+                  I never aim to just get the job done. I want to master what I do. I dive in, get obsessed (in a good way), and keep learning the finer points as I go.
+                </p>
+                <p className="text-gray-600 text-sm font-futura font-semibold">
+                  Learning is always the goal.
+                </p>
+              </motion.div>
+
+              {/* Driver of Change */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="bg-white p-6 rounded-2xl shadow-lg"
+              >
+                <div className="text-2xl font-bold text-slate-600 mb-2 font-futura">
+                  Driver of Change
+                </div>
+                <p className="text-gray-600 text-sm font-futura mb-2">
+                  I have led and supported multiple large scale transformations in the Army and major financial services organizations. I know how to drive change from stakeholder communication and planning to managing resistance before it becomes a problem.
+                </p>
+                <p className="text-gray-600 text-sm font-futura font-semibold">
+                  Effective change is a team effort.
+                </p>
+              </motion.div>
+
+              {/* Communicator */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                className="bg-white p-6 rounded-2xl shadow-lg"
+              >
+                <div className="text-2xl font-bold text-slate-600 mb-2 font-futura">
+                  Communicator
+                </div>
+                <p className="text-gray-600 text-sm font-futura mb-2">
+                  I understand what effective communication requires and have trained others to identify its root causes when it fails. I have presented to executives at major banks and commanding generals in the Army, adapting my approach for every audience.
+                </p>
+                <p className="text-gray-600 text-sm font-futura font-semibold">
+                  All communication is not equal.
+                </p>
+              </motion.div>
+
+              {/* Cross-Functional Leader */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.5 }}
+                className="bg-white p-6 rounded-2xl shadow-lg"
+              >
+                <div className="text-2xl font-bold text-slate-600 mb-2 font-futura">
+                  Cross-Functional Leader
+                </div>
+                <p className="text-gray-600 text-sm font-futura mb-2">
+                  My career has always involved working with experts from every field, whether leading soldiers or collaborating with product, design, and business teams. I know how to adapt my message and style for any audience, building strong partnerships and getting everyone aligned.
+                </p>
+                <p className="text-gray-600 text-sm font-futura font-semibold">
+                  Bringing people together is what I do best.
                 </p>
               </motion.div>
             </div>
@@ -378,8 +705,8 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Professional Philosophy Section */}
-      <section className="py-12">
+      {/* My Leadership Philosophy */}
+      <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4 md:px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -389,17 +716,82 @@ const AboutPage = () => {
             className="max-w-4xl mx-auto text-center"
           >
             <h2 className="text-3xl font-bold text-gray-900 mb-8 font-futura">
-              My Professional Philosophy
+              My Leadership Philosophy
             </h2>
 
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
-              <blockquote className="text-lg text-gray-700 italic mb-6 font-futura">
-                "Success isn't just about what you accomplish, but about the people you develop and the positive impact you create along the way."
-              </blockquote>
-              
-              <p className="text-gray-600 font-futura leading-relaxed">
-                Throughout my career, I've learned that the best leaders are those who can balance strategic thinking with genuine care for their people. Whether I'm leading soldiers in the field or managing product teams in the corporate world, I focus on creating environments where everyone can do their best work while contributing to something bigger than themselves.
-              </p>
+            <div className="space-y-6">
+              {/* Purpose Tile */}
+              <div className="bg-white p-6 rounded-2xl shadow-lg">
+                <h3 className="text-xl font-bold text-gray-900 mb-3 font-futura">Purpose</h3>
+                <p className="text-gray-600 leading-relaxed font-futura">
+                  Ensure every teammate leaves stronger, more confident, and better prepared for the next challenge.
+                </p>
+              </div>
+
+              {/* Values & Guiding Principles Tile */}
+              <div className="bg-white p-6 rounded-2xl shadow-lg">
+                <h3 className="text-xl font-bold text-gray-900 mb-3 font-futura">Values</h3>
+                <div className="space-y-3 text-left">
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Integrity:</span>
+                    <span className="text-gray-600 font-futura"> Always choose what is right over what is easy.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Growth:</span>
+                    <span className="text-gray-600 font-futura"> Always raise the least experienced so no one is left behind.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Mastery:</span>
+                    <span className="text-gray-600 font-futura"> Always dig deep to master the craft.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Empathy:</span>
+                    <span className="text-gray-600 font-futura"> Always lead with empathy, listening first.</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Leadership Approach & Style Tile */}
+              <div className="bg-white p-6 rounded-2xl shadow-lg">
+                <h3 className="text-xl font-bold text-gray-900 mb-3 font-futura">Approach</h3>
+                <div className="space-y-2 text-left">
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Allow mistakes:</span>
+                    <span className="text-gray-600 font-futura"> Let teammates learn by doing.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Prioritize people:</span>
+                    <span className="text-gray-600 font-futura"> Dedicate my time to teammates first.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Seek effort:</span>
+                    <span className="text-gray-600 font-futura"> Reward hard work, persistence, and steady improvement.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Invite bad news:</span>
+                    <span className="text-gray-600 font-futura"> Ask first for what is going wrong and never punish honesty.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Remove blockers:</span>
+                    <span className="text-gray-600 font-futura"> Quickly clear obstacles so the team can keep moving.</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-900 font-futura">Value intentions:</span>
+                    <span className="text-gray-600 font-futura"> Prioritize teammates with good intentions.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center mt-8">
+              <div className="text-center">
+                <p className="text-sm text-gray-500 mb-1 font-futura">
+                  Based in Columbus, Ohio
+                </p>
+                <p className="text-sm text-gray-500 font-futura">
+                  Ready for your next challenge
+                </p>
+              </div>
             </div>
           </motion.div>
         </div>
