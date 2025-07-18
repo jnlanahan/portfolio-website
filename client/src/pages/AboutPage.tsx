@@ -235,7 +235,7 @@ const AboutPage = () => {
               >
                 <div className="text-center">
                   <img
-                    src="/@fs/home/runner/workspace/attached_assets/maven-ai-prototyping-cert.png"
+                    src="/@fs/home/runner/workspace/attached_assets/Screenshot 2025-07-17 223656_1752807833594.png"
                     alt="AI Prototyping for Product Managers Certificate"
                     className="w-full h-20 object-cover rounded-lg mb-2"
                   />
@@ -267,7 +267,7 @@ const AboutPage = () => {
               >
                 <div className="text-center">
                   <img
-                    src="/@fs/home/runner/workspace/attached_assets/maven-advanced-ai-leadership-cert.png"
+                    src="/@fs/home/runner/workspace/attached_assets/Screenshot 2025-07-17 223705_1752807833594.png"
                     alt="Advanced AI Product Leadership Certificate"
                     className="w-full h-20 object-cover rounded-lg mb-2"
                   />
@@ -299,7 +299,7 @@ const AboutPage = () => {
               >
                 <div className="text-center">
                   <img
-                    src="/@fs/home/runner/workspace/attached_assets/maven-ai-product-mgmt-101-cert.png"
+                    src="/@fs/home/runner/workspace/attached_assets/Screenshot 2025-07-17 223712_1752807833595.png"
                     alt="AI Product Management 101 Certificate"
                     className="w-full h-20 object-cover rounded-lg mb-2"
                   />
@@ -331,7 +331,7 @@ const AboutPage = () => {
               >
                 <div className="text-center">
                   <img
-                    src="/@fs/home/runner/workspace/attached_assets/maven-ai-product-bootcamp-cert.png"
+                    src="/@fs/home/runner/workspace/attached_assets/Screenshot 2025-07-17 223720_1752807833595.png"
                     alt="AI Product Management Bootcamp Certificate"
                     className="w-full h-20 object-cover rounded-lg mb-2"
                   />
