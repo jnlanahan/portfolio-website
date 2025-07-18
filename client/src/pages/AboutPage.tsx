@@ -254,6 +254,26 @@ const AboutPage = () => {
                   All communication is not equal.
                 </p>
               </motion.div>
+
+              {/* Cross-Functional Leader */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.5 }}
+                className="bg-white p-6 rounded-2xl shadow-lg"
+              >
+                <div className="text-2xl font-bold text-slate-600 mb-2 font-futura">
+                  Cross-Functional Leader
+                </div>
+                <p className="text-gray-600 text-sm font-futura mb-2">
+                  My career has always involved working with experts from every field, whether leading soldiers or collaborating with product, design, and business teams. I know how to adapt my message and style for any audience, building strong partnerships and getting everyone aligned.
+                </p>
+                <p className="text-gray-600 text-sm font-futura font-semibold">
+                  Bringing people together is what I do best.
+                </p>
+              </motion.div>
             </div>
           </motion.div>
         </div>
