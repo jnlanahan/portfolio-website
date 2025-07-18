@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Target, Users, Lightbulb, Camera, MapPin } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import professionalPhoto from "@assets/converted_image_1752855854290.jpg";
+import professionalPhoto from "@assets/AI Headshot_1752855950115.jpg";
 
 const AboutPage = () => {
   // Fetch carousel images
@@ -45,7 +45,7 @@ const AboutPage = () => {
           >
             {/* Large Profile Photo */}
             <div className="mb-8">
-              <div className="w-48 h-48 md:w-64 md:h-64 mx-auto mb-6 shadow-lg rounded-full overflow-hidden">
+              <div className="w-48 h-60 md:w-64 md:h-80 mx-auto mb-6 shadow-lg rounded-2xl overflow-hidden bg-white">
                 <img
                   src={professionalPhoto}
                   alt="Nick Lanahan - Professional Photo"
