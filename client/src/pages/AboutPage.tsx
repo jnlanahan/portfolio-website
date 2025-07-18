@@ -224,7 +224,7 @@ const AboutPage = () => {
               Professional Certifications
             </h2>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
               {/* Maven Certificate 1 - Advanced Excel */}
               <motion.div
                 variants={itemVariants}
@@ -352,13 +352,141 @@ const AboutPage = () => {
                 </div>
               </motion.div>
 
-              {/* AI Certificate */}
+              {/* Maven Certificate 5 - AI Prototyping for Product Managers */}
               <motion.div
                 variants={itemVariants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ delay: 0.4 }}
+                className="bg-white p-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/maven-ai-prototyping-cert.png"
+                    alt="AI Prototyping for Product Managers Certificate"
+                    className="w-full h-20 object-contain rounded-lg mb-2"
+                  />
+                  <h3 className="text-xs font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    AI Prototyping for Product Managers
+                  </h3>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
+                  >
+                    View
+                    <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </motion.div>
+
+              {/* Maven Certificate 6 - Advanced AI Product Leadership */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.5 }}
+                className="bg-white p-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/maven-advanced-ai-leadership-cert.png"
+                    alt="Advanced AI Product Leadership Certificate"
+                    className="w-full h-20 object-contain rounded-lg mb-2"
+                  />
+                  <h3 className="text-xs font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    Advanced AI Product Leadership
+                  </h3>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
+                  >
+                    View
+                    <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </motion.div>
+
+              {/* Maven Certificate 7 - AI Product Management 101 */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.6 }}
+                className="bg-white p-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/maven-ai-product-mgmt-101-cert.png"
+                    alt="AI Product Management 101 Certificate"
+                    className="w-full h-20 object-contain rounded-lg mb-2"
+                  />
+                  <h3 className="text-xs font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    AI Product Management 101
+                  </h3>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
+                  >
+                    View
+                    <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </motion.div>
+
+              {/* Maven Certificate 8 - AI Product Management Bootcamp */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.7 }}
+                className="bg-white p-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <img
+                    src="/@fs/home/runner/workspace/attached_assets/maven-ai-product-bootcamp-cert.png"
+                    alt="AI Product Management Bootcamp Certificate"
+                    className="w-full h-20 object-contain rounded-lg mb-2"
+                  />
+                  <h3 className="text-xs font-bold text-gray-900 mb-1 font-futura line-clamp-2">
+                    AI Product Management Bootcamp
+                  </h3>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
+                  >
+                    View
+                    <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </motion.div>
+
+              {/* AI Certificate */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.8 }}
                 className="bg-white p-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="text-center">
@@ -390,7 +518,7 @@ const AboutPage = () => {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ delay: 0.5 }}
+                transition={{ delay: 0.9 }}
                 className="bg-white p-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="text-center">
