@@ -238,11 +238,6 @@ export default function AdminDashboardPage() {
             </Button>
           </div>
 
-
-        </div>
-
-        {/* Additional Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {/* Project Management */}
           <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#007AFF] transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
@@ -259,7 +254,10 @@ export default function AdminDashboardPage() {
               Manage Projects
             </Button>
           </div>
+        </div>
 
+        {/* Content Management */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {/* Blog Management */}
           <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#34C759] transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
