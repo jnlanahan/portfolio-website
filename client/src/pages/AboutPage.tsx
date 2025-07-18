@@ -54,10 +54,10 @@ const AboutPage = () => {
               </div>
               
               {/* Handwritten-style annotation */}
-              <div className="absolute -right-4 md:right-0 top-8 md:top-12 pointer-events-none">
+              <div className="absolute -left-4 md:right-0 top-8 md:top-12 pointer-events-none">
                 {/* Handwritten text */}
                 <div 
-                  className="absolute -top-8 -right-4 md:-right-8 text-xs md:text-sm text-red-600 transform -rotate-6 whitespace-nowrap"
+                  className="absolute -top-8 -left-4 md:-right-8 text-xs md:text-sm text-red-600 transform -rotate-6 whitespace-nowrap"
                   style={{
                     fontFamily: 'Comic Sans MS, cursive, sans-serif',
                     fontWeight: '400',
