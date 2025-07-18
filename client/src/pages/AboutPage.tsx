@@ -76,7 +76,7 @@ const AboutPage = () => {
               >
                 {/* Professional Photo */}
                 <div className="min-w-full snap-center relative">
-                  <div className="h-80 bg-gray-200 flex items-center justify-center">
+                  <div className="min-h-[60vh] max-h-[80vh] bg-gray-200 flex items-center justify-center">
                     <span className="text-gray-500 text-lg">Professional Team Photo</span>
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
@@ -91,7 +91,7 @@ const AboutPage = () => {
 
                 {/* Military Photo */}
                 <div className="min-w-full snap-center relative">
-                  <div className="h-80 bg-gray-200 flex items-center justify-center">
+                  <div className="min-h-[60vh] max-h-[80vh] bg-gray-200 flex items-center justify-center">
                     <span className="text-gray-500 text-lg">Military Service Photo</span>
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
@@ -106,7 +106,7 @@ const AboutPage = () => {
 
                 {/* Personal/Adventure Photo */}
                 <div className="min-w-full snap-center relative">
-                  <div className="h-80 bg-gray-200 flex items-center justify-center">
+                  <div className="min-h-[60vh] max-h-[80vh] bg-gray-200 flex items-center justify-center">
                     <span className="text-gray-500 text-lg">Adventure/Hiking Photo</span>
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
@@ -121,7 +121,7 @@ const AboutPage = () => {
 
                 {/* Travel Photo */}
                 <div className="min-w-full snap-center relative">
-                  <div className="h-80 bg-gray-200 flex items-center justify-center">
+                  <div className="min-h-[60vh] max-h-[80vh] bg-gray-200 flex items-center justify-center">
                     <span className="text-gray-500 text-lg">Travel/Location Photo</span>
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
@@ -136,7 +136,7 @@ const AboutPage = () => {
 
                 {/* University Photo */}
                 <div className="min-w-full snap-center relative">
-                  <div className="h-80 bg-gray-200 flex items-center justify-center">
+                  <div className="min-h-[60vh] max-h-[80vh] bg-gray-200 flex items-center justify-center">
                     <span className="text-gray-500 text-lg">University Photo</span>
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
@@ -154,7 +154,7 @@ const AboutPage = () => {
                   <img
                     src="/@fs/home/runner/workspace/attached_assets/NC State 1_1752808224603.jpg"
                     alt="Nick Lanahan speaking at NC State commissioning ceremony"
-                    className="w-full h-80 object-cover"
+                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
                     <h3 className="font-bold text-white mb-2 font-futura text-xl">
@@ -171,7 +171,7 @@ const AboutPage = () => {
                   <img
                     src="/@fs/home/runner/workspace/attached_assets/NC state 2_1752808224603.jpg"
                     alt="Nick Lanahan taking his commissioning oath"
-                    className="w-full h-80 object-cover"
+                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
                     <h3 className="font-bold text-white mb-2 font-futura text-xl">
@@ -188,7 +188,7 @@ const AboutPage = () => {
                   <img
                     src="/@fs/home/runner/workspace/attached_assets/NC State 3_1752808224604.jpg"
                     alt="Nick Lanahan formal commissioning ceremony"
-                    className="w-full h-80 object-cover"
+                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
                     <h3 className="font-bold text-white mb-2 font-futura text-xl">
@@ -202,7 +202,7 @@ const AboutPage = () => {
 
                 {/* Family/Personal Photo */}
                 <div className="min-w-full snap-center relative">
-                  <div className="h-80 bg-gray-200 flex items-center justify-center">
+                  <div className="min-h-[60vh] max-h-[80vh] bg-gray-200 flex items-center justify-center">
                     <span className="text-gray-500 text-lg">Family/Personal Photo</span>
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
