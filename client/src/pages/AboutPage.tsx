@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
 import { Target, Users, Lightbulb, Camera, MapPin } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 
 const AboutPage = () => {
+  // Fetch carousel images
+  const { data: carouselImages = [], isLoading: isCarouselLoading } = useQuery({
+    queryKey: ["/api/carousel-images"],
+  });
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -74,77 +80,41 @@ const AboutPage = () => {
                 className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
-                {/* Commissioning Photo - Speaking at podium */}
-                <div className="min-w-full snap-center relative">
-                  <img
-                    src="/@fs/home/runner/workspace/attached_assets/NC State 1_1752808224603.jpg"
-                    alt="Nick Lanahan speaking at NC State commissioning ceremony"
-                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
-                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
-                      Where it all started
-                    </h3>
-                    <p className="text-white/90 font-futura">
-                      This photo is from the day I commissioned as an Engineer Officer in the U.S. Army and received my degree in Civil Engineering. This was the first day of my first career.
-                    </p>
+                {isCarouselLoading ? (
+                  <div className="min-w-full snap-center relative flex items-center justify-center h-[60vh]">
+                    <div className="text-center">
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-600 mx-auto mb-4"></div>
+                      <p className="text-gray-600">Loading images...</p>
+                    </div>
                   </div>
-                </div>
-
-                {/* Top Gun Photo - Bradley Fighting Vehicle */}
-                <div className="min-w-full snap-center relative">
-                  <img
-                    src="/@fs/home/runner/workspace/attached_assets/PL1_1752808536164.jpg"
-                    alt="Nick Lanahan with Bradley Fighting Vehicle showing NC State pride and Top Gun achievement"
-                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
-                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
-                      Top Gun
-                    </h3>
-                    <p className="text-white/90 font-futura">
-                      This is me in front of my Bradley Fighting Vehicle. I was a Platoon Leader of a Combat Engineer Platoon of 30+ soldiers. I'm still obsessed with NC State. My crew earned Top Gun this year.
-                    </p>
+                ) : carouselImages.length > 0 ? (
+                  carouselImages.map((image: any) => (
+                    <div key={image.id} className="min-w-full snap-center relative">
+                      <img
+                        src={image.imagePath}
+                        alt={image.altText}
+                        className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
+                        onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                        <h3 className="font-bold text-white mb-2 font-futura text-xl">
+                          {image.title}
+                        </h3>
+                        <p className="text-white/90 font-futura">
+                          {image.caption}
+                        </p>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="min-w-full snap-center relative flex items-center justify-center h-[60vh]">
+                    <div className="text-center">
+                      <Camera className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                      <p className="text-gray-600">No images available yet.</p>
+                      <p className="text-gray-500 text-sm mt-2">Check back soon for life in pictures!</p>
+                    </div>
                   </div>
-                </div>
-
-                {/* Corps of Engineers Photo */}
-                <div className="min-w-full snap-center relative">
-                  <img
-                    src="/@fs/home/runner/workspace/attached_assets/PE1_1752808678226.jpg"
-                    alt="Nick Lanahan as Project Engineer with U.S. Army Corps of Engineers Fort Worth District"
-                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
-                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
-                      Corps of Engineers
-                    </h3>
-                    <p className="text-white/90 font-futura">
-                      I had a short stint with the Corps of Engineers where I was a Project Engineer. I got to understand the finer details of the contract side of Project Management here.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Engineers Captain Career Course Photo */}
-                <div className="min-w-full snap-center relative">
-                  <img
-                    src="/@fs/home/runner/workspace/attached_assets/ECCC1_1752808814150.jpg"
-                    alt="Nick Lanahan with international students at Engineers Captain Career Course, Fort Leonard Wood"
-                    className="w-full min-h-[60vh] max-h-[80vh] object-contain bg-gray-100"
-                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-                    <h3 className="font-bold text-white mb-2 font-futura text-xl">
-                      Back to School
-                    </h3>
-                    <p className="text-white/90 font-futura">
-                      One thing I love about the Army is the education never ends. This is me at the Engineers Captains Career Course where I learned to be a better leader and a better engineer. I was lucky to meet some great friends including two international students that I mentored!
-                    </p>
-                  </div>
-                </div>
+                )}
 
                 {/* Company Commander Photo 1 - PT Formation */}
                 <div className="min-w-full snap-center relative">

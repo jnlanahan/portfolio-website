@@ -384,3 +384,25 @@ export const insertResponseFormattingRulesSchema = createInsertSchema(responseFo
 
 export type InsertResponseFormattingRules = z.infer<typeof insertResponseFormattingRulesSchema>;
 export type ResponseFormattingRules = typeof responseFormattingRules.$inferSelect;
+
+// Carousel Images model - for the "Life in Pictures" section
+export const carouselImages = pgTable("carousel_images", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  caption: text("caption").notNull(),
+  imagePath: text("image_path").notNull(),
+  altText: text("alt_text").notNull(),
+  position: integer("position").default(0).notNull(),
+  isVisible: boolean("is_visible").default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const insertCarouselImageSchema = createInsertSchema(carouselImages).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type InsertCarouselImage = z.infer<typeof insertCarouselImageSchema>;
+export type CarouselImage = typeof carouselImages.$inferSelect;

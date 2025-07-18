@@ -18,7 +18,8 @@ import {
   insertChatbotTrainingSessionSchema,
   insertChatbotConversationSchema,
   insertChatbotEvaluationSchema,
-  insertUserFeedbackSchema
+  insertUserFeedbackSchema,
+  insertCarouselImageSchema
 } from "@shared/schema";
 import { z } from "zod";
 import { ZodError } from "zod";
@@ -2603,6 +2604,138 @@ AVAILABLE DOCUMENT TYPES:
     } catch (error) {
       console.error("Error getting dashboard info:", error);
       res.status(500).json({ error: "Failed to get dashboard info" });
+    }
+  });
+
+  // ======================================
+  // Carousel Images API
+  // ======================================
+
+  // Get all carousel images
+  app.get("/api/carousel-images", async (req, res) => {
+    try {
+      const images = await storage.getAllCarouselImages();
+      res.json(images);
+    } catch (error) {
+      console.error("Error fetching carousel images:", error);
+      res.status(500).json({ error: "Failed to fetch carousel images" });
+    }
+  });
+
+  // Get carousel image by ID
+  app.get("/api/carousel-images/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const image = await storage.getCarouselImageById(id);
+      if (!image) {
+        return res.status(404).json({ error: "Carousel image not found" });
+      }
+      res.json(image);
+    } catch (error) {
+      console.error("Error fetching carousel image:", error);
+      res.status(500).json({ error: "Failed to fetch carousel image" });
+    }
+  });
+
+  // Create new carousel image (admin only)
+  app.post("/api/carousel-images", requireAdmin, upload.single('image'), async (req, res) => {
+    try {
+      const { title, caption, altText, position, isVisible } = req.body;
+      
+      if (!req.file) {
+        return res.status(400).json({ error: "Image file is required" });
+      }
+      
+      const imageData = {
+        title,
+        caption,
+        imagePath: `/uploads/${req.file.filename}`,
+        altText,
+        position: position ? parseInt(position) : 0,
+        isVisible: isVisible === 'true' || isVisible === true
+      };
+
+      const validatedData = insertCarouselImageSchema.parse(imageData);
+      const image = await storage.createCarouselImage(validatedData);
+      
+      res.status(201).json(image);
+    } catch (error) {
+      console.error("Error creating carousel image:", error);
+      if (error instanceof ZodError) {
+        const validationError = fromZodError(error);
+        res.status(400).json({ error: validationError.message });
+      } else {
+        res.status(500).json({ error: "Failed to create carousel image" });
+      }
+    }
+  });
+
+  // Update carousel image (admin only)
+  app.put("/api/carousel-images/:id", requireAdmin, upload.single('image'), async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { title, caption, altText, position, isVisible } = req.body;
+      
+      const updateData: any = {
+        title,
+        caption,
+        altText,
+        position: position ? parseInt(position) : undefined,
+        isVisible: isVisible === 'true' || isVisible === true
+      };
+
+      // If new image file is provided, update the image path
+      if (req.file) {
+        updateData.imagePath = `/uploads/${req.file.filename}`;
+      }
+
+      // Remove undefined values
+      Object.keys(updateData).forEach(key => {
+        if (updateData[key] === undefined) {
+          delete updateData[key];
+        }
+      });
+
+      const image = await storage.updateCarouselImage(id, updateData);
+      res.json(image);
+    } catch (error) {
+      console.error("Error updating carousel image:", error);
+      if (error instanceof ZodError) {
+        const validationError = fromZodError(error);
+        res.status(400).json({ error: validationError.message });
+      } else {
+        res.status(500).json({ error: "Failed to update carousel image" });
+      }
+    }
+  });
+
+  // Delete carousel image (admin only)
+  app.delete("/api/carousel-images/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteCarouselImage(id);
+      res.json({ message: "Carousel image deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting carousel image:", error);
+      res.status(500).json({ error: "Failed to delete carousel image" });
+    }
+  });
+
+  // Update carousel image position (admin only)
+  app.patch("/api/carousel-images/:id/position", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { position } = req.body;
+      
+      if (typeof position !== 'number') {
+        return res.status(400).json({ error: "Position must be a number" });
+      }
+      
+      const image = await storage.updateCarouselImagePosition(id, position);
+      res.json(image);
+    } catch (error) {
+      console.error("Error updating carousel image position:", error);
+      res.status(500).json({ error: "Failed to update carousel image position" });
     }
   });
 

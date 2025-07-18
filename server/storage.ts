@@ -36,7 +36,9 @@ import {
   type ResponseFormattingRules,
   type InsertResponseFormattingRules,
   type SecurityQuestion,
-  type InsertSecurityQuestion
+  type InsertSecurityQuestion,
+  type CarouselImage,
+  type InsertCarouselImage
 } from "@shared/schema";
 import { getBlogPosts, getBlogPostById } from "../client/src/data/blog";
 import { getPortfolio } from "../client/src/data/portfolio";
@@ -155,6 +157,14 @@ export interface IStorage {
   getSecurityQuestions(): Promise<SecurityQuestion[]>;
   saveSecurityQuestions(questions: InsertSecurityQuestion[]): Promise<SecurityQuestion[]>;
   hasSecurityQuestionsSetup(): Promise<boolean>;
+  
+  // Carousel images methods
+  getAllCarouselImages(): Promise<CarouselImage[]>;
+  getCarouselImageById(id: number): Promise<CarouselImage | undefined>;
+  createCarouselImage(image: InsertCarouselImage): Promise<CarouselImage>;
+  updateCarouselImage(id: number, image: Partial<InsertCarouselImage>): Promise<CarouselImage>;
+  deleteCarouselImage(id: number): Promise<void>;
+  updateCarouselImagePosition(id: number, position: number): Promise<CarouselImage>;
 }
 
 export class MemStorage implements IStorage {
@@ -1353,6 +1363,76 @@ export class DatabaseStorage implements IStorage {
     
     const [result] = await db.select({ count: count() }).from(securityQuestions);
     return result.count >= 5; // Need all 5 questions answered
+  }
+
+  // Carousel images methods
+  async getAllCarouselImages(): Promise<CarouselImage[]> {
+    const { db } = await import('./db');
+    const { carouselImages } = await import('@shared/schema');
+    const { asc, eq } = await import('drizzle-orm');
+    
+    return await db.select().from(carouselImages)
+      .where(eq(carouselImages.isVisible, true))
+      .orderBy(asc(carouselImages.position));
+  }
+
+  async getCarouselImageById(id: number): Promise<CarouselImage | undefined> {
+    const { db } = await import('./db');
+    const { carouselImages } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [image] = await db.select().from(carouselImages).where(eq(carouselImages.id, id));
+    return image || undefined;
+  }
+
+  async createCarouselImage(insertImage: InsertCarouselImage): Promise<CarouselImage> {
+    const { db } = await import('./db');
+    const { carouselImages } = await import('@shared/schema');
+    
+    const [image] = await db.insert(carouselImages).values(insertImage).returning();
+    return image;
+  }
+
+  async updateCarouselImage(id: number, updateData: Partial<InsertCarouselImage>): Promise<CarouselImage> {
+    const { db } = await import('./db');
+    const { carouselImages } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [image] = await db.update(carouselImages)
+      .set({ ...updateData, updatedAt: new Date() })
+      .where(eq(carouselImages.id, id))
+      .returning();
+    
+    if (!image) {
+      throw new Error(`Carousel image with ID ${id} not found`);
+    }
+    
+    return image;
+  }
+
+  async deleteCarouselImage(id: number): Promise<void> {
+    const { db } = await import('./db');
+    const { carouselImages } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    await db.delete(carouselImages).where(eq(carouselImages.id, id));
+  }
+
+  async updateCarouselImagePosition(id: number, position: number): Promise<CarouselImage> {
+    const { db } = await import('./db');
+    const { carouselImages } = await import('@shared/schema');
+    const { eq } = await import('drizzle-orm');
+    
+    const [image] = await db.update(carouselImages)
+      .set({ position, updatedAt: new Date() })
+      .where(eq(carouselImages.id, id))
+      .returning();
+    
+    if (!image) {
+      throw new Error(`Carousel image with ID ${id} not found`);
+    }
+    
+    return image;
   }
 }
 

@@ -221,6 +221,23 @@ export default function AdminDashboardPage() {
             </Button>
           </div>
 
+          {/* Carousel Images Tile */}
+          <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#FF9500] transition-all duration-200">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold text-white">Life in Pictures</h3>
+                <p className="text-sm text-gray-300">Manage carousel images</p>
+              </div>
+              <Folder className="h-8 w-8 text-[#FF9500]" />
+            </div>
+            <Button
+              onClick={() => setLocation("/admin/carousel")}
+              className="w-full bg-[#FF9500] hover:bg-[#CC7700] text-white font-medium rounded-xl"
+            >
+              Manage Carousel
+            </Button>
+          </div>
+
           {/* View Live Site Tile */}
           <div className="bg-[#2a2a2a] rounded-2xl p-6 shadow-lg border border-[#3a3a3a] hover:border-[#007AFF] transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
