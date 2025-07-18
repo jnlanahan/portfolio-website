@@ -45,15 +45,22 @@ export default function AdminCarouselPage() {
 
   const createMutation = useMutation({
     mutationFn: async (data: FormData) => {
+      console.log("Making API request to create carousel image");
       const response = await fetch("/api/carousel-images", {
         method: "POST",
         body: data,
       });
+      console.log("API response status:", response.status);
+      console.log("API response headers:", response.headers);
+      
       if (!response.ok) {
         const error = await response.json();
+        console.log("API error response:", error);
         throw new Error(error.error || "Failed to create carousel image");
       }
-      return response.json();
+      const result = await response.json();
+      console.log("API success response:", result);
+      return result;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/carousel-images"] });
@@ -159,6 +166,9 @@ export default function AdminCarouselPage() {
   });
 
   const onSubmit = async (data: CarouselImageFormData) => {
+    console.log("Form submission started with data:", data);
+    console.log("File input ref:", fileInputRef.current?.files?.[0]);
+    
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("caption", data.caption);
@@ -168,11 +178,21 @@ export default function AdminCarouselPage() {
 
     if (fileInputRef.current?.files?.[0]) {
       formData.append("image", fileInputRef.current.files[0]);
+      console.log("Image file attached to form data");
+    } else {
+      console.log("No image file selected");
+    }
+
+    console.log("FormData contents:");
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
     }
 
     if (isEditing && selectedImage) {
+      console.log("Updating existing image:", selectedImage.id);
       updateMutation.mutate({ id: selectedImage.id, data: formData });
     } else {
+      console.log("Creating new carousel image");
       createMutation.mutate(formData);
     }
   };
