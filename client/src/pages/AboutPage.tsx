@@ -210,6 +210,156 @@ const AboutPage = () => {
         </div>
       </section>
 
+      {/* Professional Certifications Section */}
+      <section className="py-12 bg-gray-50">
+        <div className="container mx-auto px-4 md:px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="max-w-6xl mx-auto"
+          >
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center font-futura">
+              Professional Certifications
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Certificate 1 */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">🎓</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 font-futura">
+                    Maven Certificate
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4 font-futura">
+                    Professional certification from Maven
+                  </p>
+                  <a
+                    href="https://maven.com/certificate/isKysWak"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-sm transition-colors"
+                  >
+                    View Certificate
+                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </motion.div>
+
+              {/* Certificate 2 */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">🏆</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 font-futura">
+                    Maven Certificate
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4 font-futura">
+                    Professional certification from Maven
+                  </p>
+                  <a
+                    href="https://maven.com/certificate/YBSOUklu"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-sm transition-colors"
+                  >
+                    View Certificate
+                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </motion.div>
+
+              {/* Certificate 3 */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">📜</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 font-futura">
+                    Maven Certificate
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4 font-futura">
+                    Professional certification from Maven
+                  </p>
+                  <a
+                    href="https://maven.com/certificate/gtpKvnRC"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-sm transition-colors"
+                  >
+                    View Certificate
+                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </motion.div>
+
+              {/* Certificate 4 */}
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">🎯</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 font-futura">
+                    Maven Certificate
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4 font-futura">
+                    Professional certification from Maven
+                  </p>
+                  <a
+                    href="https://maven.com/certificate/jHkWhBST"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-sm transition-colors"
+                  >
+                    View Certificate
+                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* My Passions Section */}
       <section className="py-12">
         <div className="container mx-auto px-4 md:px-6">
