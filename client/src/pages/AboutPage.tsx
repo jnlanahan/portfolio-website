@@ -243,7 +243,7 @@ const AboutPage = () => {
                     AI Prototyping for Product Managers
                   </h3>
                   <a
-                    href="#"
+                    href="https://maven.com/certificate/isKysWak"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
@@ -275,7 +275,7 @@ const AboutPage = () => {
                     Advanced AI Product Leadership
                   </h3>
                   <a
-                    href="#"
+                    href="https://maven.com/certificate/YBSOUklu"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
@@ -307,7 +307,7 @@ const AboutPage = () => {
                     AI Product Management 101
                   </h3>
                   <a
-                    href="#"
+                    href="https://maven.com/certificate/gtpKvnRC"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
@@ -339,7 +339,7 @@ const AboutPage = () => {
                     AI Product Management Bootcamp
                   </h3>
                   <a
-                    href="#"
+                    href="https://maven.com/certificate/jHkWhBST"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center text-slate-600 hover:text-slate-800 font-futura font-semibold text-xs transition-colors"
