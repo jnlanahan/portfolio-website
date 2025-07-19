@@ -161,7 +161,7 @@ export async function retrieveRelevantDocuments(question: string, k: number = 5)
     try {
       const fs = await import('fs').then(m => m.promises);
       const path = await import('path');
-      const attachedAssetsPath = path.join(process.cwd(), 'attached_assets');
+      const attachedAssetsPath = path.join(workingDir, 'attached_assets');
 
       // Get list of document files
       const files = await fs.readdir(attachedAssetsPath);
