@@ -793,9 +793,13 @@ export async function runEvaluation(datasetId: string): Promise<any> {
   }
 }
 
-// Initialize vector store on startup
-// Initialize vector store only if needed, don't crash the app
-initializeVectorStore().catch(error => {
-  console.warn("Vector store initialization failed:", error.message);
-  console.warn("Chatbot will work without vector search capabilities");
-});
+// Temporarily disable ChromaDB initialization for Railway deployment
+// TODO: Re-enable after fixing path issues or migrating to cloud vector DB
+console.log("ChromaDB initialization disabled for Railway deployment");
+console.log("Chatbot will work with basic responses only");
+
+// Uncomment below when ChromaDB is fixed:
+// initializeVectorStore().catch(error => {
+//   console.warn("Vector store initialization failed:", error.message);
+//   console.warn("Chatbot will work without vector search capabilities");
+// });
