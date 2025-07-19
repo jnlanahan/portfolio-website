@@ -79,10 +79,12 @@ async function initializeVectorStore(): Promise<void> {
     // Check if chroma_db folder exists
     const fs = await import('fs');
     const path = await import('path');
-    const chromaDbPath = path.join(process.cwd(), 'chroma_db');
+    const workingDir = process.cwd() || '/app';
+    const chromaDbPath = path.join(workingDir, 'chroma_db');
 
     if (!fs.existsSync(chromaDbPath)) {
-      throw new Error("chroma_db folder not found. Please ensure your Chroma database is in the project root.");
+      console.warn("chroma_db folder not found. Vector store features will be disabled.");
+      return;
     }
 
     console.log("Found Chroma database at:", chromaDbPath);
