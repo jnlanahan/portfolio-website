@@ -28,3 +28,22 @@ yarn-error.log*
 # System files
 .DS_Store
 Thumbs.db
+
+# Replit specific
+.replit
+.config/
+
+# Uploads directory
+uploads/
+!uploads/.gitkeep
+
+# Database files
+*.db
+*.sqlite
+
+# Session store
+sessions/
+
+# Temporary files
+*.tmp
+*.temp
