@@ -5,6 +5,7 @@ import { createServer as createViteServer, createLogger } from "vite";
 import { type Server } from "http";
 import viteConfig from "../vite.config";
 import { nanoid } from "nanoid";
+import { safePath, debugPaths, isRailwayEnvironment } from "./utils/paths.js";
 
 const viteLogger = createLogger();
 
@@ -45,12 +46,11 @@ export async function setupVite(app: Express, server: Server) {
     const url = req.originalUrl;
 
     try {
-      const workingDir = process.cwd() || '/app';
-      const clientTemplate = path.resolve(
-        workingDir,
-        "client",
-        "index.html",
-      );
+      if (isRailwayEnvironment()) {
+        debugPaths();
+      }
+      
+      const clientTemplate = safePath("client", "index.html");
 
       // always reload the index.html file from disk incase it changes
       let template = await fs.promises.readFile(clientTemplate, "utf-8");
@@ -68,8 +68,7 @@ export async function setupVite(app: Express, server: Server) {
 }
 
 export function serveStatic(app: Express) {
-  const workingDir = process.cwd() || '/app';
-  const distPath = path.resolve(workingDir, "dist");
+  const distPath = safePath("dist");
 
   if (!fs.existsSync(distPath)) {
     throw new Error(
@@ -81,6 +80,6 @@ export function serveStatic(app: Express) {
 
   // fall through to index.html if the file doesn't exist
   app.use("*", (_req, res) => {
-    res.sendFile(path.resolve(distPath, "index.html"));
+    res.sendFile(safePath(distPath, "index.html"));
   });
 }

@@ -10,6 +10,7 @@ import { traceable } from "langsmith/traceable";
 import { Client } from "langsmith";
 import { storage } from './storage';
 import { ChromaClient } from "chromadb";
+import { safePath } from "./utils/paths.js";
 import { evaluate } from "langsmith/evaluation";
 import { EvaluationResult } from "langsmith/evaluation";
 
@@ -79,8 +80,7 @@ async function initializeVectorStore(): Promise<void> {
     // Check if chroma_db folder exists
     const fs = await import('fs');
     const path = await import('path');
-    const workingDir = process.cwd() || '/app';
-    const chromaDbPath = path.join(workingDir, 'chroma_db');
+    const chromaDbPath = safePath('chroma_db');
 
     if (!fs.existsSync(chromaDbPath)) {
       console.warn("chroma_db folder not found. Vector store features will be disabled.");
@@ -115,7 +115,7 @@ export async function retrieveRelevantDocuments(question: string, k: number = 5)
 
     // Open the Chroma SQLite database
     const db = await open({
-      filename: path.join(workingDir, 'chroma_db', 'chroma.sqlite3'),
+      filename: safePath('chroma_db', 'chroma.sqlite3'),
       driver: sqlite3.Database
     });
 
@@ -161,7 +161,7 @@ export async function retrieveRelevantDocuments(question: string, k: number = 5)
     try {
       const fs = await import('fs').then(m => m.promises);
       const path = await import('path');
-      const attachedAssetsPath = path.join(workingDir, 'attached_assets');
+      const attachedAssetsPath = safePath('attached_assets');
 
       // Get list of document files
       const files = await fs.readdir(attachedAssetsPath);

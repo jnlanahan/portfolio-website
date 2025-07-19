@@ -75,14 +75,14 @@ import {
   createKnowledgeFact
 } from "./chatbotKnowledgeService";
 import express from "express";
+import { safePath } from "./utils/paths.js";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Create uploads directories if they don't exist
-  const workingDir = workingDir || '/app';
-  const uploadsDir = path.join(workingDir, 'uploads', 'projects');
-  const resumeUploadsDir = path.join(workingDir, 'uploads', 'resumes');
-  const chatbotUploadsDir = path.join(workingDir, 'uploads', 'chatbot');
-  const carouselUploadsDir = path.join(workingDir, 'uploads', 'carousel');
+  const uploadsDir = safePath('uploads', 'projects');
+  const resumeUploadsDir = safePath('uploads', 'resumes');
+  const chatbotUploadsDir = safePath('uploads', 'chatbot');
+  const carouselUploadsDir = safePath('uploads', 'carousel');
   try {
     await fs.mkdir(uploadsDir, { recursive: true });
     await fs.mkdir(resumeUploadsDir, { recursive: true });
@@ -237,7 +237,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Serve uploaded files
-  app.use('/uploads', express.static(path.join(workingDir, 'uploads')));
+  app.use('/uploads', express.static(safePath('uploads')));
 
   // PUBLIC ROUTES - These must be registered before any catch-all routes
   // Direct resume download endpoint - now password protected
@@ -360,7 +360,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: 'No resume available' });
       }
       
-      const resumePath = path.join(workingDir, 'uploads', 'resumes', resume.filename);
+      const resumePath = safePath( 'uploads', 'resumes', resume.filename);
       
       // Check if file exists
       try {
@@ -2095,7 +2095,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const path = await import('path');
       
       // Read the actual chatbotService.ts file to get hardcoded prompts
-      const chatbotServicePath = path.join(workingDir, 'server', 'chatbotService.ts');
+      const chatbotServicePath = safePath( 'server', 'chatbotService.ts');
       const chatbotServiceContent = fs.readFileSync(chatbotServicePath, 'utf-8');
       
       // Extract training prompt (processTrainingConversation function)
@@ -2111,7 +2111,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const customPrompt = await storage.getActiveSystemPromptTemplate();
       
       // Get LangChain prompt
-      const langchainServicePath = path.join(workingDir, 'server', 'langchainChatbotService.ts');
+      const langchainServicePath = safePath( 'server', 'langchainChatbotService.ts');
       const langchainServiceContent = fs.readFileSync(langchainServicePath, 'utf-8');
       const langchainPromptMatch = langchainServiceContent.match(/const SYSTEM_PROMPT = `([^`]+)`/s);
       const langchainPrompt = langchainPromptMatch ? langchainPromptMatch[1] : "LangChain prompt not found";
@@ -2171,7 +2171,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       if (type === 'training') {
         // Update training prompt in chatbotService.ts
-        const chatbotServicePath = path.join(workingDir, 'server', 'chatbotService.ts');
+        const chatbotServicePath = safePath( 'server', 'chatbotService.ts');
         let content = fs.readFileSync(chatbotServicePath, 'utf-8');
         
         // Replace the training prompt
@@ -2185,7 +2185,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         
       } else if (type === 'visitor') {
         // Update visitor prompt in chatbotService.ts
-        const chatbotServicePath = path.join(workingDir, 'server', 'chatbotService.ts');
+        const chatbotServicePath = safePath( 'server', 'chatbotService.ts');
         let content = fs.readFileSync(chatbotServicePath, 'utf-8');
         
         // Replace the visitor prompt
@@ -2827,7 +2827,7 @@ async function getDefaultSystemPrompt() {
   const path = await import('path');
   
   try {
-    const filePath = path.join(workingDir, 'server', 'chatbotService.ts');
+    const filePath = safePath( 'server', 'chatbotService.ts');
     const content = await fs.readFile(filePath, 'utf-8');
     
     // Extract the default system prompt from the else block
@@ -2911,7 +2911,7 @@ async function getLangChainSystemPrompt() {
   const path = await import('path');
   
   try {
-    const filePath = path.join(workingDir, 'server', 'langchainChatbotService.ts');
+    const filePath = safePath( 'server', 'langchainChatbotService.ts');
     const content = await fs.readFile(filePath, 'utf-8');
     
     // Extract the LangChain system prompt from the file
@@ -2942,7 +2942,7 @@ async function updateSystemPrompt(type: string, prompt: string) {
   switch (type) {
     case 'default':
       // Update chatbotService.ts - Update the else block system prompt
-      const chatbotServicePath = path.join(workingDir, 'server', 'chatbotService.ts');
+      const chatbotServicePath = safePath( 'server', 'chatbotService.ts');
       const chatbotContent = await fs.readFile(chatbotServicePath, 'utf-8');
       const updatedChatbotContent = chatbotContent.replace(
         /(} else {[\s\S]*?systemPrompt = `)([\s\S]*?)`;/,
@@ -2965,7 +2965,7 @@ async function updateSystemPrompt(type: string, prompt: string) {
       
     case 'langchain':
       // Update langchainChatbotService.ts
-      const langchainServicePath = path.join(workingDir, 'server', 'langchainChatbotService.ts');
+      const langchainServicePath = safePath( 'server', 'langchainChatbotService.ts');
       const langchainContent = await fs.readFile(langchainServicePath, 'utf-8');
       const updatedLangchainContent = langchainContent.replace(
         /const SYSTEM_PROMPT = `([\s\S]*?)`;/,
