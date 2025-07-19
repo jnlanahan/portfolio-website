@@ -115,7 +115,7 @@ export async function retrieveRelevantDocuments(question: string, k: number = 5)
 
     // Open the Chroma SQLite database
     const db = await open({
-      filename: path.join(process.cwd(), 'chroma_db', 'chroma.sqlite3'),
+      filename: path.join(workingDir, 'chroma_db', 'chroma.sqlite3'),
       driver: sqlite3.Database
     });
 
@@ -794,4 +794,8 @@ export async function runEvaluation(datasetId: string): Promise<any> {
 }
 
 // Initialize vector store on startup
-initializeVectorStore().catch(console.error);
+// Initialize vector store only if needed, don't crash the app
+initializeVectorStore().catch(error => {
+  console.warn("Vector store initialization failed:", error.message);
+  console.warn("Chatbot will work without vector search capabilities");
+});
