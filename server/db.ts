@@ -1,9 +1,6 @@
-import { Pool, neonConfig } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-serverless';
-import ws from "ws";
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
 import * as schema from "@shared/schema";
-
-neonConfig.webSocketConstructor = ws;
 
 // Build connection string from individual parameters or use DATABASE_URL
 const getConnectionString = () => {
@@ -23,5 +20,9 @@ const getConnectionString = () => {
   return `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}`;
 };
 
-export const pool = new Pool({ connectionString: getConnectionString() });
-export const db = drizzle({ client: pool, schema });
+// Create postgres connection
+const connectionString = getConnectionString();
+const client = postgres(connectionString);
+
+// Create drizzle instance
+export const db = drizzle(client, { schema });
