@@ -1,0 +1,167 @@
+[
+  {
+    "id": 1,
+    "title": "Where it all started",
+    "caption": "This is the day I comissioned as an Engineer Officer and earned an engineering degree from NC State.  You will notice a trend in my pictures that NC State kind of stuck with me.  This was the first day of my first career.",
+    "imagePath": "/uploads/carousel/carousel-1752852279911-686111218.jpg",
+    "altText": "This is the day I comissioned as an Engineer Officer and earned an engineering degree from NC State.  You will notice a trend in my pictures that NC State kind of stuck with me.  This was the first day of my first career.",
+    "position": 2,
+    "isVisible": true,
+    "createdAt": "2025-07-18T15:24:40.228Z",
+    "updatedAt": "2025-07-18T15:56:52.223Z"
+  },
+  {
+    "id": 2,
+    "title": "My first job",
+    "caption": "This is me in front of my Bradley Fighting Vehicle. I was a Platoon Leader leading 30+ Combat Engineers.  Talk about a lot of responsibility for a first job out of college. I grew up fast. ",
+    "imagePath": "/uploads/carousel/carousel-1752852878400-346682456.jpg",
+    "altText": "This is me in front of my Bradley Fighting Vehicle. I was a Platoon Leader leading 30+ Combat Engineers.  Talk about a lot of responsibility for a first job out of college. I grew up fast. ",
+    "position": 3,
+    "isVisible": true,
+    "createdAt": "2025-07-18T15:34:38.991Z",
+    "updatedAt": "2025-07-18T15:56:58.455Z"
+  },
+  {
+    "id": 3,
+    "title": "Project Engineer",
+    "caption": "I had a short stint as a Project Engineer after my Combat Engineering Roles where I got to dive into Project Management by mostly helping with administrative tasks for existing projects.",
+    "imagePath": "/uploads/carousel/carousel-1752852966346-115559153.jpg",
+    "altText": "I had a short stint as a Project Engineer after my Combat Engineering Roles where I got to dive into Project Management by mostly helping with administrative tasks for existing projects.",
+    "position": 4,
+    "isVisible": true,
+    "createdAt": "2025-07-18T15:36:14.659Z",
+    "updatedAt": "2025-07-18T15:57:11.348Z"
+  },
+  {
+    "id": 5,
+    "title": "South Korea",
+    "caption": "I was lucky to live in South Korea for 3 years where I served as a Program Manager for Army construction and a Company Commander. ",
+    "imagePath": "/uploads/carousel/carousel-1752853165208-933343862.jpg",
+    "altText": "I was lucky to live in South Korea for 3 years where I served as a Program Manager for Army construction and a Company Commander. ",
+    "position": 5,
+    "isVisible": true,
+    "createdAt": "2025-07-18T15:39:27.714Z",
+    "updatedAt": "2025-07-18T15:39:27.714Z"
+  },
+  {
+    "id": 6,
+    "title": "South Korea Again",
+    "caption": "I told you NC State would follow me through these images.  I got lucky enough to work with a friend from college when I was in Korea!",
+    "imagePath": "/uploads/carousel/carousel-1752853210758-871009152.jpg",
+    "altText": "I told you NC State would follow me through these images.  I got lucky enough to work with a friend from college when I was in Korea!",
+    "position": 6,
+    "isVisible": true,
+    "createdAt": "2025-07-18T15:40:10.894Z",
+    "updatedAt": "2025-07-18T15:40:10.894Z"
+  },
+  {
+    "id": 7,
+    "title": "Company Commander",
+    "caption": "This was me the day we stood up a new organization. I was the Commander of 168+ soldiers and leaders in Korea This is where I really learned about change management having to bring cultures together to accomplish great things quickly. ",
+    "imagePath": "/uploads/carousel/carousel-1752853379570-115812918.jpg",
+    "altText": "This was me the day we stood up a new organization.  This is where I really learned about change management having to bring cultures together to accomplish great things quickly. ",
+    "position": 7,
+    "isVisible": true,
+    "createdAt": "2025-07-18T15:43:00.157Z",
+    "updatedAt": "2025-07-18T15:43:00.157Z"
+  },
+  {
+    "id": 8,
+    "title": "My soldiers",
+    "caption": "These are pictures of the soldiers I led (I am in the middle). This was the most satisfying role I have ever had because I got to wake up every day for these soliders and not just for me. It was an honor to lead them. ",
+    "imagePath": "/uploads/carousel/carousel-1752853457417-191742299.jpg",
+    "altText": "These are pictures of the soldiers I led (I am in the middle). This was the most satisfying role I have ever had because I got to wake up every day for these soliders and not just for me. It was an honor to lead them. ",
+    "position": 8,
+    "isVisible": true,
+    "createdAt": "2025-07-18T15:44:28.673Z",
+    "updatedAt": "2025-07-18T15:44:28.673Z"
+  },
+  {
+    "id": 9,
+    "title": "Company Command - again",
+    "caption": "These are pictures of the soldiers I led (I am in the middle). This was the most satisfying role I have ever had because I got to wake up every day for these soliders and not just for me. It was an honor to lead them. ",
+    "imagePath": "/uploads/carousel/carousel-1752853495953-448915836.jpg",
+    "altText": "",
+    "position": 9,
+    "isVisible": true,
+    "createdAt": "2025-07-18T15:44:56.209Z",
+    "updatedAt": "2025-07-18T15:44:56.209Z"
+  },
+  {
+    "id": 10,
+    "title": "Company Command 3",
+    "caption": "These is the last training event I conducted with my Company, where we recieved the highest ratings you could get from external evaluators!",
+    "imagePath": "/uploads/carousel/carousel-1752853544408-926887739.JPG",
+    "altText": "These is the last training event I conducted with my Company, where we recieved the highest ratings you could get from external evaluators!",
+    "position": 10,
+    "isVisible": true,
+    "createdAt": "2025-07-18T15:45:45.250Z",
+    "updatedAt": "2025-07-18T15:45:45.250Z"
+  },
+  {
+    "id": 11,
+    "title": "Saying Farewell",
+    "caption": "This is my last day as a Company Commander where I had to say farewell to my soldiers.  It was an emotional day for sure.",
+    "imagePath": "/uploads/carousel/carousel-1752853596165-468500296.jpg",
+    "altText": "This is my last day as a Company Commander where I had to say farewell to my soldiers.  It was an emotional day for sure.",
+    "position": 11,
+    "isVisible": true,
+    "createdAt": "2025-07-18T15:46:36.316Z",
+    "updatedAt": "2025-07-18T15:46:36.316Z"
+  },
+  {
+    "id": 12,
+    "title": "Next Chapter - The Ohio State University",
+    "caption": "This is me and my wife who I met while I was in Korea!  We are at a military ball shortly after arriving in Ohio for my next role. ",
+    "imagePath": "/uploads/carousel/carousel-1752853660715-319668345.JPG",
+    "altText": "This is me and my wife who I met while I was in Korea!  We are at a military ball shortly after arriving in Ohio for my next role. ",
+    "position": 12,
+    "isVisible": true,
+    "createdAt": "2025-07-18T15:47:42.804Z",
+    "updatedAt": "2025-07-18T15:47:42.804Z"
+  },
+  {
+    "id": 14,
+    "title": "Family",
+    "caption": "This is where I am now. I currently work at EY as a Technology Consultant in Product Management where I mainly focus on Product Organiaztional Transformations (Think Marty Cagan Transformed). I dont take many pictures at work these days. I have two children and a wife who are my priority.  ",
+    "imagePath": "/uploads/carousel/carousel-1752854112775-734946976.jpg",
+    "altText": "",
+    "position": 14,
+    "isVisible": true,
+    "createdAt": "2025-07-18T15:55:13.439Z",
+    "updatedAt": "2025-07-18T15:55:13.439Z"
+  },
+  {
+    "id": 4,
+    "title": "School!",
+    "caption": "One of the great things about the Army is their investment in professional development. This is me at the Engineer Captains Career Course where I got to develop my leadership and engineering skills for a year. I was lucky enough to get to mentor two international students!",
+    "imagePath": "/uploads/carousel/carousel-1752853078629-192974810.jpg",
+    "altText": "One of the great things about the Army is their investment in professional development. This is me at the Engineer Captains Career Course where I got to develop my leadership and engineering skills for a year. I was lucky enough to get to mentor two international students!",
+    "position": 5,
+    "isVisible": true,
+    "createdAt": "2025-07-18T15:38:01.132Z",
+    "updatedAt": "2025-07-18T15:57:22.663Z"
+  },
+  {
+    "id": 15,
+    "title": "Throw Back!",
+    "caption": "This was me as a child. No, I dont have blond hair anymore, but the outfits are still the same.",
+    "imagePath": "/uploads/carousel/carousel-1752854203470-228736411.jpg",
+    "altText": "",
+    "position": 1,
+    "isVisible": true,
+    "createdAt": "2025-07-18T15:56:45.967Z",
+    "updatedAt": "2025-07-18T15:57:58.291Z"
+  },
+  {
+    "id": 13,
+    "title": "Buckeyes",
+    "caption": "This was me and some of the Cadets where I was assigned as a CEMAT (Coach, Evaluator, Mentor, and Trainer) for 3 years. I am one of the small red dots. I was teaching Leadership and Military Science at The Ohio State University while also studying in the MBA program!",
+    "imagePath": "/uploads/carousel/carousel-1752853761637-358456135.jpg",
+    "altText": "This was me and some of the Cadets where I was assigned as a CEMAT (Coach, Evaluator, Mentor, and Trainer) for 3 years.  I was teaching Leadership and Military Science at The Ohio State University while also studying in the MBA program!",
+    "position": 13,
+    "isVisible": true,
+    "createdAt": "2025-07-18T15:49:22.253Z",
+    "updatedAt": "2025-07-18T15:59:27.719Z"
+  }
+]

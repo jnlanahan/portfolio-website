@@ -1,0 +1,1418 @@
+[
+  {
+    "id": 5,
+    "conversationId": 46,
+    "accuracyScore": 5,
+    "helpfulnessScore": 6,
+    "relevanceScore": 7,
+    "clarityScore": 8,
+    "overallScore": 6,
+    "feedback": "The response provides some relevant information about Nick Lanahan's background, such as his experience in engineering and military service, and mentions his work with Fortune 500 companies. However, it fails to directly answer the user's specific question about Nick's job immediately before joining EY, which is a significant gap in accuracy and helpfulness. The response maintains a clear and professional tone, but the lack of specific information reduces its overall usefulness.",
+    "strengths": [
+      "Clear and professional tone",
+      "Provides some context about Nick's background",
+      "Mentions relevant areas of expertise"
+    ],
+    "improvements": [
+      "Provide specific information about Nick's job before EY",
+      "Address the user's question more directly",
+      "Avoid generalizations when specific details are requested"
+    ],
+    "evaluatedAt": "2025-07-12T20:53:51.007Z"
+  },
+  {
+    "id": 6,
+    "conversationId": 45,
+    "accuracyScore": 5,
+    "helpfulnessScore": 3,
+    "relevanceScore": 6,
+    "clarityScore": 8,
+    "overallScore": 5,
+    "feedback": "The bot's response is clear and professionally worded, asking for clarification to provide a more accurate answer. However, it lacks any factual information about Nick Lanahan, as it does not attempt to answer the user's question about 'what year' in any context. The response is somewhat relevant as it seeks clarification, but it does not directly address the user's query, which limits its helpfulness.",
+    "strengths": [
+      "The response is clear and well-structured.",
+      "The tone is professional and polite.",
+      "The bot seeks clarification, which is a good practice when the question is ambiguous."
+    ],
+    "improvements": [
+      "Provide any known information about Nick Lanahan if available, even if the question is vague.",
+      "Attempt to infer the context of the user's question based on available data.",
+      "Offer potential interpretations of the question to guide the user towards clarification."
+    ],
+    "evaluatedAt": "2025-07-12T20:53:54.547Z"
+  },
+  {
+    "id": 7,
+    "conversationId": 44,
+    "accuracyScore": 8,
+    "helpfulnessScore": 6,
+    "relevanceScore": 8,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The response is mostly accurate regarding Nick Lanahan's current role at EY, but it lacks the specific information requested by the user, namely the start date of his employment. The bot provides a relevant context about his current position and suggests ways to obtain more detailed information, which is helpful. However, it does not fully address the user's question. The response is clear and professional in tone.",
+    "strengths": [
+      "Provides relevant context about Nick's current role at EY.",
+      "Suggests alternative ways to obtain the desired information.",
+      "Maintains a clear and professional tone."
+    ],
+    "improvements": [
+      "Directly address the user's specific question about the start date.",
+      "Include any available information about Nick's employment history if possible.",
+      "Enhance the response by acknowledging the lack of specific data more explicitly."
+    ],
+    "evaluatedAt": "2025-07-12T20:53:58.253Z"
+  },
+  {
+    "id": 8,
+    "conversationId": 43,
+    "accuracyScore": 7,
+    "helpfulnessScore": 6,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 7,
+    "feedback": "The response is mostly accurate in stating Nick Lanahan's role at EY, but it lacks specific information about the duration of his tenure, which is the main focus of the user's question. The suggestion to contact Nick directly or check his LinkedIn profile is helpful, but it doesn't fully address the user's query. The response is clear and professionally structured, maintaining relevance to the user's question.",
+    "strengths": [
+      "Clear and professional tone",
+      "Relevant to the user's question",
+      "Provides a practical suggestion for obtaining more information"
+    ],
+    "improvements": [
+      "Include specific tenure information if available",
+      "Provide more context on why the information is unavailable",
+      "Enhance the response by offering alternative sources of information"
+    ],
+    "evaluatedAt": "2025-07-12T20:54:02.139Z"
+  },
+  {
+    "id": 9,
+    "conversationId": 47,
+    "accuracyScore": 4,
+    "helpfulnessScore": 5,
+    "relevanceScore": 8,
+    "clarityScore": 9,
+    "overallScore": 6,
+    "feedback": "The response provides a detailed answer about Nick Lanahan's current employment, but it lacks verification due to the absence of accessible information from the provided context. Without the actual content of Johnathan Lanahan's resume, the accuracy of the response cannot be confirmed. The response is relevant to the user's question and is clearly articulated, but its helpfulness is limited by the potential inaccuracy of the information.",
+    "strengths": [
+      "The response is relevant to the user's question about Nick's current employment.",
+      "The response is clear and well-structured, making it easy to understand.",
+      "The bot offers to provide more details if needed, which is a good practice for engagement."
+    ],
+    "improvements": [
+      "Ensure factual accuracy by verifying information against available data.",
+      "Provide a disclaimer when information cannot be verified due to unavailable content.",
+      "Limit the inclusion of specific details unless they can be confirmed."
+    ],
+    "evaluatedAt": "2025-07-13T01:37:44.967Z"
+  },
+  {
+    "id": 10,
+    "conversationId": 48,
+    "accuracyScore": 1,
+    "helpfulnessScore": 1,
+    "relevanceScore": 1,
+    "clarityScore": 5,
+    "overallScore": 2,
+    "feedback": "The chatbot's response does not accurately address the user's question, which appears to be a test input ('test thumbs up') rather than a request for information about Nick Lanahan. The response is not factually correct as it assumes the user is seeking information about Nick Lanahan's professional background without any indication from the user's input. The response is not helpful or relevant to the user's actual input. However, the response is clear and well-structured in its language.",
+    "strengths": [
+      "Clear and well-structured language",
+      "Polite and professional tone"
+    ],
+    "improvements": [
+      "Ensure responses are relevant to the user's actual input",
+      "Avoid making assumptions about user intent without clear indicators",
+      "Provide accurate information based on the user's specific query"
+    ],
+    "evaluatedAt": "2025-07-13T01:39:04.092Z"
+  },
+  {
+    "id": 11,
+    "conversationId": 49,
+    "accuracyScore": 8,
+    "helpfulnessScore": 7,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The bot's response is mostly accurate in acknowledging the lack of specific dates regarding Nick Lanahan's military service. It provides a reasonable suggestion to contact Nick directly for precise information, which is a practical approach given the context. However, the response could have been more helpful by offering any available general information about Nick's military background, if known. The response is clear and relevant to the user's question.",
+    "strengths": [
+      "Acknowledges the lack of specific information and suggests a practical solution.",
+      "Maintains a professional and conversational tone.",
+      "Clear and well-structured response."
+    ],
+    "improvements": [
+      "Include any general information about Nick's military service if available.",
+      "Provide more context about Nick's professional background to enhance helpfulness.",
+      "Consider offering alternative sources or methods to obtain the desired information."
+    ],
+    "evaluatedAt": "2025-07-13T01:51:13.850Z"
+  },
+  {
+    "id": 12,
+    "conversationId": 50,
+    "accuracyScore": 8,
+    "helpfulnessScore": 7,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The response accurately states that Nick Lanahan served in the U.S. Army for over 12 years and was part of the U.S. Army Corps of Engineers. However, it lacks specific details about his rank progression, which was part of the user's question. The response is clear and maintains a professional tone, providing some context about Nick's leadership roles and suggesting a way to obtain more detailed information.",
+    "strengths": [
+      "Accurate information about Nick's service duration and role in the Army.",
+      "Professional and clear communication.",
+      "Provides context about Nick's leadership experience."
+    ],
+    "improvements": [
+      "Include more specific details about Nick's rank progression if available.",
+      "Address the user's question more directly by focusing on the rank progression.",
+      "Suggest alternative sources for obtaining detailed rank information if not available."
+    ],
+    "evaluatedAt": "2025-07-13T01:58:25.445Z"
+  },
+  {
+    "id": 13,
+    "conversationId": 51,
+    "accuracyScore": 8,
+    "helpfulnessScore": 7,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The response accurately reflects the available information about Nick Lanahan's service in the U.S. Army Corps of Engineers and his leadership roles. However, it lacks specific details about the positions and locations, which are not provided in the available documents. The bot appropriately suggests that more detailed information would require further inquiry. The response is clear, relevant, and maintains a professional tone.",
+    "strengths": [
+      "Accurate representation of available information",
+      "Clear and professional tone",
+      "Provides guidance on how to obtain more detailed information"
+    ],
+    "improvements": [
+      "Include a disclaimer about the limitations of available data",
+      "Offer more context about the type of leadership roles if possible",
+      "Suggest alternative sources for more detailed military records"
+    ],
+    "evaluatedAt": "2025-07-13T01:58:30.012Z"
+  },
+  {
+    "id": 14,
+    "conversationId": 52,
+    "accuracyScore": 8,
+    "helpfulnessScore": 6,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The response accurately reflects Nick Lanahan's military background with the U.S. Army Corps of Engineers and his leadership roles. However, it lacks specific information about his service in South Korea, which was the user's primary question. The bot appropriately suggests contacting Nick directly for precise details, maintaining a professional tone. The response is clear and well-structured.",
+    "strengths": [
+      "Accurate representation of Nick's military background.",
+      "Professional and clear communication.",
+      "Appropriate suggestion to contact Nick for specific details."
+    ],
+    "improvements": [
+      "Provide more specific information if available, such as service locations.",
+      "Address the user's question more directly by acknowledging the lack of specific location data.",
+      "Include a brief explanation of why specific location details might not be available."
+    ],
+    "evaluatedAt": "2025-07-13T01:58:37.753Z"
+  },
+  {
+    "id": 15,
+    "conversationId": 54,
+    "accuracyScore": 9,
+    "helpfulnessScore": 7,
+    "relevanceScore": 8,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The response is mostly accurate based on the available information, as it correctly identifies Nick Lanahan's service with the U.S. Army Corps of Engineers and his leadership experience. However, it lacks specific details about the positions he held and his station locations, which the user asked for. The response is clear and maintains a professional tone, but could be more helpful by suggesting alternative sources for the information or explaining why the details are unavailable.",
+    "strengths": [
+      "Accurate representation of Nick's military background",
+      "Clear and professional tone",
+      "Provides context about his leadership and engineering experience"
+    ],
+    "improvements": [
+      "Include more specific information if available",
+      "Suggest alternative ways to obtain the missing details",
+      "Acknowledge the limitation of available data more explicitly"
+    ],
+    "evaluatedAt": "2025-07-13T01:59:23.062Z"
+  },
+  {
+    "id": 16,
+    "conversationId": 55,
+    "accuracyScore": 9,
+    "helpfulnessScore": 8,
+    "relevanceScore": 9,
+    "clarityScore": 10,
+    "overallScore": 9,
+    "feedback": "The response accurately identifies Nick Lanahan's service in the U.S. Army Corps of Engineers, which is consistent with the available information. It is helpful and relevant to the user's question about his military service. The response is clear and well-structured, providing additional context about how his military experience contributes to his leadership skills, which adds value to the answer.",
+    "strengths": [
+      "Accurate representation of Nick Lanahan's military background.",
+      "Clear and well-structured response.",
+      "Provides additional context about the impact of military service on his skills."
+    ],
+    "improvements": [
+      "Could include more specific details about his role or achievements within the U.S. Army Corps of Engineers if available.",
+      "Might offer a brief mention of the duration of his service for more context.",
+      "Ensure that any additional context provided directly relates to the user's question to maintain focus."
+    ],
+    "evaluatedAt": "2025-07-13T01:59:36.862Z"
+  },
+  {
+    "id": 17,
+    "conversationId": 56,
+    "accuracyScore": 9,
+    "helpfulnessScore": 9,
+    "relevanceScore": 10,
+    "clarityScore": 10,
+    "overallScore": 9,
+    "feedback": "The response accurately reflects Nick Lanahan's military experience as described in the provided documents. It highlights his leadership role in the U.S. Army Corps of Engineers and effectively connects his military skills to his current career in product management and consulting. The response is clear, relevant, and provides a comprehensive answer to the user's question. However, it could benefit from additional specific examples or achievements during his military service if available.",
+    "strengths": [
+      "Accurate representation of Nick's military experience",
+      "Clear and well-structured response",
+      "Relevant and directly addresses the user's question"
+    ],
+    "improvements": [
+      "Include specific examples or achievements from his military service",
+      "Provide more detailed context about his roles in the Army",
+      "Consider mentioning any notable projects or responsibilities if available"
+    ],
+    "evaluatedAt": "2025-07-13T02:00:01.686Z"
+  },
+  {
+    "id": 18,
+    "conversationId": 57,
+    "accuracyScore": 8,
+    "helpfulnessScore": 7,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The response accurately captures Nick Lanahan's military background in the U.S. Army Corps of Engineers and the skills he gained, such as engineering and leadership. However, it lacks specific details about his exact roles within the military, which the user asked for. The response is clear and provides relevant context about how his military experience has influenced his professional career, which adds value to the answer. The bot also appropriately acknowledges the limitation of its knowledge regarding specific roles.",
+    "strengths": [
+      "Accurate depiction of Nick's military background and skills.",
+      "Provides relevant context about the influence of military experience on his career.",
+      "Clear and well-structured response."
+    ],
+    "improvements": [
+      "Include more specific details about Nick's military roles if available.",
+      "Directly address the user's request for specific roles before providing additional context.",
+      "Consider acknowledging the source of information to enhance credibility."
+    ],
+    "evaluatedAt": "2025-07-13T02:00:26.795Z"
+  },
+  {
+    "id": 19,
+    "conversationId": 58,
+    "accuracyScore": 8,
+    "helpfulnessScore": 6,
+    "relevanceScore": 8,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The bot's response is generally accurate based on the available information, highlighting Nick Lanahan's extensive experience with the U.S. Army Corps of Engineers and his leadership skills. However, it lacks specific details about his Army assignments and positions, which was the user's primary inquiry. The response is clear and maintains a professional tone, but could be more helpful by explicitly stating the absence of specific data and suggesting alternative ways to obtain it.",
+    "strengths": [
+      "Accurate representation of Nick's general military background",
+      "Clear and professional tone",
+      "Provides context about Nick's leadership and strategic skills"
+    ],
+    "improvements": [
+      "Include a disclaimer about the lack of specific assignment details",
+      "Suggest more concrete steps for obtaining detailed information",
+      "Enhance helpfulness by addressing the user's question more directly"
+    ],
+    "evaluatedAt": "2025-07-13T02:00:55.286Z"
+  },
+  {
+    "id": 20,
+    "conversationId": 59,
+    "accuracyScore": 8,
+    "helpfulnessScore": 7,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The response accurately states that Nick Lanahan served in the U.S. Army Corps of Engineers and acknowledges the lack of specific details about his positions and station locations. It provides a reasonable suggestion to contact Nick directly for more detailed information. The response is clear, relevant, and maintains a professional tone, but it could have been more helpful by summarizing the available information about his military experience.",
+    "strengths": [
+      "Accurate representation of available information",
+      "Clear and professional tone",
+      "Relevant and on-topic response"
+    ],
+    "improvements": [
+      "Include a brief summary of Nick's military experience based on available data",
+      "Provide more context about how his military experience relates to his current roles",
+      "Offer additional resources or suggestions for obtaining further information"
+    ],
+    "evaluatedAt": "2025-07-13T02:01:34.761Z"
+  },
+  {
+    "id": 21,
+    "conversationId": 60,
+    "accuracyScore": 9,
+    "helpfulnessScore": 8,
+    "relevanceScore": 9,
+    "clarityScore": 10,
+    "overallScore": 9,
+    "feedback": "The bot's response is mostly accurate based on the available information, clearly stating Nick Lanahan's role within the U.S. Army Corps of Engineers and his leadership experience. It acknowledges the lack of specific details about his positions and station locations, which is a factual representation of the provided context. The response is relevant to the user's question and maintains a professional and clear tone, making it easy to understand. However, it could be more helpful by suggesting potential sources or methods to obtain the missing information.",
+    "strengths": [
+      "Accurate representation of available information",
+      "Clear and professional tone",
+      "Acknowledges limitations in available data"
+    ],
+    "improvements": [
+      "Suggest ways to obtain more detailed information",
+      "Provide a more comprehensive summary of his military experience if possible",
+      "Include any relevant information from other documents if available"
+    ],
+    "evaluatedAt": "2025-07-13T02:02:06.071Z"
+  },
+  {
+    "id": 22,
+    "conversationId": 61,
+    "accuracyScore": 9,
+    "helpfulnessScore": 8,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 9,
+    "feedback": "The response is mostly accurate as it correctly states that there is no specific information about Nick Lanahan's service in South Korea in the available documents. It provides a general overview of his military service and leadership roles, which is relevant to the user's question. The response is clear, well-structured, and maintains a professional tone. However, it could be slightly more helpful by suggesting potential sources for more detailed information.",
+    "strengths": [
+      "Accurate representation of available information",
+      "Clear and professional tone",
+      "Relevant context provided"
+    ],
+    "improvements": [
+      "Suggest potential sources for more detailed information",
+      "Include a brief mention of the types of roles he might have held in South Korea based on his general military experience",
+      "Offer to assist with other related questions"
+    ],
+    "evaluatedAt": "2025-07-13T02:02:27.374Z"
+  },
+  {
+    "id": 23,
+    "conversationId": 62,
+    "accuracyScore": 7,
+    "helpfulnessScore": 6,
+    "relevanceScore": 8,
+    "clarityScore": 9,
+    "overallScore": 7,
+    "feedback": "The response accurately states that there is no specific information available about Nick's positions in South Korea, which is correct based on the provided context. However, it could have been more helpful by elaborating on the type of roles typically held by someone with his background in the U.S. Army Corps of Engineers. The response is relevant to the user's question and is clear and easy to understand.",
+    "strengths": [
+      "Accurate acknowledgment of the lack of specific information.",
+      "Clear and professional tone.",
+      "Relevant to the user's query."
+    ],
+    "improvements": [
+      "Provide more context about typical roles in the U.S. Army Corps of Engineers.",
+      "Suggest potential sources where the user might find more detailed information.",
+      "Include more details about Nick's military experience if available."
+    ],
+    "evaluatedAt": "2025-07-13T02:02:49.159Z"
+  },
+  {
+    "id": 24,
+    "conversationId": 63,
+    "accuracyScore": 9,
+    "helpfulnessScore": 8,
+    "relevanceScore": 9,
+    "clarityScore": 10,
+    "overallScore": 9,
+    "feedback": "The response is mostly accurate as it correctly identifies Nick Lanahan's military background with the U.S. Army Corps of Engineers. However, it does not provide specific details about his service in South Korea, which is acknowledged in the response. The bot's answer is helpful and relevant as it directly addresses the user's question about Nick's military service, while also clarifying the lack of specific information about South Korea. The response is clear, concise, and maintains a professional tone.",
+    "strengths": [
+      "Accurate representation of Nick's military background",
+      "Acknowledges the lack of specific information about South Korea",
+      "Clear and professional tone"
+    ],
+    "improvements": [
+      "Provide more context or suggest where to find additional information",
+      "Include a brief summary of Nick's overall military service if available",
+      "Offer to assist with related questions proactively"
+    ],
+    "evaluatedAt": "2025-07-13T02:03:08.679Z"
+  },
+  {
+    "id": 25,
+    "conversationId": 64,
+    "accuracyScore": 9,
+    "helpfulnessScore": 8,
+    "relevanceScore": 9,
+    "clarityScore": 10,
+    "overallScore": 9,
+    "feedback": "The chatbot's response is mostly accurate, as it correctly identifies Nick Lanahan as a U.S. Army Veteran. It acknowledges the lack of specific information about his current rank, which is consistent with the provided context. The response is helpful and relevant to the user's question, as it directly addresses the inquiry about Nick's current Army rank. The suggestion to contact Nick directly for more information is appropriate given the context. The response is clear, well-structured, and maintains a professional tone.",
+    "strengths": [
+      "Accurate identification of Nick as a U.S. Army Veteran.",
+      "Clear and professional tone.",
+      "Appropriate suggestion to contact Nick for more information."
+    ],
+    "improvements": [
+      "Provide more context if available, such as any known past ranks or roles.",
+      "Include a brief explanation of why the information might not be available.",
+      "Consider offering general information about how military ranks work for veterans if relevant."
+    ],
+    "evaluatedAt": "2025-07-13T02:03:17.729Z"
+  },
+  {
+    "id": 26,
+    "conversationId": 65,
+    "accuracyScore": 9,
+    "helpfulnessScore": 8,
+    "relevanceScore": 9,
+    "clarityScore": 10,
+    "overallScore": 9,
+    "feedback": "The bot's response is mostly accurate, acknowledging the lack of specific information about Nick Lanahan's military positions in South Korea. It correctly identifies his background in the U.S. Army Corps of Engineers and suggests likely roles related to engineering or leadership. The response is helpful and relevant, as it addresses the user's question within the constraints of available information. The clarity of the response is excellent, as it is well-structured and easy to understand.",
+    "strengths": [
+      "Acknowledges the lack of specific information, preventing misinformation.",
+      "Provides a logical inference based on known background details.",
+      "Maintains a clear and professional tone throughout the response."
+    ],
+    "improvements": [
+      "Could offer more general information about typical roles in the U.S. Army Corps of Engineers to provide additional context.",
+      "Suggest alternative sources or methods for obtaining the desired information.",
+      "Include a brief explanation of why direct contact with Nick might yield more detailed information."
+    ],
+    "evaluatedAt": "2025-07-13T02:03:37.207Z"
+  },
+  {
+    "id": 27,
+    "conversationId": 66,
+    "accuracyScore": 8,
+    "helpfulnessScore": 7,
+    "relevanceScore": 8,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The response is mostly accurate as it correctly states that Nick Lanahan served in the U.S. Army Corps of Engineers for over 12 years. However, it does not provide specific years of service, which was the user's main question. The mention of his role as an Assistant Professor of Military Science at The Ohio State University from November 2018 to May 2021 is relevant but does not directly answer the question about his Army service years. The response is clear and well-structured, making it easy to understand.",
+    "strengths": [
+      "Accurate representation of Nick's role in the Army Corps of Engineers.",
+      "Clear and well-structured response.",
+      "Provides additional relevant information about his role at The Ohio State University."
+    ],
+    "improvements": [
+      "Include specific years of service in the Army if available.",
+      "Focus more on directly answering the user's question about the years of service.",
+      "Clarify the connection between his Army service and his role at The Ohio State University if relevant."
+    ],
+    "evaluatedAt": "2025-07-13T02:05:00.567Z"
+  },
+  {
+    "id": 28,
+    "conversationId": 67,
+    "accuracyScore": 8,
+    "helpfulnessScore": 7,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The response is mostly accurate based on the available information, providing a reasonable estimation of Nick Lanahan's service years in the Army. It is helpful and relevant to the user's question, offering context where specific details are missing. The response is clear and well-structured, maintaining a professional tone.",
+    "strengths": [
+      "Provides a logical estimation of service years based on available data.",
+      "Maintains clarity and professionalism in the response.",
+      "Addresses the user's question with relevant context."
+    ],
+    "improvements": [
+      "Include a disclaimer about the lack of specific dates to enhance transparency.",
+      "Consider providing a more detailed breakdown of the timeline if possible.",
+      "Verify if additional sources could confirm the exact service years."
+    ],
+    "evaluatedAt": "2025-07-13T02:06:12.750Z"
+  },
+  {
+    "id": 29,
+    "conversationId": 68,
+    "accuracyScore": 8,
+    "helpfulnessScore": 9,
+    "relevanceScore": 10,
+    "clarityScore": 9,
+    "overallScore": 9,
+    "feedback": "The response provides a comprehensive overview of Nick Lanahan's background, touching on his experience, roles, and education. It accurately reflects the information available from the provided documents, particularly the resume and accomplishments document. However, some details, such as the specific contributions and metrics, could not be verified due to the lack of access to certain files. The response is well-structured and clear, making it easy to understand.",
+    "strengths": [
+      "Comprehensive overview of Nick's background",
+      "Clear and well-structured response",
+      "Highly relevant to the user's question"
+    ],
+    "improvements": [
+      "Verify specific contributions and metrics mentioned",
+      "Ensure all details are cross-checked with available documents",
+      "Provide more context on unavailable information"
+    ],
+    "evaluatedAt": "2025-07-13T02:08:13.458Z"
+  },
+  {
+    "id": 30,
+    "conversationId": 69,
+    "accuracyScore": 10,
+    "helpfulnessScore": 10,
+    "relevanceScore": 10,
+    "clarityScore": 10,
+    "overallScore": 10,
+    "feedback": "The chatbot's response is completely accurate, providing precise information about Nick Lanahan's current job position. It directly answers the user's question with relevant details, maintaining a clear and professional tone throughout.",
+    "strengths": [
+      "Accurate representation of Nick's current job position.",
+      "Directly addresses the user's question.",
+      "Clear and professional tone."
+    ],
+    "improvements": [
+      "Ensure consistent access to all relevant documents for comprehensive context.",
+      "Consider providing additional context if the user asks follow-up questions.",
+      "Maintain up-to-date information if there are changes in Nick's employment status."
+    ],
+    "evaluatedAt": "2025-07-13T02:11:30.842Z"
+  },
+  {
+    "id": 31,
+    "conversationId": 70,
+    "accuracyScore": 9,
+    "helpfulnessScore": 10,
+    "relevanceScore": 10,
+    "clarityScore": 10,
+    "overallScore": 10,
+    "feedback": "The response is highly accurate, providing detailed information about Nick Lanahan's educational background. It includes specific degrees, institutions, and completion dates, which directly address the user's question about what Nick studied in school. The response is clear, well-structured, and maintains a professional tone throughout.",
+    "strengths": [
+      "Detailed and specific information about Nick's educational background.",
+      "Directly answers the user's question with relevant details.",
+      "Clear and professional tone that enhances understanding."
+    ],
+    "improvements": [
+      "Ensure all information is cross-verified with available documents to maintain accuracy.",
+      "Include any additional relevant educational achievements if available.",
+      "Maintain consistency in the format of educational details for clarity."
+    ],
+    "evaluatedAt": "2025-07-13T02:13:25.924Z"
+  },
+  {
+    "id": 32,
+    "conversationId": 71,
+    "accuracyScore": 8,
+    "helpfulnessScore": 7,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The response accurately notes the lack of specific coursework details in the provided documents and highlights Nick's advanced certifications in AI Product Management. It also references his relevant roles and achievements, which supports the user's inquiry about his product management expertise. However, it could have been more helpful by explicitly stating that the documents did not provide coursework details, rather than implying it through context.",
+    "strengths": [
+      "Accurately identifies the lack of specific coursework information in the documents.",
+      "Highlights relevant achievements and certifications related to product management.",
+      "Maintains a clear and professional tone."
+    ],
+    "improvements": [
+      "Explicitly state that the documents do not provide specific coursework details.",
+      "Provide more context about the relevance of his roles and achievements to product management.",
+      "Include any additional information about his educational background that might relate to product management, if available."
+    ],
+    "evaluatedAt": "2025-07-13T02:16:26.105Z"
+  },
+  {
+    "id": 33,
+    "conversationId": 72,
+    "accuracyScore": 9,
+    "helpfulnessScore": 8,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 9,
+    "feedback": "The response accurately reflects Nick Lanahan's educational background and its relevance to his role as a Product Manager. It provides a comprehensive overview of his qualifications, which are pertinent to the user's question about relevant coursework. The response is clear, well-structured, and maintains a professional tone throughout.",
+    "strengths": [
+      "Accurate representation of Nick's educational background.",
+      "Clear explanation of how his education contributes to his skills as a Product Manager.",
+      "Professional and well-structured response."
+    ],
+    "improvements": [
+      "Include specific coursework if available to enhance the response.",
+      "Mention any additional certifications or training relevant to product management.",
+      "Provide more context on how his military background influences his management skills."
+    ],
+    "evaluatedAt": "2025-07-13T02:18:51.400Z"
+  },
+  {
+    "id": 34,
+    "conversationId": 73,
+    "accuracyScore": 9,
+    "helpfulnessScore": 9,
+    "relevanceScore": 10,
+    "clarityScore": 9,
+    "overallScore": 9,
+    "feedback": "The bot's response is highly accurate and aligns well with the available information about Nick Lanahan's skills and experience. It effectively highlights his expertise in leading cross-functional teams, strategic product management, and stakeholder relationship building, which are consistent with the details extracted from the documents. The response is very helpful and relevant to the user's question about Nick's strongest skills. It is clear and well-structured, providing a comprehensive overview of his capabilities.",
+    "strengths": [
+      "Accurate representation of Nick's skills and experience",
+      "Highly relevant to the user's question",
+      "Clear and well-structured response"
+    ],
+    "improvements": [
+      "Include more specific examples or achievements if available",
+      "Ensure all statements are directly supported by the extracted documents",
+      "Consider mentioning any unique skills or certifications if relevant"
+    ],
+    "evaluatedAt": "2025-07-13T02:20:40.068Z"
+  },
+  {
+    "id": 35,
+    "conversationId": 74,
+    "accuracyScore": 8,
+    "helpfulnessScore": 7,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The bot's response is mostly accurate and provides a reasonable inference based on the available information about Nick Lanahan's professional background. However, it doesn't provide specific details about the courses taken during his MBA, which is the user's main query. The response is clear and maintains a professional tone, offering a logical suggestion to contact Nick directly for more detailed information.",
+    "strengths": [
+      "The response accurately identifies Nick's MBA completion at The Ohio State University.",
+      "The bot infers relevant focus areas based on Nick's professional expertise.",
+      "The response is clear, well-structured, and maintains a professional tone."
+    ],
+    "improvements": [
+      "Provide a disclaimer that specific course details are not available in the provided documents.",
+      "Enhance helpfulness by suggesting potential course topics based on common MBA curricula.",
+      "Consider acknowledging the lack of specific information more explicitly to manage user expectations."
+    ],
+    "evaluatedAt": "2025-07-13T02:22:56.250Z"
+  },
+  {
+    "id": 36,
+    "conversationId": 75,
+    "accuracyScore": 9,
+    "helpfulnessScore": 8,
+    "relevanceScore": 10,
+    "clarityScore": 9,
+    "overallScore": 9,
+    "feedback": "The response accurately identifies Nick Lanahan's educational background, including the institutions and degrees obtained. It clearly states that specific course details are not available in the provided documents, which is a factual and honest representation of the information at hand. The response is relevant to the user's query and maintains a professional tone throughout.",
+    "strengths": [
+      "Accurate representation of Nick Lanahan's educational background.",
+      "Clear communication of the lack of specific course details.",
+      "Maintains a professional and relevant tone."
+    ],
+    "improvements": [
+      "Provide potential suggestions for where to find detailed course information, if applicable.",
+      "Include a brief explanation of the typical courses in those programs, if possible, to add value.",
+      "Ensure the response is as concise as possible while maintaining clarity."
+    ],
+    "evaluatedAt": "2025-07-13T02:23:31.718Z"
+  },
+  {
+    "id": 37,
+    "conversationId": 76,
+    "accuracyScore": 9,
+    "helpfulnessScore": 7,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The chatbot response is largely accurate given the available information, clearly stating that specific course details from Nick Lanahan's MBA are not provided in the context. It correctly identifies his completion of an MBA at The Ohio State University and suggests a focus on product management and strategic planning, which aligns with his professional background. The response is relevant and maintains clarity throughout, though it could be more helpful by suggesting practical next steps for obtaining the desired information.",
+    "strengths": [
+      "Accurate representation of available information",
+      "Clear and well-structured response",
+      "Relevant to the user's question"
+    ],
+    "improvements": [
+      "Provide more specific guidance on how to obtain detailed course information",
+      "Include potential courses related to his focus areas as examples",
+      "Enhance helpfulness by suggesting alternative sources or contacts"
+    ],
+    "evaluatedAt": "2025-07-13T02:27:04.208Z"
+  },
+  {
+    "id": 38,
+    "conversationId": 77,
+    "accuracyScore": 8,
+    "helpfulnessScore": 7,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The response is mostly accurate in stating that Nick Lanahan earned his MBA from The Ohio State University, Fisher College of Business, and it correctly infers the likely focus areas of his MBA based on his professional expertise. However, it lacks specific details about the courses, which limits its helpfulness. The response is relevant and clear, offering a logical assumption about the MBA focus areas.",
+    "strengths": [
+      "The response accurately identifies Nick Lanahan's MBA institution and graduation date.",
+      "It provides a logical inference about the MBA focus areas based on Nick's professional background.",
+      "The response is clear and well-structured, making it easy to understand."
+    ],
+    "improvements": [
+      "Include a disclaimer that specific course details are not available, to manage user expectations.",
+      "Provide more context or examples of typical MBA courses to enhance helpfulness.",
+      "Consider suggesting where the user might find more detailed information about Nick's MBA coursework."
+    ],
+    "evaluatedAt": "2025-07-13T02:30:34.493Z"
+  },
+  {
+    "id": 39,
+    "conversationId": 78,
+    "accuracyScore": 9,
+    "helpfulnessScore": 8,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 9,
+    "feedback": "The response is highly accurate based on the available information, as it correctly states that there is no specific mention of entrepreneurship courses in Nick Lanahan's educational background. The response is helpful and relevant, as it directly addresses the user's question and provides additional context about Nick's education. The clarity of the response is excellent, with a well-structured and easy-to-understand explanation.",
+    "strengths": [
+      "Accurate representation of available information",
+      "Clear and concise explanation",
+      "Provides relevant educational background context"
+    ],
+    "improvements": [
+      "Could suggest potential sources for more detailed information",
+      "Include a disclaimer about the limitations of the available documents",
+      "Offer to help with additional related queries"
+    ],
+    "evaluatedAt": "2025-07-13T02:33:12.286Z"
+  },
+  {
+    "id": 40,
+    "conversationId": 79,
+    "accuracyScore": 9,
+    "helpfulnessScore": 8,
+    "relevanceScore": 10,
+    "clarityScore": 10,
+    "overallScore": 9,
+    "feedback": "The response accurately reflects the available information about Nick Lanahan's educational background, noting that specific entrepreneurship courses are not mentioned. It provides a clear and relevant answer to the user's question, maintaining a professional and informative tone.",
+    "strengths": [
+      "Accurate representation of available information",
+      "Clear and concise response",
+      "Directly addresses the user's question"
+    ],
+    "improvements": [
+      "Include a suggestion for how the user might find more detailed course information",
+      "Mention the possibility of entrepreneurship courses being part of the MBA program",
+      "Provide a brief context on why specific course details might not be available"
+    ],
+    "evaluatedAt": "2025-07-13T02:33:44.091Z"
+  },
+  {
+    "id": 41,
+    "conversationId": 80,
+    "accuracyScore": 9,
+    "helpfulnessScore": 8,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 9,
+    "feedback": "The response accurately reflects the available information about Nick Lanahan's educational background, noting the absence of specific finance courses. It provides a reasonable inference that finance topics might be covered within broader curricula, which is a logical assumption given his MBA. The response is clear, relevant, and maintains a professional tone.",
+    "strengths": [
+      "Accurate representation of available educational background.",
+      "Clear and concise explanation.",
+      "Professional and informative tone."
+    ],
+    "improvements": [
+      "Could explicitly state the limitations of the available data.",
+      "Might suggest potential areas where finance could be covered in his studies.",
+      "Could acknowledge the possibility of finance-related experience outside formal coursework."
+    ],
+    "evaluatedAt": "2025-07-13T02:35:42.458Z"
+  },
+  {
+    "id": 42,
+    "conversationId": 81,
+    "accuracyScore": 10,
+    "helpfulnessScore": 10,
+    "relevanceScore": 10,
+    "clarityScore": 10,
+    "overallScore": 10,
+    "feedback": "The chatbot's response is completely accurate and directly answers the user's question about Nick's educational background at Missouri University of Science and Technology. The information provided is precise, relevant, and clearly presented, making it extremely helpful for the user.",
+    "strengths": [
+      "Accurate representation of Nick's educational background.",
+      "Directly addresses the user's specific question.",
+      "Clear and well-structured response."
+    ],
+    "improvements": [
+      "None needed; the response is exemplary in all evaluated criteria."
+    ],
+    "evaluatedAt": "2025-07-13T02:42:23.044Z"
+  },
+  {
+    "id": 43,
+    "conversationId": 82,
+    "accuracyScore": 9,
+    "helpfulnessScore": 10,
+    "relevanceScore": 10,
+    "clarityScore": 10,
+    "overallScore": 10,
+    "feedback": "The response is highly accurate and provides a comprehensive answer to the user's question about Nick Lanahan's educational background. It includes detailed information about his degrees and the institutions he attended, which aligns with the available data. The response is clear, well-structured, and directly relevant to the user's inquiry, making it extremely helpful.",
+    "strengths": [
+      "Comprehensive and detailed response",
+      "Clear and well-structured information",
+      "Directly addresses the user's question"
+    ],
+    "improvements": [
+      "Verify all details against the most current data",
+      "Ensure consistency with any additional available documents",
+      "Include any recent educational updates if applicable"
+    ],
+    "evaluatedAt": "2025-07-13T02:43:05.608Z"
+  },
+  {
+    "id": 44,
+    "conversationId": 83,
+    "accuracyScore": 9,
+    "helpfulnessScore": 8,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 9,
+    "feedback": "The response accurately reflects the information available about Nick Lanahan's educational background, mentioning his degrees and the institutions he attended. It correctly notes that there is no explicit mention of finance courses in the provided details. The response is helpful and relevant, as it addresses the user's question about Nick's finance education. The clarity is high, with a well-structured and easy-to-understand explanation. However, it could have been slightly more helpful by suggesting that finance courses are commonly part of an MBA curriculum, even if not explicitly stated.",
+    "strengths": [
+      "Accurate representation of Nick's educational background",
+      "Clear and well-structured response",
+      "Relevant and on-topic"
+    ],
+    "improvements": [
+      "Could mention that finance courses are typically part of an MBA curriculum",
+      "Provide more context on typical MBA coursework",
+      "Reassure the user about the possibility of finance education despite lack of explicit mention"
+    ],
+    "evaluatedAt": "2025-07-13T02:50:35.853Z"
+  },
+  {
+    "id": 45,
+    "conversationId": 84,
+    "accuracyScore": 9,
+    "helpfulnessScore": 8,
+    "relevanceScore": 9,
+    "clarityScore": 10,
+    "overallScore": 9,
+    "feedback": "The bot's response is mostly accurate, as it correctly identifies Nick's educational qualifications and notes the absence of specific information about finance courses. It is helpful and relevant to the user's question, providing a clear and concise answer. However, the response could be improved by acknowledging the possibility that finance courses might be part of the MBA curriculum, even if not explicitly mentioned.",
+    "strengths": [
+      "Accurately identifies Nick's educational background.",
+      "Clearly communicates the lack of specific information about finance courses.",
+      "Maintains a professional and clear tone."
+    ],
+    "improvements": [
+      "Consider mentioning the typical inclusion of finance courses in an MBA program.",
+      "Provide additional context or suggest where more detailed information might be found.",
+      "Acknowledge any assumptions made due to lack of detailed information."
+    ],
+    "evaluatedAt": "2025-07-13T02:58:36.410Z"
+  },
+  {
+    "id": 46,
+    "conversationId": 85,
+    "accuracyScore": 10,
+    "helpfulnessScore": 8,
+    "relevanceScore": 9,
+    "clarityScore": 10,
+    "overallScore": 9,
+    "feedback": "The response accurately states that specific course information from Nick's MBA is not available in the provided documents. It suggests a practical next step by recommending reaching out to Nick directly for more details. The response is clear, concise, and maintains a professional tone.",
+    "strengths": [
+      "Accurate representation of available information",
+      "Clear and concise communication",
+      "Professional and polite tone"
+    ],
+    "improvements": [
+      "Provide alternative suggestions for obtaining course information, such as contacting the university",
+      "Include a brief overview of typical MBA courses if relevant",
+      "Consider acknowledging the user's interest in more detail to enhance engagement"
+    ],
+    "evaluatedAt": "2025-07-13T03:05:22.092Z"
+  },
+  {
+    "id": 47,
+    "conversationId": 86,
+    "accuracyScore": 9,
+    "helpfulnessScore": 8,
+    "relevanceScore": 9,
+    "clarityScore": 10,
+    "overallScore": 9,
+    "feedback": "The bot's response is mostly accurate, clearly stating that the specific courses Nick took during his MBA are not detailed in the provided documents. It infers potential courses based on his professional background, which aligns with the available information. The response is helpful and relevant, as it addresses the user's question about Nick's MBA courses while acknowledging the lack of specific details. The response is clear, well-structured, and maintains a professional tone.",
+    "strengths": [
+      "Acknowledges the lack of specific information in the documents",
+      "Provides a logical inference based on Nick's professional background",
+      "Maintains clarity and professionalism in the response"
+    ],
+    "improvements": [
+      "Could suggest alternative ways to find the specific course information",
+      "Might include more context about Nick's documented expertise",
+      "Could offer to assist with related inquiries about Nick's professional accomplishments"
+    ],
+    "evaluatedAt": "2025-07-13T03:19:34.307Z"
+  },
+  {
+    "id": 48,
+    "conversationId": 87,
+    "accuracyScore": 7,
+    "helpfulnessScore": 6,
+    "relevanceScore": 8,
+    "clarityScore": 9,
+    "overallScore": 7,
+    "feedback": "The response provides a reasonable assumption about the types of courses Nick might have taken during his MBA studies based on his professional expertise and typical MBA curricula. However, it lacks specific details about Nick's actual coursework, which limits its accuracy and helpfulness. The response is relevant to the user's question and is clearly articulated, but it could be improved by acknowledging the lack of specific data more explicitly.",
+    "strengths": [
+      "The response is clear and well-structured, making it easy to understand.",
+      "It provides a logical assumption based on typical MBA courses and Nick's professional background.",
+      "The response maintains a professional tone throughout."
+    ],
+    "improvements": [
+      "Include a disclaimer about the lack of specific course information to manage user expectations better.",
+      "Provide more context about why certain courses are assumed, such as linking them directly to Nick's known skills or roles.",
+      "Enhance helpfulness by suggesting where the user might find more detailed information about Nick's MBA coursework."
+    ],
+    "evaluatedAt": "2025-07-13T03:27:27.939Z"
+  },
+  {
+    "id": 49,
+    "conversationId": 88,
+    "accuracyScore": 8,
+    "helpfulnessScore": 8,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The response is mostly accurate, providing a reasonable inference based on Nick's educational background. It is helpful and relevant to the user's question, offering a logical assumption about the finance-related coursework typically included in an MBA program. The response is clear and well-structured, making it easy to understand. However, it could be improved by explicitly stating the lack of specific course details in the available documents.",
+    "strengths": [
+      "Provides a logical inference based on available educational background",
+      "Clear and well-structured response",
+      "Relevant and addresses the user's question effectively"
+    ],
+    "improvements": [
+      "Explicitly state the absence of specific course details in the documents",
+      "Suggest alternative ways to obtain detailed course information",
+      "Avoid assumptions by clearly distinguishing between known facts and logical inferences"
+    ],
+    "evaluatedAt": "2025-07-13T03:41:19.194Z"
+  },
+  {
+    "id": 50,
+    "conversationId": 89,
+    "accuracyScore": 4,
+    "helpfulnessScore": 5,
+    "relevanceScore": 6,
+    "clarityScore": 8,
+    "overallScore": 5,
+    "feedback": "The bot's response attempts to provide information about finance courses Nick Lanahan has taken, but it lacks accuracy due to the absence of verified data from the provided documents. The response is somewhat helpful as it addresses the user's question about finance courses, but it relies on assumptions rather than confirmed facts. The response is relevant to the user's query and is presented clearly, though it could be misleading due to the lack of evidence supporting the claims.",
+    "strengths": [
+      "The response is clear and easy to understand.",
+      "It attempts to directly address the user's question.",
+      "The structure of the response is logical and well-organized."
+    ],
+    "improvements": [
+      "Verify the accuracy of the information provided by cross-referencing available documents.",
+      "Avoid making assumptions about Nick's academic background without evidence.",
+      "Provide a disclaimer if the information cannot be confirmed from the available data."
+    ],
+    "evaluatedAt": "2025-07-13T04:28:44.679Z"
+  },
+  {
+    "id": 51,
+    "conversationId": 90,
+    "accuracyScore": 2,
+    "helpfulnessScore": 3,
+    "relevanceScore": 5,
+    "clarityScore": 7,
+    "overallScore": 4,
+    "feedback": "The response attempts to provide information about Nick Lanahan's MBA coursework, but it lacks factual accuracy as there is no evidence from the provided context that these specific courses were part of his MBA program. The response is somewhat relevant as it addresses the user's question about coursework, but it is not helpful due to the lack of verified information. The clarity of the response is decent, with a clear structure and understandable language.",
+    "strengths": [
+      "Clear and structured response",
+      "Attempts to address the user's question",
+      "Professional tone"
+    ],
+    "improvements": [
+      "Ensure factual accuracy by verifying information before responding",
+      "Provide context or disclaimers when specific information is unavailable",
+      "Improve helpfulness by offering alternative ways to obtain the requested information"
+    ],
+    "evaluatedAt": "2025-07-13T04:30:51.527Z"
+  },
+  {
+    "id": 52,
+    "conversationId": 91,
+    "accuracyScore": 9,
+    "helpfulnessScore": 6,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The response accurately states that the specific information about Nick's MBA coursework is not available in the provided documents. It maintains a professional tone and encourages further questions, which is helpful. However, it could have provided more context or alternative suggestions, such as where the user might find this information.",
+    "strengths": [
+      "Accurate acknowledgment of unavailable information",
+      "Encourages further engagement with the user",
+      "Maintains a professional and clear tone"
+    ],
+    "improvements": [
+      "Could suggest alternative sources for finding the information",
+      "Provide more context about Nick's educational background if available",
+      "Offer a broader overview of Nick's qualifications related to his MBA"
+    ],
+    "evaluatedAt": "2025-07-13T04:36:03.508Z"
+  },
+  {
+    "id": 53,
+    "conversationId": 92,
+    "accuracyScore": 5,
+    "helpfulnessScore": 6,
+    "relevanceScore": 8,
+    "clarityScore": 9,
+    "overallScore": 6,
+    "feedback": "The response provides a general overview of typical MBA coursework, which may or may not be specific to Nick Lanahan's actual studies. It lacks specific details about Nick's actual coursework and grades, which were requested by the user. The response is clear and well-structured but lacks accuracy due to the absence of specific information about Nick's MBA program.",
+    "strengths": [
+      "The response is clear and easy to understand.",
+      "The response is relevant to the user's question about MBA coursework.",
+      "The response maintains a professional tone."
+    ],
+    "improvements": [
+      "Provide specific details about Nick Lanahan's actual MBA coursework if available.",
+      "Clarify the source of the information to enhance credibility.",
+      "Acknowledge the lack of specific grade information more explicitly and suggest alternative ways to obtain it if possible."
+    ],
+    "evaluatedAt": "2025-07-13T04:40:52.335Z"
+  },
+  {
+    "id": 54,
+    "conversationId": 93,
+    "accuracyScore": 10,
+    "helpfulnessScore": 5,
+    "relevanceScore": 8,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The bot's response is accurate in stating that it doesn't have specific information about Nick's performance ratings from his EY performance reviews. However, it could be more helpful by providing additional context or suggesting alternative ways to obtain the information. The response is relevant to the user's question and is clear and concise.",
+    "strengths": [
+      "Accurate in acknowledging the lack of specific information.",
+      "Clear and concise response.",
+      "Relevant to the user's question."
+    ],
+    "improvements": [
+      "Provide suggestions on how to obtain the desired information.",
+      "Offer additional context or related information that might be helpful.",
+      "Enhance the response by acknowledging the user's query more directly."
+    ],
+    "evaluatedAt": "2025-07-13T04:49:36.928Z"
+  },
+  {
+    "id": 55,
+    "conversationId": 94,
+    "accuracyScore": 9,
+    "helpfulnessScore": 8,
+    "relevanceScore": 10,
+    "clarityScore": 10,
+    "overallScore": 9,
+    "feedback": "The bot's response is mostly accurate, as it correctly identifies Missouri University of Science and Technology as one of the institutions where Nick Lanahan obtained a Master's degree. However, it misses mentioning that Nick also attended The Ohio State University for his MBA, which is relevant to the user's question about his Master's education. The response is clear, relevant, and well-structured, providing a direct answer to the user's query.",
+    "strengths": [
+      "Accurate identification of one of the institutions attended for a Master's degree.",
+      "Clear and concise response.",
+      "Directly addresses the user's question."
+    ],
+    "improvements": [
+      "Include information about both Master's degrees to provide a complete answer.",
+      "Mention the specific degree obtained at Missouri University of Science and Technology for added clarity.",
+      "Consider providing additional context about Nick's educational background when relevant."
+    ],
+    "evaluatedAt": "2025-07-13T04:49:44.890Z"
+  },
+  {
+    "id": 56,
+    "conversationId": 95,
+    "accuracyScore": 8,
+    "helpfulnessScore": 7,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The response is mostly accurate and provides a reasonable assumption about the focus of Nick's MBA coursework based on his professional background. It acknowledges the lack of specific course titles, which is a good practice when precise information is unavailable. The response is relevant to the user's question and is clear and easy to understand.",
+    "strengths": [
+      "Acknowledges the lack of specific information, maintaining transparency.",
+      "Provides a logical assumption based on Nick's professional background.",
+      "Clear and concise response."
+    ],
+    "improvements": [
+      "Could have mentioned the specific institution where Nick completed his MBA for added context.",
+      "Include more specific details if available in other documents.",
+      "Offer to assist with related questions or provide more general information about typical MBA coursework."
+    ],
+    "evaluatedAt": "2025-07-13T04:51:12.408Z"
+  },
+  {
+    "id": 57,
+    "conversationId": 96,
+    "accuracyScore": 7,
+    "helpfulnessScore": 6,
+    "relevanceScore": 8,
+    "clarityScore": 9,
+    "overallScore": 7,
+    "feedback": "The response is generally accurate in terms of the broader focus areas of Nick's MBA coursework, such as strategy and leadership development, which align with his professional background. However, it lacks specific details about the coursework that would make it more helpful. The response is relevant to the user's question but could be improved by providing more precise information or indicating the absence of specific details in the available documents. The response is clear and well-structured, maintaining a professional tone.",
+    "strengths": [
+      "Clear and well-structured response",
+      "Professional tone",
+      "Relevant to the user's question"
+    ],
+    "improvements": [
+      "Provide more specific details about the MBA coursework",
+      "Indicate if specific course information is unavailable",
+      "Enhance helpfulness by addressing the user's question more directly"
+    ],
+    "evaluatedAt": "2025-07-13T04:52:57.304Z"
+  },
+  {
+    "id": 58,
+    "conversationId": 97,
+    "accuracyScore": 10,
+    "helpfulnessScore": 8,
+    "relevanceScore": 10,
+    "clarityScore": 10,
+    "overallScore": 9,
+    "feedback": "The response accurately states that the specific information about the courses Nick took in his MBA program is not available in the provided documents. This is factually correct as the documents do not contain detailed course information. The response is relevant and directly addresses the user's question. It is also clear and concise, making it easy for the user to understand the limitation of the available information.",
+    "strengths": [
+      "Accurate representation of available information",
+      "Directly addresses the user's question",
+      "Clear and concise response"
+    ],
+    "improvements": [
+      "Provide alternative suggestions, such as where to find the information",
+      "Offer additional context about Nick's educational background",
+      "Include a polite note acknowledging the limitation"
+    ],
+    "evaluatedAt": "2025-07-13T04:53:23.812Z"
+  },
+  {
+    "id": 59,
+    "conversationId": 99,
+    "accuracyScore": 9,
+    "helpfulnessScore": 8,
+    "relevanceScore": 9,
+    "clarityScore": 10,
+    "overallScore": 9,
+    "feedback": "The response is mostly accurate as it correctly states that Nick graduated with an MBA from Ohio State University. However, it does not provide specific information about his GPA, which was the user's primary question. The response is helpful in confirming his educational background and offers to provide more details if needed, which adds value. The response is relevant to the user's question and maintains a professional and clear tone throughout.",
+    "strengths": [
+      "Accurate representation of Nick's educational background.",
+      "Clear and professional tone.",
+      "Offers additional assistance for further inquiries."
+    ],
+    "improvements": [
+      "Directly address the user's specific question about GPA, even if to confirm its unavailability.",
+      "Provide a brief explanation of why the GPA information might not be available.",
+      "Consider referencing the limitation due to document reading issues more prominently."
+    ],
+    "evaluatedAt": "2025-07-13T04:54:05.932Z"
+  },
+  {
+    "id": 60,
+    "conversationId": 100,
+    "accuracyScore": 4,
+    "helpfulnessScore": 6,
+    "relevanceScore": 7,
+    "clarityScore": 8,
+    "overallScore": 6,
+    "feedback": "The response provides a list of courses that Nick Lanahan supposedly took during his MBA, but there is no direct evidence from the provided documents to verify this information. The response is somewhat helpful as it attempts to answer the user's question, but the accuracy is questionable due to the lack of supporting data. The response is relevant to the user's question and is presented clearly, but it lacks verification of the facts.",
+    "strengths": [
+      "Clear and well-structured response",
+      "Attempts to provide a comprehensive list of courses",
+      "Relevant to the user's question"
+    ],
+    "improvements": [
+      "Verify the accuracy of the course list with available documents",
+      "Provide a disclaimer about the lack of direct evidence for the courses listed",
+      "Enhance the response with more context from verified sources"
+    ],
+    "evaluatedAt": "2025-07-13T04:58:05.161Z"
+  },
+  {
+    "id": 61,
+    "conversationId": 101,
+    "accuracyScore": 6,
+    "helpfulnessScore": 5,
+    "relevanceScore": 7,
+    "clarityScore": 8,
+    "overallScore": 6,
+    "feedback": "The response provides a general overview of typical MBA coursework, which may not specifically reflect Nick's actual coursework as there is no detailed information about his MBA courses in the provided documents. The response is somewhat helpful in giving a broad idea of what an MBA might entail, but it lacks specific details about Nick's academic record or coursework. The note about unreadable documents is a good addition for transparency, but it doesn't compensate for the lack of specific information.",
+    "strengths": [
+      "Provides a general overview of typical MBA coursework.",
+      "Includes a note about unreadable documents for transparency.",
+      "Clear and well-structured response."
+    ],
+    "improvements": [
+      "Verify and include specific coursework details from available documents.",
+      "Address the user's question more directly with specific information about Nick.",
+      "Avoid making assumptions about coursework without supporting evidence."
+    ],
+    "evaluatedAt": "2025-07-13T05:02:55.548Z"
+  },
+  {
+    "id": 62,
+    "conversationId": 102,
+    "accuracyScore": 9,
+    "helpfulnessScore": 9,
+    "relevanceScore": 10,
+    "clarityScore": 10,
+    "overallScore": 9,
+    "feedback": "The response accurately represents Nick Lanahan's educational background, providing detailed information about his degrees and relevant coursework. It effectively addresses the user's question about his educational background and provides additional context about how his education complements his professional experience. The response is clear, well-structured, and maintains a professional tone. However, the bot's mention of unread documents is unnecessary in this context, as it does not affect the accuracy of the educational information provided.",
+    "strengths": [
+      "Accurate representation of Nick's educational background",
+      "Clear and well-structured response",
+      "Relevant and comprehensive information provided"
+    ],
+    "improvements": [
+      "Remove mention of unread documents when not directly relevant",
+      "Consider summarizing coursework to maintain focus on degrees",
+      "Ensure all facts are cross-verified with available documents"
+    ],
+    "evaluatedAt": "2025-07-13T05:07:00.653Z"
+  },
+  {
+    "id": 63,
+    "conversationId": 103,
+    "accuracyScore": 8,
+    "helpfulnessScore": 8,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The response provides a detailed overview of Nick Lanahan's educational background, accurately mentioning his degrees and relevant coursework. However, it incorrectly states that specific details about his MBA are not available, despite the context indicating he completed an MBA at Ohio State University. The response is clear, well-structured, and mostly relevant to the user's question.",
+    "strengths": [
+      "Provides detailed information about Nick's educational background.",
+      "Mentions specific courses and achievements, adding depth to the response.",
+      "Maintains a clear and professional tone throughout."
+    ],
+    "improvements": [
+      "Correct the statement about the availability of MBA details, as the context provides information about his MBA.",
+      "Avoid unnecessary disclaimers about unread documents unless they directly impact the response.",
+      "Ensure all available information is utilized to provide a complete answer."
+    ],
+    "evaluatedAt": "2025-07-14T00:42:58.379Z"
+  },
+  {
+    "id": 64,
+    "conversationId": 104,
+    "accuracyScore": 8,
+    "helpfulnessScore": 9,
+    "relevanceScore": 10,
+    "clarityScore": 9,
+    "overallScore": 9,
+    "feedback": "The response is mostly accurate and provides a comprehensive overview of Nick Lanahan's experience in product management at EY. It effectively addresses the user's question by detailing his roles and accomplishments. However, some specific claims, such as the exact number of people impacted by certain initiatives, could not be directly verified from the provided documents. The response is clear, well-structured, and maintains a professional tone.",
+    "strengths": [
+      "Comprehensive overview of Nick's experience at EY",
+      "Clear and well-structured response",
+      "Professional tone and relevant details"
+    ],
+    "improvements": [
+      "Verify specific numerical claims with available data",
+      "Clarify any assumptions made due to unreadable documents",
+      "Ensure all statements are directly supported by extracted information"
+    ],
+    "evaluatedAt": "2025-07-14T00:48:11.105Z"
+  },
+  {
+    "id": 65,
+    "conversationId": 106,
+    "accuracyScore": 8,
+    "helpfulnessScore": 7,
+    "relevanceScore": 8,
+    "clarityScore": 9,
+    "overallScore": 8,
+    "feedback": "The response is mostly accurate in listing Nick Lanahan's technical skills and tools based on the available documents. However, it does not directly address the user's question about programming languages, which could have been highlighted more explicitly. The response is clear and well-structured, providing a comprehensive overview of Nick's skills and tools. It also appropriately notes the limitations due to unreadable documents.",
+    "strengths": [
+      "Comprehensive list of technical skills and tools",
+      "Clear and well-structured response",
+      "Professional tone and acknowledgment of document limitations"
+    ],
+    "improvements": [
+      "Directly address the user's question about programming languages",
+      "Provide more specific examples of programming languages if possible",
+      "Consider mentioning the lack of explicit programming language information earlier in the response"
+    ],
+    "evaluatedAt": "2025-07-14T00:48:36.855Z"
+  },
+  {
+    "id": 66,
+    "conversationId": 107,
+    "accuracyScore": 9,
+    "helpfulnessScore": 9,
+    "relevanceScore": 10,
+    "clarityScore": 9,
+    "overallScore": 9,
+    "feedback": "The response is highly accurate and provides a comprehensive overview of Nick Lanahan's experience in product management at EY. It effectively addresses the user's question by detailing specific achievements and roles. The response is clear, well-structured, and maintains a professional tone. However, there is a minor discrepancy regarding the number of documents that could not be read, which does not significantly impact the overall accuracy.",
+    "strengths": [
+      "Comprehensive and detailed response",
+      "Highly relevant to the user's question",
+      "Clear and professional tone"
+    ],
+    "improvements": [
+      "Ensure consistency in reporting document issues",
+      "Provide more context on specific achievements if possible",
+      "Clarify any potential ambiguities in the listed accomplishments"
+    ],
+    "evaluatedAt": "2025-07-14T00:56:15.045Z"
+  },
+  {
+    "id": 67,
+    "conversationId": 108,
+    "accuracyScore": 8,
+    "helpfulnessScore": 9,
+    "relevanceScore": 10,
+    "clarityScore": 9,
+    "overallScore": 9,
+    "feedback": "The response accurately represents Nick Lanahan's leadership experience in the military, as it highlights his roles and achievements within the U.S. Army Corps of Engineers. It provides a comprehensive overview of his leadership roles, making it very helpful and relevant to the user's question. The response is clear, well-structured, and easy to understand, though it could benefit from more specific references to the documents provided to ensure complete accuracy.",
+    "strengths": [
+      "Comprehensive coverage of Nick's leadership roles in the military.",
+      "Clear and well-structured response.",
+      "Highly relevant to the user's question."
+    ],
+    "improvements": [
+      "Include specific references to the documents to enhance accuracy.",
+      "Verify the exact details of the leadership roles mentioned.",
+      "Clarify any potential discrepancies in the available documents."
+    ],
+    "evaluatedAt": "2025-07-14T00:56:35.939Z"
+  },
+  {
+    "id": 68,
+    "conversationId": 110,
+    "accuracyScore": 7,
+    "helpfulnessScore": 7,
+    "relevanceScore": 8,
+    "clarityScore": 7,
+    "overallScore": 7,
+    "feedback": "Custom AI Judge: The response accurately provides Nick Lanahan's educational background, detailing his degrees and the institutions attended. It includes specific coursework relevant to his Master's degree, which adds depth to the answer. The note about unreadable documents is a good practice for transparency, though it may not be necessary in this context.\n\nPrebuilt Evaluators: Prebuilt evaluator analysis: Correctness: 0/10, Conciseness: 0/10, Comprehensiveness: 0/10, Coherence: 0/10",
+    "strengths": [
+      "Accurate representation of Nick's educational background.",
+      "Provides detailed information about coursework, enhancing the response's depth.",
+      "Clear and well-structured response."
+    ],
+    "improvements": [
+      "The note about unreadable documents could be omitted unless directly relevant to the user's question.",
+      "Consider simplifying the coursework list to avoid overwhelming the user with details.",
+      "Ensure that the note about document limitations is clearly separated from the main response to maintain focus.",
+      "Improve correctness: Error occurred during correctness evaluation",
+      "Improve conciseness: Error occurred during conciseness evaluation",
+      "Improve comprehensiveness: Error occurred during comprehensiveness evaluation",
+      "Improve coherence: Error occurred during coherence evaluation"
+    ],
+    "evaluatedAt": "2025-07-14T01:04:08.678Z"
+  },
+  {
+    "id": 69,
+    "conversationId": 111,
+    "accuracyScore": 7,
+    "helpfulnessScore": 7,
+    "relevanceScore": 7,
+    "clarityScore": 7,
+    "overallScore": 7,
+    "feedback": "Custom AI Judge: The response accurately lists Nick Lanahan's educational background, including his Master of Science in Engineering Management and Bachelor of Science in Civil Engineering. However, it omits his Master of Business Administration from The Ohio State University, which is a significant part of his educational history. The response is clear and well-structured, providing relevant information to the user's question. The note about unreadable documents is a good addition for transparency.\n\nPrebuilt Evaluators: Prebuilt evaluator analysis: Correctness: 0/10, Conciseness: 0/10, Comprehensiveness: 0/10, Coherence: 0/10",
+    "strengths": [
+      "Accurate listing of known degrees",
+      "Clear and well-structured response",
+      "Transparency about potential limitations due to unreadable documents"
+    ],
+    "improvements": [
+      "Include the Master of Business Administration degree from The Ohio State University",
+      "Ensure completeness by cross-verifying all available documents",
+      "Mention the conferral dates for all degrees for consistency",
+      "Improve correctness: Error occurred during correctness evaluation",
+      "Improve conciseness: Error occurred during conciseness evaluation",
+      "Improve comprehensiveness: Error occurred during comprehensiveness evaluation",
+      "Improve coherence: Error occurred during coherence evaluation"
+    ],
+    "evaluatedAt": "2025-07-14T01:09:47.477Z"
+  },
+  {
+    "id": 70,
+    "conversationId": 112,
+    "accuracyScore": 5,
+    "helpfulnessScore": 7,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 7,
+    "feedback": "Custom AI Judge: The response accurately represents Nick Lanahan's educational background based on the available information. It provides a comprehensive overview of his degrees from The Ohio State University, Missouri University of Science and Technology, and North Carolina State University. The response is clear, well-structured, and directly addresses the user's question about Nick's educational background, including his time at Ohio State.\n\nPrebuilt Evaluators: Prebuilt evaluator analysis: Correctness: 1/10, Conciseness: 7/10, Comprehensiveness: 7/10, Coherence: 8/10",
+    "strengths": [
+      "Accurate representation of Nick's educational background.",
+      "Clear and well-structured response.",
+      "Directly addresses the user's question with relevant details.",
+      "Strong coherence: Response has good logical flow"
+    ],
+    "improvements": [
+      "Include specific dates for each degree to enhance accuracy.",
+      "Mention any additional certifications or minors if applicable.",
+      "Ensure all details are cross-verified with the most recent documents.",
+      "Improve correctness: The response provides a detailed educational background for an individual named Nick Lanahan, including degrees from The Ohio State University, Missouri University of Science and Technology, and North Carolina State University"
+    ],
+    "evaluatedAt": "2025-07-14T01:12:35.541Z"
+  },
+  {
+    "id": 71,
+    "conversationId": 113,
+    "accuracyScore": 5,
+    "helpfulnessScore": 7,
+    "relevanceScore": 9,
+    "clarityScore": 9,
+    "overallScore": 7,
+    "feedback": "Custom AI Judge: The response accurately captures Nick Lanahan's educational background, including his degrees and coursework. It provides a detailed account of his studies in engineering and management, which is highly relevant to the user's query. The response is clear, well-structured, and maintains a professional tone. However, it incorrectly states that specific details about his MBA coursework or institution are not available, despite the context indicating he completed an MBA at The Ohio State University.\n\nPrebuilt Evaluators: Prebuilt evaluator analysis: Correctness: 1/10, Conciseness: 7/10, Comprehensiveness: 7/10, Coherence: 8/10",
+    "strengths": [
+      "Accurate representation of Nick's educational background",
+      "Detailed and relevant information about his studies",
+      "Clear and professional tone",
+      "Strong coherence: Response has good logical flow"
+    ],
+    "improvements": [
+      "Correct the statement about the availability of MBA details",
+      "Include information about the MBA institution and conferral date",
+      "Ensure all available information is utilized for completeness",
+      "Improve correctness: The response provides detailed information about Nick Lanahan's educational background, including specific degrees, institutions, and coursework"
+    ],
+    "evaluatedAt": "2025-07-14T01:14:15.358Z"
+  }
+]

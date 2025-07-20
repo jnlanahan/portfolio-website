@@ -1,0 +1,27 @@
+{
+  "exportDate": "2025-07-20T01:32:40.459Z",
+  "source": "Replit",
+  "tables": [
+    "users",
+    "security_questions",
+    "projects",
+    "blog_series",
+    "blog_posts",
+    "contact_submissions",
+    "admins",
+    "resume_content",
+    "top_five_lists",
+    "top_five_list_items",
+    "chatbot_documents",
+    "chatbot_training_sessions",
+    "chatbot_conversations",
+    "chatbot_training_progress",
+    "chatbot_evaluations",
+    "user_feedback",
+    "chatbot_learning_insights",
+    "system_prompt_template",
+    "response_formatting_rules",
+    "carousel_images"
+  ],
+  "version": "1.0"
+}

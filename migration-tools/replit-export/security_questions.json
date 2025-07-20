@@ -1,0 +1,37 @@
+[
+  {
+    "id": 11,
+    "questionIndex": 0,
+    "hashedAnswer": "$2b$12$BtfUapXvQZ.qgxyBk6eL3uVENLPdNsK3j/2VJ0EJRlnjOIR6cpj3.",
+    "createdAt": "2025-07-15T03:24:09.464Z",
+    "updatedAt": "2025-07-15T03:24:09.464Z"
+  },
+  {
+    "id": 12,
+    "questionIndex": 1,
+    "hashedAnswer": "$2b$12$c0Jfd8hKT1/5lPVk0D06BeIODPkOsRLsf0Qv2TFd5xM4ZBq1FuzGS",
+    "createdAt": "2025-07-15T03:24:09.507Z",
+    "updatedAt": "2025-07-15T03:24:09.507Z"
+  },
+  {
+    "id": 13,
+    "questionIndex": 2,
+    "hashedAnswer": "$2b$12$hfv8hYhjwFuXPDtHZKSOcubDIy6qr5vLFdcB4ERV5UEbD6vc/e1za",
+    "createdAt": "2025-07-15T03:24:09.545Z",
+    "updatedAt": "2025-07-15T03:24:09.545Z"
+  },
+  {
+    "id": 14,
+    "questionIndex": 3,
+    "hashedAnswer": "$2b$12$FQMsJ1wzR3nR.B.uKC.w.umIH4RIiAg43PFrNa/9eqJZFCDEmosD2",
+    "createdAt": "2025-07-15T03:24:09.583Z",
+    "updatedAt": "2025-07-15T03:24:09.583Z"
+  },
+  {
+    "id": 15,
+    "questionIndex": 4,
+    "hashedAnswer": "$2b$12$dIecwZ.SzisJkZnNYXtZzuoZc5TmT/xmewJ7GXxLoQu0y8U4yKUxO",
+    "createdAt": "2025-07-15T03:24:09.620Z",
+    "updatedAt": "2025-07-15T03:24:09.620Z"
+  }
+]

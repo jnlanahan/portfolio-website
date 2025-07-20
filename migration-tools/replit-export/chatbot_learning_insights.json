@@ -1,0 +1,1565 @@
+[
+  {
+    "id": 22,
+    "category": "improvement",
+    "insight": "Ensure the response directly addresses the user's main question by providing specific years of service if available.",
+    "examples": [
+      "Nick Lanahan served in the Army from 2005 to 2017."
+    ],
+    "sourceEvaluationId": 27,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:05:50.769Z"
+  },
+  {
+    "id": 23,
+    "category": "improvement",
+    "insight": "When additional relevant information is provided, clearly connect it to the user's main question to maintain relevance.",
+    "examples": [
+      "Nick's role as an Assistant Professor from 2018 to 2021 followed his Army service, which ended in 2017."
+    ],
+    "sourceEvaluationId": 27,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:05:50.814Z"
+  },
+  {
+    "id": 24,
+    "category": "best_practice",
+    "insight": "Maintain a clear and well-structured response to ensure ease of understanding.",
+    "examples": [
+      "The response is clear and concise, with a logical flow of information."
+    ],
+    "sourceEvaluationId": 27,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:05:50.853Z"
+  },
+  {
+    "id": 25,
+    "category": "best_practice",
+    "insight": "Provide additional relevant information that enriches the response, as long as it does not detract from the main question.",
+    "examples": [
+      "Including roles or achievements that are related to the main topic."
+    ],
+    "sourceEvaluationId": 27,
+    "importance": 6,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:05:50.894Z"
+  },
+  {
+    "id": 26,
+    "category": "avoid_pattern",
+    "insight": "Avoid providing information that does not directly answer the user's primary question unless it is clearly connected.",
+    "examples": [
+      "Mentioning roles or dates that do not clarify the main question."
+    ],
+    "sourceEvaluationId": 27,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:05:50.934Z"
+  },
+  {
+    "id": 27,
+    "category": "improvement",
+    "insight": "Include general information about typical roles in the U.S. Army Corps of Engineers to provide additional context when specific details are unavailable.",
+    "examples": [
+      "Typical roles in the U.S. Army Corps of Engineers include project management, engineering support, and leadership positions."
+    ],
+    "sourceEvaluationId": 26,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:05:56.340Z"
+  },
+  {
+    "id": 28,
+    "category": "improvement",
+    "insight": "Suggest alternative sources or methods for obtaining the desired information, such as official military records or public profiles.",
+    "examples": [
+      "You might find more information on official military websites or through public records."
+    ],
+    "sourceEvaluationId": 26,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:05:56.379Z"
+  },
+  {
+    "id": 29,
+    "category": "improvement",
+    "insight": "Include a brief explanation of why direct contact with the individual might yield more detailed information, emphasizing privacy and specificity.",
+    "examples": [
+      "Direct contact with Nick could provide more detailed information due to privacy considerations and the specificity of his roles."
+    ],
+    "sourceEvaluationId": 26,
+    "importance": 6,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:05:56.429Z"
+  },
+  {
+    "id": 30,
+    "category": "best_practice",
+    "insight": "Acknowledge the lack of specific information to prevent misinformation and maintain credibility.",
+    "examples": [
+      "Unfortunately, the specific military positions are not detailed in the available information."
+    ],
+    "sourceEvaluationId": 26,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:05:56.469Z"
+  },
+  {
+    "id": 31,
+    "category": "best_practice",
+    "insight": "Provide logical inferences based on known background details to offer a helpful response.",
+    "examples": [
+      "Nick has a background in the U.S. Army Corps of Engineers, and it's likely that his roles involved engineering or leadership responsibilities."
+    ],
+    "sourceEvaluationId": 26,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:05:56.509Z"
+  },
+  {
+    "id": 32,
+    "category": "best_practice",
+    "insight": "Maintain a clear and professional tone throughout the response to ensure clarity and user satisfaction.",
+    "examples": [
+      "The response is well-structured and easy to understand."
+    ],
+    "sourceEvaluationId": 26,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:05:56.548Z"
+  },
+  {
+    "id": 33,
+    "category": "avoid_pattern",
+    "insight": "Avoid suggesting direct contact with individuals without providing a reason why it might be beneficial.",
+    "examples": [
+      "I recommend directly contacting Nick for more comprehensive details."
+    ],
+    "sourceEvaluationId": 26,
+    "importance": 5,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:05:56.588Z"
+  },
+  {
+    "id": 34,
+    "category": "improvement",
+    "insight": "Provide additional context if available, such as known past ranks or roles, to enhance the response's informativeness.",
+    "examples": [
+      "Include known past ranks like 'Nick was a Sergeant before retiring.'"
+    ],
+    "sourceEvaluationId": 25,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:01.974Z"
+  },
+  {
+    "id": 35,
+    "category": "improvement",
+    "insight": "Include a brief explanation of why specific information might not be available to manage user expectations.",
+    "examples": [
+      "Information about current ranks may not be publicly available due to privacy concerns."
+    ],
+    "sourceEvaluationId": 25,
+    "importance": 6,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:02.014Z"
+  },
+  {
+    "id": 36,
+    "category": "improvement",
+    "insight": "Consider offering general information about military ranks and how they apply to veterans if relevant, to provide additional value.",
+    "examples": [
+      "Veterans may retain their last active duty rank, but it may not be publicly updated."
+    ],
+    "sourceEvaluationId": 25,
+    "importance": 5,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:02.053Z"
+  },
+  {
+    "id": 37,
+    "category": "best_practice",
+    "insight": "Maintain a clear and professional tone throughout the response to ensure clarity and user trust.",
+    "examples": [
+      "The response was structured clearly and maintained professionalism."
+    ],
+    "sourceEvaluationId": 25,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:02.091Z"
+  },
+  {
+    "id": 38,
+    "category": "best_practice",
+    "insight": "Provide actionable suggestions, such as contacting the individual directly for more information, when specific details are unavailable.",
+    "examples": [
+      "Recommend contacting Nick directly for the most accurate information."
+    ],
+    "sourceEvaluationId": 25,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:02.131Z"
+  },
+  {
+    "id": 39,
+    "category": "avoid_pattern",
+    "insight": "Avoid making assumptions about the availability of specific information without context.",
+    "examples": [
+      "Avoid statements like 'the information is not available' without explaining why."
+    ],
+    "sourceEvaluationId": 25,
+    "importance": 6,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:02.170Z"
+  },
+  {
+    "id": 40,
+    "category": "improvement",
+    "insight": "Enhance responses by providing suggestions on where users can find additional information when specific details are unavailable.",
+    "examples": [
+      "Consider checking official military records or biographies for more details.",
+      "You might find more information in Nick's published interviews or memoirs."
+    ],
+    "sourceEvaluationId": 24,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:08.969Z"
+  },
+  {
+    "id": 41,
+    "category": "improvement",
+    "insight": "Include a brief summary of the subject's overall military service if specific details are not available.",
+    "examples": [
+      "Nick Lanahan served in various capacities within the U.S. Army Corps of Engineers, contributing to multiple engineering projects globally."
+    ],
+    "sourceEvaluationId": 24,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:09.006Z"
+  },
+  {
+    "id": 42,
+    "category": "improvement",
+    "insight": "Proactively offer to assist with related questions to enhance user engagement and satisfaction.",
+    "examples": [
+      "Would you like to know more about his engineering projects?",
+      "Can I help you with information on his post-military career?"
+    ],
+    "sourceEvaluationId": 24,
+    "importance": 6,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:09.045Z"
+  },
+  {
+    "id": 43,
+    "category": "best_practice",
+    "insight": "Maintain a clear and professional tone throughout the response.",
+    "examples": [
+      "Nick Lanahan has an extensive military background...",
+      "If you have further questions, feel free to ask."
+    ],
+    "sourceEvaluationId": 24,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:09.084Z"
+  },
+  {
+    "id": 44,
+    "category": "best_practice",
+    "insight": "Acknowledge the lack of specific information directly to manage user expectations.",
+    "examples": [
+      "Specific details about his service in South Korea are not included in the provided documents."
+    ],
+    "sourceEvaluationId": 24,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:09.123Z"
+  },
+  {
+    "id": 45,
+    "category": "avoid_pattern",
+    "insight": "Avoid leaving the user without guidance or next steps when specific information is unavailable.",
+    "examples": [
+      "However, specific details about his service in South Korea are not included."
+    ],
+    "sourceEvaluationId": 24,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:09.164Z"
+  },
+  {
+    "id": 46,
+    "category": "improvement",
+    "insight": "Provide additional context about typical roles in the U.S. Army Corps of Engineers to enhance helpfulness.",
+    "examples": [
+      "Typically, someone with Nick's background might hold roles such as project manager or operations officer in the U.S. Army Corps of Engineers."
+    ],
+    "sourceEvaluationId": 23,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:14.145Z"
+  },
+  {
+    "id": 47,
+    "category": "improvement",
+    "insight": "Suggest potential sources where users might find more detailed information about specific military roles.",
+    "examples": [
+      "You might find more detailed information by visiting the official U.S. Army Corps of Engineers website or contacting a military historian."
+    ],
+    "sourceEvaluationId": 23,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:14.184Z"
+  },
+  {
+    "id": 48,
+    "category": "improvement",
+    "insight": "Include more details about Nick's military experience if available to provide a more comprehensive answer.",
+    "examples": [
+      "Nick served as a senior engineer and led multiple infrastructure projects during his tenure."
+    ],
+    "sourceEvaluationId": 23,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:14.224Z"
+  },
+  {
+    "id": 49,
+    "category": "best_practice",
+    "insight": "Maintain a clear and professional tone throughout the response.",
+    "examples": [
+      "Unfortunately, I don't have specific details...",
+      "However, I can confirm that..."
+    ],
+    "sourceEvaluationId": 23,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:14.263Z"
+  },
+  {
+    "id": 50,
+    "category": "best_practice",
+    "insight": "Acknowledge the lack of specific information accurately and guide the user towards possible next steps.",
+    "examples": [
+      "If you need more detailed information about his military service, I would recommend reaching out to Nick directly."
+    ],
+    "sourceEvaluationId": 23,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:14.300Z"
+  },
+  {
+    "id": 51,
+    "category": "avoid_pattern",
+    "insight": "Avoid ending responses without offering any additional value or guidance.",
+    "examples": [
+      "Unfortunately, I don't have specific details about the positions Nick held."
+    ],
+    "sourceEvaluationId": 23,
+    "importance": 6,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:14.340Z"
+  },
+  {
+    "id": 77,
+    "category": "improvement",
+    "insight": "Directly address the user's request before providing additional context to ensure the primary question is answered first.",
+    "examples": [
+      "Start with 'Nick served as a...' before discussing the influence of his experience."
+    ],
+    "sourceEvaluationId": 18,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:50.481Z"
+  },
+  {
+    "id": 52,
+    "category": "improvement",
+    "insight": "Suggest potential sources for more detailed information when specific details are unavailable.",
+    "examples": [
+      "Consider checking official military records or reaching out to Nick directly for more details.",
+      "You might find more information in public records or military service databases."
+    ],
+    "sourceEvaluationId": 22,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:21.877Z"
+  },
+  {
+    "id": 53,
+    "category": "improvement",
+    "insight": "Include a brief mention of the types of roles that might have been held based on general experience, even if specific details are unavailable.",
+    "examples": [
+      "Based on typical military roles, Nick might have been involved in strategic operations or logistics management.",
+      "In similar positions, individuals often engage in training exercises or international collaborations."
+    ],
+    "sourceEvaluationId": 22,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:21.917Z"
+  },
+  {
+    "id": 54,
+    "category": "improvement",
+    "insight": "Offer to assist with other related questions to maintain engagement and provide additional value.",
+    "examples": [
+      "If you have other questions about Nick's career or experiences, feel free to ask.",
+      "I'm here to help with any other inquiries you might have about Nick's background."
+    ],
+    "sourceEvaluationId": 22,
+    "importance": 6,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:21.956Z"
+  },
+  {
+    "id": 55,
+    "category": "best_practice",
+    "insight": "Maintain a clear and professional tone throughout the response.",
+    "examples": [
+      "The response was well-structured and professional, which enhances readability and user trust.",
+      "Using a professional tone helps in maintaining the credibility of the information provided."
+    ],
+    "sourceEvaluationId": 22,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:21.996Z"
+  },
+  {
+    "id": 56,
+    "category": "best_practice",
+    "insight": "Provide relevant context even when specific information is not available.",
+    "examples": [
+      "The response included a general overview of Nick's military service, which was relevant to the user's question.",
+      "Providing context helps in filling the gaps when specific details are missing."
+    ],
+    "sourceEvaluationId": 22,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:22.034Z"
+  },
+  {
+    "id": 57,
+    "category": "avoid_pattern",
+    "insight": "Avoid stating the inability to provide information without offering alternative solutions or guidance.",
+    "examples": [
+      "Simply stating 'I'm unable to provide specific details' without further guidance can be unhelpful.",
+      "Avoid leaving the user without a direction for finding more information."
+    ],
+    "sourceEvaluationId": 22,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:22.073Z"
+  },
+  {
+    "id": 58,
+    "category": "improvement",
+    "insight": "Suggest potential sources or methods to obtain missing information when specific details are unavailable.",
+    "examples": [
+      "Consider reaching out to Nick directly for more details.",
+      "Check military records or LinkedIn profiles for additional information."
+    ],
+    "sourceEvaluationId": 21,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:28.397Z"
+  },
+  {
+    "id": 59,
+    "category": "improvement",
+    "insight": "Provide a more comprehensive summary of the subject's experience if possible, using available data.",
+    "examples": [
+      "Include any notable projects or achievements within the U.S. Army Corps of Engineers.",
+      "Mention any awards or recognitions received during military service."
+    ],
+    "sourceEvaluationId": 21,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:28.437Z"
+  },
+  {
+    "id": 60,
+    "category": "improvement",
+    "insight": "Incorporate relevant information from other documents or sources if available to enrich the response.",
+    "examples": [
+      "Cross-reference with other verified documents or databases.",
+      "Include information from reputable news articles or interviews."
+    ],
+    "sourceEvaluationId": 21,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:28.477Z"
+  },
+  {
+    "id": 61,
+    "category": "best_practice",
+    "insight": "Maintain a clear and professional tone throughout the response.",
+    "examples": [
+      "Use straightforward language and avoid jargon.",
+      "Structure information logically and concisely."
+    ],
+    "sourceEvaluationId": 21,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:28.516Z"
+  },
+  {
+    "id": 62,
+    "category": "best_practice",
+    "insight": "Acknowledge limitations in available data to manage user expectations.",
+    "examples": [
+      "Clearly state when specific details are not available.",
+      "Explain the reason for any missing information."
+    ],
+    "sourceEvaluationId": 21,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:28.555Z"
+  },
+  {
+    "id": 63,
+    "category": "avoid_pattern",
+    "insight": "Avoid providing vague or non-specific responses without offering alternative solutions or next steps.",
+    "examples": [
+      "Avoid saying 'information not available' without suggesting where to find it.",
+      "Do not leave the user without guidance on how to proceed."
+    ],
+    "sourceEvaluationId": 21,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:28.594Z"
+  },
+  {
+    "id": 64,
+    "category": "improvement",
+    "insight": "Include a brief summary of the subject's military experience based on available data to enhance helpfulness.",
+    "examples": [
+      "Summarize known roles or achievements in the military, even if general, to provide more context."
+    ],
+    "sourceEvaluationId": 20,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:35.069Z"
+  },
+  {
+    "id": 65,
+    "category": "improvement",
+    "insight": "Provide context on how the subject's military experience relates to their current roles to increase relevance and helpfulness.",
+    "examples": [
+      "Explain how leadership skills from the military are applied in consulting roles."
+    ],
+    "sourceEvaluationId": 20,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:35.109Z"
+  },
+  {
+    "id": 66,
+    "category": "improvement",
+    "insight": "Offer additional resources or suggestions for obtaining further information to improve user satisfaction.",
+    "examples": [
+      "Suggest official military records or public profiles as potential sources."
+    ],
+    "sourceEvaluationId": 20,
+    "importance": 6,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:35.147Z"
+  },
+  {
+    "id": 67,
+    "category": "best_practice",
+    "insight": "Maintain a clear and professional tone throughout the response.",
+    "examples": [
+      "Use concise language and avoid jargon to ensure clarity."
+    ],
+    "sourceEvaluationId": 20,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:35.187Z"
+  },
+  {
+    "id": 68,
+    "category": "best_practice",
+    "insight": "Acknowledge the limitations of available information while providing a constructive next step.",
+    "examples": [
+      "State what is known and recommend contacting the individual for more details."
+    ],
+    "sourceEvaluationId": 20,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:35.226Z"
+  },
+  {
+    "id": 69,
+    "category": "avoid_pattern",
+    "insight": "Avoid stating the lack of information without providing any additional value or context.",
+    "examples": [
+      "Simply saying 'details are not available' without any follow-up action or context."
+    ],
+    "sourceEvaluationId": 20,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:35.265Z"
+  },
+  {
+    "id": 70,
+    "category": "improvement",
+    "insight": "Explicitly state when specific information is not available to set clear expectations for the user.",
+    "examples": [
+      "Unfortunately, I don't have access to the specific details of Nick's Army assignments at this time."
+    ],
+    "sourceEvaluationId": 19,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:40.515Z"
+  },
+  {
+    "id": 71,
+    "category": "improvement",
+    "insight": "Provide concrete suggestions for users to obtain the desired information.",
+    "examples": [
+      "You might consider reaching out to Nick directly via LinkedIn or checking official military records if available."
+    ],
+    "sourceEvaluationId": 19,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:40.552Z"
+  },
+  {
+    "id": 72,
+    "category": "improvement",
+    "insight": "Address the user's primary inquiry more directly by acknowledging the specific request before providing general information.",
+    "examples": [
+      "While I don't have the specific assignments, I can tell you about his general role in the Army Corps of Engineers."
+    ],
+    "sourceEvaluationId": 19,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:40.594Z"
+  },
+  {
+    "id": 73,
+    "category": "best_practice",
+    "insight": "Maintain a clear and professional tone throughout the response.",
+    "examples": [
+      "Nick has over 12 years of experience with the U.S. Army Corps of Engineers, contributing significantly to his expertise."
+    ],
+    "sourceEvaluationId": 19,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:40.634Z"
+  },
+  {
+    "id": 74,
+    "category": "best_practice",
+    "insight": "Provide context about the subject's skills and experience to add value to the response.",
+    "examples": [
+      "His military background contributes significantly to his expertise in strategic planning, leadership development, and organizational transformation."
+    ],
+    "sourceEvaluationId": 19,
+    "importance": 6,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:40.673Z"
+  },
+  {
+    "id": 76,
+    "category": "improvement",
+    "insight": "Incorporate more specific details about the user's query, such as exact military roles if available in the database.",
+    "examples": [
+      "Include roles like 'Platoon Leader', 'Company Commander' if such data is available."
+    ],
+    "sourceEvaluationId": 18,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:50.442Z"
+  },
+  {
+    "id": 78,
+    "category": "improvement",
+    "insight": "Acknowledge the source of information to enhance credibility and user trust.",
+    "examples": [
+      "'According to official military records...' or 'Based on available data from...'. "
+    ],
+    "sourceEvaluationId": 18,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:50.524Z"
+  },
+  {
+    "id": 80,
+    "category": "best_practice",
+    "insight": "Provide relevant context about how experiences influence professional skills, as it adds value to the response.",
+    "examples": [
+      "'His engineering background in the military has been instrumental in his consulting roles.'"
+    ],
+    "sourceEvaluationId": 18,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:50.602Z"
+  },
+  {
+    "id": 81,
+    "category": "avoid_pattern",
+    "insight": "Avoid stating limitations in knowledge without first attempting to provide the most relevant available information.",
+    "examples": [
+      "Instead of 'I might not have them', use 'Based on available data, here is what I can share...'"
+    ],
+    "sourceEvaluationId": 18,
+    "importance": 6,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:50.641Z"
+  },
+  {
+    "id": 75,
+    "category": "avoid_pattern",
+    "insight": "Avoid providing general information that doesn't directly address the user's specific question.",
+    "examples": [
+      "The response included general leadership skills without directly addressing the user's request for specific assignments."
+    ],
+    "sourceEvaluationId": 19,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T02:06:40.713Z"
+  },
+  {
+    "id": 82,
+    "category": "improvement",
+    "insight": "Offer alternative suggestions for obtaining course information, such as contacting the university or checking their website.",
+    "examples": [
+      "Consider reaching out to The Ohio State University's Fisher College of Business for more information on typical MBA courses."
+    ],
+    "sourceEvaluationId": 46,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:26.628Z"
+  },
+  {
+    "id": 83,
+    "category": "improvement",
+    "insight": "Include a brief overview of typical MBA courses to provide additional context and value to the user.",
+    "examples": [
+      "Typically, MBA programs include courses in finance, marketing, operations, and strategy."
+    ],
+    "sourceEvaluationId": 46,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:26.673Z"
+  },
+  {
+    "id": 84,
+    "category": "improvement",
+    "insight": "Acknowledge the user's interest in more detail to enhance engagement and show empathy.",
+    "examples": [
+      "I understand you're interested in the specifics of Nick's coursework. While I don't have that information, here's how you might find it."
+    ],
+    "sourceEvaluationId": 46,
+    "importance": 6,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:26.712Z"
+  },
+  {
+    "id": 85,
+    "category": "best_practice",
+    "insight": "Maintain a clear and concise communication style to ensure the user easily understands the response.",
+    "examples": [
+      "The detailed information about specific courses Nick took during his MBA isn't provided."
+    ],
+    "sourceEvaluationId": 46,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:26.751Z"
+  },
+  {
+    "id": 86,
+    "category": "best_practice",
+    "insight": "Use a professional and polite tone to maintain a positive user experience.",
+    "examples": [
+      "Should you need more specific details, I recommend directly reaching out to Nick."
+    ],
+    "sourceEvaluationId": 46,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:26.791Z"
+  },
+  {
+    "id": 87,
+    "category": "avoid_pattern",
+    "insight": "Avoid providing responses that solely state the lack of information without offering additional guidance or suggestions.",
+    "examples": [
+      "The information isn't available."
+    ],
+    "sourceEvaluationId": 46,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:26.830Z"
+  },
+  {
+    "id": 88,
+    "category": "improvement",
+    "insight": "Include potential assumptions about typical course content when specific details are unavailable.",
+    "examples": [
+      "It's common for MBA programs to include finance courses, although specific details about Nick's coursework are not provided."
+    ],
+    "sourceEvaluationId": 45,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:31.587Z"
+  },
+  {
+    "id": 89,
+    "category": "improvement",
+    "insight": "Suggest where users might find more detailed information if it's not available in the current dataset.",
+    "examples": [
+      "For more detailed information on Nick's coursework, you might consider checking his LinkedIn profile or the university's course catalog."
+    ],
+    "sourceEvaluationId": 45,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:31.626Z"
+  },
+  {
+    "id": 90,
+    "category": "best_practice",
+    "insight": "Maintain a clear and professional tone while providing accurate information.",
+    "examples": [
+      "Nick holds a Master of Business Administration from The Ohio State University."
+    ],
+    "sourceEvaluationId": 45,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:31.665Z"
+  },
+  {
+    "id": 91,
+    "category": "best_practice",
+    "insight": "Clearly communicate when specific information is not available.",
+    "examples": [
+      "There's no specific mention of finance courses in Nick's educational background."
+    ],
+    "sourceEvaluationId": 45,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:31.705Z"
+  },
+  {
+    "id": 92,
+    "category": "avoid_pattern",
+    "insight": "Avoid providing a definitive answer when the information is not explicitly available.",
+    "examples": [
+      "He did not take finance courses."
+    ],
+    "sourceEvaluationId": 45,
+    "importance": 6,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:31.744Z"
+  },
+  {
+    "id": 93,
+    "category": "improvement",
+    "insight": "Include general knowledge about typical coursework for degrees mentioned when specific course details are unavailable.",
+    "examples": [
+      "Finance courses are commonly part of an MBA curriculum, even if not explicitly stated."
+    ],
+    "sourceEvaluationId": 44,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:35.971Z"
+  },
+  {
+    "id": 94,
+    "category": "improvement",
+    "insight": "Provide reassurance to the user about the likelihood of certain courses being part of a degree when specific information is missing.",
+    "examples": [
+      "It's likely that finance courses were included as part of the MBA curriculum."
+    ],
+    "sourceEvaluationId": 44,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:36.010Z"
+  },
+  {
+    "id": 95,
+    "category": "best_practice",
+    "insight": "Maintain a clear and well-structured response that directly addresses the user's question.",
+    "examples": [
+      "The response accurately reflects the information available about Nick Lanahan's educational background."
+    ],
+    "sourceEvaluationId": 44,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:36.049Z"
+  },
+  {
+    "id": 96,
+    "category": "best_practice",
+    "insight": "Ensure relevance by directly tying the response to the user's query.",
+    "examples": [
+      "The response is helpful and relevant, as it addresses the user's question about Nick's finance education."
+    ],
+    "sourceEvaluationId": 44,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:36.088Z"
+  },
+  {
+    "id": 97,
+    "category": "avoid_pattern",
+    "insight": "Avoid leaving the user with uncertainty when general knowledge can provide additional context.",
+    "examples": [
+      "While it's possible that finance courses may have been part of the curriculum, it's not explicitly mentioned."
+    ],
+    "sourceEvaluationId": 44,
+    "importance": 6,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:36.129Z"
+  },
+  {
+    "id": 98,
+    "category": "improvement",
+    "insight": "Verify all educational details against the most current data to ensure accuracy and relevance.",
+    "examples": [
+      "Cross-check degree completion dates with the latest records.",
+      "Update educational history with recent qualifications if applicable."
+    ],
+    "sourceEvaluationId": 43,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:40.843Z"
+  },
+  {
+    "id": 99,
+    "category": "improvement",
+    "insight": "Ensure consistency with any additional available documents or data sources to maintain reliability.",
+    "examples": [
+      "Align educational details with official transcripts or LinkedIn profiles.",
+      "Use multiple data sources to confirm educational history."
+    ],
+    "sourceEvaluationId": 43,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:40.883Z"
+  },
+  {
+    "id": 100,
+    "category": "best_practice",
+    "insight": "Provide comprehensive and detailed responses that directly address the user's question.",
+    "examples": [
+      "Include degree names, institutions, and graduation dates.",
+      "Mention any special certifications or concentrations."
+    ],
+    "sourceEvaluationId": 43,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:40.922Z"
+  },
+  {
+    "id": 101,
+    "category": "best_practice",
+    "insight": "Structure information clearly and logically to enhance readability and understanding.",
+    "examples": [
+      "List educational achievements in chronological order.",
+      "Use bullet points or paragraphs to separate different degrees."
+    ],
+    "sourceEvaluationId": 43,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:40.961Z"
+  },
+  {
+    "id": 102,
+    "category": "avoid_pattern",
+    "insight": "Avoid providing outdated or unverified information that could mislead users.",
+    "examples": [
+      "Do not use old data without verification.",
+      "Avoid making assumptions about recent educational updates."
+    ],
+    "sourceEvaluationId": 43,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:41.000Z"
+  },
+  {
+    "id": 79,
+    "category": "best_practice",
+    "insight": "Maintain clarity and structure in responses to ensure information is easily understood.",
+    "examples": [
+      "Use clear sentences and logical flow, such as 'He gained skills in X, which led to Y.'"
+    ],
+    "sourceEvaluationId": 18,
+    "importance": 8,
+    "isActive": false,
+    "createdAt": "2025-07-13T02:06:50.563Z"
+  },
+  {
+    "id": 103,
+    "category": "best_practice",
+    "insight": "Maintain a high level of accuracy and relevance by directly addressing the user's specific question with precise information.",
+    "examples": [
+      "Nick earned a Master of Science in Engineering Management with a Military Construction Management Certification from Missouri University of Science and Technology, which he completed in May 2016."
+    ],
+    "sourceEvaluationId": 42,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:43.932Z"
+  },
+  {
+    "id": 104,
+    "category": "best_practice",
+    "insight": "Ensure clarity and helpfulness by structuring responses in a clear and concise manner, making it easy for users to understand the information provided.",
+    "examples": [
+      "The chatbot's response is completely accurate and directly answers the user's question about Nick's educational background."
+    ],
+    "sourceEvaluationId": 42,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:43.971Z"
+  },
+  {
+    "id": 105,
+    "category": "best_practice",
+    "insight": "Use specific and detailed information to enhance the perceived value of the response, providing users with comprehensive answers.",
+    "examples": [
+      "Nick earned a Master of Science in Engineering Management with a Military Construction Management Certification."
+    ],
+    "sourceEvaluationId": 42,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:44.010Z"
+  },
+  {
+    "id": 106,
+    "category": "avoid_pattern",
+    "insight": "Avoid providing unnecessary information that does not directly contribute to answering the user's question.",
+    "examples": [
+      "Including unrelated details about other aspects of Nick's life."
+    ],
+    "sourceEvaluationId": 42,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:44.049Z"
+  },
+  {
+    "id": 107,
+    "category": "improvement",
+    "insight": "Explicitly state the limitations of the available data to manage user expectations.",
+    "examples": [
+      "The available data does not specify all courses taken.",
+      "There is no detailed list of courses in the provided information."
+    ],
+    "sourceEvaluationId": 41,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:51.033Z"
+  },
+  {
+    "id": 108,
+    "category": "improvement",
+    "insight": "Suggest potential areas where finance topics might be covered based on the user's educational background.",
+    "examples": [
+      "His MBA program likely included finance-related courses.",
+      "Engineering Management may include finance topics."
+    ],
+    "sourceEvaluationId": 41,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:51.072Z"
+  },
+  {
+    "id": 109,
+    "category": "improvement",
+    "insight": "Acknowledge the possibility of finance-related experience outside formal coursework.",
+    "examples": [
+      "Nick may have gained finance experience through internships or work experience.",
+      "Finance skills could be acquired through professional development."
+    ],
+    "sourceEvaluationId": 41,
+    "importance": 6,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:51.111Z"
+  },
+  {
+    "id": 110,
+    "category": "best_practice",
+    "insight": "Maintain a professional and informative tone throughout the response.",
+    "examples": [
+      "The response is clear and maintains a professional tone.",
+      "Information is presented in a concise and informative manner."
+    ],
+    "sourceEvaluationId": 41,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:51.150Z"
+  },
+  {
+    "id": 111,
+    "category": "best_practice",
+    "insight": "Provide a logical inference when specific details are not available.",
+    "examples": [
+      "It's reasonable to infer that finance topics might be covered in an MBA program.",
+      "Suggesting possible course coverage based on degree type."
+    ],
+    "sourceEvaluationId": 41,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:51.188Z"
+  },
+  {
+    "id": 112,
+    "category": "avoid_pattern",
+    "insight": "Avoid making assumptions without indicating they are assumptions.",
+    "examples": [
+      "Assuming finance courses were taken without stating it's an assumption.",
+      "Implying certainty where there is none."
+    ],
+    "sourceEvaluationId": 41,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:51.227Z"
+  },
+  {
+    "id": 113,
+    "category": "improvement",
+    "insight": "Suggest ways for users to find more detailed course information, such as checking the university's course catalog or contacting the alumni office.",
+    "examples": [
+      "You might find more detailed course information by checking the university's course catalog or contacting their alumni office."
+    ],
+    "sourceEvaluationId": 40,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:56.939Z"
+  },
+  {
+    "id": 114,
+    "category": "improvement",
+    "insight": "Mention the possibility of entrepreneurship courses being part of the MBA program, as this is a common inclusion.",
+    "examples": [
+      "It's possible that entrepreneurship courses were included as part of the MBA program."
+    ],
+    "sourceEvaluationId": 40,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:56.978Z"
+  },
+  {
+    "id": 115,
+    "category": "improvement",
+    "insight": "Provide context on why specific course details might not be available, such as privacy policies or the nature of available data.",
+    "examples": [
+      "Specific course details might not be available due to privacy policies or limitations in the data provided."
+    ],
+    "sourceEvaluationId": 40,
+    "importance": 6,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:57.016Z"
+  },
+  {
+    "id": 116,
+    "category": "best_practice",
+    "insight": "Maintain a clear and concise response that directly addresses the user's question.",
+    "examples": [
+      "The available information does not specify whether Nick took any entrepreneurship courses."
+    ],
+    "sourceEvaluationId": 40,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:57.055Z"
+  },
+  {
+    "id": 117,
+    "category": "best_practice",
+    "insight": "Provide a professional and informative tone throughout the response.",
+    "examples": [
+      "His educational background includes a Master of Business Administration from The Ohio State University..."
+    ],
+    "sourceEvaluationId": 40,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:57.095Z"
+  },
+  {
+    "id": 118,
+    "category": "avoid_pattern",
+    "insight": "Avoid providing excessive detail that does not directly answer the user's question, unless it adds value or context.",
+    "examples": [
+      "Listing all degrees without relevance to the specific question about entrepreneurship courses."
+    ],
+    "sourceEvaluationId": 40,
+    "importance": 5,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:06:57.134Z"
+  },
+  {
+    "id": 119,
+    "category": "improvement",
+    "insight": "Suggest potential sources for more detailed information when the provided documents are insufficient.",
+    "examples": [
+      "You might want to check Nick's LinkedIn profile or contact the university for more detailed course information."
+    ],
+    "sourceEvaluationId": 39,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:07:02.703Z"
+  },
+  {
+    "id": 120,
+    "category": "improvement",
+    "insight": "Include a disclaimer about the limitations of the available documents to set user expectations.",
+    "examples": [
+      "Please note that the information is based on the documents provided and may not cover all details of Nick's coursework."
+    ],
+    "sourceEvaluationId": 39,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:07:02.741Z"
+  },
+  {
+    "id": 121,
+    "category": "improvement",
+    "insight": "Offer to help with additional related queries to enhance user engagement.",
+    "examples": [
+      "If you have more questions about Nick's education or career, feel free to ask!"
+    ],
+    "sourceEvaluationId": 39,
+    "importance": 6,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:07:02.787Z"
+  },
+  {
+    "id": 122,
+    "category": "best_practice",
+    "insight": "Maintain a clear and concise explanation that directly addresses the user's question.",
+    "examples": [
+      "There is no specific mention of Nick Lanahan taking entrepreneurship courses in college."
+    ],
+    "sourceEvaluationId": 39,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:07:02.827Z"
+  },
+  {
+    "id": 123,
+    "category": "best_practice",
+    "insight": "Provide relevant context to enrich the user's understanding of the topic.",
+    "examples": [
+      "His educational background includes a Master of Business Administration from The Ohio State University..."
+    ],
+    "sourceEvaluationId": 39,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:07:02.865Z"
+  },
+  {
+    "id": 124,
+    "category": "avoid_pattern",
+    "insight": "Avoid overly verbose responses that can dilute the main message.",
+    "examples": [
+      "Avoid listing unnecessary details that do not directly answer the user's question."
+    ],
+    "sourceEvaluationId": 39,
+    "importance": 5,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:07:02.905Z"
+  },
+  {
+    "id": 125,
+    "category": "improvement",
+    "insight": "Include a disclaimer when specific details are not available to manage user expectations.",
+    "examples": [
+      "Specific course details are not available, but...",
+      "While exact courses are not listed, typically..."
+    ],
+    "sourceEvaluationId": 38,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:07:08.949Z"
+  },
+  {
+    "id": 126,
+    "category": "improvement",
+    "insight": "Enhance helpfulness by providing more context or examples of typical MBA courses.",
+    "examples": [
+      "MBA programs often include courses like Financial Accounting, Marketing Management, and Operations Strategy.",
+      "Common MBA courses include Leadership Development and Strategic Planning."
+    ],
+    "sourceEvaluationId": 38,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:07:08.988Z"
+  },
+  {
+    "id": 127,
+    "category": "improvement",
+    "insight": "Suggest where the user might find more detailed information about the subject.",
+    "examples": [
+      "You might find more detailed course information on the university's official website.",
+      "For specific course details, consider contacting the Fisher College of Business directly."
+    ],
+    "sourceEvaluationId": 38,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:07:09.027Z"
+  },
+  {
+    "id": 129,
+    "category": "best_practice",
+    "insight": "Use logical inferences based on available information to provide a relevant and accurate response.",
+    "examples": [
+      "His MBA would typically cover core areas such as strategic planning, leadership development, and organizational transformation."
+    ],
+    "sourceEvaluationId": 38,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:07:09.106Z"
+  },
+  {
+    "id": 130,
+    "category": "avoid_pattern",
+    "insight": "Avoid assuming specific details without clear evidence, as this can reduce the perceived accuracy of the response.",
+    "examples": [
+      "While specific course details are not provided, his MBA would typically cover..."
+    ],
+    "sourceEvaluationId": 38,
+    "importance": 6,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:07:09.145Z"
+  },
+  {
+    "id": 131,
+    "category": "improvement",
+    "insight": "Provide specific guidance on how users can obtain detailed course information, such as suggesting they contact the university's registrar or visit the official website for course catalogs.",
+    "examples": [
+      "Consider reaching out to the university's registrar for detailed course information.",
+      "Visit the university's official website to access course catalogs."
+    ],
+    "sourceEvaluationId": 37,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:07:20.539Z"
+  },
+  {
+    "id": 134,
+    "category": "best_practice",
+    "insight": "Ensure relevance by aligning responses with the user's question and available context.",
+    "examples": [
+      "The response aligns with the user's inquiry about Nick's MBA courses and his professional focus.",
+      "It provides contextually relevant information about Nick's educational background."
+    ],
+    "sourceEvaluationId": 37,
+    "importance": 8,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:07:20.649Z"
+  },
+  {
+    "id": 135,
+    "category": "avoid_pattern",
+    "insight": "Avoid vague suggestions without actionable steps, as they can reduce the perceived helpfulness of the response.",
+    "examples": [
+      "If more specific details are required, additional documentation or direct inquiry with Nick might be necessary.",
+      "Avoid suggesting 'additional documentation' without specifying what kind or where to find it."
+    ],
+    "sourceEvaluationId": 37,
+    "importance": 7,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:07:20.686Z"
+  },
+  {
+    "id": 132,
+    "category": "improvement",
+    "insight": "Include examples of potential courses related to the user's focus areas to enhance the response's helpfulness.",
+    "examples": [
+      "Nick might have taken courses like 'Product Management Fundamentals' or 'Strategic Planning in Business'.",
+      "Courses such as 'Advanced Marketing Strategy' or 'Innovation Management' could be relevant."
+    ],
+    "sourceEvaluationId": 37,
+    "importance": 8,
+    "isActive": false,
+    "createdAt": "2025-07-13T03:07:20.575Z"
+  },
+  {
+    "id": 139,
+    "category": "best_practice",
+    "insight": "FACT: Bot should reference specific courses from Nick's Engineering Management transcripts",
+    "examples": [],
+    "sourceEvaluationId": 5,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:26:39.211Z"
+  },
+  {
+    "id": 138,
+    "category": "best_practice",
+    "insight": "FACT: Bot should reference specific courses from Nick's MBA transcripts.",
+    "examples": [],
+    "sourceEvaluationId": 5,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:26:39.174Z"
+  },
+  {
+    "id": 137,
+    "category": "best_practice",
+    "insight": "FACT: Bot should reference specific courses from Nick's MBA transcripts",
+    "examples": [],
+    "sourceEvaluationId": 6,
+    "importance": 10,
+    "isActive": false,
+    "createdAt": "2025-07-13T03:26:37.537Z"
+  },
+  {
+    "id": 136,
+    "category": "best_practice",
+    "insight": "FACT: Bot should reference specific courses from Nick's MBA transcripts",
+    "examples": [],
+    "sourceEvaluationId": 7,
+    "importance": 10,
+    "isActive": false,
+    "createdAt": "2025-07-13T03:26:36.025Z"
+  },
+  {
+    "id": 133,
+    "category": "best_practice",
+    "insight": "Maintain clarity and structure in responses to ensure they are easy to understand.",
+    "examples": [
+      "The response clearly states the lack of specific course details and suggests potential focus areas.",
+      "The information is presented in a logical order, enhancing readability."
+    ],
+    "sourceEvaluationId": 37,
+    "importance": 9,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:07:20.612Z"
+  },
+  {
+    "id": 128,
+    "category": "best_practice",
+    "insight": "Maintain clarity and logical structure in responses to ensure they are easy to understand.",
+    "examples": [
+      "The response is clear and well-structured, making it easy to understand."
+    ],
+    "sourceEvaluationId": 38,
+    "importance": 9,
+    "isActive": false,
+    "createdAt": "2025-07-13T03:07:09.066Z"
+  },
+  {
+    "id": 140,
+    "category": "best_practice",
+    "insight": "FACT: Bot should reference specific courses from Nick's MBA transcripts",
+    "examples": [],
+    "sourceEvaluationId": 8,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:43:12.077Z"
+  },
+  {
+    "id": 141,
+    "category": "best_practice",
+    "insight": "FACT: Bot should reference specific courses from Nick's Master of Science in Engineering Management transcripts",
+    "examples": [],
+    "sourceEvaluationId": 8,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:43:12.124Z"
+  },
+  {
+    "id": 142,
+    "category": "best_practice",
+    "insight": "FACT: Bot should reference specific courses from Nick's MBA transcripts",
+    "examples": [],
+    "sourceEvaluationId": 7,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:43:14.056Z"
+  },
+  {
+    "id": 143,
+    "category": "best_practice",
+    "insight": "FACT: Bot should reference specific courses from Nick's MBA transcripts",
+    "examples": [],
+    "sourceEvaluationId": 6,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:43:15.435Z"
+  },
+  {
+    "id": 144,
+    "category": "best_practice",
+    "insight": "FACT: Bot should reference specific courses from Nick's MBA transcripts",
+    "examples": [],
+    "sourceEvaluationId": 5,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:43:17.075Z"
+  },
+  {
+    "id": 145,
+    "category": "best_practice",
+    "insight": "FACT: Bot should reference specific courses from Nick's MS in Engineering Management transcripts",
+    "examples": [],
+    "sourceEvaluationId": 5,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T03:43:17.115Z"
+  },
+  {
+    "id": 146,
+    "category": "best_practice",
+    "insight": "FACT: Bot should reference specific courses from Nick's MBA transcripts",
+    "examples": [],
+    "sourceEvaluationId": 8,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T04:05:55.597Z"
+  },
+  {
+    "id": 147,
+    "category": "best_practice",
+    "insight": "FACT: Bot should reference specific courses from Nick's Master of Science in Engineering Management transcripts",
+    "examples": [],
+    "sourceEvaluationId": 8,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T04:05:55.648Z"
+  },
+  {
+    "id": 148,
+    "category": "best_practice",
+    "insight": "FACT: Bot should reference specific courses from Nick's MBA transcripts",
+    "examples": [],
+    "sourceEvaluationId": 7,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T04:05:57.073Z"
+  },
+  {
+    "id": 149,
+    "category": "best_practice",
+    "insight": "FACT: Bot should reference specific courses from Nick's MBA transcripts",
+    "examples": [],
+    "sourceEvaluationId": 6,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T04:05:58.447Z"
+  },
+  {
+    "id": 150,
+    "category": "best_practice",
+    "insight": "FACT: Bot should reference specific courses from Nick's MBA transcripts",
+    "examples": [],
+    "sourceEvaluationId": 5,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T04:06:00.054Z"
+  },
+  {
+    "id": 151,
+    "category": "best_practice",
+    "insight": "FACT: Bot should reference specific courses from Nick's Master of Science in Engineering Management transcripts",
+    "examples": [],
+    "sourceEvaluationId": 5,
+    "importance": 10,
+    "isActive": true,
+    "createdAt": "2025-07-13T04:06:00.093Z"
+  }
+]

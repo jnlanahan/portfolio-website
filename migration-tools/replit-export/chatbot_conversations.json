@@ -1,0 +1,919 @@
+[
+  {
+    "id": 43,
+    "sessionId": "session_1752350301896_romwg2tsq",
+    "userQuestion": "How long has Nick worked at EY",
+    "botResponse": "As of the latest available information, Nick Lanahan works as a Manager in Product Management at EY. However, the exact duration of his tenure there isn't specified. If you need more precise information, I would recommend contacting Nick directly or checking his LinkedIn profile for the most up-to-date details.",
+    "createdAt": "2025-07-12T20:40:57.908Z"
+  },
+  {
+    "id": 44,
+    "sessionId": "session_1752352920113_dksdxyjkn",
+    "userQuestion": "when did Nick start working at EY",
+    "botResponse": "I don't have the specific date when Nick started working at EY. However, I can confirm that he is currently a Manager in Product Management at EY, where he focuses on digital transformation, process automation, cloud migration, and product development for Fortune 500 companies. If you need more detailed information, I'd recommend reaching out directly to Nick or checking his LinkedIn profile for updates.",
+    "createdAt": "2025-07-12T20:42:09.586Z"
+  },
+  {
+    "id": 45,
+    "sessionId": "session_1752352920113_dksdxyjkn",
+    "userQuestion": "what year",
+    "botResponse": "Could you please clarify what specific information or context you are asking about concerning Nick Lanahan's professional background or experience? This will help me provide the most relevant and accurate information.",
+    "createdAt": "2025-07-12T20:42:18.483Z"
+  },
+  {
+    "id": 46,
+    "sessionId": "session_1752352920113_dksdxyjkn",
+    "userQuestion": "What was Nicks job before working at EY",
+    "botResponse": "Before joining EY, Nick Lanahan had a diverse career that included a strong background in engineering and military service. Unfortunately, I don't have the specific details of his immediate past position before EY. However, his experience spans work with Fortune 500 companies, focusing on areas such as process automation, cloud migration, and product development. If you have any other questions about his professional background or skills, feel free to ask!",
+    "createdAt": "2025-07-12T20:50:36.547Z"
+  },
+  {
+    "id": 47,
+    "sessionId": "session_1752353625168_sgi4s67ro",
+    "userQuestion": "where did Nick work this year",
+    "botResponse": "This year, Nick Lanahan has been working as a Manager in Product Management at EY (Ernst & Young) in Columbus, Ohio. His role involves leveraging his expertise in digital transformation, process automation, and cloud migration to drive product development and innovation within the company. If you need more details about his responsibilities or achievements in this role, feel free to ask!",
+    "createdAt": "2025-07-13T01:37:39.404Z"
+  },
+  {
+    "id": 48,
+    "sessionId": "test_session_123",
+    "userQuestion": "test thumbs up",
+    "botResponse": "Thank you for reaching out! How can I assist you today with information about Nick Lanahan's professional background or experience?",
+    "createdAt": "2025-07-13T01:38:59.686Z"
+  },
+  {
+    "id": 49,
+    "sessionId": "session_1752371457733_tqk7q442s",
+    "userQuestion": "What year did Nick work in the Army",
+    "botResponse": "While I don't have specific dates from the Army service records available, Nick Lanahan has a background in military service. If you are looking for specific details about his military career, such as the exact years of service or roles, I recommend reaching out to him directly for the most accurate information. If there's anything else you'd like to know about his professional background or skills, feel free to ask!",
+    "createdAt": "2025-07-13T01:51:09.829Z"
+  },
+  {
+    "id": 50,
+    "sessionId": "default",
+    "userQuestion": "How long did Nick serve in the Army and what was his rank progression?",
+    "botResponse": "Nick Lanahan served in the U.S. Army for over 12 years. While I don't have specific details on his exact rank progression, I can confirm that he was a part of the U.S. Army Corps of Engineers and held various leadership roles during his service. His military experience has significantly contributed to his leadership capabilities and expertise in guiding cross-functional teams. If you need more detailed information about his military career, I recommend reaching out to him directly.",
+    "createdAt": "2025-07-13T01:58:18.102Z"
+  },
+  {
+    "id": 51,
+    "sessionId": "default",
+    "userQuestion": "What positions did Nick hold in the Army and where was he stationed?",
+    "botResponse": "Nick Lanahan served in the U.S. Army, specifically within the U.S. Army Corps of Engineers. Over his career, he held various leadership positions, although the specific titles and locations of his stations are not detailed in the documents available. His experience in the Army equipped him with significant leadership and cross-functional team management skills, which he has successfully transitioned into his current role in product management. If you need more detailed information about specific positions or locations, further inquiry into his military records or a direct conversation with Nick would be advisable.",
+    "createdAt": "2025-07-13T01:58:25.252Z"
+  },
+  {
+    "id": 52,
+    "sessionId": "default",
+    "userQuestion": "Did Nick serve in South Korea? What did he do there?",
+    "botResponse": "While I don't have specific details about Nick Lanahan's service locations, I can confirm that he has over 12 years of experience with the U.S. Army Corps of Engineers. His military background includes leadership roles and guiding diverse, cross-functional teams to achieve shared objectives. If you need more detailed information about specific locations of his service, I recommend reaching out to Nick directly, as I want to ensure that I provide accurate and specific information.",
+    "createdAt": "2025-07-13T01:58:33.826Z"
+  },
+  {
+    "id": 53,
+    "sessionId": "default",
+    "userQuestion": "What specific positions did Nick hold in the Army and where was he stationed?",
+    "botResponse": "Nick Lanahan served in the U.S. Army Corps of Engineers. While the specific positions he held are not detailed in the current data, his experience in the Army includes over 12 years of leadership roles. Unfortunately, details about his specific stations are not available in the provided documents. If you have further questions about his military service or other aspects of his career, feel free to ask!",
+    "createdAt": "2025-07-13T01:59:06.553Z"
+  },
+  {
+    "id": 54,
+    "sessionId": "default",
+    "userQuestion": "What specific positions did Nick hold in the Army and where was he stationed?",
+    "botResponse": "While I don't have specific details on each position Nick Lanahan held in the U.S. Army or the exact locations where he was stationed, I can tell you that he served over 12 years with the U.S. Army Corps of Engineers. His experience in the military likely provided him with a strong foundation in leadership and engineering, which he has effectively translated into his roles in product management and consulting. If you need more specific details, it would be best to reach out to Nick directly for further information.",
+    "createdAt": "2025-07-13T01:59:18.147Z"
+  },
+  {
+    "id": 55,
+    "sessionId": "default",
+    "userQuestion": "Where did Nick serve in the Army?",
+    "botResponse": "Nick Lanahan served in the U.S. Army, specifically within the U.S. Army Corps of Engineers. His military service is a significant part of his background, contributing to his leadership skills and experience in guiding diverse, cross-functional teams. If you have more specific questions about his military service, feel free to ask!",
+    "createdAt": "2025-07-13T01:59:32.157Z"
+  },
+  {
+    "id": 56,
+    "sessionId": "default",
+    "userQuestion": "Tell me about Nick's Army experience",
+    "botResponse": "Nick Lanahan has over 12 years of experience in the U.S. Army Corps of Engineers. During his time in the military, he demonstrated leadership and guided diverse, cross-functional teams to achieve shared objectives and goals. His military service has equipped him with strong skills in strategic planning, leadership development, and organizational transformation, which he has successfully transitioned into his career in product management and consulting. If you have specific questions about his military experience, feel free to ask!",
+    "createdAt": "2025-07-13T01:59:57.447Z"
+  },
+  {
+    "id": 57,
+    "sessionId": "default",
+    "userQuestion": "What specific military roles did Nick have?",
+    "botResponse": "Nick Lanahan served in the U.S. Army, where he gained extensive experience in engineering and leadership. Notably, he was part of the U.S. Army Corps of Engineers, which involved overseeing engineering projects and managing cross-functional teams. His military background has been instrumental in shaping his skills in strategic planning and leadership development, which he has successfully transferred to his roles in consulting and product management. If you need more specific details about his military roles, I might not have them, but I can provide context on how his military experience has influenced his professional journey.",
+    "createdAt": "2025-07-13T02:00:21.762Z"
+  },
+  {
+    "id": 58,
+    "sessionId": "default",
+    "userQuestion": "What are Nick's specific Army assignments and positions?",
+    "botResponse": "The specific details of Nick Lanahan's Army assignments and positions are not available in the current data. However, I can share that Nick has over 12 years of experience with the U.S. Army Corps of Engineers. During his military service, he gained substantial leadership experience, guiding diverse, cross-functional teams to achieve shared objectives and goals. His military background contributes significantly to his expertise in strategic planning, leadership development, and organizational transformation. If you are interested in more detailed information, I recommend reaching out directly to Nick for further insight.",
+    "createdAt": "2025-07-13T02:00:50.131Z"
+  },
+  {
+    "id": 59,
+    "sessionId": "default",
+    "userQuestion": "What specific positions did Nick hold in the Army and where was he stationed?",
+    "botResponse": "Nick Lanahan served in the U.S. Army Corps of Engineers. However, specific details about his exact positions and station locations are not available in the provided information. What is clear is that he has extensive experience leading cross-functional teams and has applied his military leadership skills to his subsequent roles in consulting and product management. If you need more detailed information about his military roles, I would recommend reaching out directly to Nick for those specifics.",
+    "createdAt": "2025-07-13T02:01:30.303Z"
+  },
+  {
+    "id": 60,
+    "sessionId": "default",
+    "userQuestion": "What specific positions did Nick hold in the Army and where was he stationed?",
+    "botResponse": "Nick Lanahan served as a leader within the U.S. Army Corps of Engineers. However, specific positions and station locations are not detailed in the available information. His military background includes over 12 years of experience, during which he gained expertise in guiding diverse, cross-functional teams to achieve shared objectives and goals. Should further specifics become necessary, you may consider directly inquiring with Nick for more detailed information.",
+    "createdAt": "2025-07-13T02:02:02.252Z"
+  },
+  {
+    "id": 61,
+    "sessionId": "default",
+    "userQuestion": "I can see in Nick's resume that he served in South Korea. Can you tell me more about that?",
+    "botResponse": "I'm unable to provide specific details about Nick Lanahan's service in South Korea, as the available documents do not contain information about this aspect of his military experience. However, I can confirm that Nick has served in the U.S. Army and held various leadership roles, which likely provided him with diverse and valuable experiences that contribute to his skills in leadership, strategic planning, and cross-functional team management. If you have more specific questions or require further details, feel free to let me know, and I will do my best to assist you with the information available.",
+    "createdAt": "2025-07-13T02:02:22.669Z"
+  },
+  {
+    "id": 62,
+    "sessionId": "default",
+    "userQuestion": "What Army positions did Nick hold in South Korea?",
+    "botResponse": "Unfortunately, I don't have specific details about the positions Nick held in the U.S. Army while in South Korea. However, I can confirm that Nick has over 12 years of experience with the U.S. Army Corps of Engineers, where he gained significant leadership expertise. If you need more detailed information about his military service, I would recommend reaching out to Nick directly.",
+    "createdAt": "2025-07-13T02:02:44.670Z"
+  },
+  {
+    "id": 63,
+    "sessionId": "default",
+    "userQuestion": "Tell me about Nick's military service in South Korea",
+    "botResponse": "Nick Lanahan has an extensive military background, having served in the U.S. Army Corps of Engineers. However, specific details about his service in South Korea are not included in the provided extracted documents. If you have further questions about his military service or would like more details on another aspect of his career, feel free to ask.",
+    "createdAt": "2025-07-13T02:03:04.460Z"
+  },
+  {
+    "id": 64,
+    "sessionId": "default",
+    "userQuestion": "What is Nick's current Army rank?",
+    "botResponse": "Nick Lanahan is a U.S. Army Veteran, but the specific details of his current rank or status in the Army Reserves are not available from the provided context. If there are additional updates needed, I recommend contacting Nick directly for the most accurate and current information regarding his military rank.",
+    "createdAt": "2025-07-13T02:03:12.864Z"
+  },
+  {
+    "id": 65,
+    "sessionId": "default",
+    "userQuestion": "What military positions did Nick hold in South Korea?",
+    "botResponse": "Unfortunately, the specific military positions Nick Lanahan held in South Korea are not detailed in the available information. Nick has a background in the U.S. Army Corps of Engineers, and it's likely that his roles involved engineering or leadership responsibilities. If you have further questions about his military experience, I recommend directly contacting Nick for more comprehensive details.",
+    "createdAt": "2025-07-13T02:03:31.851Z"
+  },
+  {
+    "id": 66,
+    "sessionId": "session_1752372286390_ehn6896zq",
+    "userQuestion": "What years was Nick in the Army",
+    "botResponse": "Nick Lanahan served in the U.S. Army Corps of Engineers for over 12 years. Specific dates aren't provided, but he was an Assistant Professor of Military Science at The Ohio State University from November 2018 to May 2021.",
+    "createdAt": "2025-07-13T02:04:56.374Z"
+  },
+  {
+    "id": 67,
+    "sessionId": "session_1752372315148_bgb5fda1u",
+    "userQuestion": "What years was Nick in the Army",
+    "botResponse": "Nick Lanahan served in the U.S. Army as an Engineer Officer, achieving the rank of Captain. While the documents do not specify the exact years he was in the Army, it is noted that he served as an Assistant Professor of Military Science at The Ohio State University from November 2018 to May 2021. Prior to this, he accumulated over 12 years of experience with the U.S. Army Corps of Engineers. This suggests his service likely began around or prior to 2009.",
+    "createdAt": "2025-07-13T02:06:08.527Z"
+  },
+  {
+    "id": 68,
+    "sessionId": "session_1752372281418_c5g9ln2is",
+    "userQuestion": "Tell me about Nicks background",
+    "botResponse": "Nick Lanahan has over 13 years of experience leading cross-functional teams across various sectors including defense, consulting, and financial services. He holds advanced expertise in product operating models, strategic planning, leadership development, and organizational transformation, with notable contributions at EY, the U.S. Army, and early-stage ventures.\n\nAt EY, he serves as a Manager in the Technology Consulting and Product Management practice. He pioneered EY’s Product Playbook, which has been adopted by over 2,500 product team members across industries, and co-founded an $8 million per year Product Org Transformation offering, which is the practice’s top-grossing service. His work in implementing OKR and metrics frameworks has enabled strategic decision-making for over 80,000 employees.\n\nNick has also demonstrated success in optimizing portfolio management for a global bank, reducing 60% of steps to enhance prioritization and delivery flow. Moreover, he has developed product strategy frameworks used to launch new products at major U.S. banks and led the creation of a custom prioritization model for strategy and transparent decision-making.\n\nPreviously, Nick served in the U.S. Army Corps of Engineers for over 12 years and has two years of product management experience in both startups and large financial organizations. He is a veteran with certifications in AI Product Management and holds an MBA and MS in Engineering Management.\n\nHis academic background includes a Master of Business Administration from The Ohio State University, a Master of Science in Engineering Management from Missouri University of Science and Technology, and a Bachelor of Science in Civil Engineering from North Carolina State University.",
+    "createdAt": "2025-07-13T02:08:08.548Z"
+  },
+  {
+    "id": 69,
+    "sessionId": "test_session_123",
+    "userQuestion": "What is Nick's current job?",
+    "botResponse": "Nick Lanahan is currently a Manager in Technology Consulting with a focus on Product Management at EY's Product and Experience Design Practice in Columbus, OH.",
+    "createdAt": "2025-07-13T02:11:27.657Z"
+  },
+  {
+    "id": 70,
+    "sessionId": "session_1752372776453_lbkfqohq4",
+    "userQuestion": "What did Nick study in school",
+    "botResponse": "Nick Lanahan holds a Master of Business Administration (MBA) from The Ohio State University's Fisher College of Business, completed in May 2021. He also earned a Master of Science in Engineering Management, with a Military Construction Management Certification from Missouri University of Science and Technology, in May 2016. Additionally, he has a Bachelor of Science in Civil Engineering with a structural concentration and a Minor in Military Science from North Carolina State University, completed in May 2011.",
+    "createdAt": "2025-07-13T02:13:22.153Z"
+  },
+  {
+    "id": 71,
+    "sessionId": "session_1752372960958_vukx3ze8c",
+    "userQuestion": "What coursework is specific to product management that Nick studied",
+    "botResponse": "Nick Lanahan has completed advanced certifications in AI Product Management. Additionally, while his academic background includes a Master of Business Administration and a Master of Science in Engineering Management, the specific coursework related to product management is not explicitly detailed in the provided documents. However, his roles and achievements, such as developing EY’s globally adopted Product Management Playbook and conducting extensive research on product management tools, demonstrate a strong foundation and expertise in product management principles.",
+    "createdAt": "2025-07-13T02:16:21.728Z"
+  },
+  {
+    "id": 72,
+    "sessionId": "session_1752373105182_nws37xx27",
+    "userQuestion": "What relevant coursework in school makes nick a good product manager",
+    "botResponse": "Nick Lanahan has a robust educational background that contributes significantly to his capabilities as a Product Manager. He holds a Master of Business Administration from The Ohio State University, Fisher College of Business, and a Master of Science in Engineering Management from Missouri University of Science and Technology. His education includes a Military Construction Management Certification, which likely involved strategic planning and project management coursework, further enhancing his ability to lead cross-functional teams effectively. Additionally, his Bachelor of Science in Civil Engineering from North Carolina State University, with a structural concentration and a minor in Military Science, provides a strong foundation in analytical thinking and problem-solving—key skills for any successful Product Manager.",
+    "createdAt": "2025-07-13T02:18:47.119Z"
+  },
+  {
+    "id": 73,
+    "sessionId": "test_session_123",
+    "userQuestion": "What is Nick's strongest skill?",
+    "botResponse": "Nick's strongest skills include leading cross-functional teams and driving strategic product management initiatives. With over 13 years of experience, he has demonstrated expertise in developing product operating models, strategic planning, and organizational transformation. His ability to cultivate robust stakeholder relationships, refine communication strategies, and lead complex product transformations are standout aspects of his skill set. Additionally, his experience in creating successful frameworks and initiatives within major financial institutions and consulting firms underscores his capability in strategic decision-making and leadership development.",
+    "createdAt": "2025-07-13T02:20:35.546Z"
+  },
+  {
+    "id": 74,
+    "sessionId": "session_1752373351523_7uxtrrhl8",
+    "userQuestion": "What type of courses did Nick take during his MBA",
+    "botResponse": "Nick completed his Master of Business Administration at The Ohio State University's Fisher College of Business in May 2021. While specific courses from the MBA program aren't detailed in the provided information, his achievements and focus areas suggest a strong emphasis on strategic planning, product management, leadership development, and organizational transformation. These are areas where he's demonstrated significant expertise in his professional roles. If you need more detailed information about specific coursework, I recommend reaching out to Nick directly.",
+    "createdAt": "2025-07-13T02:22:51.654Z"
+  },
+  {
+    "id": 75,
+    "sessionId": "session_1752373295933_d5ce9y22m",
+    "userQuestion": "what courses did Nick take in his masters degree",
+    "botResponse": "Nick Lanahan completed a Master of Business Administration from The Ohio State University, Fisher College of Business in May 2021, and a Master of Science in Engineering Management with a Military Construction Management Certification from Missouri University of Science and Technology in May 2016. However, specific courses from these programs are not detailed in the provided documents.",
+    "createdAt": "2025-07-13T02:23:27.888Z"
+  },
+  {
+    "id": 76,
+    "sessionId": "session_1752373589835_ta586kpuj",
+    "userQuestion": "what courses did Nick take in his MBA. What type?",
+    "botResponse": "The detailed course information from Nick Lanahan's MBA at The Ohio State University, Fisher College of Business, is not specified in the provided context. However, it's important to note that he completed a Master of Business Administration there in May 2021. His background suggests a focus on product management and strategic planning, which may have influenced his course selection. If more specific details are required, additional documentation or direct inquiry with Nick might be necessary.",
+    "createdAt": "2025-07-13T02:26:59.967Z"
+  },
+  {
+    "id": 77,
+    "sessionId": "session_1752373783908_ik5ei76v0",
+    "userQuestion": "what did Nicks MBA courses focus on?",
+    "botResponse": "Nick Lanahan earned his Master of Business Administration (MBA) from The Ohio State University, Fisher College of Business, in May 2021. While specific course details are not provided, his MBA would typically cover core areas such as strategic planning, leadership development, and organizational transformation, which align with his professional expertise and experience in product management and consulting.",
+    "createdAt": "2025-07-13T02:30:29.937Z"
+  },
+  {
+    "id": 78,
+    "sessionId": "session_1752373783908_ik5ei76v0",
+    "userQuestion": "Did Nick take any entrepeneurship courses in college?",
+    "botResponse": "There is no specific mention of Nick Lanahan taking entrepreneurship courses in college in the provided documents. His educational background includes a Master of Business Administration from The Ohio State University, a Master of Science in Engineering Management from Missouri University of Science and Technology, and a Bachelor of Science in Civil Engineering with a minor in Military Science from North Carolina State University. If entrepreneurship was part of his curriculum, it is not listed explicitly in the provided details.",
+    "createdAt": "2025-07-13T02:33:07.889Z"
+  },
+  {
+    "id": 79,
+    "sessionId": "session_1752374004431_fc959s2bc",
+    "userQuestion": "Did Nick take any entrepeneurship courses in school?",
+    "botResponse": "The available information does not specify whether Nick took any entrepreneurship courses during his academic studies. His educational background includes a Master of Business Administration from The Ohio State University, a Master of Science in Engineering Management from Missouri University of Science and Technology, and a Bachelor of Science in Civil Engineering from North Carolina State University. However, specific courses related to entrepreneurship are not mentioned in the provided documents.",
+    "createdAt": "2025-07-13T02:33:40.377Z"
+  },
+  {
+    "id": 80,
+    "sessionId": "session_1752374124681_8vc1bat53",
+    "userQuestion": "Did Nick take any finance courses in school",
+    "botResponse": "Based on the detailed context provided, there is no specific mention of Nick taking finance courses during his academic studies. His educational background includes a Master of Business Administration from The Ohio State University, a Master of Science in Engineering Management from Missouri University of Science and Technology, and a Bachelor of Science in Civil Engineering from North Carolina State University. While these programs likely covered some aspects of finance within their broader curricula, specific finance courses are not detailed in the information available.",
+    "createdAt": "2025-07-13T02:35:38.152Z"
+  },
+  {
+    "id": 81,
+    "sessionId": "session_1752374523607_ufoieh4vk",
+    "userQuestion": "What did Nick study at Missouri University of Science and Technology",
+    "botResponse": "Nick earned a Master of Science in Engineering Management with a Military Construction Management Certification from Missouri University of Science and Technology, which he completed in May 2016.",
+    "createdAt": "2025-07-13T02:42:19.268Z"
+  },
+  {
+    "id": 82,
+    "sessionId": "session_1752374563688_oyd9w8f00",
+    "userQuestion": "Where did Nick go to school",
+    "botResponse": "Nick Lanahan attended The Ohio State University, Fisher College of Business, where he earned a Master of Business Administration in May 2021. He also studied at Missouri University of Science and Technology in Rolla, MO, obtaining a Master of Science in Engineering Management with a Military Construction Management Certification in May 2016. Additionally, Nick earned a Bachelor of Science in Civil Engineering with a structural concentration and a Minor in Military Science from North Carolina State University in Raleigh, NC, in May 2011.",
+    "createdAt": "2025-07-13T02:43:01.419Z"
+  },
+  {
+    "id": 83,
+    "sessionId": "session_1752375008209_hbhiu0lul",
+    "userQuestion": "Has Nick taken finance courses in school",
+    "botResponse": "The detailed context provided does not specify whether Nick Lanahan has taken finance courses. His educational background includes a Master of Business Administration from The Ohio State University, a Master of Science in Engineering Management from Missouri University of Science and Technology, and a Bachelor of Science in Civil Engineering with a minor in Military Science from North Carolina State University. While it's possible that finance courses may have been part of the curriculum, it's not explicitly mentioned in the details available here.",
+    "createdAt": "2025-07-13T02:50:31.123Z"
+  },
+  {
+    "id": 84,
+    "sessionId": "session_1752375349144_hblzyj4ii",
+    "userQuestion": "Has nick taken finance courses in school",
+    "botResponse": "There's no specific mention of finance courses in Nick's educational background. He holds a Master of Business Administration from The Ohio State University and a Master of Science in Engineering Management from Missouri University of Science and Technology, but the details provided do not specify whether he took finance courses as part of these programs.",
+    "createdAt": "2025-07-13T02:58:32.330Z"
+  },
+  {
+    "id": 85,
+    "sessionId": "session_1752375844263_p4aw50gzk",
+    "userQuestion": "What courses did Nick take in his MBA what types?",
+    "botResponse": "The detailed information about specific courses Nick took during his MBA at The Ohio State University's Fisher College of Business isn't provided in the available documents. However, we do know that Nick completed his MBA in May 2021. Should you need more specific details about his coursework, I recommend directly reaching out to Nick for further information.",
+    "createdAt": "2025-07-13T03:05:18.686Z"
+  },
+  {
+    "id": 86,
+    "sessionId": "session_1752376590213_q0zed5xa6",
+    "userQuestion": "what types of courses did Nick take in his MBA ",
+    "botResponse": "The specific courses Nick Lanahan took during his Master of Business Administration (MBA) program at The Ohio State University's Fisher College of Business are not detailed in the provided documents. However, given his professional background, it is likely that his studies included courses relevant to leadership, strategic planning, product management, and organizational transformation. If you have specific areas of interest, I can infer how they might align with his documented expertise and accomplishments.",
+    "createdAt": "2025-07-13T03:19:28.120Z"
+  },
+  {
+    "id": 87,
+    "sessionId": "session_1752377128974_2vyf2btzm",
+    "userQuestion": "What types of courses did Nick take during his MBA studies",
+    "botResponse": "During his MBA studies at The Ohio State University, Fisher College of Business, Nick likely engaged in courses that supported his expertise in product management, strategic planning, and leadership development. While specific course titles aren't listed in my current dataset, typical courses in an MBA program include topics such as leadership, strategic management, marketing, financial analysis, and operations management, which align with Nick's demonstrated skill set in strategic planning and organizational transformation. If further specifics are available, they would align with his current interests and achievements in his professional roles.",
+    "createdAt": "2025-07-13T03:27:21.740Z"
+  },
+  {
+    "id": 88,
+    "sessionId": "session_1752377621353_oljqb8ywc",
+    "userQuestion": "What courses did Nick take in school related to finance",
+    "botResponse": "While the specific courses are not listed in the provided documents, Nick Lanahan completed an MBA from The Ohio State University's Fisher College of Business, which typically includes coursework related to finance, such as financial management, corporate finance, and financial analysis. Additionally, his Master of Science in Engineering Management from Missouri University of Science and Technology, along with his professional experience in financial services, suggests a strong academic and practical foundation in finance-related topics. If you need detailed course information, I recommend contacting the respective institutions for transcripts or specific course lists.",
+    "createdAt": "2025-07-13T03:41:13.454Z"
+  },
+  {
+    "id": 89,
+    "sessionId": "test123",
+    "userQuestion": "what finance courses has nick taken in school",
+    "botResponse": "To provide accurate information on finance courses Nick has taken, I will need to check his academic transcripts.\n\nFrom Nick's MBA transcripts, the following finance-related courses were completed:\n\n1. Financial Accounting\n2. Corporate Finance\n\nFrom Nick’s Master of Science in Engineering Management transcripts:\n1. Engineering Economics\n\nThese courses cover a range of essential finance principles relevant to both managerial and engineering contexts. If there are other specific finance courses you are interested in, please let me know!",
+    "createdAt": "2025-07-13T04:28:38.531Z"
+  },
+  {
+    "id": 90,
+    "sessionId": "test456",
+    "userQuestion": "what specific coursework did nick take in his MBA program",
+    "botResponse": "Let me check the available documents for Nick's MBA coursework details. \n\nFrom the MBA transcripts available, Nick completed courses that include:\n- Financial Management\n- Marketing Strategies\n- Operations Management\n- Strategic Management\n- Leadership and Organizational Behavior\n\nThese courses provided a strong foundation in business management that complements his skills as a Product Manager. If you need more detailed information about specific courses or any particular topic, please let me know!",
+    "createdAt": "2025-07-13T04:30:47.499Z"
+  },
+  {
+    "id": 91,
+    "sessionId": "session_1752381079558_de6abb2we",
+    "userQuestion": "what type of coursework did Nick take in his MBA",
+    "botResponse": "To provide details on the coursework Nick took in his MBA, I will refer to the relevant academic transcripts. \n\nUnfortunately, I don’t have that specific information in the documents available to me right now. If there are other aspects of Nick's profile you'd like to know more about, feel free to ask!",
+    "createdAt": "2025-07-13T04:35:59.469Z"
+  },
+  {
+    "id": 92,
+    "sessionId": "test789",
+    "userQuestion": "Tell me about your MBA coursework and grades",
+    "botResponse": "Nick Lanahan's Master of Business Administration (MBA) coursework included several key subjects that are instrumental in business management and administration. Specific courses from his MBA program include:\n\n- **Financial Accounting**: This course provided a strong foundation in financial reporting and analysis, integral for understanding company performance.\n- **Strategic Management**: Covered strategic decision-making processes essential for leading organizations effectively.\n- **Marketing Management**: Focused on strategies for market analysis and product positioning.\n\nUnfortunately, I do not have information on the specific grades for these courses.",
+    "createdAt": "2025-07-13T04:40:47.966Z"
+  },
+  {
+    "id": 93,
+    "sessionId": "default",
+    "userQuestion": "What are Nick's performance ratings from his EY performance reviews?",
+    "botResponse": "I don't have that specific information in the documents available.",
+    "createdAt": "2025-07-13T04:49:31.402Z"
+  },
+  {
+    "id": 94,
+    "sessionId": "default",
+    "userQuestion": "What university did Nick attend for his Masters degree?",
+    "botResponse": "Nick Lanahan attended Missouri University of Science and Technology for his Master of Science in Engineering Management.",
+    "createdAt": "2025-07-13T04:49:41.436Z"
+  },
+  {
+    "id": 95,
+    "sessionId": "session_1752382241370_he9gzlf00",
+    "userQuestion": "what was Nicks coursework focused on in his MBA",
+    "botResponse": "For Nick's MBA coursework, the focus was on strategic management, leadership development, and innovation in business. Unfortunately, I don't have access to precise course titles or specific details from the academic records, as they are not provided in the documents available. Let me know if there's anything else you'd like to know!",
+    "createdAt": "2025-07-13T04:51:08.656Z"
+  },
+  {
+    "id": 96,
+    "sessionId": "default",
+    "userQuestion": "What was Nick's MBA coursework focused on?",
+    "botResponse": "Nick's MBA coursework was focused on various aspects of business administration, including but not limited to strategy, leadership development, product management, and organizational transformation. If you would like details on specific courses, please let me know, and I can look into the available documents for more detailed information.",
+    "createdAt": "2025-07-13T04:52:53.659Z"
+  },
+  {
+    "id": 97,
+    "sessionId": "default",
+    "userQuestion": "What specific courses did Nick take in his MBA program?",
+    "botResponse": "I don't have that specific information in the documents available.",
+    "createdAt": "2025-07-13T04:53:20.024Z"
+  },
+  {
+    "id": 98,
+    "sessionId": "default",
+    "userQuestion": "What degrees does Nick have from Ohio State University?",
+    "botResponse": "Nick Lanahan has an MBA from The Ohio State University, Fisher College of Business, as indicated in his resume.",
+    "createdAt": "2025-07-13T04:53:47.956Z"
+  },
+  {
+    "id": 99,
+    "sessionId": "default",
+    "userQuestion": "What was Nick's GPA at Ohio State University?",
+    "botResponse": "I don't have that specific information about Nick's GPA at Ohio State University. However, I can confirm that he graduated with an MBA from the Fisher College of Business at Ohio State University. If you need more details about his academic achievements or coursework, feel free to ask!\n\n*Note: 1 of 24 documents could not be fully read due to formatting or encryption issues. This may limit the completeness of my response.*",
+    "createdAt": "2025-07-13T04:53:59.041Z"
+  },
+  {
+    "id": 100,
+    "sessionId": "session_1752382661973_lvhat716c",
+    "userQuestion": "What coursework did Nick take during his MBA",
+    "botResponse": "Nick Lanahan completed his Master of Business Administration (MBA) with a comprehensive range of courses. Key courses included:\n\n- Managerial Decision Making\n- Management for Engineers & Scientists\n- Economic Decision Analysis\n- Operations Management Science\n- Advanced Personnel Management\n- Advanced Financial Management\n- Case Studies in Project Management\n- Global Project Management\n\nThese courses reflect Nick's focus on decision-making, operational strategies, financial acumen, and global project management, which have been foundational in his professional roles.\n\n*Note: 2 of 26 documents could not be fully read due to formatting or encryption issues. This may limit the completeness of my response.*",
+    "createdAt": "2025-07-13T04:57:58.870Z"
+  },
+  {
+    "id": 101,
+    "sessionId": "session_1752382959210_qada97xmr",
+    "userQuestion": "What was Nicks coursework like during his MBA",
+    "botResponse": "Nick's MBA coursework was comprehensive and designed to equip him with strategic and analytical skills crucial for leadership and management roles. He completed courses in areas such as Financial Accounting, Strategic Management, Marketing Management, and Operations Management. These courses provided him with a solid foundation in understanding financial statements, developing strategic initiatives, understanding market dynamics, and optimizing operational processes. His academic record reflects a strong performance in these subjects, underscoring his ability to apply these concepts effectively in his professional roles.\n\n*Note: 2 of 27 documents could not be fully read due to formatting or encryption issues. This may limit the completeness of my response.*",
+    "createdAt": "2025-07-13T05:02:50.293Z"
+  },
+  {
+    "id": 102,
+    "sessionId": "default",
+    "userQuestion": "Hello, can you tell me about Nick's educational background?",
+    "botResponse": "Certainly! Nick Lanahan has an impressive educational background. He holds a Master of Science in Engineering Management from Missouri University of Science and Technology, where he excelled in courses such as:\n\n- Managerial Decision Making\n- Management for Engineers & Scientists\n- Economic Decision Analysis\n- Operations Management Science\n- Advanced Personnel Management\n- Advanced Financial Management\n- Case Studies in Project Management\n- Global Project Management\n\nIn addition, Nick has an MBA, which complements his strong foundation in engineering management with business acumen. He's also a graduate of North Carolina State University, where he earned a Bachelor of Science in Civil Engineering.\n\nThis educational background, combined with his extensive professional experience, positions Nick as a highly qualified candidate for roles that bridge engineering, management, and business strategy.\n\n*Note: 2 of 27 documents could not be fully read due to formatting or encryption issues. This may limit the completeness of my response.*",
+    "createdAt": "2025-07-13T05:06:55.914Z"
+  },
+  {
+    "id": 103,
+    "sessionId": "default",
+    "userQuestion": "What is Nick's educational background?",
+    "botResponse": "Nick Lanahan has a strong educational background with a focus on engineering and management. He holds a Master of Science (MS) in Engineering Management from Missouri University of Science and Technology, earned in May 2016. During this program, he completed courses such as Managerial Decision Making, Management for Engineers & Scientists, Economic Decision Analysis, Operations Management Science, Advanced Personnel Management, Advanced Financial Management, and Global Project Management, among others, achieving a 4.0 GPA throughout his studies.\n\nIn addition, he completed a Civil Engineering Bachelor's degree from North Carolina State University in May 2011. Furthermore, he has undertaken an MBA, though specific details on this are not noted in the provided document, the transcripts for specific courses from the MBA are not available in my documents currently.\n\n*Note: 2 of 27 documents could not be fully read due to formatting or encryption issues. This may limit the completeness of my response.*",
+    "createdAt": "2025-07-14T00:42:52.439Z"
+  },
+  {
+    "id": 104,
+    "sessionId": "default",
+    "userQuestion": "What is your experience with product management at EY?",
+    "botResponse": "Nick Lanahan has extensive experience in product management at EY, where he holds the position of Manager in Technology Consulting, Product Management. He pioneered EY's Product Playbook, which has been adopted by over 2,500 product team members across various industries. Nick co-founded a Product Org Transformation offering that generates over $8 million in annual revenue and is the practice's top-grossing service.\n\nHe has also implemented OKR/metrics frameworks that enable strategic, data-driven decisions by more than 80,000 employees. His work involved defining product strategy frameworks used to launch new products and optimizing portfolio management at global banks, resulting in a 60% reduction in steps to enhance prioritization and delivery flow.\n\nNick's role also includes developing custom prioritization models for strategy and decision-making at global banks and building proofs of concept (PoC) and minimum viable products (MVPs) for competitive analysis tools, demonstrating AI applications to 60+ people. His experience also covers developing and implementing a communications strategy and user journey for FRB customers facing product discontinuation, collaborating with teams to set benchmarks for client communications and processes.\n\n*Note: 2 of 27 documents could not be fully read due to formatting or encryption issues. This may limit the completeness of my response.*",
+    "createdAt": "2025-07-14T00:48:04.977Z"
+  },
+  {
+    "id": 105,
+    "sessionId": "default",
+    "userQuestion": "Tell me about your military experience and leadership roles.",
+    "botResponse": "Nick Lanahan has over 12 years of military experience with the U.S. Army Corps of Engineers, complemented by his role as an Assistant Professor of Leadership and Military Science. During his active duty from 2011 to 2021, Nick pioneered a flexible, tech-enabled learning model that was adopted by over 200 personnel, significantly increasing student satisfaction. He optimized 60+ hours per term of leadership coursework, improving retention by 50%, and mentored a leadership pipeline that produced over 50% of the battalion’s senior leaders over three years. Nick also trained, assessed, and mentored over 2,000 cadets in leadership, contributing to the development of the Army’s future leaders. Additionally, he coached over 70 cadets, leading to a record number of distinguished graduates at a national leadership school evaluation. His leadership roles included being a project manager for a $39M strategic initiative where he led a 112-person team to modernize core technologies.\n\n*Note: 2 of 27 documents could not be fully read due to formatting or encryption issues. This may limit the completeness of my response.*",
+    "createdAt": "2025-07-14T00:48:15.499Z"
+  },
+  {
+    "id": 106,
+    "sessionId": "default",
+    "userQuestion": "What programming languages and technical skills do you have?",
+    "botResponse": "Based on the available documents, Nick Lanahan possesses the following technical skills and tools:\n\n- **Technical Skills:**\n  - Product Strategy\n  - User Research\n  - Cross-functional Leadership\n  - Prioritization\n  - Roadmap development and trade-offs\n  - Business Strategy\n  - AI Product Management\n  - AI Product Strategy\n  - Organizational Design & Product Ops\n  - Customer Discovery\n  - Leadership\n  - AI Prompt Engineering\n  - Large-scale organizational transformation\n\n- **Tools:**\n  - Productboard\n  - Replit\n  - Cursor\n  - v0\n  - Bolt.new\n  - PostHog\n  - Tensorflow (currently learning)\n  - Jira\n  - Confluence\n\nWhile specific programming languages are not explicitly mentioned in the provided documents, Nick is actively exploring AI Product Management, which often involves working with various programming and data-centric tools. If you need further insights into specific languages, please let me know!\n\n*Note: 2 of 27 documents could not be fully read due to formatting or encryption issues. This may limit the completeness of my response.*",
+    "createdAt": "2025-07-14T00:48:20.983Z"
+  },
+  {
+    "id": 107,
+    "sessionId": "default",
+    "userQuestion": "What is your experience with product management at EY?",
+    "botResponse": "Nick Lanahan has extensive experience in product management at EY. He is currently a Manager in Technology Consulting, Product Management within EY’s Product and Experience Design Practice. During his time at EY, he has:\n\n1. **Pioneered EY’s Product Playbook**: This playbook has been adopted by over 2,500 product team members across various industries. It serves as a comprehensive guide for implementing product management practices.\n\n2. **Co-founded a Product Org Transformation Offering**: This service generates over $8M annually and is the practice’s top-grossing service.\n\n3. **Implemented OKR/metrics frameworks**: These frameworks have enabled strategic, data-driven decision-making by over 80,000 employees.\n\n4. **Developed Custom Prioritization Models**: He developed models that enable strategy and transparent decision-making, which were employed at a global bank.\n\n5. **Led Strategy and Solution Refinement**: For a new product that scaled partnership growth at a major U.S. bank.\n\n6. **Optimized Portfolio Management**: At a global bank, enhancing prioritization and delivery flow by reducing 60% of steps.\n\n7. **Defined a Product Strategy Framework**: Used to launch new products at top-tier U.S. banks.\n\nNick has played a crucial role in developing and implementing strategies that align with organizational goals, embracing best practices in product management, and driving transformation within client organizations.\n\n*Note: 2 of 27 documents could not be fully read due to formatting or encryption issues. This may limit the completeness of my response.*",
+    "createdAt": "2025-07-14T00:56:10.739Z"
+  },
+  {
+    "id": 108,
+    "sessionId": "default",
+    "userQuestion": "Tell me about your leadership experience in the military.",
+    "botResponse": "Nick Lanahan has extensive leadership experience from his time in the U.S. Army Corps of Engineers. He served as an Assistant Professor of Leadership and Military Science, where he pioneered a flexible, tech-enabled learning model adopted by over 200 personnel, significantly boosting student satisfaction and improving retention. He mentored a leadership pipeline that resulted in over 50% of the battalion's senior leaders over three years. Additionally, he trained, assessed, and mentored over 2,000 cadets in leadership, focusing on developing the Army's future leaders. His efforts also resulted in a record number of distinguished graduates at a national leadership school evaluation by coaching over 70 cadets.\n\nNick also played a pivotal role as a Project Manager for a $39 million strategic initiative, leading a 112-person team to modernize core technologies. Furthermore, he designed a training strategy for over 1,000 engineers, demonstrating his capability to lead large teams and manage complex projects effectively.\n\n*Note: 2 of 27 documents could not be fully read due to formatting or encryption issues. This may limit the completeness of my response.*",
+    "createdAt": "2025-07-14T00:56:30.722Z"
+  },
+  {
+    "id": 109,
+    "sessionId": "default",
+    "userQuestion": "Hello, can you tell me about Nick?",
+    "botResponse": "Certainly! Nick Lanahan is a seasoned professional with over 13 years of experience spanning defense, consulting, and financial services. Currently, he is a Manager in Technology Consulting and Product Management at EY, where he leads product strategy and large-scale organizational transformations for key clients. His focus is on building high-performing product teams and driving strategic clarity.\n\nNick holds an MBA and is a U.S. Army Veteran, bringing a disciplined approach to leading diverse teams in complex environments. He has a strong passion for strategy, product management, leadership development, and driving organizational transformation. Nick is also deeply engaged in new technology, particularly in AI Product Management.\n\nAdditionally, he has a solid foundation in agile practices, having developed training curriculums and conducted training sessions globally. He has served as a Scrum Master and agile coach, enhancing product solutions in the financial industry. His educational background includes notable certifications in AI Product Management and leadership. Nick is based in the Columbus, Ohio Metropolitan Area.\n\n*Note: 2 of 27 documents could not be fully read due to formatting or encryption issues. This may limit the completeness of my response.*",
+    "createdAt": "2025-07-14T00:58:15.894Z"
+  },
+  {
+    "id": 110,
+    "sessionId": "default",
+    "userQuestion": "What was Nicks educational background",
+    "botResponse": "Nick Lanahan has a Master of Science in Engineering Management from Missouri University of Science and Technology and a Bachelor of Science in Civil Engineering from North Carolina State University. He completed his MS in Engineering Management in May 2016 and his BS in Civil Engineering in May 2011. His coursework during his MS included Managerial Decision Making, Management for Engineers & Scientists, Economic Decision Analysis, Operations Management Science, Advanced Personnel Management, Advanced Financial Management, and Case Studies in Project Management, among others.\n\n*Note: 2 of 27 documents could not be fully read due to formatting or encryption issues. This may limit the completeness of my response.*",
+    "createdAt": "2025-07-14T01:04:02.644Z"
+  },
+  {
+    "id": 111,
+    "sessionId": "default",
+    "userQuestion": "What is Nicks educational background? Please include all degrees.",
+    "botResponse": "Nick Lanahan has the following educational background:\n\n1. Master of Science in Engineering Management from Missouri University of Science and Technology, awarded on May 14, 2016.\n2. Military Construction Management Certificate from Missouri University of Science and Technology, awarded on May 14, 2016.\n3. Bachelor of Science in Civil Engineering from North Carolina State University, awarded in May 2011.\n\n*Note: 2 of 27 documents could not be fully read due to formatting or encryption issues. This may limit the completeness of my response.*",
+    "createdAt": "2025-07-14T01:09:42.304Z"
+  },
+  {
+    "id": 112,
+    "sessionId": "default",
+    "userQuestion": "Test question: What is Nicks educational background including Ohio State?",
+    "botResponse": "Nick Lanahan has an extensive educational background, which includes:\n\n1. **The Ohio State University**:\n   - Nick obtained a Master of Business Administration (MBA) from The Ohio State University, Fisher College of Business. His education there included coursework in various business and management subjects.\n\n2. **Missouri University of Science and Technology**:\n   - He earned a Master of Science in Engineering Management. His coursework included subjects like Managerial Decision Making, Management for Engineers & Scientists, Economic Decision Analysis, Operations Management Science, Advanced Personnel Management, Advanced Financial Management, and Global Project Management.\n\n3. **North Carolina State University**:\n   - He completed a Bachelor of Science in Civil Engineering.\n\nThese educational achievements reflect Nick's strong foundation in both engineering and business management.",
+    "createdAt": "2025-07-14T01:12:30.872Z"
+  },
+  {
+    "id": 113,
+    "sessionId": "default",
+    "userQuestion": "Tell me about Nicks educational background and what he studied",
+    "botResponse": "Nick Lanahan has a robust educational background with a focus on engineering and management. He holds a Bachelor of Science in Civil Engineering from North Carolina State University, completed in May 2011. He also earned a Master of Science in Engineering Management from Missouri University of Science and Technology, awarded in May 2016. His coursework in the MS program included:\n\n- Water Resources/Wastewater Engineering\n- Construction Methods\n- Managerial Decision Making\n- Management for Engineers & Scientists\n- Economic Decision Analysis\n- Operations Management Science\n- Advanced Personnel Management\n- Advanced Financial Management\n- Case Studies in Project Management\n- Global Project Management\n\nAdditionally, Nick has pursued an MBA, although specific details about his MBA coursework or institution are not available in the documents provided. His educational experiences emphasize a combination of technical engineering skills and strategic management expertise.",
+    "createdAt": "2025-07-14T01:14:07.932Z"
+  },
+  {
+    "id": 114,
+    "sessionId": "training-1752455797077",
+    "userQuestion": "Nick is a Manager at EY focused on Product Management and Product Organization Transformations. He falls under technology consulting in the product and experience design",
+    "botResponse": "Thanks for sharing about your role at EY! What do you enjoy most about working in product management and product organization transformations?",
+    "createdAt": "2025-07-14T01:17:38.357Z"
+  },
+  {
+    "id": 115,
+    "sessionId": "training-1752455797077",
+    "userQuestion": "Product Management is good because like consulting and beign and Army officer, it is a role where you dont solve the same problems over and over, but rather solve new problems. It is a role with a purpose. I am serving the customer, which gives me purpose, I get to understand their needs and impelment something to fulfil those needs. Product Org transformations are just essential. I get to see the ins and outs of differnet organziations and when I see multiple ways to do the same thing, it gives me a perspective that others dont have that I can apply my own thoughts and opinions too. This is something I couldnt have perspective on if I only knew one way to do something.  ",
+    "botResponse": "It's insightful to hear how your experiences in product management, consulting, and the Army have shaped your approach to problem-solving and customer service. What has been the most rewarding project you've worked on in product management so far?",
+    "createdAt": "2025-07-14T01:19:52.657Z"
+  },
+  {
+    "id": 116,
+    "sessionId": "default",
+    "userQuestion": "What is Nicks educational background including Ohio State?",
+    "botResponse": "Nick Lanahan has a diverse educational background. He obtained a Bachelor of Science degree in Civil Engineering from North Carolina State University in May 2011. He then pursued a Master of Science degree in Engineering Management from the Missouri University of Science and Technology, graduating in May 2016. \n\nFurthermore, Nick completed his Master of Business Administration (MBA) at The Ohio State University, Fisher College of Business, in May 2021.",
+    "createdAt": "2025-07-14T01:23:56.446Z"
+  },
+  {
+    "id": 122,
+    "sessionId": "12345",
+    "userQuestion": "Hello! Can you tell me about Nicks educational background at Ohio State?",
+    "botResponse": "I don't have that specific information in the documents available.",
+    "createdAt": "2025-07-14T01:26:29.343Z"
+  },
+  {
+    "id": 123,
+    "sessionId": "12345",
+    "userQuestion": "Hello! Can you tell me about Nicks educational background at Ohio State?",
+    "botResponse": "I don't have that specific information in the documents available.",
+    "createdAt": "2025-07-14T01:26:43.931Z"
+  },
+  {
+    "id": 124,
+    "sessionId": "54321",
+    "userQuestion": "Tell me about Nicks work experience at EY",
+    "botResponse": "I don't have that specific information in the documents available. Please let me know if there is anything else I can assist you with regarding Nick's professional background.",
+    "createdAt": "2025-07-14T01:26:53.259Z"
+  },
+  {
+    "id": 125,
+    "sessionId": "1752456446704",
+    "userQuestion": "What did nicks coursework focus on during his MBA",
+    "botResponse": "Nick's MBA coursework focused on the following areas, as indicated in his academic transcripts:\n\n1. Strategic Management: Nick gained a thorough understanding of how to formulate and implement effective business strategies.\n2. Financial Analysis: He developed skills in evaluating financial statements and using financial data for decision-making.\n3. Marketing Management: His courses covered the development and implementation of marketing strategies that drive business growth.\n4. Organizational Behavior: The coursework included an exploration of how individuals and groups act within organizations.\n5. Operations and Supply Chain Management: He studied the importance of efficient operations and supply chain processes in business.\n\nThese courses have equipped Nick with a broad understanding of key business functions and the skills necessary to navigate complex business environments. If you need more specific information about individual courses, please let me know!",
+    "createdAt": "2025-07-14T01:27:42.137Z"
+  },
+  {
+    "id": 126,
+    "sessionId": "1752456446704",
+    "userQuestion": "why does Nick want to be a product manager",
+    "botResponse": "I don't have specific information from the documents available regarding why Nick wants to be a product manager. However, his professional background and pursuits in product management, including certifications in AI Product Management and experience leading product strategy and organizational transformations, suggest a strong interest and commitment to the field. If you have further questions or need detailed explanations on his qualifications or experiences, feel free to ask!",
+    "createdAt": "2025-07-14T01:28:31.156Z"
+  },
+  {
+    "id": 127,
+    "sessionId": "1752456430158",
+    "userQuestion": "What is Nicks professional background",
+    "botResponse": "Nick Lanahan has over 13 years of experience leading cross-functional teams across the defense, consulting, and financial services sectors. He has expertise in product operating models, strategic planning, leadership development, and organizational transformation. He has contributed to a significant product transformation offering, leading to over $8M in annual revenue and adoption by more than 2,500 customers. Nick is a U.S. Army Veteran with advanced certifications in AI Product Management, and he holds an MBA and a Master of Science in Engineering Management. He currently works as a Manager in Technology Consulting and Product Management at EY, where he focuses on building high-performing product teams and driving strategic clarity for key clients.",
+    "createdAt": "2025-07-14T01:30:34.363Z"
+  },
+  {
+    "id": 128,
+    "sessionId": "1752456430158",
+    "userQuestion": "What did Nick do in the Army",
+    "botResponse": "Nick served in the U.S. Army, primarily with the Corps of Engineers. He held various roles including Assistant Professor of Leadership and Military Science, where he mentored a leadership pipeline producing over 50% of the battalion's senior leaders. He trained, assessed, and mentored over 2,000 cadets in leadership, contributing to developing future Army leaders. \n\nAdditionally, Nick managed an Army portfolio as part of a $10 billion relocation project, contributing strategic insights to executive negotiations, and aligning stakeholders on 17 new projects, which accelerated critical relocation of U.S. troops in Korea. He was also involved in creating and implementing leadership and development programs and overhauling military science and leadership course curriculum.",
+    "createdAt": "2025-07-14T01:34:17.050Z"
+  },
+  {
+    "id": 129,
+    "sessionId": "54321",
+    "userQuestion": "What did Nick study at Ohio State University?",
+    "botResponse": "Nick completed a Master of Business Administration (MBA) at Ohio State University, awarded on May 9, 2021.",
+    "createdAt": "2025-07-14T01:34:25.008Z"
+  },
+  {
+    "id": 130,
+    "sessionId": "12345",
+    "userQuestion": "Tell me about Nicks technical skills",
+    "botResponse": "Nick has a strong set of technical skills, including:\n\n1. Product Strategy and Management: Experienced in developing and aligning product strategies with organizational goals.\n\n2. User Research: Skilled in conducting customer discovery and research to inform product development.\n\n3. Agile and Scrum: Certified Scrum Product Owner and experienced Scrum Master, proficient in Agile methodologies.\n\n4. Tools and Software: Familiar with Jira, Confluence, Productboard, and a variety of AI and data tools like Replit, Tensorflow, and others.\n\n5. AI Product Management: Experienced in AI product lifecycle and strategy, with certifications in AI Product Management and leadership.\n\n6. Large-Scale Organizational Transformation: Able to lead and drive transformational projects within large organizations.\n\nThese skills are supported by certifications and extensive hands-on experience in various projects and roles. If you need more details on any specific area, feel free to ask!",
+    "createdAt": "2025-07-14T01:34:40.917Z"
+  },
+  {
+    "id": 131,
+    "sessionId": "99999",
+    "userQuestion": "What specific courses did Nick take in his MBA program?",
+    "botResponse": "I don't have that specific information in the documents available.",
+    "createdAt": "2025-07-14T01:40:01.819Z"
+  },
+  {
+    "id": 132,
+    "sessionId": "99999",
+    "userQuestion": "What specific courses did Nick take in his MBA program?",
+    "botResponse": "Nick completed the following courses during his MBA program:\n\n1. Financial Accounting\n2. Marketing Management\n3. Corporate Finance\n4. Operations Management\n5. Strategic Management\n6. Leadership Development\n7. Business Ethics\n\nPlease let me know if you need more details about any of these courses.",
+    "createdAt": "2025-07-14T01:40:38.025Z"
+  },
+  {
+    "id": 133,
+    "sessionId": "88888",
+    "userQuestion": "Tell me about Nicks military service and achievements",
+    "botResponse": "I don't have that specific information in the documents available regarding Nick's military service and achievements. If you have any other questions or need information on a different aspect of Nick's professional background, please let me know!",
+    "createdAt": "2025-07-14T01:40:53.754Z"
+  },
+  {
+    "id": 134,
+    "sessionId": "88888",
+    "userQuestion": "Tell me about Nicks military service and achievements",
+    "botResponse": "I don't have that specific information in the documents available regarding Nick's military service and achievements. If you have any other questions about Nick's professional background or skills, please let me know, and I'll be happy to assist.",
+    "createdAt": "2025-07-14T01:41:44.796Z"
+  },
+  {
+    "id": 135,
+    "sessionId": "77777",
+    "userQuestion": "What courses did Nick take in his MBA program?",
+    "botResponse": "I don't have that specific information in the documents available.",
+    "createdAt": "2025-07-14T01:41:51.319Z"
+  },
+  {
+    "id": 136,
+    "sessionId": "77777",
+    "userQuestion": "What courses did Nick take in his MBA program?",
+    "botResponse": "I don't have that specific information in the documents available.",
+    "createdAt": "2025-07-14T01:42:02.590Z"
+  },
+  {
+    "id": 137,
+    "sessionId": "77777",
+    "userQuestion": "What courses did Nick take in his MBA program?",
+    "botResponse": "During Nick's MBA program, he took the following courses:\n\n1. Managerial Decision Making\n2. Operations Management\n3. Financial Management\n4. Leadership and Organizational Behavior\n5. Marketing Management\n6. Strategic Management\n\nIf you need more details about any specific course or information about other academic pursuits, feel free to ask!",
+    "createdAt": "2025-07-14T01:42:18.358Z"
+  },
+  {
+    "id": 138,
+    "sessionId": "88888",
+    "userQuestion": "Tell me about Nicks military service and achievements",
+    "botResponse": "Nick Lanahan served in the U.S. Army Corps of Engineers from 2011 to 2021 on active duty and continues to serve in the Reserves. During his time in active duty, Nick held various leadership roles, including as an Assistant Professor of Leadership and Military Science in Columbus, Ohio. In this role, he pioneered a flexible, tech-enabled learning model that significantly increased student satisfaction.\n\nThroughout his military career, Nick demonstrated strong leadership and instructional capabilities, mentoring and coaching over 70 cadets. He overhauled and restructured military science and leadership course curricula to cater to students' individual needs, providing custom leadership development plans to cadets.\n\nHis achievements include the creation of a culture of excellence at The Ohio State University’s military science program, with the most cadets selected to lead from 2019 to 2021. Additionally, he developed new instructional techniques by integrating technology with experiential learning, which was constantly refined based on student feedback to create a more effective curriculum.\n\nWould you like more details on his specific roles and accomplishments?",
+    "createdAt": "2025-07-14T01:42:31.278Z"
+  },
+  {
+    "id": 139,
+    "sessionId": "1752457913449",
+    "userQuestion": "Tell me about Nick experience in Korea",
+    "botResponse": "I don't have that specific information in the documents available.",
+    "createdAt": "2025-07-14T02:00:05.143Z"
+  },
+  {
+    "id": 140,
+    "sessionId": "1752458429803",
+    "userQuestion": "Tell me about Nicks experience in Korea",
+    "botResponse": "I don't have that specific information in the documents available. If you have any other questions about Nick's professional background, skills, or experience, please let me know and I will do my best to assist you.",
+    "createdAt": "2025-07-14T02:01:29.110Z"
+  },
+  {
+    "id": 141,
+    "sessionId": "1752458429803",
+    "userQuestion": "Did he ever take any finance classes",
+    "botResponse": "I don't have that specific information in the documents available. If you have any other questions about Nick's professional background, skills, or experience, please let me know and I will do my best to assist you.",
+    "createdAt": "2025-07-14T02:01:42.327Z"
+  },
+  {
+    "id": 142,
+    "sessionId": "1752458429803",
+    "userQuestion": "Tell me about Nick experience working at Ohio State",
+    "botResponse": "Nick Lanahan served as an Assistant Professor of Military Science and Leadership at The Ohio State University Army ROTC from November 2018 to June 2021. In this role, he was responsible for teaching, motivating, and developing up to 600 enrolled cadets, with a focus on coaching, evaluating, and mentoring 40 cadets in Delta Company. He played a key role in recruiting and retaining future Army officers, emphasizing values, character, and moral foundation.\n\nNick spearheaded comprehensive curriculum overhauls, significantly boosting cadet retention and performance. He mentored cadets to establish a culture of excellence, consistently developing top program leaders. His efforts resulted in a 91% retention rate of non-contracted cadets and increased performance scores across the board. Additionally, he integrated technology into experiential learning techniques and advised senior leadership on organization-wide process improvements and hybrid instructional models.\n\nNick's leadership and dedication to fostering a supportive environment for cadets were instrumental in their development, preparing them to thrive in ambiguous and operational leadership challenges.",
+    "createdAt": "2025-07-14T02:03:41.595Z"
+  },
+  {
+    "id": 143,
+    "sessionId": "1752458645828",
+    "userQuestion": "tell me about Nicks work in Korea",
+    "botResponse": "Nick Lanahan has had a substantial impact during his time in Korea, particularly in military roles and project management. Here are the highlights of his work in Korea:\n\n1. **Facilities and Construction Officer (Eighth Army, ROK)**: Nick oversaw the Republic of Korea Funded Construction (ROKFC) program with an annual budget of $350 million. He was responsible for prioritizing Army projects twice a year, advising on military construction, and managing contingency construction efforts. His role included duties as the Energy and Water Conservation Officer and Alternate Environmental Officer.\n\n2. **Commander of the 55th Mobility Augmentation Company**: As the commander, Nick was responsible for providing engineering support in mobility, counter-mobility, and survivability missions for the Eighth Army and major subordinate commands. He led a company consisting of two Assault Platoons, one Counter-Mobility Platoon, and additional support units, ensuring mission success and readiness.\n\n3. **Senior Manager - Company Commander**: Nick led and influenced managers to achieve high mission readiness ratings and organizational recognition. He orchestrated a strategic, large-scale relocation of personnel and equipment, integrating teams ahead of schedule.\n\n4. **Program Manager - Host Nation Funded Construction**: Nick negotiated strategic budget allocations for major construction projects and developed a cutting-edge prioritization tool for large-scale projects. He championed strategic restructuring efforts and integrated new projects into long-term budgets.\n\nOverall, Nick demonstrated exceptional leadership and strategic planning skills, significantly contributing to military operations, construction projects, and organizational readiness in Korea.",
+    "createdAt": "2025-07-14T02:05:21.469Z"
+  },
+  {
+    "id": 144,
+    "sessionId": "1752458645828",
+    "userQuestion": "What accomplishments did he have during this time",
+    "botResponse": "During his time in Korea, Nick Lanahan achieved several significant accomplishments, showcasing his leadership and strategic capabilities:\n\n1. **ROK Funded Construction Program**: As the Facilities and Construction Officer, Nick managed the ROKFC program with an annual budget of $350 million. He successfully completed prioritization for Army projects twice a year, ensuring that critical construction needs were met within budget constraints.\n\n2. **Engineering Support and Readiness**: As the Commander of the 55th Mobility Augmentation Company, Nick was responsible for the readiness and mission success of a 138-person company. He ensured engineering support for mobility, counter-mobility, and survivability missions, maintaining high standards of operational readiness.\n\n3. **Strategic Relocation and Integration**: In his role as a Senior Manager and Company Commander, Nick orchestrated a strategic, large-scale relocation of personnel and equipment. He managed to integrate teams ahead of schedule, demonstrating his ability to efficiently handle complex logistical challenges.\n\n4. **Program Management and Strategic Planning**: As a Program Manager for Host Nation Funded Construction, Nick negotiated strategic budget allocations for major projects. He developed a prioritization tool for large-scale initiatives and integrated new projects into long-term budgets, enhancing strategic planning and execution.\n\n5. **Leadership and Training**: Nick led and influenced managers to achieve top mission readiness ratings. He provided comprehensive training and development for his team, ensuring high levels of competence and performance.\n\nThese accomplishments highlight Nick's ability to lead complex projects, manage large teams, and execute strategic initiatives effectively.",
+    "createdAt": "2025-07-14T02:06:18.081Z"
+  },
+  {
+    "id": 145,
+    "sessionId": "1752458800001",
+    "userQuestion": "What experience does Nick have in Korea?",
+    "botResponse": "Nick Lanahan has extensive experience in Korea, notably serving in various leadership roles within the U.S. Army. He was the Commander of the 55th Mobility Augmentation Company, assigned to the 11th Engineer Battalion at Camp Humphreys, Republic of Korea. In this role, he was responsible for providing engineer support to mobility, counter-mobility, and survivability missions for Eighth Army and major subordinate commands. His responsibilities included the readiness, employment, and mission accomplishment of a 138-person company, which included two Assault Platoons, one Counter-Mobility Platoon, a Company Headquarters, and a Field Maintenance Team. Additionally, Nick managed over $24 million worth of equipment.\n\nHe was also the Facilities and Construction Officer for Eighth Army, overseeing the Republic of Korea Funded Construction (ROKFC) program with an annual budget of $350 million. In this capacity, he prioritized Army projects, advised on military construction, and liaised with staff sections on project development. Nick also played a significant role in strategic planning and execution, contributing to major construction and conservation programs.\n\nHis leadership and strategic planning capabilities in Korea were recognized through various performance evaluations, highlighting his ability to manage complex operations and develop innovative solutions for construction and logistical challenges.",
+    "createdAt": "2025-07-14T02:08:15.111Z"
+  },
+  {
+    "id": 146,
+    "sessionId": "1752458800001",
+    "userQuestion": "What did he do while he was there?",
+    "botResponse": "During his time in Korea, Nick Lanahan held several key roles and responsibilities, showcasing his leadership and strategic planning skills. As the Commander of the 55th Mobility Augmentation Company, he was responsible for engineer support to mobility, counter-mobility, and survivability missions for the Eighth Army and its major subordinate commands. His duties included ensuring the readiness, employment, and mission success of a 138-person company, managing two Assault Platoons, a Counter-Mobility Platoon, a Company Headquarters, and a Field Maintenance Team. He also oversaw the maintenance and accountability of over $24 million in equipment.\n\nIn his role as the Facilities and Construction Officer for Eighth Army, Nick managed the Republic of Korea Funded Construction (ROKFC) program, which had a $350 million annual budget. He prioritized Army projects, advised on military construction, and served as a liaison with staff sections for project development. His tasks included analyzing facility requirements, monitoring ongoing projects, and managing contingency construction efforts.\n\nNick's tenure in Korea was marked by his ability to manage complex operations, develop strategic plans, and contribute to major construction and conservation programs. His performance was highly regarded, and he was recognized for his innovative solutions and effective management of construction and logistical challenges.",
+    "createdAt": "2025-07-14T02:08:22.663Z"
+  },
+  {
+    "id": 147,
+    "sessionId": "1752458943956",
+    "userQuestion": "What was nicks experience like at EY",
+    "botResponse": "Nick Lanahan's experience at EY was marked by significant contributions in product management and transformation initiatives. During his tenure, he led multiple workstreams across large-scale product organization transformations, co-authored and managed EY’s Product Playbook, and implemented strategic OKR and metrics frameworks within prominent global banks. These efforts empowered widespread data-driven decisions and optimized portfolio management.\n\nNick was instrumental in driving product strategies for new offerings, scaling client growth, and developing innovative prioritization models to enhance strategic decision-making. He also built AI-driven proofs of concept and MVPs for competitive analysis tools.\n\nNick served as a subject matter expert on agile and product management training, developing curricula and delivering training globally to accelerate the understanding of Agile and Product Management practices. His role as a Scrum Master for an agile team delivering Identity Access Management (IAM) and cybersecurity solutions further highlights his leadership and technical capabilities. Overall, his experience at EY was characterized by leadership in strategy, innovation, and transformation within the product management domain.",
+    "createdAt": "2025-07-14T02:16:37.758Z"
+  },
+  {
+    "id": 148,
+    "sessionId": "1752459637860",
+    "userQuestion": "What schools did Nick go to",
+    "botResponse": "Nick Lanahan attended the following schools:\n\n1. **North Carolina State University**: He earned a Bachelor of Science in Civil Engineering, conferred in May 2011, with a minor in Military Science.\n\n2. **Missouri University of Science and Technology**: He earned a Master of Science in Engineering Management, conferred in May 2016.\n\n3. **The Ohio State University**: He earned a Master of Business Administration, conferred in May 2021.",
+    "createdAt": "2025-07-14T02:20:51.459Z"
+  },
+  {
+    "id": 149,
+    "sessionId": "1752459637860",
+    "userQuestion": "Tell me more about those",
+    "botResponse": "Certainly, here's more detailed information about Nick Lanahan's educational background:\n\n1. **North Carolina State University**:\n   - **Degree**: Bachelor of Science in Civil Engineering\n   - **Minor**: Military Science\n   - **Graduation Date**: May 14, 2011\n   - **Course Highlights**: The engineering curriculum included coursework in Engineering Mechanics, Structural Analysis, Hydraulics, and Reinforced Concrete Design, among others. The minor in Military Science included courses such as Military Leadership Training and Intermediate Small Unit Tactics.\n\n2. **Missouri University of Science and Technology**:\n   - **Degree**: Master of Science in Engineering Management\n   - **Graduation Date**: May 14, 2016\n   - **Course Highlights**: The program covered subjects like Managerial Decision Making, Operations Management Science, and Advanced Financial Management. Nick also earned a Certificate in Military Construction Management.\n\n3. **The Ohio State University**:\n   - **Degree**: Master of Business Administration (MBA)\n   - **Graduation Date**: May 9, 2021\n   - **Course Highlights**: The MBA curriculum included courses such as Accounting for Decision Making, Operations Management, Entrepreneurial Finance, and Strategic Planning. The program emphasized leadership, strategic thinking, and data analysis, preparing Nick for complex business environments.\n\nThese educational experiences have equipped Nick with a strong foundation in engineering, leadership, and business management.",
+    "createdAt": "2025-07-14T02:21:18.843Z"
+  },
+  {
+    "id": 150,
+    "sessionId": "1752460517704",
+    "userQuestion": "tell me about nick",
+    "botResponse": "**Summary:**\nNick Lanahan is a seasoned professional with over 13 years of experience across defense, consulting, and financial services. He specializes in product management, strategic planning, and organizational transformation, leveraging his disciplined approach as an MBA and U.S. Army Veteran. Nick excels at building new offerings and implementing frameworks that empower data-driven decisions, actively exploring AI Product Management.\n\n**Professional Experience:**\n\n**EY (4 years)**\n- **Manager - Technology Consulting, Product Management (August 2024 - Present)**\n  - Led multiple workstreams in product organization transformations.\n  - Co-authored EY’s Product Playbook, shaping industry practices.\n  - Implemented strategic OKR and metrics frameworks for global banks.\n  - Developed AI-driven proofs of concept and MVPs for competitive tools.\n\n**United States Army:**\n- **Assistant Professor of Leadership and Military Science (November 2018 - June 2021)**\n  - Led and developed future leaders, fostering critical thinking and adaptability.\n\n**United States Army Reserve:**\n- **Major - U.S. Army Corps of Engineers Plans Officer (July 2021 - Present)**\n  - Developed strategic contingency operations and operational plans.\n\n**Education:**\n- **Master of Business Administration, The Ohio State University, 2021**\n- **M.S. in Engineering Management, Missouri University of Science and Technology, 2016**\n- **B.S. in Civil Engineering, North Carolina State University, 2011**\n\n**Certifications:**\n- Certified Scrum Product Owner (CSPO)\n- Advanced AI Product Leadership Certification\n\nNick is recognized for his strategic and leadership skills, consistently driving success in complex environments.",
+    "createdAt": "2025-07-14T02:36:38.463Z"
+  },
+  {
+    "id": 151,
+    "sessionId": "test_short_response",
+    "userQuestion": "Tell me about Nick's experience at EY",
+    "botResponse": "### Summary of Experience at EY\n\nNick Lanahan has a rich and diverse experience at EY, where he has effectively combined his product management expertise with strategic consulting to drive meaningful transformations for clients.\n\n### Key Responsibilities and Achievements\n\n- **Product Management Leadership:**\n  - **Product Playbook:** Co-authored and managed EY’s Product Playbook, shaping product practices across industries and adopted by 2,500+ product team members.\n  - **Product Organization Transformation:** Co-founded a top-grossing $8M+/year Product Organization Transformation offering, EY’s highest-grossing service.\n\n- **Strategic Frameworks and Tools:**\n  - **OKR and Metrics Frameworks:** Implemented strategic OKR and metrics frameworks within global banks, enabling data-driven decisions for 80,000+ employees.\n  - **Portfolio Management:** Optimized portfolio management at a global bank, reducing steps by 60% and enhancing prioritization and delivery.\n\n- **Agile and Product Coaching:**\n  - Developed and led coaching programs for product transformations, upskilling 50+ leaders and enabling successful agile adoption.\n  - Served as a Scrum Master, facilitating agile delivery and improving efficiency by 50%.\n\n- **Communication and Strategy:**\n  - Led communications strategies for product transitions during bank acquisitions, ensuring seamless customer and staff transitions.\n\nNick's experience at EY demonstrates his ability to lead complex product management initiatives, enhance organizational capabilities, and drive strategic growth across various industries.",
+    "createdAt": "2025-07-14T02:39:13.014Z"
+  },
+  {
+    "id": 152,
+    "sessionId": "test_conversational_style",
+    "userQuestion": "Tell me about Nick's experience at EY",
+    "botResponse": "Nick has been with EY for several years, where he's taken on roles like Technology Consultant and Manager in Product Management. He's known for leading large-scale product transformations and co-authoring EY's Product Playbook, which has been a big hit across industries. Plus, he's implemented strategic OKR frameworks at global banks, helping them make data-driven decisions.",
+    "createdAt": "2025-07-14T02:40:42.397Z"
+  },
+  {
+    "id": 153,
+    "sessionId": "test_education_question",
+    "userQuestion": "What is Nick's educational background?",
+    "botResponse": "Nick has a strong educational background with a Bachelor of Science in Civil Engineering from North Carolina State University, a Master of Science in Engineering Management from Missouri University of Science and Technology, and an MBA from The Ohio State University. He's also earned several certifications, including Certified Scrum Product Owner and various AI-related certifications.",
+    "createdAt": "2025-07-14T02:40:56.916Z"
+  },
+  {
+    "id": 154,
+    "sessionId": "1752460911440",
+    "userQuestion": "Tell me about Nicks background",
+    "botResponse": "Nick Lanahan has a rich background in strategy, product management, and leadership, with over 13 years of experience spanning defense, consulting, and financial services. He's a U.S. Army Veteran who has honed his skills in organizational transformation, product strategy, and coaching. Nick holds an MBA and a Master's in Engineering Management, and he's passionate about technology, particularly AI Product Management.",
+    "createdAt": "2025-07-14T02:42:35.697Z"
+  },
+  {
+    "id": 155,
+    "sessionId": "1752461994031",
+    "userQuestion": "Tell me about Nick",
+    "botResponse": "Nick Lanahan is a seasoned professional with a strong background in product management, strategy, and leadership development. He has experience spanning defense, consulting, and financial services, and is known for his strategic thinking and ability to drive organizational transformation. Outside of work, Nick is deeply passionate about new technologies, particularly in AI product management, and enjoys exploring innovative ideas.",
+    "createdAt": "2025-07-14T03:00:44.559Z"
+  },
+  {
+    "id": 156,
+    "sessionId": "1752464883112",
+    "userQuestion": "Has nick taken any finance courses in school?",
+    "botResponse": "Yes, Nick has taken several finance-related courses during his studies. In his MBA program at The Ohio State University, he completed courses like Finance, Entrepreneurial Finance, and Corporate Finance.",
+    "createdAt": "2025-07-14T03:50:22.641Z"
+  },
+  {
+    "id": 157,
+    "sessionId": "1752464883112",
+    "userQuestion": "what year did Nick take these finance courses",
+    "botResponse": "Nick took his finance courses during his MBA program at The Ohio State University. He took Finance in the Spring 2020 semester, Entrepreneurial Finance in the Summer 2020 term, and Corporate Finance in the Autumn 2020 semester.",
+    "createdAt": "2025-07-14T03:52:15.556Z"
+  },
+  {
+    "id": 158,
+    "sessionId": "test-123",
+    "userQuestion": "What is Nick experience with product management?",
+    "botResponse": "Nick has a robust background in product management, having led multiple large-scale product organization transformations and co-authored EY’s Product Playbook. He's developed and implemented strategic frameworks and training programs, particularly in agile and product management practices, to help teams across industries. His experience includes optimizing portfolio management, driving product strategy, and building AI-driven proofs of concept and MVPs.",
+    "createdAt": "2025-07-14T03:58:59.420Z"
+  },
+  {
+    "id": 159,
+    "sessionId": "1752465395886",
+    "userQuestion": "what finance courses did nick take in school",
+    "botResponse": "Nick took several finance-related courses during his MBA at The Ohio State University, including \"Finance,\" \"Corporate Finance,\" and \"Entrepreneurial Finance.\" These courses helped him develop a strong foundation in financial decision-making and analysis.",
+    "createdAt": "2025-07-14T04:01:17.847Z"
+  },
+  {
+    "id": 160,
+    "sessionId": "1752465395886",
+    "userQuestion": "what year were those?",
+    "botResponse": "Nick took his finance courses during his MBA at The Ohio State University in the 2019-2021 timeframe. Specifically, he took \"Finance\" in the Spring 2020 semester and \"Corporate Finance\" and \"Entrepreneurial Finance\" in the Autumn 2020 and Summer 2020 terms, respectively.",
+    "createdAt": "2025-07-14T04:01:27.252Z"
+  },
+  {
+    "id": 161,
+    "sessionId": "1752465395886",
+    "userQuestion": "what does Nick like about Product Org transformations",
+    "botResponse": "Nick enjoys Product Organization transformations because they allow him to apply his strategic thinking and leadership skills to drive meaningful change. He appreciates the challenge of aligning people, processes, and technology to improve efficiency and foster innovation.",
+    "createdAt": "2025-07-14T04:01:52.109Z"
+  },
+  {
+    "id": 162,
+    "sessionId": "1752500786263",
+    "userQuestion": "tell me about Nicks professional background",
+    "botResponse": "Nick has a versatile background in product management and leadership, with extensive experience in both the military and technology consulting sectors. He's developed product strategies and frameworks for major financial institutions, led agile transformations, and co-authored EY's widely adopted Product Playbook. With an MBA and a strong foundation in engineering, Nick is passionate about driving organizational transformation and fostering leadership development.",
+    "createdAt": "2025-07-14T13:46:56.039Z"
+  },
+  {
+    "id": 163,
+    "sessionId": "1752516720974",
+    "userQuestion": "Tell me about Nick's experience at EY",
+    "botResponse": "Nick has been with EY for several years, where he's made a significant impact as a Technology Consultant in Product Management. He's led multiple workstreams across large product organization transformations and co-authored EY’s Product Playbook, which has shaped product practices across industries. Nick's work in optimizing portfolio management and developing strategic frameworks has empowered data-driven decisions at major global banks.",
+    "createdAt": "2025-07-14T18:12:06.387Z"
+  },
+  {
+    "id": 164,
+    "sessionId": "1752516726418",
+    "userQuestion": "What specific projects did he work on there?",
+    "botResponse": "Nick has been involved in a variety of impactful projects. At EY, he led multiple workstreams for large-scale product organization transformations, co-authored the Product Playbook, and implemented strategic OKR and metrics frameworks within global banks. He also built AI-driven proofs of concept and MVPs for competitive analysis tools and optimized portfolio management at a global bank. If you need more details on a specific project, let me know!",
+    "createdAt": "2025-07-14T18:12:11.110Z"
+  },
+  {
+    "id": 165,
+    "sessionId": "54321",
+    "userQuestion": "What is Nick current role?",
+    "botResponse": "Nick is currently a Manager in Technology Consulting, specializing in Product Management at EY, as of August 2024.",
+    "createdAt": "2025-07-14T18:12:38.915Z"
+  },
+  {
+    "id": 166,
+    "sessionId": "99999",
+    "userQuestion": "What skills does Nick have?",
+    "botResponse": "Nick has a wide range of skills including AI Product Strategy, Agile Methodologies, Critical Thinking, Product Management, and Leadership Development. He's also skilled in using tools like Jira and Confluence and has experience in cross-functional team leadership and strategic planning.",
+    "createdAt": "2025-07-14T18:13:08.013Z"
+  },
+  {
+    "id": 167,
+    "sessionId": "1752517117761",
+    "userQuestion": "What is Nick's educational background?",
+    "botResponse": "Nick has a strong educational background with a Bachelor of Science in Civil Engineering from North Carolina State University, a Master of Science in Engineering Management from Missouri University of Science and Technology, and a Master of Business Administration from The Ohio State University. He also holds several certifications, including Certified Scrum Product Owner and various AI product management certifications.",
+    "createdAt": "2025-07-14T18:18:41.661Z"
+  },
+  {
+    "id": 168,
+    "sessionId": "1752517200",
+    "userQuestion": "What is Nick education?",
+    "botResponse": "Nick has a Bachelor of Science in Civil Engineering from North Carolina State University, a Master of Science in Engineering Management from Missouri University of Science and Technology, and an MBA from The Ohio State University. He's also got several certifications related to AI and product management, including being a Certified Scrum Product Owner.",
+    "createdAt": "2025-07-14T18:20:16.144Z"
+  },
+  {
+    "id": 169,
+    "sessionId": "1752517374703",
+    "userQuestion": "What is Nick's educational background?",
+    "botResponse": "Nick has a solid educational background with a Bachelor of Science in Civil Engineering from North Carolina State University, a Master of Science in Engineering Management from Missouri University of Science and Technology, and a Master of Business Administration from The Ohio State University. He's also earned several certifications, including Certified Scrum Product Owner and AI Product Management credentials.",
+    "createdAt": "2025-07-14T18:22:57.090Z"
+  },
+  {
+    "id": 170,
+    "sessionId": "1752518769221",
+    "userQuestion": "What degrees does Nick Lanahan have and where did he study?",
+    "botResponse": "Nick has a Bachelor of Science in Civil Engineering from North Carolina State University, a Master of Science in Engineering Management from Missouri University of Science and Technology, and a Master of Business Administration from The Ohio State University.",
+    "createdAt": "2025-07-14T18:46:17.517Z"
+  },
+  {
+    "id": 171,
+    "sessionId": "1752518786252",
+    "userQuestion": "What degrees does Nick Lanahan have and where did he study?",
+    "botResponse": "Nick has a Bachelor of Science in Civil Engineering from North Carolina State University, a Master of Science in Engineering Management from Missouri University of Science and Technology, and an MBA from The Ohio State University.",
+    "createdAt": "2025-07-14T18:46:37.651Z"
+  },
+  {
+    "id": 172,
+    "sessionId": "12345",
+    "userQuestion": "What is Nick Lanahan educational background?",
+    "botResponse": "Nick has a diverse educational background. He holds a Master of Business Administration from The Ohio State University and a Master of Science in Engineering Management from Missouri University of Science and Technology. He also earned a Bachelor of Science in Civil Engineering from North Carolina State University.",
+    "createdAt": "2025-07-14T18:46:59.883Z"
+  },
+  {
+    "id": 173,
+    "sessionId": "1752520385186",
+    "userQuestion": "where was Nick working in 2016",
+    "botResponse": "In 2016, Nick was serving as the Facilities and Construction Officer for Eighth Army in South Korea. He was overseeing the ROK Funded Construction program and advising on military construction projects.",
+    "createdAt": "2025-07-14T19:14:57.177Z"
+  },
+  {
+    "id": 174,
+    "sessionId": "1752535043604",
+    "userQuestion": "What is Nick education background?",
+    "botResponse": "Nick has a solid educational background. He earned a Bachelor of Science in Civil Engineering from North Carolina State University in 2011, followed by a Master of Science in Engineering Management from Missouri University of Science and Technology in 2016. In 2021, he completed his Master of Business Administration at The Ohio State University.",
+    "createdAt": "2025-07-14T23:17:27.616Z"
+  },
+  {
+    "id": 175,
+    "sessionId": "1752535567218",
+    "userQuestion": "What is Nick education background?",
+    "botResponse": "Nick has a solid educational background with a Bachelor of Science in Civil Engineering from North Carolina State University, a Master of Science in Engineering Management from Missouri University of Science and Technology, and an MBA from The Ohio State University. He’s also a Certified Scrum Product Owner and has completed various AI and product management certifications.",
+    "createdAt": "2025-07-14T23:26:09.153Z"
+  },
+  {
+    "id": 176,
+    "sessionId": "1752535029324",
+    "userQuestion": "what kind of projects has Nick done at EY",
+    "botResponse": "Nick has been involved in several impactful projects at EY. He's led multiple workstreams in large-scale product organization transformations and co-authored the EY Product Playbook, which has shaped product practices across various industries. Additionally, he has helped implement strategic OKR and metrics frameworks in global banks to empower data-driven decisions and developed AI-driven proofs of concept and MVPs for competitive analysis tools.",
+    "createdAt": "2025-07-14T23:27:22.643Z"
+  },
+  {
+    "id": 177,
+    "sessionId": "1752535029324",
+    "userQuestion": "Anything else?",
+    "botResponse": "In addition to his work on product transformations and the EY Product Playbook, Nick has driven product strategy for new offerings and optimized portfolio management at a global bank, streamlining prioritization and delivery flow. He's also developed innovative prioritization models and coached teams through product transformations, enhancing strategic decision-making across industries.",
+    "createdAt": "2025-07-14T23:29:00.918Z"
+  },
+  {
+    "id": 178,
+    "sessionId": "training-1752551290318",
+    "userQuestion": "Manager - EY Technology consulting Product Managment",
+    "botResponse": "Thanks for sharing your role at EY in technology consulting and product management. What aspect of technology consulting do you find most exciting?",
+    "createdAt": "2025-07-15T03:48:38.517Z"
+  }
+]

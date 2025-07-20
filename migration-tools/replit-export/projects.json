@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "Dynamic Personal Portfolio Website",
+    "slug": "portfolio-website",
+    "shortDescription": "A modern, full-stack personal portfolio website with an AI-powered chatbot trained on professional background and experience to help recruiters and visitors learn about Nick's qualifications interactively.",
+    "description": "<p><strong>Full Description:</strong></p><p>This is a <strong>comprehensive personal portfolio platform designed to showcase professional work and thought leadership</strong>. The product features a clean, Apple-inspired design with interactive navigation tiles, animated elements, and responsive layouts.</p><p>The core functionality includes a portfolio showcase with detailed project pages, a blog system with series organization, curated \"Top 5\" lists for sharing preferences and recommendations, and a contact system with email integration.</p><p>The standout feature is an <strong>AI-powered chatbot trained on the user's professional background</strong>, enabling visitors to ask questions about skills, experience, and qualifications through natural language interactions.</p><p>The <strong>admin dashboard</strong> <strong>provides complete content management capabilities, allowing real-time updates to projects, blog posts, resume uploads, and AI training data</strong>.</p><p>The platform implements <strong>advanced analytics with PostHog</strong> for user behavior tracking and includes sophisticated features like password-protected resume downloads and AI content polishing tools.<br><strong>Key Features:</strong></p><p><strong>AI-Powered Chatbot with Smart Document Retrieval</strong></p><ul><li><p>LangChain integration with Chroma vector database for contextual responses</p></li><li><p>Real-time learning from user interactions with evaluation scoring</p></li></ul><p><strong>Advanced Analytics &amp; User Behavior Tracking</strong></p><ul><li><p>PostHog integration for comprehensive user journey analysis</p></li><li><p>Event tracking across all user interactions (tile clicks, downloads, etc.)</p></li></ul><p><strong>Comprehensive Admin Dashboard with Content Management</strong></p><ul><li><p>Full CRUD operations for projects, blog posts, and portfolio content</p></li><li><p>Draft/publish workflows with content versioning</p></li></ul><p><strong>Dynamic Project Portfolio with Advanced Filtering</strong></p><ul><li><p>Category-based project organization with real-time filtering</p></li><li><p>Rich project details with technologies, challenges, and solutions</p></li></ul><p><strong>Professional Contact &amp; Lead Management System</strong></p><ul><li><p>SendGrid email integration for automated notifications</p></li><li><p>Contact form submissions tracked in admin panel</p></li></ul><p><strong>Password-Protected Resume Download System</strong></p><ul><li><p>Secure file access with authentication</p></li><li><p>Download tracking and analytics</p></li></ul><p><strong>Real-Time Performance Monitoring</strong></p><ul><li><p>Comprehensive logging and error tracking</p></li><li><p>System health monitoring and evaluation metrics<br></p></li></ul><p><strong>New Skill Learned:</strong> Applied advanced prompt engineering and LangSmith evaluation frameworks for AI chatbot optimization and user experience analytics<br></p><p></p>",
+    "image": "/uploads/projects/files-1752501978407-54629719.png",
+    "mediaFiles": [
+      "/uploads/projects/files-1752501978407-54629719.png",
+      "/uploads/projects/files-1752501978544-165325211.png",
+      "/uploads/projects/files-1752501978713-432919656.png"
+    ],
+    "thumbnailIndex": 0,
+    "technologies": [
+      "Replit",
+      "React",
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL",
+      "Chroma Vector DB",
+      "LangChain",
+      "PostHog Analytics",
+      "TailwindCSS"
+    ],
+    "tags": [
+      "TEST"
+    ],
+    "demoUrl": "https://portfolio.nicklanahanportfolio.repl.co",
+    "codeUrl": "https://github.com/nick-lanahan/portfolio",
+    "featured": true,
+    "status": "published",
+    "date": "2025-07-12T00:00:00.000Z",
+    "client": "Personal Project",
+    "customColor": "#007AFF",
+    "createdAt": "2025-07-12T19:53:35.183Z"
+  }
+]

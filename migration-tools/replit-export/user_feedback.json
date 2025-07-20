@@ -1,0 +1,62 @@
+[
+  {
+    "id": 3,
+    "conversationId": 69,
+    "sessionId": "test_session_123",
+    "rating": "thumbs_up",
+    "comment": "This was a great response!",
+    "userAgent": null,
+    "ipAddress": null,
+    "createdAt": "2025-07-13T02:11:32.225Z"
+  },
+  {
+    "id": 4,
+    "conversationId": 73,
+    "sessionId": "test_session_123",
+    "rating": "thumbs_up",
+    "comment": "This was very helpful",
+    "userAgent": "Mozilla/5.0 test",
+    "ipAddress": null,
+    "createdAt": "2025-07-13T02:21:36.275Z"
+  },
+  {
+    "id": 5,
+    "conversationId": 84,
+    "sessionId": "session_1752375349144_hblzyj4ii",
+    "rating": "thumbs_down",
+    "comment": "The chatbot has transcripts. It should know what classes.",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+    "ipAddress": null,
+    "createdAt": "2025-07-13T03:01:20.316Z"
+  },
+  {
+    "id": 6,
+    "conversationId": 85,
+    "sessionId": "session_1752375844263_p4aw50gzk",
+    "rating": "thumbs_down",
+    "comment": "The bot should be able to access transcripts and look at the types of courses.",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+    "ipAddress": null,
+    "createdAt": "2025-07-13T03:05:42.620Z"
+  },
+  {
+    "id": 7,
+    "conversationId": 86,
+    "sessionId": "session_1752376590213_q0zed5xa6",
+    "rating": "thumbs_down",
+    "comment": "THe chatbot knows my courses",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+    "ipAddress": null,
+    "createdAt": "2025-07-13T03:19:42.502Z"
+  },
+  {
+    "id": 8,
+    "conversationId": 88,
+    "sessionId": "session_1752377621353_oljqb8ywc",
+    "rating": "thumbs_down",
+    "comment": "The chatbot should access transcripts when asked about specific coursework. It should accss all documents before determing it doesnt have an answer.",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+    "ipAddress": null,
+    "createdAt": "2025-07-13T03:41:56.696Z"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "id": 2,
+    "listId": 3,
+    "title": "The Lean Product Playbook: How to Innovate with Minimum Viable Products and Rapid Customer Feedback",
+    "description": "Great practical book on how modern day product management should work.  Goes in depth on MVPs",
+    "link": "https://www.amazon.com/Lean-Product-Playbook-Innovate-Products/dp/1118960874",
+    "linkText": "Book Link",
+    "image": "/uploads/projects/files-1752514789063-818887427.jpg",
+    "highlight": false,
+    "position": 1,
+    "createdAt": "2025-07-14T17:24:40.477Z"
+  },
+  {
+    "id": 3,
+    "listId": 3,
+    "title": "Inspired: How to Create Tech Products Customers Love",
+    "description": "Great theoretical book on modern day product management with a lot of good do's and dont's",
+    "link": "https://www.amazon.com/INSPIRED-Create-Tech-Products-Customers/dp/1119387507/ref=pd_lpo_d_sccl_1/147-1598150-6000053?pd_rd_w=BikT9&content-id=amzn1.sym.4c8c52db-06f8-4e42-8e56-912796f2ea6c&pf_rd_p=4c8c52db-06f8-4e42-8e56-912796f2ea6c&pf_rd_r=6E0RP7R8YE4MY4NV2D38&pd_rd_wg=s5Q9Y&pd_rd_r=8091bca6-65bd-49d9-85fa-416ab6b115d1&pd_rd_i=1119387507&psc=1",
+    "linkText": "Amazon Link",
+    "image": "/uploads/projects/files-1752514801264-216061504.jpg",
+    "highlight": false,
+    "position": 2,
+    "createdAt": "2025-07-14T17:26:44.577Z"
+  },
+  {
+    "id": 4,
+    "listId": 3,
+    "title": "Running Lean",
+    "description": "The most underrated Product Management Book.  Short and to the point, with a ton of great tips on customer discovery and interviews (plus a lot more)",
+    "link": "https://www.amazon.com/Running-Lean-Iterate-Plan-Works/dp/1449305172",
+    "linkText": "Amazon Link",
+    "image": "/uploads/projects/files-1752514809350-205295908.jpg",
+    "highlight": false,
+    "position": 3,
+    "createdAt": "2025-07-14T17:27:52.987Z"
+  },
+  {
+    "id": 5,
+    "listId": 3,
+    "title": "Continuous Discovery Habits: Discover Products that Create Customer Value and Business Value",
+    "description": "Excellent and practical book on customer discovery. ",
+    "link": "https://www.amazon.com/dp/1736633309/ref=mes-dp?_encoding=UTF8&pd_rd_w=Rpqwr&content-id=amzn1.sym.27ff3460-3571-4b3a-9a28-9e9ebed7694a&pf_rd_p=27ff3460-3571-4b3a-9a28-9e9ebed7694a&pf_rd_r=6E0RP7R8YE4MY4NV2D38&pd_rd_wg=K6tB3&pd_rd_r=753afd63-e92f-4cbd-b4e0-314c9f7e4419",
+    "linkText": "Amazon Link",
+    "image": "/uploads/projects/files-1752514816058-606602493.jpg",
+    "highlight": false,
+    "position": 4,
+    "createdAt": "2025-07-14T17:28:47.945Z"
+  },
+  {
+    "id": 6,
+    "listId": 3,
+    "title": "Empowered: Ordinary People, Extraordinary Products ",
+    "description": "Good book for leaders on how to enable teams to build products customers love.  ",
+    "link": "https://www.amazon.com/dp/B08LPKRD5L/ref=sspa_dk_detail_2?psc=1&pd_rd_i=B08LPKRD5L&pd_rd_w=g7WW9&content-id=amzn1.sym.f2f1cf8f-cab4-44dc-82ba-0ca811fb90cc&pf_rd_p=f2f1cf8f-cab4-44dc-82ba-0ca811fb90cc&pf_rd_r=5HN182TESJQ5EXQY1BMX&pd_rd_wg=2umAt&pd_rd_r=fb192441-9ba6-492a-a43d-e89c2721569f&sp_csd=d2lkZ2V0TmFtZT1zcF9kZXRhaWxfdGhlbWF0aWM",
+    "linkText": "Amazon Link",
+    "image": "/uploads/projects/files-1752514822637-297035572.jpg",
+    "highlight": false,
+    "position": 5,
+    "createdAt": "2025-07-14T17:29:57.597Z"
+  }
+]
