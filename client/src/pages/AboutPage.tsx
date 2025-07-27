@@ -2,6 +2,12 @@ import { motion } from "framer-motion";
 import { Target, Users, Lightbulb, Camera, MapPin } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import professionalPhoto from "@assets/AI Headshot_1752855950115.jpg";
+import aiPrototypingCert from "@assets/Screenshot 2025-07-17 223656_1752807833594.png";
+import advancedAILeadershipCert from "@assets/Screenshot 2025-07-17 223705_1752807833594.png";
+import aiPM101Cert from "@assets/Screenshot 2025-07-17 223712_1752807833595.png";
+import aiPMBootcampCert from "@assets/Screenshot 2025-07-17 223720_1752807833595.png";
+import eyAICert from "@assets/AI Badge_1752806308560.jpg";
+import eyBlockchainCert from "@assets/Blockchain Badge_1752806308560.jpg";
 
 const AboutPage = () => {
   // Fetch carousel images
@@ -205,7 +211,7 @@ const AboutPage = () => {
               >
                 <div className="text-center">
                   <img
-                    src="/@fs/home/runner/workspace/attached_assets/Screenshot 2025-07-17 223656_1752807833594.png"
+                    src={aiPrototypingCert}
                     alt="AI Prototyping for Product Managers Certificate"
                     className="w-full h-20 object-cover rounded-lg mb-2"
                   />
@@ -237,7 +243,7 @@ const AboutPage = () => {
               >
                 <div className="text-center">
                   <img
-                    src="/@fs/home/runner/workspace/attached_assets/Screenshot 2025-07-17 223705_1752807833594.png"
+                    src={advancedAILeadershipCert}
                     alt="Advanced AI Product Leadership Certificate"
                     className="w-full h-20 object-cover rounded-lg mb-2"
                   />
@@ -269,7 +275,7 @@ const AboutPage = () => {
               >
                 <div className="text-center">
                   <img
-                    src="/@fs/home/runner/workspace/attached_assets/Screenshot 2025-07-17 223712_1752807833595.png"
+                    src={aiPM101Cert}
                     alt="AI Product Management 101 Certificate"
                     className="w-full h-20 object-cover rounded-lg mb-2"
                   />
@@ -301,7 +307,7 @@ const AboutPage = () => {
               >
                 <div className="text-center">
                   <img
-                    src="/@fs/home/runner/workspace/attached_assets/Screenshot 2025-07-17 223720_1752807833595.png"
+                    src={aiPMBootcampCert}
                     alt="AI Product Management Bootcamp Certificate"
                     className="w-full h-20 object-cover rounded-lg mb-2"
                   />
@@ -333,7 +339,7 @@ const AboutPage = () => {
               >
                 <div className="text-center">
                   <img
-                    src="/@fs/home/runner/workspace/attached_assets/AI Badge_1752806308560.jpg"
+                    src={eyAICert}
                     alt="EY AI Certification Badge"
                     className="w-full h-20 object-cover rounded-lg mb-2"
                   />
@@ -365,7 +371,7 @@ const AboutPage = () => {
               >
                 <div className="text-center">
                   <img
-                    src="/@fs/home/runner/workspace/attached_assets/Blockchain Badge_1752806308560.jpg"
+                    src={eyBlockchainCert}
                     alt="EY Blockchain Certification Badge"
                     className="w-full h-20 object-cover rounded-lg mb-2"
                   />
