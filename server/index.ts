@@ -1,5 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import session from "express-session";
+import connectPgSimple from "connect-pg-simple";
+import { Pool } from "pg";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { debugPaths, isRailwayEnvironment } from "./utils/paths.js";
@@ -14,13 +16,27 @@ app.use(express.urlencoded({ extended: false }));
 // Serve static files from uploads directory
 app.use('/uploads', express.static('uploads'));
 
-// Session configuration
+// Session configuration with PostgreSQL store in production
+const PgSession = connectPgSimple(session);
+
+// Create session store based on environment
+const sessionStore = process.env.DATABASE_URL ? 
+  new PgSession({
+    pool: new Pool({
+      connectionString: process.env.DATABASE_URL,
+    }),
+    tableName: 'session', // Table name for storing sessions
+    createTableIfMissing: true // Automatically create the session table
+  }) : 
+  undefined; // Use default MemoryStore for development
+
 app.use(session({
+  store: sessionStore,
   secret: process.env.SESSION_SECRET || 'admin-session-secret-key',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false, // Set to true in production with HTTPS
+    secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
