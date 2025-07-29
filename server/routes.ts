@@ -380,15 +380,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Handle API routes with prefix
   
+  // Test route for debugging
+  app.get("/api/test", (req, res) => {
+    console.log("🧪 Test API called!");
+    res.json({ message: "Server is working!", timestamp: new Date().toISOString() });
+  });
+  
   // Get all published projects (public endpoint)
   app.get("/api/portfolio", async (req, res) => {
+    console.log("🚀 Portfolio API called!");
     try {
       const projects = await storage.getAllProjects();
-      // Filter to only show published projects (not drafts)
-      const publishedProjects = projects.filter(project => project.published !== false);
-      res.json(publishedProjects);
+      console.log(`📦 Found ${projects.length} total projects in storage`);
+      
+      // Return all projects (no filtering for now)
+      console.log(`✅ Returning ${projects.length} projects`);
+      
+      res.json(projects);
     } catch (error) {
-      console.error("Error fetching projects:", error);
+      console.error("❌ Error fetching projects:", error);
       res.status(500).json({ message: "Failed to fetch projects" });
     }
   });

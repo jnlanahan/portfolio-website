@@ -121,6 +121,7 @@ export default function AdminNewBlogPage() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/blog"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/blog"] });
       if (isEditMode) {
         queryClient.invalidateQueries({ queryKey: [`/api/blog/${blogId}`] });
       }

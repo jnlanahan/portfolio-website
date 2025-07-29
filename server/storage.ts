@@ -226,11 +226,14 @@ export class MemStorage implements IStorage {
           mediaFiles: project.gallery || [project.image],
           thumbnailIndex: 0,
           technologies: project.technologies,
+          tags: [], // Add empty tags array
           demoUrl: project.demoUrl,
           codeUrl: project.codeUrl,
           featured: project.featured || false,
+          status: "published" as const, // Add status field
           date: new Date(project.date),
           client: project.client || null,
+          customColor: "#007AFF", // Add custom color
           createdAt: new Date()
         } as Project);
         this.projectId = Math.max(this.projectId, project.id + 1);
@@ -1446,4 +1449,4 @@ export class DatabaseStorage implements IStorage {
   }
 }
 
-export const storage = new DatabaseStorage();
+export const storage = new MemStorage();

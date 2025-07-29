@@ -8,7 +8,18 @@
       "Bash(git push:*)",
       "Bash(npm install)",
       "Bash(npm run dev:*)",
-      "Bash(git log:*)"
+      "Bash(git log:*)",
+      "Bash(curl:*)",
+      "Bash(grep:*)",
+      "Bash(npx tsx:*)",
+      "Bash(taskkill:*)",
+      "Bash(npm run build:*)",
+      "Bash(set NODE_ENV=production)",
+      "Bash(npm start)",
+      "Bash(node:*)",
+      "Bash(set PORT=3003)",
+      "Bash(railway login:*)",
+      "Bash(npm install:*)"
     ],
     "deny": []
   }

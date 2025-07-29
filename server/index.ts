@@ -114,6 +114,11 @@ app.use((req, res, next) => {
   
   const server = await registerRoutes(app);
 
+  // Add a simple API test to see if Express is working
+  app.get('/debug', (req, res) => {
+    res.json({ message: 'Express is working!', timestamp: new Date() });
+  });
+
   // Enhanced error handling middleware
   app.use((err: any, req: Request, res: Response, _next: NextFunction) => {
     // Get error details
@@ -157,8 +162,9 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // Server port configuration
-  const port = process.env.PORT || 3000;
+  // Server port configuration  
+  const port = process.env.PORT || 3001;
+  const apiPort = process.env.API_PORT || 3002;
   const host = process.env.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost';
   server.listen(port, host, () => {
     log(`serving on http://${host}:${port}`);

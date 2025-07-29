@@ -200,9 +200,13 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
             color: customColor
           }}
         >
-          <Link href={`/portfolio/${project.slug}`} className="hover:opacity-80">
-            {project.title}
-          </Link>
+          {project.slug ? (
+            <Link href={`/portfolio/${project.slug}`} className="hover:opacity-80">
+              {project.title}
+            </Link>
+          ) : (
+            <span>{project.title}</span>
+          )}
         </h3>
 
         {/* Project date */}
@@ -243,13 +247,23 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
 
         {/* Action buttons */}
         <div className="flex justify-between items-center mt-4 pt-4" style={{ borderTop: `1px solid ${customColor}10` }}>
-          <Link 
-            href={`/portfolio/${project.slug}`} 
-            className="text-sm font-medium transition-colors flex items-center hover:opacity-80"
-            style={{ color: customColor }}
-          >
-            View Details <i className="ri-arrow-right-line ml-1"></i>
-          </Link>
+          {project.slug ? (
+            <Link 
+              href={`/portfolio/${project.slug}`} 
+              className="text-sm font-medium transition-colors flex items-center hover:opacity-80"
+              style={{ color: customColor }}
+            >
+              View Details <i className="ri-arrow-right-line ml-1"></i>
+            </Link>
+          ) : (
+            <span 
+              className="text-sm font-medium opacity-50 flex items-center cursor-not-allowed"
+              style={{ color: customColor }}
+              title="Project details not available"
+            >
+              View Details <i className="ri-arrow-right-line ml-1"></i>
+            </span>
+          )}
           <div className="flex space-x-3">
             {project.demoUrl && (
               <a
@@ -417,7 +431,7 @@ const PortfolioPage = () => {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {(selectedTag ? filteredProjects : (projects || []).filter(p => !p.featured)).map((project, index) => (
+          {(selectedTag ? filteredProjects : (projects || [])).map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
         </div>

@@ -41,30 +41,51 @@ export async function setupVite(app: Express, server: Server) {
     appType: "custom",
   });
 
-  app.use(vite.middlewares);
-  app.use("*", async (req, res, next) => {
-    const url = req.originalUrl;
+  // Important: Only use vite middlewares for static assets, not for routing
+  app.use((req, res, next) => {
+    // Let API routes pass through to Express handlers
+    if (req.originalUrl.startsWith('/api/') || req.originalUrl.startsWith('/debug')) {
+      return next();
+    }
+    
+    // Use Vite middleware for assets and dev server features
+    vite.middlewares(req, res, next);
+  });
+  
+  // Catch-all for SPA routing (only for non-API routes)
+  app.use((req, res, next) => {
+    // Skip API routes completely - they should have been handled by now
+    if (req.originalUrl.startsWith('/api/') || req.originalUrl.startsWith('/debug')) {
+      return next();
+    }
+    
+    // Handle SPA routing for everything else
+    handleSPARoute(req, res, next, vite);
+  });
+}
 
-    try {
+async function handleSPARoute(req: any, res: any, next: any, vite: any) {
+  const url = req.originalUrl;
+
+  try {
       if (isRailwayEnvironment()) {
         debugPaths();
       }
       
-      const clientTemplate = safePath("client", "index.html");
+    const clientTemplate = safePath("client", "index.html");
 
-      // always reload the index.html file from disk incase it changes
-      let template = await fs.promises.readFile(clientTemplate, "utf-8");
-      template = template.replace(
-        `src="/src/main.tsx"`,
-        `src="/src/main.tsx?v=${nanoid()}"`,
-      );
-      const page = await vite.transformIndexHtml(url, template);
-      res.status(200).set({ "Content-Type": "text/html" }).end(page);
-    } catch (e) {
-      vite.ssrFixStacktrace(e as Error);
-      next(e);
-    }
-  });
+    // always reload the index.html file from disk incase it changes
+    let template = await fs.promises.readFile(clientTemplate, "utf-8");
+    template = template.replace(
+      `src="/src/main.tsx"`,
+      `src="/src/main.tsx?v=${nanoid()}"`,
+    );
+    const page = await vite.transformIndexHtml(url, template);
+    res.status(200).set({ "Content-Type": "text/html" }).end(page);
+  } catch (e) {
+    vite.ssrFixStacktrace(e as Error);
+    next(e);
+  }
 }
 
 export function serveStatic(app: Express) {
